@@ -69,7 +69,7 @@ name = "Biology/Biochemistry"
 title = "Biochemical Techniques"
 catalog = "/courses/BIOL.html#bibc103"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIBC 103. For information regarding lab enrollment and waitlist procedures, \
   please visit http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be at least 1 hour/week in \
@@ -94,7 +94,7 @@ name = "Biol/Ecology, Behavior, & Evol"
 title = "Ecology Laboratory"
 catalog = "/courses/BIOL.html#bieb121"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIEB 121. For information regarding lab enrollment and waitlist procedures, \
   please visit: http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be at least 4 hours/week in \
@@ -127,7 +127,7 @@ name = "Biology/Molec Biol, Microbiol"
 title = "Laboratory in Microbiology"
 catalog = "/courses/BIOL.html#bimm121"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIMM 121. For information regarding lab enrollment and waitlist procedures, \
   please visit http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be at least 1 hour/week in \

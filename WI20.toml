@@ -2559,7 +2559,7 @@ note = """DOC 100D satisfies UCSD's Diversity, Equity, and Inclusion \
   Week 1. Please email docinfo@ucsd.edu with your PID# if you have questions. \
   This course will provide a broad overview of the histories of multiple \
   communities and explore the struggle for social justice in the United \
-  States. Topics include social movements, shifting ideas about "race" and \
+  States. Topics include social movements, shifting ideas about \"race\" and \
   gender, the rise of corporate power, and the transformation of higher \
   education."""
 
@@ -4216,7 +4216,7 @@ title = "Intl Relations of Asia-Pacific"
 catalog = "/courses/GPS.html#gpps400"
 
 [GPPS.courses.401]
-title = "The New "New" Civil Wars"
+title = "The New \"New\" Civil Wars"
 catalog = "/courses/GPS.html#gpps401"
 
 [GPPS.courses.407]
@@ -6494,7 +6494,7 @@ name = "Muir College Writing Program"
 title = "Critical Writing"
 catalog = "/courses/MCWP.html#mcwp40"
 note = """Submit any questions about enrollment preauthorization to the \
-  Virtual Advising Center (vac.ucsd.edu), choosing "Muir Writing" as the \
+  Virtual Advising Center (vac.ucsd.edu), choosing \"Muir Writing\" as the \
   reason for your question."""
 
 [MCWP.courses.50]
@@ -10508,9 +10508,9 @@ catalog = "/courses/VIS.html#vis100"
 note = """A brief survey on the institutionalizations of Public Art and \
   subsequent reactionary development of community, environmental and political \
   practices. Anatomy of Public Space, its on-going privatization, including \
-  its "wallifications" and "mallifications" through the concept of "defensible \
-  space." Branding of global cities, through international events like \
-  Olympics, World Cups, World Fairs and Art Biennales, and 'signature' \
+  its \"wallifications\" and \"mallifications\" through the concept of \"\
+  defensible space.\" Branding of global cities, through international events \
+  like Olympics, World Cups, World Fairs and Art Biennales, and 'signature' \
   architectural monuments. Information visualizations of communication, \
   transportation and other forms of movements across territories, including \
   materials, products and populations. Examination of critical geography, such \

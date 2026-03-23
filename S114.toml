@@ -19,7 +19,7 @@ note = """Students who enroll in ANAR 155S will be charged a $2,495 Program \
 title = "The Inca"
 
 [ANAR.courses.159GS]
-title = ""1492" : Coexist, Crusade"
+title = "\"1492\" : Coexist, Crusade"
 
 [ANAR.courses.184]
 title = "Political Economy/Early Empire"
@@ -105,7 +105,7 @@ catalog = "/courses/BIOL.html#bimm100"
 title = "Recombinant DNA Techniques"
 catalog = "/courses/BIOL.html#bimm101"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIMM 101. For information regarding lab enrollment and waitlist procedures, \
   please visit http://biology.ucsd.edu/undergrad/Waitlist.html"""
 
@@ -378,7 +378,7 @@ note = """DOC 100D satisfies UCSD's Diversity, Equity, and Inclusion \
   ucsd.edu with your PID# if you have trouble enrolling. This course will \
   provide a broad overview of the histories of multiple communities and \
   explore the struggle for social justice in the United States. Topics include \
-  social movements, shifting ideas about "race" and gender, the rise of \
+  social movements, shifting ideas about \"race\" and gender, the rise of \
   corporate power, and the transformation of higher education."""
 
 [ECE]

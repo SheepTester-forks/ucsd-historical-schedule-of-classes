@@ -575,7 +575,7 @@ catalog = "/courses/BIOL.html#bibc102"
 title = "Biochemical Techniques"
 catalog = "/courses/BIOL.html#bibc103"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIBC 103. For information regarding lab enrollment and waitlist procedures, \
   please visit http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be at least 1 hour/week in \
@@ -653,7 +653,7 @@ catalog = "/courses/BIOL.html#bimm100"
 title = "Recombinant DNA Techniques"
 catalog = "/courses/BIOL.html#bimm101"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIMM 101. For information regarding lab enrollment and waitlist procedures, \
   please visit http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be at least 1 hour/week in \
@@ -756,7 +756,7 @@ catalog = "/courses/BIOL.html#bipn102"
 title = "Animal Physiology Lab"
 catalog = "/courses/BIOL.html#bipn105"
 note = """Please see the note under the Biology heading regarding lab fees, \
-  wait lists, "W" policy, and attendance at the first scheduled meeting of \
+  wait lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIPN 105. For information regarding lab enrollment and waitlist procedures, \
   please visit http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be many hours in which \
@@ -1910,14 +1910,14 @@ name = "Dimensions of Culture"
 [DOC.courses.1]
 title = "Diversity"
 catalog = "/courses/DOC.html#doc1"
-note = """DOC 1 lectures (meeting type "LE" below) begin Friday, September 24. \
-  DOC 1 discussion sections (meeting type "DI") will meet for the first time \
-  on Wednesday, September 29, or Friday, October 1. There are no "Week Zero" \
-  DOC 1 sections. Adding and dropping DOC sections may be done via WebReg \
-  through 4:00 p.m., Friday, October 1. After that, students must get DOC \
-  office approval to make any changes in their DOC enrollment (email docinfo@\
-  ucsd.edu and include PID). Students may not be enrolled in DOC 1 \
-  concurrently with SDCC 4."""
+note = """DOC 1 lectures (meeting type \"LE\" below) begin Friday, \
+  September 24. DOC 1 discussion sections (meeting type \"DI\") will meet for \
+  the first time on Wednesday, September 29, or Friday, October 1. There are \
+  no \"Week Zero\" DOC 1 sections. Adding and dropping DOC sections may be \
+  done via WebReg through 4:00 p.m., Friday, October 1. After that, students \
+  must get DOC office approval to make any changes in their DOC enrollment (\
+  email docinfo@ucsd.edu and include PID). Students may not be enrolled in \
+  DOC 1 concurrently with SDCC 4."""
 
 [DOC.courses.500]
 title = "Apprentice Teaching/Marshall"
@@ -2700,9 +2700,9 @@ name = "Ethnic Studies"
 title = "Intro:Population Histories/US"
 catalog = "/courses/ETHN.html#ethn1a"
 note = """ETHN 1A students who need to enroll in a discussion section that is \
-  currently listed as "Full" should contact Yolanda Escamilla, Ethnic Studies \
-  Department Undergraduate Advisor at 858/534-3277 or by e-mail at yescamilla@\
-  ucsd.edu"""
+  currently listed as \"Full\" should contact Yolanda Escamilla, Ethnic \
+  Studies Department Undergraduate Advisor at 858/534-3277 or by e-mail at \
+  yescamilla@ucsd.edu"""
 
 [ETHN.courses.97]
 title = "Fld Stds/Racial&Ethnic Communt"
@@ -5587,11 +5587,11 @@ note = """No more than a total of 12 units for registered Music majors and no \
   taken with a P/NP grade option only. Please note: MUS 95G can ONLY be taken \
   for a P/NP grading option. . Auditions required for all performance \
   ensembles except 95C, 95G, and 95W. For audition information, go to the \
-  Music website: http://music.ucsd.edu/. Click on "Ensembles" on the left-hand \
-  side. Enrollment may take place only after a students passes an audition, \
-  and department approval is required. Students enrolled in the Music 95B \
-  performance ensembles will be charged a $15 lab fee which will be assessed \
-  with registration fees."""
+  Music website: http://music.ucsd.edu/. Click on \"Ensembles\" on the left-\
+  hand side. Enrollment may take place only after a students passes an \
+  audition, and department approval is required. Students enrolled in the \
+  Music 95B performance ensembles will be charged a $15 lab fee which will be \
+  assessed with registration fees."""
 
 [MUS.courses.95C]
 title = "Concert Choir"

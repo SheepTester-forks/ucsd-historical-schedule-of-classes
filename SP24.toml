@@ -2671,7 +2671,7 @@ note = """This information applies to all four DOC 3 lectures (A00, B00, C00, \
   and D00): Successful completion of DOC 2 is a mandatory prerequisite of \
   DOC 3. Students who are currently taking DOC 2 may enroll in DOC 3 during \
   their pre-quarter enrollment appointments. But if they earn a grade lower \
-  than a "D" in that course they are required to drop DOC 3 before the first \
+  than a \"D\" in that course they are required to drop DOC 3 before the first \
   day of Spring Quarter. DOC 3 discussion sections will meet twice a week, \
   starting Week 1. Adding or switching DOC sections may be done via WebReg as \
   openings occur through Friday of Week 1. Students may not add late or miss \
@@ -4728,7 +4728,7 @@ note = """It is highly recommended that students enroll in Linguistics \
   Language classes no later than Week 1. More information: http://bit.ly/LLP-\
   courses Note: Students must enroll concurrently in BOTH Conversation (MWF) \
   and Analysis (TuTh) courses in order to receive credit for the course \
-  level.""""
+  level.\""""
 
 [LIAB.courses.1CX]
 title = "Analysis of Arabic"
@@ -4737,7 +4737,7 @@ note = """It is highly recommended that students enroll in Linguistics \
   Language classes no later than Week 1. More information: http://bit.ly/LLP-\
   courses Note: Students must enroll concurrently in BOTH Conversation (MWF) \
   and Analysis (TuTh) courses in order to receive credit for the course \
-  level.""""
+  level.\""""
 
 [LIAB.courses.1F]
 title = "Intermediate Arabic Conversatn"
@@ -4828,7 +4828,7 @@ note = """It is highly recommended that students enroll in Linguistics \
   Language classes no later than Week 1. More information: http://bit.ly/LLP-\
   courses Note: Students must enroll concurrently in BOTH Conversation (MWF) \
   and Analysis (TuTh) courses in order to receive credit for the course \
-  level.""""
+  level.\""""
 
 [LIGM.courses.1CX]
 title = "Analysis of German"
@@ -4837,7 +4837,7 @@ note = """It is highly recommended that students enroll in Linguistics \
   Language classes no later than Week 1. More information: http://bit.ly/LLP-\
   courses Note: Students must enroll concurrently in BOTH Conversation (MWF) \
   and Analysis (TuTh) courses in order to receive credit for the course \
-  level.""""
+  level.\""""
 
 [LIGM.courses.11]
 title = "Elementary German Reading"
@@ -5015,7 +5015,7 @@ note = """It is highly recommended that students enroll in Linguistics \
   Language classes no later than Week 1. More information: http://bit.ly/LLP-\
   courses Note: Students must enroll concurrently in BOTH Conversation (MWF) \
   and Analysis (TuTh) courses in order to receive credit for the course \
-  level.""""
+  level.\""""
 
 [LIIT.courses.1CX]
 title = "Analysis of Italian"
@@ -5024,7 +5024,7 @@ note = """It is highly recommended that students enroll in Linguistics \
   Language classes no later than Week 1. More information: http://bit.ly/LLP-\
   courses Note: Students must enroll concurrently in BOTH Conversation (MWF) \
   and Analysis (TuTh) courses in order to receive credit for the course \
-  level.""""
+  level.\""""
 
 [LIPO]
 name = "Linguistics/Portuguese"
@@ -6330,7 +6330,7 @@ name = "Muir College Writing Program"
 title = "Critical Writing"
 catalog = "/courses/MCWP.html#mcwp40"
 note = """Submit any questions about enrollment preauthorization to the \
-  Virtual Advising Center (vac.ucsd.edu), choosing "Muir Writing" as the \
+  Virtual Advising Center (vac.ucsd.edu), choosing \"Muir Writing\" as the \
   reason for your question."""
 
 [MCWP.courses.50]
@@ -9675,7 +9675,7 @@ title = "Public Speaking"
 catalog = "/courses/THEA.html#tdge25"
 
 [TDGE.courses.100]
-title = "Creating the Role of "Leader""
+title = "Creating the Role of \"Leader\""
 catalog = "/courses/THEA.html#tdge100"
 
 [TDGE.courses.124]

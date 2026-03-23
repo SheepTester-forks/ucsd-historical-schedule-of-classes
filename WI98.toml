@@ -669,7 +669,7 @@ catalog = "/courses/BIOL.html#bibc102"
 title = "Biochemical Techniques"
 catalog = "/courses/BIOL.html#bibc102"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIBC 103. In addition to the formal lab hours listed below, there will be at \
   least 8 hours/week in which students will be required to work in the class \
   laboratory to complete experiments and prepare for presentations."""
@@ -717,10 +717,10 @@ title = "General Ecology"
 [BIEB.courses.121]
 title = "Ecology Laboratory"
 note = """Please see note under Biology Department Heading regarding the lab \
-  fee, waitlist, "W" policy, and attendance at the first scheduled meeting of \
-  BIEB 121. In addition to the formal lab hours listed below there will be an \
-  average of nine hours/week in which students will be required to work in the \
-  class laboratory to complete experiments and prepare presentations."""
+  fee, waitlist, \"W\" policy, and attendance at the first scheduled meeting \
+  of BIEB 121. In addition to the formal lab hours listed below there will be \
+  an average of nine hours/week in which students will be required to work in \
+  the class laboratory to complete experiments and prepare presentations."""
 
 [BIEB.courses.126]
 title = "Plant Ecology"
@@ -788,7 +788,7 @@ catalog = "/courses/BIOL.html#bimm114"
 title = "Laboratory in Microbiology"
 catalog = "/courses/BIOL.html#bimm114"
 note = """Please see note under the Biology heading regarding attendance at \
-  the first scheduled meeting, lab fees, wait lists, and the "W" policy for \
+  the first scheduled meeting, lab fees, wait lists, and the \"W\" policy for \
   BIMM 121. Seniors who are pre-pharmacy and pre-optometry students, please \
   see either Dr. Brown or Dr. Brody by the end of Fall quarter."""
 

@@ -54,7 +54,7 @@ name = "Biology/Biochemistry"
 title = "Biochemical Techniques"
 catalog = "/courses/BIOL.html#bibc103"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIBC 103. For information regarding lab enrollment and waitlist procedures, \
   please visit: http://biology.ucsd.edu/go/ug-waitlist"""
 
@@ -102,7 +102,7 @@ name = "Biology/Molec Biol, Microbiol"
 title = "Recombinant DNA Techniques"
 catalog = "/courses/BIOL.html#bimm101"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIMM 101. For information regarding lab enrollment and waitlist procedures, \
   please visit: http://biology.ucsd.edu/go/ug-waitlist"""
 
@@ -393,7 +393,7 @@ note = """DOC 100D satisfies UCSD's Diversity, Equity, and Inclusion \
   email docinfo@ucsd.edu with your PID# if you have questions. This course \
   will provide a broad overview of the histories of multiple communities and \
   explore the struggle for social justice in the United States. Topics include \
-  social movements, shifting ideas about "race" and gender, the rise of \
+  social movements, shifting ideas about \"race\" and gender, the rise of \
   corporate power, and the transformation of higher education."""
 
 [ECE]

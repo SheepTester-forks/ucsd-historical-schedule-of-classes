@@ -627,7 +627,7 @@ catalog = "/courses/BIOL.html#bibc102"
 title = "Biochemical Techniques"
 catalog = "/courses/BIOL.html#bibc103"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIBC 103. For information regarding lab enrollment and waitlist procedures, \
   please visit http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be at least 1 hour/week in \
@@ -662,7 +662,7 @@ catalog = "/courses/BIOL.html#bicd140"
 title = "Lab in Molecular Medicine"
 catalog = "/courses/BIOL.html#bicd145"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BICD 145. In addition to the formal lab hours listed below, there will be at \
   least 4 hours/week in which students will be required to work in the class \
   laboratory to complete experiments and prepare for presentations."""
@@ -718,7 +718,7 @@ catalog = "/courses/BIOL.html#bieb166"
 title = "Animal Communication Lab"
 catalog = "/courses/BIOL.html#bieb167"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIEB 167. In addition to the formal lab hours listed below, there will be at \
   least 9 hour/week in which students will be required to work in the class \
   laboratory to complete experiments and prepare for presentations."""
@@ -771,7 +771,7 @@ catalog = "/courses/BIOL.html#bimm100"
 title = "Recombinant DNA Techniques"
 catalog = "/courses/BIOL.html#bimm101"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIMM 101. For information regarding lab enrollment and waitlist procedures, \
   please visit http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be at least 1 hour/week in \
@@ -911,7 +911,7 @@ catalog = "/courses/BIOL.html#bipn102"
 title = "Animal Physiology Lab"
 catalog = "/courses/BIOL.html#bipn105"
 note = """Please see the note under the Biology heading regarding lab fees, \
-  wait lists, "W" policy, and attendance at the first scheduled meeting of \
+  wait lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIPN 105. For information regarding lab enrollment and waitlist procedures, \
   please visit http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be many hours in which \
@@ -2224,7 +2224,7 @@ note = """DOC 100D satisfies the Diversity, Equity, and Inclusion requirement \
   docinfo@ucsd.edu with your PID# if you have trouble enrolling. This course \
   will provide a broad overview of the histories of multiple communities and \
   explore the struggle for social justice in the United States. Topics include \
-  social movements, shifting ideas about "race" and gender, the rise of \
+  social movements, shifting ideas about \"race\" and gender, the rise of \
   corporate power, and the transformation of higher education."""
 
 [DOC.courses.500]
@@ -5992,11 +5992,11 @@ note = """No more than a total of 12 units for registered Music majors and no \
   taken with a P/NP grade option only. Please note: MUS 95G can ONLY be taken \
   for a P/NP grading option. . Auditions required for all performance \
   ensembles except 95C, 95G, and 95W. For audition information, go to the \
-  Music website: http://music.ucsd.edu/. Click on "Ensembles" on the left-hand \
-  side. Enrollment may take place only after a students passes an audition, \
-  and department approval is required. Students enrolled in the Music 95B \
-  performance ensembles will be charged a $15 lab fee which will be assessed \
-  with registration fees."""
+  Music website: http://music.ucsd.edu/. Click on \"Ensembles\" on the left-\
+  hand side. Enrollment may take place only after a students passes an \
+  audition, and department approval is required. Students enrolled in the \
+  Music 95B performance ensembles will be charged a $15 lab fee which will be \
+  assessed with registration fees."""
 
 [MUS.courses.95C]
 title = "Concert Choir"
@@ -6987,22 +6987,22 @@ catalog = "/courses/POLI.html#poli110eb"
 [POLI.courses.110EC]
 title = "Amer. Poli.Thought/Cont Debate"
 catalog = "/courses/POLI.html#poli110ec"
-note = """This course is sub-titled "U.S. Law and American Preferences: Choice \
-  and Formation" We will investigate various ways in which U.S. institutions \
-  influence the preferences of Americans and how changes in these institutions \
-  might alter people's preferences. We will consider how statutes change \
-  people's behavior, first as a direct reaction to the statute and any fines \
-  or punishments prescribed, and second as a permanent shift that could last \
-  even if penalties are removed. For example, some municipalities mandate the \
-  recycling of plastics. Do they work and how do these local ordinances change \
-  behavior and also preferences generally (e.g., do they change how people \
-  vote on environmental issues)? We will also look at how people vote on \
-  environmental issues)? We will also look at how institutions like the U.S. \
-  jury system and universities influence the preferences of Americans. Course \
-  assignments will include both theoretical material and empirical studies. \
-  Some authors students will read include Jon Elster (selections from Ulysses \
-  Unbound), Cass Sunstein (e.g., "Cost? - Benefit Analysis and the \
-  Environment"), Gneezy and Rustichini ("A Fine is a Price"), and de \
+note = """This course is sub-titled \"U.S. Law and American Preferences: \
+  Choice and Formation\" We will investigate various ways in which U.S. \
+  institutions influence the preferences of Americans and how changes in these \
+  institutions might alter people's preferences. We will consider how statutes \
+  change people's behavior, first as a direct reaction to the statute and any \
+  fines or punishments prescribed, and second as a permanent shift that could \
+  last even if penalties are removed. For example, some municipalities mandate \
+  the recycling of plastics. Do they work and how do these local ordinances \
+  change behavior and also preferences generally (e.g., do they change how \
+  people vote on environmental issues)? We will also look at how people vote \
+  on environmental issues)? We will also look at how institutions like the U.\
+  S. jury system and universities influence the preferences of Americans. \
+  Course assignments will include both theoretical material and empirical \
+  studies. Some authors students will read include Jon Elster (selections from \
+  Ulysses Unbound), Cass Sunstein (e.g., \"Cost? - Benefit Analysis and the \
+  Environment\"), Gneezy and Rustichini (\"A Fine is a Price\"), and de \
   Tocqueville (selections from Democracy in America)."""
 
 [POLI.courses.114B]

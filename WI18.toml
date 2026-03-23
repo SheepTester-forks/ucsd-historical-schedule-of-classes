@@ -2388,7 +2388,7 @@ note = """DOC 100D satisfies UCSD's Diversity, Equity, and Inclusion \
   Week 1. Please email docinfo@ucsd.edu with your PID# if you have questions. \
   This course will provide a broad overview of the histories of multiple \
   communities and explore the struggle for social justice in the United \
-  States. Topics include social movements, shifting ideas about "race" and \
+  States. Topics include social movements, shifting ideas about \"race\" and \
   gender, the rise of corporate power, and the transformation of higher \
   education."""
 
@@ -6587,11 +6587,11 @@ note = """No more than a total of 12 units for registered Music majors and no \
   taken with a P/NP grade option only. Please note: MUS 95G can ONLY be taken \
   for a P/NP grading option. . Auditions required for all performance \
   ensembles except 95C, 95G, and 95W. For audition information, go to the \
-  Music website: http://music.ucsd.edu/. Click on "Ensembles" on the left-hand \
-  side. Enrollment may take place only after a students passes an audition, \
-  and department approval is required. Students enrolled in the Music 95B \
-  performance ensembles will be charged a $15 lab fee which will be assessed \
-  with registration fees."""
+  Music website: http://music.ucsd.edu/. Click on \"Ensembles\" on the left-\
+  hand side. Enrollment may take place only after a students passes an \
+  audition, and department approval is required. Students enrolled in the \
+  Music 95B performance ensembles will be charged a $15 lab fee which will be \
+  assessed with registration fees."""
 
 [MUS.courses.95C]
 title = "Concert Choir"

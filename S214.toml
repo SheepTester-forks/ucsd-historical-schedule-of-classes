@@ -49,7 +49,7 @@ name = "Biology/Biochemistry"
 title = "Biochemical Techniques"
 catalog = "/courses/BIOL.html#bibc103"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIBC 103. For information regarding lab enrollment and waitlist procedures, \
   please visit http://biology.ucsd.edu/undergrad/Waitlist.html"""
 

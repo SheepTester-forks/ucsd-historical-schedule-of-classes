@@ -760,7 +760,7 @@ catalog = "/courses/BIOL.html#bimm114"
 title = "Laboratory in Microbiology"
 catalog = "/courses/BIOL.html#bimm114"
 note = """Please see the note under the Biology department heading regarding \
-  the lab fee, waitlist, "W" policy, and attendance at the first scheduled \
+  the lab fee, waitlist, \"W\" policy, and attendance at the first scheduled \
   meeting for BIMM 121. All students enrolled in BIMM 121, LA A00 AND LA B00, \
   must attend class Tuesday, January 9, 1996. Seniors who are pre-pharmacy and \
   pre-optometry students, please see either Dr. Brown or Dr. Brody by the end \
@@ -922,7 +922,7 @@ catalog = "/courses/CHEM.html#chem12"
 title = "Molecular Biochemistry Lab"
 catalog = "/courses/CHEM.html#chem12"
 note = """For CHEM 112A, see also the notes at the beginning of Chemistry and \
-  Biochemistry course listings regarding the "W" policy, attendance at the \
+  Biochemistry course listings regarding the \"W\" policy, attendance at the \
   first lab section, and the fees for all laboratory courses."""
 
 [CHEM.courses.114B]

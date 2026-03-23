@@ -31,7 +31,7 @@ catalog = "/courses/BIOL.html#bibc102"
 title = "Biochemical Techniques"
 catalog = "/courses/BIOL.html#bibc103"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIBC 103. In addition to the formal lab hours listed below, there will be at \
   least 1 hour/ week in which students will be required to work in the class \
   laboratory to complete experiments and prepare for presentations."""

@@ -81,7 +81,7 @@ name = "Biology/Biochemistry"
 title = "Biochemical Techniques"
 catalog = "/courses/BIOL.html#bibc103"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIBC 103. For information regarding lab enrollment and waitlist procedures, \
   please visit http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be at least 1 hour/week in \
@@ -129,7 +129,7 @@ catalog = "/courses/BIOL.html#bimm100"
 title = "Recombinant DNA Techniques"
 catalog = "/courses/BIOL.html#bimm101"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIMM 101. For information regarding lab enrollment and waitlist procedures, \
   please visit http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be at least 1 hour/week in \
@@ -140,7 +140,7 @@ note = """Please see note under the Biology heading regarding lab fees, wait \
 title = "Laboratory in Microbiology"
 catalog = "/courses/BIOL.html#bimm121"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIMM 121. For information regarding lab enrollment and waitlist procedures, \
   please visit http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be at least 1 hour/week in \
@@ -409,7 +409,7 @@ title = "Promises&Contradictions/USCult"
 catalog = "/courses/DOC.html#doc100d"
 note = """Juniors and Seniors from all six colleges may take this course. If \
   you get an error message when you try to enroll, please email docinfo@ucsd.\
-  edu with your PID#. "DOC 100D: Key Issues in U.S. Culture and History" is \
+  edu with your PID#. \"DOC 100D: Key Issues in U.S. Culture and History\" is \
   designed to provide a broad overview of key historical contradictions in the \
   history of the United States and to explore the origins of social \
   stratifications and the social movements that attempted to overcome them. \
@@ -418,7 +418,7 @@ note = """Juniors and Seniors from all six colleges may take this course. If \
   rights, and the rise of corporate power. By grounding lectures and \
   discussions in the historical development of collective identities, the \
   course introduces concepts related to the intersections of categoires such \
-  as class, gender, religion, "race," and sexuality. Students will learn to \
+  as class, gender, religion, \"race,\" and sexuality. Students will learn to \
   analyze and discuss complex historical artifacts that range from theoretical \
   essays on racialization to autobiography to video and film./"""
 

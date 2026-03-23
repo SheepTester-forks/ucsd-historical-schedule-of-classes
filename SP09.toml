@@ -611,7 +611,7 @@ catalog = "/courses/BIOL.html#bibc102"
 title = "Biochemical Techniques"
 catalog = "/courses/BIOL.html#bibc103"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIBC 103. In addition to the formal lab hours listed below, there will be at \
   least 1 hour/ week in which students will be required to work in the class \
   laboratory to complete experiments and prepare for presentations."""
@@ -635,7 +635,7 @@ catalog = "/courses/BIOL.html#bicd100"
 title = "Eucaryotic Genetics Laboratory"
 catalog = "/courses/BIOL.html#bicd101"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BICD 101. In addition to the formal lab hours listed below, there will be at \
   least 4 hours/week in which students will be required to work in the class \
   laboratory to complete experiments and prepare for presentations."""
@@ -648,7 +648,7 @@ catalog = "/courses/BIOL.html#bicd110"
 title = "Plant Mol Genetics&Biotech Lab"
 catalog = "/courses/BIOL.html#bicd123"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BICD 123. In addition to the formal lab hours listed below, there will be at \
   least 4 hour/week in which students will be required to work in the class \
   laboratory to complete experiments and prepare for presentations."""
@@ -664,7 +664,7 @@ name = "Biol/Ecology, Behavior, & Evol"
 title = "Ecology Laboratory"
 catalog = "/courses/BIOL.html#bieb121"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIEB 121. In addition to the formal lab hours listed below, there will be at \
   least 4 hours/week in which students will be required to work in the class \
   laboratory to complete experiments and prepare for presentations."""
@@ -739,7 +739,7 @@ catalog = "/courses/BIOL.html#bimm100"
 title = "Recombinant DNA Techniques"
 catalog = "/courses/BIOL.html#bimm101"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIMM 101. In addition to the formal lab hours listed below, there will be at \
   least 2 hours/week in which students will be required to work in the class \
   laboratory to complete experiments and prepare for presentations."""
@@ -768,7 +768,7 @@ catalog = "/courses/BIOL.html#bimm126"
 title = "Marine Microbiology Lab"
 catalog = "/courses/BIOL.html#bimm127"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIMM 127. In addition to the formal lab hours listed below, there will be at \
   least 4 hours/week in which students will be required to work in the class \
   laboratory to complete experiments and prepare for presentations."""
@@ -788,7 +788,7 @@ catalog = "/courses/BIOL.html#bimm181"
 title = "Bioinformatics Lab (Advanced)"
 catalog = "/courses/BIOL.html#bimm185"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIMM 185. In addition to the formal lab hours listed below, there will be a \
   least 4 hours/week in which students will be required to work in the class \
   laboratory to complete experiments and prepare for presentations."""
@@ -891,7 +891,7 @@ catalog = "/courses/BIOL.html#bipn102"
 title = "Animal Physiology Lab"
 catalog = "/courses/BIOL.html#bipn105"
 note = """Please see the note under the Biology heading regarding lab fees, \
-  wait lists, "W" policy, and attendance at the first scheduled meeting of \
+  wait lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIPN 105. In addition to the formal lab hours listed below, there will be at \
   least 5 hours/week in which students will be required to work in the class \
   laboratory to complete experiments and prepare for presentations. It is \
@@ -5789,11 +5789,11 @@ note = """No more than a total of 12 units for registered Music majors and no \
   taken with a P/NP grade option only. Please note: MUS 95G can ONLY be taken \
   for a P/NP grading option. . Auditions required for all performance \
   ensembles except 95C, 95G, and 95W. For audition information, go to the \
-  Music website: http://music.ucsd.edu/. Click on "Ensembles" on the left-hand \
-  side. Enrollment may take place only after a students passes an audition, \
-  and department approval is required. Students enrolled in the Music 95B \
-  performance ensembles will be charged a $15 lab fee which will be assessed \
-  with registration fees."""
+  Music website: http://music.ucsd.edu/. Click on \"Ensembles\" on the left-\
+  hand side. Enrollment may take place only after a students passes an \
+  audition, and department approval is required. Students enrolled in the \
+  Music 95B performance ensembles will be charged a $15 lab fee which will be \
+  assessed with registration fees."""
 
 [MUS.courses.95C]
 title = "Concert Choir"

@@ -543,7 +543,7 @@ catalog = "/courses/BIOL.html#bibc102"
 title = "Biochemical Techniques"
 catalog = "/courses/BIOL.html#bibc103"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIBC 103. In addition to the formal lab hours listed below, there will be at \
   least 1 hour/week in which students will be required to work in the class \
   laboratory to complete experiments and prepare for presentations."""
@@ -678,7 +678,7 @@ catalog = "/courses/BIOL.html#bimm100"
 title = "Recombinant DNA Techniques"
 catalog = "/courses/BIOL.html#bimm101"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIMM 101. In addition to the formal lab hours listed below, there will be at \
   least 2 hours/week in which students will be required to work in the class \
   laboratory to complete experiments and prepare for presentations. BIMM 101 \
@@ -700,7 +700,7 @@ catalog = "/courses/BIOL.html#bimm114"
 title = "Laboratory in Microbiology"
 catalog = "/courses/BIOL.html#bimm121"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIMM 121. Seniors who are pre-pharmacy and pre-optometry students, please \
   see with Dr. Brown or Dr. Brody by the end of the Fall quarter. In addition \
   to the formal lab hours listed below, there will be at least 4 hours/week in \
@@ -807,10 +807,10 @@ catalog = "/courses/BIOL.html#bipn102"
 title = "Animal Physiology Lab"
 catalog = "/courses/BIOL.html#bipn105"
 note = """Please see the note under the Biology heading regarding attendance \
-  at the first scheduled meeting, lab fees, wait lists, and the "W" policy for \
-  BIPN 105. In addition to the formal lab hours listed below, there will be at \
-  least 6 hours/week in which students will be required to work in the class \
-  laboratory to complete experiments and prepare for presentations."""
+  at the first scheduled meeting, lab fees, wait lists, and the \"W\" policy \
+  for BIPN 105. In addition to the formal lab hours listed below, there will \
+  be at least 6 hours/week in which students will be required to work in the \
+  class laboratory to complete experiments and prepare for presentations."""
 
 [BIPN.courses.142]
 title = "Systems Neurobiology"
@@ -969,7 +969,7 @@ note = """In addition to the formal lab hours listed below, there will also be \
 [CHEM.courses.112B]
 title = "Molecular Biochemistry Lab"
 catalog = "/courses/CHEM.html#chem112b"
-note = """See IMPORTANT add/drops, "W" grade, lab fee, and mandatory safety \
+note = """See IMPORTANT add/drops, \"W\" grade, lab fee, and mandatory safety \
   training at start of Chem course listings. In addition to the formal hours \
   listed, an additional two to three hours each week may be required to \
   complete the experiments. It is recommended that students not schedule a \

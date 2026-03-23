@@ -2223,11 +2223,11 @@ title = "Diversity"
 catalog = "/courses/DOC.html#doc1"
 note = """DOC 1 lectures begin Friday, September 29. DOC 1 discussion sections \
   will meet for the first time on Wednesday, October 4, or Thursday, \
-  October 5. (There are no "Week Zero" DOC 1 discussion sections.) Attendance \
-  is mandatory. Adding and dropping DOC sections may be done via WebReg \
-  through Friday of Week One. Adding this class Week Two or later is not \
-  allowed Students may not be enrolled in DOC 1 concurrently with ELWR 2A-2B (\
-  Analytical Writing and Academic English)."""
+  October 5. (There are no \"Week Zero\" DOC 1 discussion sections.) \
+  Attendance is mandatory. Adding and dropping DOC sections may be done via \
+  WebReg through Friday of Week One. Adding this class Week Two or later is \
+  not allowed Students may not be enrolled in DOC 1 concurrently with \
+  ELWR 2A-2B (Analytical Writing and Academic English)."""
 
 [DOC.courses.100D]
 title = "Promises&Contradictions/USCult"
@@ -2240,7 +2240,7 @@ note = """DOC 100D satisfies UCSD's Diversity, Equity, and Inclusion \
   Week 1. Please email docinfo@ucsd.edu with your PID# if you have questions. \
   This course will provide a broad overview of the histories of multiple \
   communities and explore the struggle for social justice in the United \
-  States. Topics include social movements, shifting ideas about "race" and \
+  States. Topics include social movements, shifting ideas about \"race\" and \
   gender, the rise of corporate power, and the transformation of higher \
   education."""
 
@@ -3602,7 +3602,7 @@ catalog = "/courses/GPS.html#gppa472"
 name = "GPS/Political Science"
 
 [GPPS.courses.401]
-title = "The New "New" Civil Wars"
+title = "The New \"New\" Civil Wars"
 catalog = "/courses/GPS.html#gpps401"
 
 [GPPS.courses.403]

@@ -599,7 +599,7 @@ catalog = "/courses/BIOL.html#bibc102"
 title = "Biochemical Techniques"
 catalog = "/courses/BIOL.html#bibc103"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIBC 103. For information regarding lab enrollment and waitlist procedures, \
   please visit http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be at least 1 hour/week in \
@@ -629,7 +629,7 @@ catalog = "/courses/BIOL.html#bicd110"
 title = "Plant Mol Genetics&Biotech Lab"
 catalog = "/courses/BIOL.html#bicd123"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BICD 123. For information regarding lab enrollment and waitlist procedures, \
   please visit: http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be at least 4 hour/week in \
@@ -651,7 +651,7 @@ name = "Biol/Ecology, Behavior, & Evol"
 title = "Ecology Laboratory"
 catalog = "/courses/BIOL.html#bieb121"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIEB 121. For information regarding lab enrollment and waitlist procedures \
   please visit: http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be at least 4 hours/week in \
@@ -666,7 +666,7 @@ catalog = "/courses/BIOL.html#bieb140"
 title = "Comp Modeling in Evol/Ecol"
 catalog = "/courses/BIOL.html#bieb143"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIEB 143. For information regarding lab enrollment and waitlist procedures, \
   please visit: http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be at least 4 hours/week in \
@@ -732,7 +732,7 @@ catalog = "/courses/BIOL.html#bimm100"
 title = "Recombinant DNA Techniques"
 catalog = "/courses/BIOL.html#bimm101"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIMM 101. For information regarding lab enrollment and waitlist procedures, \
   please visit http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be at least 1 hour/week in \
@@ -755,7 +755,7 @@ catalog = "/courses/BIOL.html#bimm120"
 title = "Laboratory in Microbiology"
 catalog = "/courses/BIOL.html#bimm121"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIMM 121. For information regarding lab enrollment and waitlist please \
   visit: http://biology.ucsd.edu/undergrad/Waitlist.html In addition to the \
   formal lab hours listed below, there will be at least 1 hour/week in which \
@@ -774,7 +774,7 @@ catalog = "/courses/BIOL.html#bimm171b"
 title = "Bioinformatics Lab (Advanced)"
 catalog = "/courses/BIOL.html#bimm185"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIMM 185. For information regarding lab enrollment and waitlist procedures, \
   please visit: http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be at least 4 hours/week in \
@@ -912,7 +912,7 @@ catalog = "/courses/BIOL.html#bipn102"
 title = "Animal Physiology Lab"
 catalog = "/courses/BIOL.html#bipn105"
 note = """Please see the note under the Biology heading regarding lab fees, \
-  wait lists, "W" policy, and attendance at the first scheduled meeting of \
+  wait lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIPN 105. For information regarding lab enrollment and waitlist procedures, \
   please visit http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be many hours in which \
@@ -982,9 +982,9 @@ note = """All adds/drops can be made by using WebReg. All waitlists are \
 title = "Experience Art! Seminar Series"
 catalog = "/courses/CAT.html#cat75"
 note = """Successful completion of this seminar series satisfies 1 of the 8 \
-  Sixth College GE requirements for "Art Making". Please see http://sixth.ucsd.\
-  edu/cat/courses/special-courses/cat-7 5/index.html for more information and \
-  specific meeting times and locations."""
+  Sixth College GE requirements for \"Art Making\". Please see http://sixth.\
+  ucsd.edu/cat/courses/special-courses/cat-7 5/index.html for more information \
+  and specific meeting times and locations."""
 
 [CAT.courses.124]
 title = "Sixth College Practicum"
@@ -2162,7 +2162,7 @@ note = """DOC 100D satisfies UCSD's Diversity, Equity, and Inclusion \
   ucsd.edu with your PID# if you have trouble enrolling. This course will \
   provide a broad overview of the histories of multiple communities and \
   explore the struggle for social justice in the United States. Topics include \
-  social movements, shifting ideas about "race" and gender, the rise of \
+  social movements, shifting ideas about \"race\" and gender, the rise of \
   corporate power, and the transformation of higher education."""
 
 [DOC.courses.500]
@@ -6046,11 +6046,11 @@ note = """No more than a total of 12 units for registered Music majors and no \
   taken with a P/NP grade option only. Please note: MUS 95G can ONLY be taken \
   for a P/NP grading option. . Auditions required for all performance \
   ensembles except 95C, 95G, and 95W. For audition information, go to the \
-  Music website: http://music.ucsd.edu/. Click on "Ensembles" on the left-hand \
-  side. Enrollment may take place only after a students passes an audition, \
-  and department approval is required. Students enrolled in the Music 95B \
-  performance ensembles will be charged a $15 lab fee which will be assessed \
-  with registration fees."""
+  Music website: http://music.ucsd.edu/. Click on \"Ensembles\" on the left-\
+  hand side. Enrollment may take place only after a students passes an \
+  audition, and department approval is required. Students enrolled in the \
+  Music 95B performance ensembles will be charged a $15 lab fee which will be \
+  assessed with registration fees."""
 
 [MUS.courses.95C]
 title = "Concert Choir"
@@ -8978,9 +8978,9 @@ catalog = "/courses/VIS.html#vis100"
 note = """A brief survey on the institutionalizations of Public Art and \
   subsequent reactionary development of community, environmental and political \
   practices. Anatomy of Public Space, its on-going privatization, including \
-  its "wallifications" and "mallifications" through the concept of "defensible \
-  space." Branding of global cities, through international events like \
-  Olympics, World Cups, World Fairs and Art Biennales, and 'signature' \
+  its \"wallifications\" and \"mallifications\" through the concept of \"\
+  defensible space.\" Branding of global cities, through international events \
+  like Olympics, World Cups, World Fairs and Art Biennales, and 'signature' \
   architectural monuments. Information visualizations of communication, \
   transportation and other forms of movements across territories, including \
   materials, products and populations. Examination of critical geography, such \

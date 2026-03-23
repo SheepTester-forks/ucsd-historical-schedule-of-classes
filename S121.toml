@@ -1254,7 +1254,7 @@ name = "Muir College Writing Program"
 title = "Critical Writing"
 catalog = "/courses/MCWP.html#mcwp40"
 note = """Submit any questions about enrollment preauthorization to the \
-  Virtual Advising Center (vac.ucsd.edu), choosing "Muir Writing" as the \
+  Virtual Advising Center (vac.ucsd.edu), choosing \"Muir Writing\" as the \
   reason for your question."""
 
 [MCWP.courses.125]

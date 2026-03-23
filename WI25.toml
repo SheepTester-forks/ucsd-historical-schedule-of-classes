@@ -1251,7 +1251,7 @@ title = "Research Persp/Climate Change"
 catalog = "/courses/CCS.html#ccs102"
 
 [CCS.courses.123]
-title = "Policy\Politics Climate Change"
+title = "Policy\\Politics Climate Change"
 catalog = "/courses/CCS.html#ccs123"
 
 [CCS.courses.197]
@@ -4318,7 +4318,7 @@ catalog = "/courses/GPS.html#gppa463"
 name = "GPS/Political Science"
 
 [GPPS.courses.401]
-title = "The New "New" Civil Wars"
+title = "The New \"New\" Civil Wars"
 catalog = "/courses/GPS.html#gpps401"
 
 [GPPS.courses.407]
@@ -6443,7 +6443,7 @@ name = "Muir College Writing Program"
 title = "Critical Writing"
 catalog = "/courses/MCWP.html#mcwp40"
 note = """Submit any questions about enrollment preauthorization to the \
-  Virtual Advising Center (vac.ucsd.edu), choosing "Muir Writing" as the \
+  Virtual Advising Center (vac.ucsd.edu), choosing \"Muir Writing\" as the \
   reason for your question."""
 
 [MCWP.courses.50]

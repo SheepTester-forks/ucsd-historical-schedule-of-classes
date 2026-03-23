@@ -2328,7 +2328,7 @@ title = "Diversity"
 catalog = "/courses/DOC.html#doc1"
 note = """DOC 1 lectures begin Friday, September 27. DOC 1 discussion sections \
   will meet for the first time on Wednesday, October 2, or Friday, October 4. (\
-  There are no "Week Zero" DOC 1 discussion sections.) Attendance is \
+  There are no \"Week Zero\" DOC 1 discussion sections.) Attendance is \
   mandatory. Adding and dropping DOC sections may be done via WebReg through \
   Friday of Week One. Adding this class Week Two or later is not allowed. \
   Students may not be enrolled in DOC 1 concurrently with AWP 2A-2B (\
@@ -2345,7 +2345,7 @@ note = """DOC 100D satisfies UCSD's Diversity, Equity, and Inclusion \
   Week 1. Please email docinfo@ucsd.edu with your PID# if you have questions. \
   This course will provide a broad overview of the histories of multiple \
   communities and explore the struggle for social justice in the United \
-  States. Topics include social movements, shifting ideas about "race" and \
+  States. Topics include social movements, shifting ideas about \"race\" and \
   gender, the rise of corporate power, and the transformation of higher \
   education."""
 
@@ -6250,8 +6250,8 @@ catalog = "/courses/MCWP.html#mcwp40"
 note = """PLEASE NOTE: In Fall Quarter, the majority of seats are held for \
   incoming freshman and transfer students. Additional seats will not be added \
   for continuing students. Submit any questions about enrollment \
-  preauthorization to the Virtual Advising Center (vac.ucsd.edu), choosing "\
-  Muir Writing" as the reason for your question"""
+  preauthorization to the Virtual Advising Center (vac.ucsd.edu), choosing \"\
+  Muir Writing\" as the reason for your question"""
 
 [MCWP.courses.50]
 title = "Critical Writing"

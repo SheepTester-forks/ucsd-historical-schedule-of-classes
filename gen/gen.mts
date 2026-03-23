@@ -44,7 +44,7 @@ const tomlSingleLineString = (key: string, value: string) => {
     .map((match) => match.index)) {
     const textToAdd = value
       .slice(lastIndex, wrapPoint)
-      .replace(/"\\/g, (m) => "\\" + m);
+      .replace(/["\\]/g, (m) => "\\" + m);
     if (textToAdd === "") {
       continue;
     }
@@ -56,7 +56,7 @@ const tomlSingleLineString = (key: string, value: string) => {
     lastIndex = wrapPoint;
   }
   {
-    const textToAdd = value.slice(lastIndex).replace(/"\\/g, (m) => "\\" + m);
+    const textToAdd = value.slice(lastIndex).replace(/["\\]/g, (m) => "\\" + m);
     if (textToAdd !== "") {
       // -3 for """
       if ((lines.at(-1) + textToAdd).length > MAX_LENGTH - 3) {

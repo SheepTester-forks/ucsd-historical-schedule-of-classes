@@ -545,7 +545,7 @@ catalog = "/courses/BIOL.html#bibc102"
 title = "Biochemical Techniques"
 catalog = "/courses/BIOL.html#bibc103"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIBC 103. For information regarding lab enrollment and waitlist procedures, \
   please visit: http://biology.ucsd.edu/education/undergrad/course/ waitlist.\
   html"""
@@ -579,7 +579,7 @@ catalog = "/courses/BIOL.html#bicd136"
 title = "Lab in Molecular Medicine"
 catalog = "/courses/BIOL.html#bicd145"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BICD 145."""
 
 [BICD.courses.194]
@@ -603,7 +603,7 @@ catalog = "/courses/BIOL.html#bieb102"
 title = "Ecology Laboratory"
 catalog = "/courses/BIOL.html#bieb121"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIEB 121. For information regarding lab enrollment and waitlist procedures \
   please visit: http://biology.ucsd.edu/education/undergrad/course/ waitlist.\
   html"""
@@ -659,7 +659,7 @@ catalog = "/courses/BIOL.html#bimm100"
 title = "Recombinant DNA Techniques"
 catalog = "/courses/BIOL.html#bimm101"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIMM 101. For information regarding lab enrollment and waitlist procedures, \
   please visit: http://biology.ucsd.edu/education/undergrad/course/ waitlist.\
   html"""
@@ -676,7 +676,7 @@ catalog = "/courses/BIOL.html#bimm116"
 title = "Laboratory in Microbiology"
 catalog = "/courses/BIOL.html#bimm121"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIMM 121. For information regarding lab enrollment and waitlist please \
   visit: http://biology/ucsd.edu/education/undergrad/course/ waitlist.html"""
 
@@ -779,7 +779,7 @@ catalog = "/courses/BIOL.html#bipn102"
 title = "Animal Physiology Lab"
 catalog = "/courses/BIOL.html#bipn105"
 note = """Please see the note under the Biology heading regarding lab fees, \
-  wait lists, "W" policy, and attendance at the first scheduled meeting of \
+  wait lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIPN 105. For information regarding lab enrollment and waitlist procedures, \
   please visit: http://biology.ucsd.edu/education/undergrad/course waitlist.\
   html"""
@@ -1992,9 +1992,9 @@ name = "Dimensions of Culture"
 [DOC.courses.1]
 title = "Diversity"
 catalog = "/courses/DOC.html#doc1"
-note = """DOC 1 lectures (meeting type "LE" below) begin Friday, October 3. \
-  DOC 1 discussion sections (meeting type "DI") will meet for the first time \
-  on Wednesday, October 8, or Thursday, October 9. There are no "Week Zero" \
+note = """DOC 1 lectures (meeting type \"LE\" below) begin Friday, October 3. \
+  DOC 1 discussion sections (meeting type \"DI\") will meet for the first time \
+  on Wednesday, October 8, or Thursday, October 9. There are no \"Week Zero\" \
   DOC 1 sections. Adding and dropping DOC sections may be done via WebReg \
   through 4:00 p.m., Friday, October 10. After that, students must get DOC \
   office approval to make any changes in their DOC enrollment (email docinfo@\
@@ -2012,7 +2012,7 @@ note = """DOC 100D satisfies UCSD's Diversity, Equity, and Inclusion \
   email docinfo@ucsd.edu with your PID# if you have questions. This course \
   will provide a broad overview of the histories of multiple communities and \
   explore the struggle for social justice in the United States. Topics include \
-  social movements, shifting ideas about "race" and gender, the rise of \
+  social movements, shifting ideas about \"race\" and gender, the rise of \
   corporate power, and the transformation of higher education."""
 
 [DOC.courses.500]

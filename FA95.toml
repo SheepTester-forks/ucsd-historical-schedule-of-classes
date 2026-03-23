@@ -632,7 +632,7 @@ catalog = "/courses/BIOL.html#bibc102"
 title = "Biochemical Techniques"
 catalog = "/courses/BIOL.html#bibc102"
 note = """Please see note under the Biology heading regarding lab fees, \
-  waitlists, "W" policy, and attendance at the first scheduled meeting of \
+  waitlists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIBC 103."""
 
 [BIBC.courses.115]
@@ -691,10 +691,10 @@ catalog = "/courses/BIOL.html#bieb100"
 [BIEB.courses.121]
 title = "Ecology Laboratory"
 note = """Please see note under Biology Department Heading regarding the lab \
-  fee, waitlist, "W" policy, and attendance at the first scheduled meeting of \
-  BIEB 121. In addition to the formal lab hours listed below there will be an \
-  average of nine hours/week in which students will be required to work in the \
-  class laboratory to complete experiments and prepare presentations."""
+  fee, waitlist, \"W\" policy, and attendance at the first scheduled meeting \
+  of BIEB 121. In addition to the formal lab hours listed below there will be \
+  an average of nine hours/week in which students will be required to work in \
+  the class laboratory to complete experiments and prepare presentations."""
 
 [BIEB.courses.130]
 title = "Introductory Marine Ecology"

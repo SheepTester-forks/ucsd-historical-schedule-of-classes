@@ -2390,8 +2390,8 @@ name = "Dimensions of Culture"
 title = "Diversity"
 catalog = "/courses/DOC.html#doc1"
 note = """DOC 1 lectures begin Friday of Week Zero. DOC 1 discussion sections \
-  will meet for the first time on Wednesday of Week One. (There are no "Week \
-  Zero" DOC 1 discussion sections.) Attendance is mandatory. Adding and \
+  will meet for the first time on Wednesday of Week One. (There are no \"Week \
+  Zero\" DOC 1 discussion sections.) Attendance is mandatory. Adding and \
   dropping DOC sections may be done via WebReg through Friday of Week One. \
   Adding this class Week Two or later is not allowed. Prerequisite: \
   satisfaction of the Entry Level Writing Requirement OR concurrent enrollment \
@@ -5746,7 +5746,7 @@ note = """Effective Fall 2016, Math 20F has been renumbered as Math 18. \
   remote oral assessments during either the discussion section time on \
   Thursdays or the corresponding lab time on Tuesdays. Please only enroll in a \
   section time you can attend (either virtually or in person). All lectures \
-  will have common exams.""""
+  will have common exams.\""""
 
 [MATH.courses.20A]
 title = "Calculus/Science & Engineering"
@@ -6155,7 +6155,7 @@ name = "Muir College Writing Program"
 title = "Critical Writing"
 catalog = "/courses/MCWP.html#mcwp40"
 note = """Submit any questions about enrollment preauthorization to the \
-  Virtual Advising Center (vac.ucsd.edu), choosing "Muir Writing" as the \
+  Virtual Advising Center (vac.ucsd.edu), choosing \"Muir Writing\" as the \
   reason for your question."""
 
 [MCWP.courses.50]

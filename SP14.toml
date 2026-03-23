@@ -516,7 +516,7 @@ catalog = "/courses/BIOL.html#bibc102"
 title = "Biochemical Techniques"
 catalog = "/courses/BIOL.html#bibc103"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIBC 103. For information regarding lab enrollment and waitlist procedures, \
   please visit: http://biology.ucsd.edu/education/undergrad/course/ waitlist.\
   html"""
@@ -551,7 +551,7 @@ catalog = "/courses/BIOL.html#bicd110"
 title = "Plant Mol Genetics&Biotech Lab"
 catalog = "/courses/BIOL.html#bicd123"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BICD 123. For information regarding lab enrollment and waitlist procedures, \
   please visit: http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be at least 4 hour/week in \
@@ -579,7 +579,7 @@ name = "Biol/Ecology, Behavior, & Evol"
 title = "Ecology Laboratory"
 catalog = "/courses/BIOL.html#bieb121"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIEB 121. For information regarding lab enrollment and waitlist procedures \
   please visit: http://biology.ucsd.edu/education/undergrad/course/ waitlist.\
   html"""
@@ -592,7 +592,7 @@ catalog = "/courses/BIOL.html#bieb140"
 title = "Comp Modeling in Evol/Ecol"
 catalog = "/courses/BIOL.html#bieb143"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIEB 143. For information regarding lab enrollment and waitlist procedures, \
   please visit: http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be at least 4 hours/week in \
@@ -665,7 +665,7 @@ catalog = "/courses/BIOL.html#bimm100"
 title = "Recombinant DNA Techniques"
 catalog = "/courses/BIOL.html#bimm101"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIMM 101. For information regarding lab enrollment and waitlist procedures, \
   please visit: http://biology.ucsd.edu/education/undergrad/course/ waitlist.\
   html"""
@@ -678,7 +678,7 @@ catalog = "/courses/BIOL.html#bimm110"
 title = "Laboratory in Microbiology"
 catalog = "/courses/BIOL.html#bimm121"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIMM 121. For information regarding lab enrollment and waitlist please \
   visit: http://biology/ucsd.edu/education/undergrad/course/ waitlist.html"""
 
@@ -702,7 +702,7 @@ catalog = "/courses/BIOL.html#bimm184"
 title = "Bioinformatics Lab (Advanced)"
 catalog = "/courses/BIOL.html#bimm185"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIMM 185. For information regarding lab enrollment and waitlist procedures, \
   please visit: http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
   the formal lab hours listed below, there will be at least 4 hours/week in \
@@ -844,7 +844,7 @@ catalog = "/courses/BIOL.html#bipn102"
 title = "Animal Physiology Lab"
 catalog = "/courses/BIOL.html#bipn105"
 note = """Please see the note under the Biology heading regarding lab fees, \
-  wait lists, "W" policy, and attendance at the first scheduled meeting of \
+  wait lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIPN 105. For information regarding lab enrollment and waitlist procedures, \
   please visit: http://biology.ucsd.edu/education/undergrad/course waitlist.\
   html"""
@@ -2166,7 +2166,7 @@ note = """DOC 100D satisfies UCSD's Diversity, Equity, and Inclusion \
   ucsd.edu with your PID# if you have trouble enrolling. This course will \
   provide a broad overview of the histories of multiple communities and \
   explore the struggle for social justice in the United States. Topics include \
-  social movements, shifting ideas about "race" and gender, the rise of \
+  social movements, shifting ideas about \"race\" and gender, the rise of \
   corporate power, and the transformation of higher education."""
 
 [DOC.courses.500]

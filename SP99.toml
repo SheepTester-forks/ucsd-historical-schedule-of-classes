@@ -650,7 +650,7 @@ catalog = "/courses/BIOL.html#bibc102"
 title = "Biochemical Techniques"
 catalog = "/courses/BIOL.html#bibc102"
 note = """Please see note under the Biology heading regarding lab fees, wait \
-  lists, "W" policy, and attendance at the first scheduled meeting of \
+  lists, \"W\" policy, and attendance at the first scheduled meeting of \
   BIBC 103. In addition to the formal lab hours listed below, there will be at \
   least 8 hours/week in which students will be required to work in the class \
   laboratory to complete experiments and prepare for presentations."""
@@ -708,10 +708,10 @@ name = "Biol/Ecology, Behavior, & Evol"
 title = "Ecology Laboratory"
 catalog = "/courses/BIOL.html#bicd180"
 note = """Please see note under Biology Department Heading regarding the lab \
-  fee, waitlist, "W" policy, and attendance at the first scheduled meeting of \
-  BIEB 121. In addition to the formal lab hours listed below there will be an \
-  average of nine hours/week in which students will be required to work in the \
-  class laboratory to complete experiments and prepare presentations."""
+  fee, waitlist, \"W\" policy, and attendance at the first scheduled meeting \
+  of BIEB 121. In addition to the formal lab hours listed below there will be \
+  an average of nine hours/week in which students will be required to work in \
+  the class laboratory to complete experiments and prepare presentations."""
 
 [BIEB.courses.140]
 title = "Biodiversity"
@@ -800,7 +800,7 @@ catalog = "/courses/BIOL.html#bimm100"
 title = "Recombinant DNA Techniques"
 catalog = "/courses/BIOL.html#bimm100"
 note = """Please see the note under the Biology heading regarding the lab fee, \
-  wait list, "W" policy, and attendance at the first scheduled meeting for \
+  wait list, \"W\" policy, and attendance at the first scheduled meeting for \
   BIMM 101."""
 
 [BIMM.courses.112]
@@ -918,10 +918,10 @@ catalog = "/courses/BIOL.html#bipn102"
 title = "Animal Physiology Lab"
 catalog = "/courses/BIOL.html#bipn102"
 note = """Please see the note under the Biology heading regarding attendance \
-  at the first scheduled meeting, lab fees, wait lists, and the "W" policy for \
-  BIPN 105. In addition to the formal lab hours listed below, there will be at \
-  least 8 hours/week in which students will be required to work in the class \
-  laboratory to complete experiments and prepare for presentations."""
+  at the first scheduled meeting, lab fees, wait lists, and the \"W\" policy \
+  for BIPN 105. In addition to the formal lab hours listed below, there will \
+  be at least 8 hours/week in which students will be required to work in the \
+  class laboratory to complete experiments and prepare for presentations."""
 
 [BIPN.courses.144]
 title = "Developmental Neurobiology"
@@ -997,7 +997,7 @@ note = """Students who have not completed CHEM 6CL, or an equivalent course, \
 title = "Physical Chemistry Laboratory"
 catalog = "/courses/CHEM.html#chem92"
 note = """See also the notes at the beginning of Chemistry and Biochemistry \
-  course listings regarding the "W" policy and fees for all laboratory \
+  course listings regarding the \"W\" policy and fees for all laboratory \
   courses. To add CHEM 105B after priority enrollment, students must first \
   obtain instructor approval, and then a department stamp from YORK 3150. This \
   course WILL NOT RE-OPEN FOR TeSS or WebReg enrollment. In addition to the \
