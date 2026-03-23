@@ -1,0 +1,771 @@
+[ANES]
+name = "Anesthesiology"
+
+[ANES.courses.296]
+title = "Independent Study"
+
+[ANES.courses.299]
+title = "Anes/Independent Study Project"
+
+[ANES.courses.401]
+title = "Anesthesiology Clerkship"
+
+[ANES.courses.402]
+title = "Pain Med Eval & Intervntnl Clk"
+
+[ANES.courses.403]
+title = "Critical Care Medicine Clerksp"
+
+[ANES.courses.410]
+title = "Introduction to Anesthesiology"
+
+[ANES.courses.496]
+title = "Clinical Independent Study"
+
+[DERM]
+name = "Dermatology"
+
+[DERM.courses.296]
+title = "Independent Study"
+
+[DERM.courses.299]
+title = "Independent Study Project"
+
+[DERM.courses.428]
+title = "Clinical Dermatology"
+
+[DERM.courses.436]
+title = "Pediatric Dermatology"
+
+[DERM.courses.496]
+title = "Clinical Independent Study"
+
+[EMED]
+name = "Emergency Medicine"
+
+[EMED.courses.296]
+title = "Independent Reseach"
+
+[EMED.courses.299]
+title = "Independent Study Project"
+
+[EMED.courses.411]
+title = "Clinical Emergency Medicine"
+
+[EMED.courses.420]
+title = "Subinternship in Emergengy Med"
+
+[EMED.courses.423]
+title = "Elective in Medical Toxicology"
+
+[EMED.courses.425]
+title = "Point-of-Care Ultrasound"
+
+[EMED.courses.427]
+title = "Wilderness Medicine Elective"
+
+[EMED.courses.473]
+title = "Subint: Diving/Hyperbaric Med"
+
+[EMED.courses.496]
+title = "Clinical Independent Study"
+
+[FPM]
+name = "Family and Preventive Medicine"
+
+[FPM.courses.286]
+title = "Free Clinic II"
+catalog = "/courses/FMPH.html#fpm286"
+
+[FPM.courses.296]
+title = "Community Med Independnt Rsrch"
+
+[FPM.courses.297]
+title = "SpecialStudy/FamMed&PublicHlth"
+
+[FPM.courses.299]
+title = "Comm/Fam Med Indepndnt Stu-ISP"
+
+[FPM.courses.410]
+title = "Intro to Underserved Medicine"
+
+[FPM.courses.411]
+title = "Adolescent/School-based Health"
+
+[FPM.courses.412]
+title = "Intro to Integrative Medicine"
+
+[FPM.courses.413]
+title = "Med Spanish/Future Clinicians"
+
+[FPM.courses.419]
+title = "Medical Education Teaching Ele"
+
+[FPM.courses.426]
+title = "Family Medicine Clerkship"
+
+[FPM.courses.428]
+title = "Clerkship in Integrative Med"
+
+[FPM.courses.431]
+title = "Sports Medicine"
+
+[FPM.courses.432]
+title = "Underserved Medicine Clerkship"
+
+[FPM.courses.441]
+title = "Family Medicine Subinternship"
+
+[FPM.courses.442]
+title = "Comm Based Family Med Subintrn"
+
+[FPM.courses.496]
+title = "Clinical Independent Study"
+
+[MED]
+name = "Medicine"
+
+[MED.courses.199]
+title = "Independent Study"
+
+[MED.courses.296]
+title = "Independent Research"
+
+[MED.courses.299]
+title = "Medicine Independnt Study Proj"
+
+[MED.courses.401]
+title = "Medicine Core Clerkship"
+
+[MED.courses.410]
+title = "Intro to Geriatric Medicine"
+
+[MED.courses.426]
+title = "Coronary Care Unit Clerkship"
+
+[MED.courses.429]
+title = "Intensive Clerkship/Ambul Med"
+
+[MED.courses.430]
+title = "Clinical Cardiology"
+
+[MED.courses.431]
+title = "Clerkship/Infectious Diseases"
+
+[MED.courses.432]
+title = "Clin Hematolgy/Oncolgy Clrkshp"
+
+[MED.courses.433]
+title = "Clrkshp Clin Endocrinlgy-Metab"
+
+[MED.courses.434]
+title = "Intl Med Primary Care Clerkshp"
+
+[MED.courses.435]
+title = "Pulmonary Med Consul Clerkship"
+
+[MED.courses.438]
+title = "Clin Pulmonary Physiology Lab"
+
+[MED.courses.442]
+title = "LGBTQ+ Healthcare"
+
+[MED.courses.444]
+title = "Critical Care Med-VA Hospital"
+
+[MED.courses.452]
+title = "Clinical Geriatrics"
+
+[MED.courses.453]
+title = "Clerkship/Clinical Nephrology"
+
+[MED.courses.454]
+title = "Clrkshp/Blood Marrow Stem Cell"
+
+[MED.courses.455]
+title = "Clerkship in Gastroenterology"
+
+[MED.courses.457]
+title = "Rheumatology Clinical Clerkshp"
+
+[MED.courses.463]
+title = "Clrkshp/Crit Care/Internal Med"
+
+[MED.courses.467]
+title = "Med Acting Internshp-VAMC/UCSD"
+
+[MED.courses.468]
+title = "Med Act Intnsp/Scrps/Mercy/Grn"
+note = """In this four week course, students assume many of the \
+  responsibilities of Internal Medicine interns under the direct supervision \
+  of resident physicians and departmental faculty. Students can elect to \
+  rotate at either Scripps Green or Mercy Hospital."""
+
+[MED.courses.496]
+title = "Clinical Independent Study"
+
+[NEU]
+name = "Neurosciences"
+
+[NEU.courses.296]
+title = "Neurosciences Resrch Rotation"
+catalog = "/courses/NEU.html#neu296"
+
+[NEU.courses.299]
+title = "Neurosciences Research"
+catalog = "/courses/NEU.html#neu299"
+
+[NEU.courses.401]
+title = "Neurology Core Clerkship"
+
+[NEU.courses.426]
+title = "Sub-Internship/Pediatric Neuro"
+
+[NEU.courses.427]
+title = "Neurology Out-Patient"
+
+[NEU.courses.496]
+title = "Clinical Independent Study"
+
+[OBG]
+name = "Obstetrics and Gynecology"
+
+[OBG.courses.401]
+title = "Obstetrcs&Gyneclgy Cor Clrkshp"
+
+[OBG.courses.428]
+title = "Subinternship In Perinatology"
+
+[OBG.courses.429]
+title = "Family Planning/Women's Health"
+
+[OBG.courses.430]
+title = "Subinternship/Gynecologc Oncol"
+
+[OBG.courses.432]
+title = "Subintrnshp/Obstetrics&Gynecol"
+
+[OBG.courses.496]
+title = "Clinical Independent Study"
+
+[OPTH]
+name = "Ophthalmology"
+
+[OPTH.courses.296]
+title = "Independent Study"
+
+[OPTH.courses.299]
+title = "Ophthalmology Indepndnt Resrch"
+
+[OPTH.courses.410]
+title = "Introduction to Ophthalmology"
+
+[OPTH.courses.425]
+title = "Subinternship in Ophthalmology"
+
+[OPTH.courses.426]
+title = "Ophthalmic Plast & Reconst Sur"
+
+[OPTH.courses.496]
+title = "Clinical Independent Study"
+
+[ORTH]
+name = "Orthopaedics"
+
+[ORTH.courses.296]
+title = "Orthopaedics Independent Rsrch"
+
+[ORTH.courses.299]
+title = "Independent Study Project(ISP)"
+
+[ORTH.courses.425]
+title = "Subinternship/Trauma Orthopaed"
+
+[ORTH.courses.426]
+title = "Subin/Ambulatory Orthopaedics"
+
+[ORTH.courses.428]
+title = "Subin/Reconstrctv Orthopaedics"
+
+[ORTH.courses.429]
+title = "Subint/Orthopaedic Spine Surg"
+
+[ORTH.courses.430]
+title = "Subinternship in Hand Surgery"
+
+[ORTH.courses.431]
+title = "Clrkshp/Pediatric Orthopaedics"
+
+[ORTH.courses.435]
+title = "Orthopaedic Sports Medicine"
+
+[ORTH.courses.436]
+title = "Adult Orthopaedics VA Sub-I"
+
+[ORTH.courses.450]
+title = "Subint/Outpatient Physical Med"
+
+[ORTH.courses.496]
+title = "Clinical Independent Study"
+
+[PAE]
+name = "Physician Assistant Education"
+
+[PAE.courses.210]
+title = "Professional Practice I"
+catalog = "/courses/PAS.html#pae210"
+
+[PAE.courses.211]
+title = "The PA Profession"
+catalog = "/courses/PAS.html#pae211"
+
+[PAE.courses.212]
+title = "The Physical Exam"
+catalog = "/courses/PAS.html#pae212"
+
+[PAE.courses.213]
+title = "Human Anatomy"
+catalog = "/courses/PAS.html#pae213"
+
+[PAE.courses.214]
+title = "Human Phys & Pathophys I"
+catalog = "/courses/PAS.html#pae214"
+
+[PAE.courses.215]
+title = "The Medical Interview"
+catalog = "/courses/PAS.html#pae215"
+
+[PAE.courses.216]
+title = "EBM in Practice"
+catalog = "/courses/PAS.html#pae216"
+
+[PATH]
+name = "Pathology"
+
+[PATH.courses.296]
+title = "Pathology Independent Research"
+catalog = "/courses/PATH.html#path296"
+
+[PATH.courses.299]
+title = "Path/Independent Study Project"
+catalog = "/courses/PATH.html#path299"
+
+[PATH.courses.401A]
+title = "Pathology Clerkship/Autopsy"
+
+[PATH.courses.401B]
+title = "Pathology Clerkship/Cytology"
+
+[PATH.courses.401C]
+title = "Pathology Clerkship/Clinical"
+
+[PATH.courses.401S]
+title = "Pathology Clerkship/Surgery"
+
+[PATH.courses.410]
+title = "Intro to Surgical Pathology"
+
+[PATH.courses.411]
+title = "Intro to Anatomic Pathology"
+
+[PATH.courses.412]
+title = "Intro to Ophthalmic Pathology"
+
+[PATH.courses.426]
+title = "Pathology Clerkship/Pediatric"
+
+[PATH.courses.427]
+title = "Ophthalmic Pathology"
+
+[PATH.courses.428]
+title = "Pathology Clerkship/Forensic"
+
+[PATH.courses.496]
+title = "Clinical Independent Study"
+
+[PEDS]
+name = "Pediatrics"
+
+[PEDS.courses.296]
+title = "Pediatrics Independent Resrch"
+
+[PEDS.courses.299]
+title = "Pediatric Indepndnt Study Proj"
+
+[PEDS.courses.401]
+title = "Pediatric Core Clerkship"
+
+[PEDS.courses.424]
+title = "Subinternship in Ped Resp Med"
+
+[PEDS.courses.426]
+title = "Clin Clerkshp/Pediatric Cardio"
+
+[PEDS.courses.427]
+title = "Sub-Internship/Inpatient Peds"
+
+[PEDS.courses.428]
+title = "Subintrnshp/Neonatal/Perinatal"
+
+[PEDS.courses.429]
+title = "Subintrnshp/Pediatrc Emerg Med"
+
+[PEDS.courses.430]
+title = "Pediatric Infectious Diseases"
+
+[PEDS.courses.431]
+title = "Subinternship/Ambulatory Peds"
+
+[PEDS.courses.432]
+title = "Clin Clerkship/Adolescent Med"
+
+[PEDS.courses.433]
+title = "Elect/Clin Ped Hematolgy/Oncol"
+
+[PEDS.courses.434]
+title = "Clerkship/Pediatric Nephrology"
+
+[PEDS.courses.435]
+title = "Clin Pediatrc Gastroenterology"
+
+[PEDS.courses.437]
+title = "Pediatrc Endocrinolgy&Diabetes"
+
+[PEDS.courses.438]
+title = "Peds Allergy Immuno Subintern"
+
+[PEDS.courses.496]
+title = "Clinical Independent Study"
+
+[PSY]
+name = "Psychiatry"
+
+[PSY.courses.296]
+title = "Independnt Readngs/Stdy in Psy"
+
+[PSY.courses.299]
+title = "Psychiatry Independnt Stdy Pro"
+
+[PSY.courses.401]
+title = "Psychiatry Core Clerkship"
+
+[PSY.courses.403]
+title = "Adv Clin Psy Outpatient Electv"
+
+[PSY.courses.405]
+title = "Sub-I in Interventional Psych"
+
+[PSY.courses.426]
+title = "Geriatric Psychiatry"
+
+[PSY.courses.427]
+title = "Psychiatric Crisis Evaluation"
+
+[PSY.courses.429]
+title = "Child Psychiatry"
+
+[PSY.courses.430]
+title = "Consult/Liaison Psy Clerkship"
+
+[PSY.courses.431]
+title = "Inpatient Psy Subinternship"
+
+[PSY.courses.435]
+title = "Subi/Inpat Alco-Drug Treatment"
+
+[PSY.courses.496]
+title = "Clinical Independent Study"
+
+[RAD]
+name = "Radiology"
+
+[RAD.courses.296]
+title = "Radiology Independent Research"
+
+[RAD.courses.299]
+title = "Radiology Independent Study"
+
+[RAD.courses.401]
+title = "General Radiology"
+
+[RAD.courses.411]
+title = "Introduction to Radiology"
+
+[RAD.courses.412]
+title = "Intro/Interventional Radiology"
+
+[RAD.courses.427]
+title = "Vascular Radiology"
+
+[RAD.courses.428]
+title = "Body Computed Tomography"
+
+[RAD.courses.430]
+title = "Cardiovascular Imaging"
+
+[RAD.courses.434]
+title = "Chest Radiology"
+
+[RAD.courses.496]
+title = "Clinical Independent Study"
+
+[RMAS]
+name = "Radiation Med & Applied Sci"
+
+[RMAS.courses.296]
+title = "Independent Study"
+
+[RMAS.courses.299]
+title = "Independent Research Project"
+
+[RMAS.courses.410]
+title = "Componts/Clin Radiatn Oncology"
+
+[RMAS.courses.429]
+title = "Radiation Therapy Clerkship"
+
+[RMAS.courses.496]
+title = "Clinical Independent Study"
+
+[RMED]
+name = "Reproductive Medicine"
+
+[RMED.courses.296]
+title = "Independent Study"
+
+[RMED.courses.299]
+title = "Repro Med Indepen Study Projct"
+
+[SOMC]
+name = "School of Medicine Core Crses"
+
+[SOMC.courses.401A]
+title = "Primary Care Core Clerkship"
+
+[SOMC.courses.402A]
+title = "Prim Care Core Clkship:Fam Med"
+
+[SOMI]
+name = "Sch of Med Interdisciplinary"
+
+[SOMI.courses.220]
+title = "Core Topics in Biomedical Sci"
+
+[SOMI.courses.421]
+title = "Subinternship Palliative Med"
+
+[SPPS]
+name = "Pharmacy"
+
+[SPPS.courses.400A]
+title = "Acute Care Adv Pharm Pract Exp"
+
+[SPPS.courses.400B]
+title = "Acute Care APPE"
+
+[SPPS.courses.401A]
+title = "Ambulatory Care APPE"
+
+[SPPS.courses.401B]
+title = "Ambulatory Care APPE"
+
+[SPPS.courses.402]
+title = "Community Pharmacy APPE"
+
+[SPPS.courses.402E]
+title = "Community APPE Elective"
+
+[SPPS.courses.403]
+title = "Hospital Practice APPE"
+
+[SPPS.courses.406]
+title = "Academia APPE"
+
+[SPPS.courses.407]
+title = "HIV/AIDS APPE"
+
+[SPPS.courses.408]
+title = "Anticoagulation APPE"
+
+[SPPS.courses.409]
+title = "Cardiology APPE"
+
+[SPPS.courses.410]
+title = "Discharge Pharmacy APPE"
+
+[SPPS.courses.411]
+title = "Drug Information APPE"
+
+[SPPS.courses.412]
+title = "Emergency Medicine APPE"
+
+[SPPS.courses.413]
+title = "Food&Drug Administration APPE"
+
+[SPPS.courses.414]
+title = "Geriatric Pharmacotherpy APPE"
+
+[SPPS.courses.415]
+title = "Hematology/Oncology APPE"
+
+[SPPS.courses.416]
+title = "Home Infusion APPE"
+
+[SPPS.courses.418]
+title = "Infectious Disease APPE"
+
+[SPPS.courses.419]
+title = "Informatics APPE"
+
+[SPPS.courses.420]
+title = "International APPE"
+
+[SPPS.courses.421]
+title = "Investigational Drug Serv APPE"
+
+[SPPS.courses.422]
+title = "Managed Care APPE"
+
+[SPPS.courses.423]
+title = "Medical ICU APPE"
+
+[SPPS.courses.424]
+title = "Medication Safety APPE"
+
+[SPPS.courses.425]
+title = "Medication Therapy Mgmt APPE"
+
+[SPPS.courses.426]
+title = "Neonatal ICU APPE"
+
+[SPPS.courses.427]
+title = "Nuclear Pharmacy APPE"
+
+[SPPS.courses.428]
+title = "Pain and Palliative Care APPE"
+
+[SPPS.courses.429]
+title = "Pediatrics APPE"
+
+[SPPS.courses.430]
+title = "Pharmacy Admin/Leadership APPE"
+
+[SPPS.courses.431]
+title = "Pharmacy Benefits Mgmt APPE"
+
+[SPPS.courses.432]
+title = "Pharmaceutical Industry APPE"
+
+[SPPS.courses.433]
+title = "Poison Control APPE"
+
+[SPPS.courses.434]
+title = "Psychiatry APPE"
+
+[SPPS.courses.435]
+title = "Spinal Cord Injury APPE"
+
+[SPPS.courses.436]
+title = "Surgical ICU APPE"
+
+[SPPS.courses.437]
+title = "Transitions of Care APPE"
+
+[SPPS.courses.438]
+title = "Transplant APPE"
+
+[SPPS.courses.440]
+title = "Veterinary Pharmacy APPE"
+
+[SPPS.courses.441]
+title = "Nephrology APPE"
+
+[SPPS.courses.447]
+title = "Compounding Pharmacy APPE"
+
+[SPPS.courses.496]
+title = "Independent Study APPE"
+
+[SURG]
+name = "Surgery"
+
+[SURG.courses.296]
+title = "Surgery Independent Research"
+
+[SURG.courses.299]
+title = "Surgery Independent Study Proj"
+
+[SURG.courses.401]
+title = "Surgery Core Clerkship"
+
+[SURG.courses.410]
+title = "Introduction to Neurosurgery"
+
+[SURG.courses.411]
+title = "Intro to Head & Neck Surgery"
+
+[SURG.courses.413]
+title = "Surg Apprenticeship Selective"
+
+[SURG.courses.425]
+title = "Subinternship in Trauma Unit"
+
+[SURG.courses.428]
+title = "In Depth Elec/Surgical Oncolgy"
+
+[SURG.courses.430]
+title = "ColorectalSurgerySubinternship"
+
+[SURG.courses.431]
+title = "Clerkship/Transplntn (Abdomnl)"
+
+[SURG.courses.432]
+title = "Subintern/Ped Otolaryngology"
+
+[SURG.courses.433]
+title = "Subint/Otol-Head&Neck Surgery"
+
+[SURG.courses.435]
+title = "Preceptorship in Otology"
+
+[SURG.courses.437]
+title = "Subin/Cardiothoracic Surgery"
+
+[SURG.courses.438]
+title = "Subint/Vasc&EndovascularSurg"
+
+[SURG.courses.445]
+title = "Subinternship/Plastic Surgery"
+
+[SURG.courses.448]
+title = "Subinternshp/Pediatric Surgery"
+
+[SURG.courses.454]
+title = "Subinternship/Neurosurgery UH"
+
+[SURG.courses.466]
+title = "Subinternship in Burn Surgery"
+
+[SURG.courses.496]
+title = "Clinical Independent Study"
+
+[UROL]
+name = "Urology"
+
+[UROL.courses.296]
+title = "Independent Study"
+
+[UROL.courses.299]
+title = "Independent Study Project"
+
+[UROL.courses.412]
+title = "Introduction to Urology"
+
+[UROL.courses.443]
+title = "Subinternship in Urology"
+
+[UROL.courses.455]
+title = "Clin Clrkshp/Pediatric Urology"
+
+[UROL.courses.496]
+title = "Clinical Independent Study"

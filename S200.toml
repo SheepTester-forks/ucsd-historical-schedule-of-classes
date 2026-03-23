@@ -1,0 +1,737 @@
+[ANES]
+name = "Anesthesiology"
+
+[ANES.courses.199]
+title = "Independent Study"
+
+[ANGN]
+name = "Anthropology/General"
+
+[ANGN.courses.120]
+title = "Anthropology of Religion"
+catalog = "/courses/ANTH.html#angn120"
+
+[BENG]
+name = "Bioengineering"
+
+[BENG.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/BENG.html#beng199"
+note = """Students should go to the Engineering Building Unit I, Room 4103, to \
+  obtain information and department approval for enrollment in BENG 199."""
+
+[BGGN]
+name = "Biology/Grad/General"
+
+[BGGN.courses.271]
+title = "Adv Experimental Methods/Bio"
+catalog = "/courses/BENG.html#beng199"
+note = """BGGN 271 is only open to students enrolled in the Integrated \
+  Bachelors/Masters Degree Program."""
+
+[BIBC]
+name = "Biology/Biochemistry"
+
+[BIBC.courses.102]
+title = "Metabolic Biochemistry"
+catalog = "/courses/BIOL.html#bibc102"
+
+[BICD]
+name = "Biol/Genetics,Cellular&Develop"
+
+[BICD.courses.100]
+title = "Genetics"
+catalog = "/courses/BIOL.html#bicd100"
+
+[BICD.courses.110]
+title = "Cell Biology"
+catalog = "/courses/BIOL.html#bicd110"
+
+[BILD]
+name = "Biology/Lower Division"
+
+[BILD.courses.1]
+title = "The Cell"
+catalog = "/courses/BIOL.html#bild1"
+
+[BILD.courses.2]
+title = "Multicellular Life"
+catalog = "/courses/BIOL.html#bild2"
+
+[BILD.courses.10]
+title = "Fundamental Concepts/Modrn Bio"
+catalog = "/courses/BIOL.html#bild10"
+
+[BILD.courses.24]
+title = "Biology of Human Reproduction"
+catalog = "/courses/BIOL.html#bild24"
+
+[BILD.courses.82]
+title = "Marine Biology"
+
+[BIMM]
+name = "Biology/Molec Biol, Microbiol"
+
+[BIMM.courses.100]
+title = "Molecular Biology"
+catalog = "/courses/BIOL.html#bimm100"
+
+[BISP]
+name = "Biology/Special Studies"
+
+[BISP.courses.199]
+title = "Independent Study"
+catalog = "/courses/BIOL.html#bisp199"
+
+[CENG]
+name = "Chemical Engineering"
+
+[CENG.courses.103B]
+title = "Mass Transfer"
+catalog = "/courses/LIT.html#ltwr115"
+
+[CGS]
+name = "Critical Gender Studies"
+
+[CGS.courses.102]
+title = "Topics in Critical Gender Stds"
+catalog = "/courses/CGS.html#cgs102"
+
+[CHEM]
+name = "Chemistry and Biochemistry"
+
+[CHEM.courses.6A]
+title = "General Chemistry"
+catalog = "/courses/CGS.html#cgs102"
+
+[CHEM.courses.140B]
+title = "Organic Chemistry"
+catalog = "/courses/CGS.html#cgs102"
+
+[CHEM.courses.140C]
+title = "Organic Chemistry"
+
+[COGN]
+name = "Communication/General"
+
+[COGN.courses.20]
+title = "Introduction to Communication"
+catalog = "/courses/COMM.html#cogn20"
+
+[COGN.courses.199]
+title = "Independent Study/Communicatn"
+catalog = "/courses/COMM.html#cogn199"
+
+[COGS]
+name = "Cognitive Science"
+
+[COGS.courses.199]
+title = "Special Project"
+
+[COMT]
+name = "Communication Media Methods"
+
+[COMT.courses.102]
+title = "Intro/Media Use in Communicatn"
+catalog = "/courses/COMM.html#comt102"
+
+[CONT]
+name = "Contemporary Issues"
+
+[CONT.courses.1]
+title = "The University in Society"
+catalog = "/courses/CONT.html#cont1"
+
+[COSF]
+name = "Communication as Social Force"
+
+[COSF.courses.100]
+title = "Intro/Communication/Soc Force"
+catalog = "/courses/COMM.html#cosf100"
+
+[COSF.courses.175]
+title = "Adv Topics/Comm Social Force"
+catalog = "/courses/COMM.html#cosf175"
+
+[CSE]
+name = "Computer Science & Engineering"
+
+[CSE.courses.30]
+title = "Computer Organiz&Systms Progrm"
+catalog = "/courses/CSE.html#cse30"
+
+[CSE.courses.140]
+title = "Component&Desgn Tech/Digtl Sys"
+catalog = "/courses/CSE.html#cse140"
+
+[CSE.courses.140L]
+title = "Digital Systems Laboratory"
+catalog = "/courses/CSE.html#cse140l"
+
+[CSE.courses.197]
+title = "Field Study/Computer Sci&Engin"
+catalog = "/courses/CSE.html#cse197"
+note = """Students should go to APM 3402 or call (858)534-3621 \
+  or (858)822-1535 to obtain information and department approval for \
+  enrollment in CSE 197, 198, and 199."""
+
+[CSE.courses.199]
+title = "Independent Study"
+catalog = "/courses/CSE.html#cse199"
+
+[ECE]
+name = "Electrical & Computer Engineer"
+
+[ECE.courses.53B]
+title = "Fundamentl/Electricl Enginr II"
+catalog = "/courses/ECE.html#ece53b"
+
+[ECE.courses.60B]
+title = "Circuits and Systems II"
+
+[ECE.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/ECE.html#ece199"
+
+[ECE.courses.299]
+title = "Research"
+catalog = "/courses/ECE.html#ece299"
+
+[ECON]
+name = "Economics"
+
+[ECON.courses.1B]
+title = "Elements of Economics"
+
+[ECON.courses.2B]
+title = "Introduction to Economics"
+
+[ECON.courses.100B]
+title = "Microeconomics"
+
+[ECON.courses.103]
+title = "International Monetary Relatns"
+catalog = "/courses/ECON.html#econ103"
+
+[ECON.courses.109]
+title = "Game Theory"
+catalog = "/courses/ECON.html#econ103"
+
+[ECON.courses.170B]
+title = "Management Sci Microeconomics"
+catalog = "/courses/ECON.html#econ103"
+
+[ECON.courses.171]
+title = "Decisions Under Uncertainty"
+catalog = "/courses/ECON.html#econ103"
+
+[ECON.courses.199]
+title = "Independent Study"
+catalog = "/courses/ECON.html#econ199"
+
+[ETHN]
+name = "Ethnic Studies"
+
+[ETHN.courses.199]
+title = "Independent Study and Research"
+catalog = "/courses/ETHN.html#ethn199"
+
+[HIAF]
+name = "History of Africa"
+
+[HIAF.courses.120]
+title = "History of South Africa"
+catalog = "/courses/HIST.html#hiaf120"
+
+[HILA]
+name = "History of Latin America"
+
+[HILA.courses.118]
+title = "US Agression/Latin Am 1898-Prs"
+catalog = "/courses/HIST.html#hila118"
+
+[HIUS]
+name = "History of the United States"
+
+[HIUS.courses.166]
+title = "Topics in Southern History"
+catalog = "/courses/HIST.html#hila118"
+
+[HIUS.courses.199]
+title = "Independent Study/US History"
+catalog = "/courses/HIST.html#hius199"
+note = """Students should go to the History Department Office, HSS 5027, to \
+  obtain information and department approval for enrollment in History of the \
+  United States 199."""
+
+[HUM]
+name = "Humanities"
+
+[HUM.courses.4]
+title = "Enlightmnt,Romnt,Rev/1660-1848"
+catalog = "/courses/HUM.html#hum4"
+
+[HUM.courses.5]
+title = "Modern Culture (1848-Present)"
+catalog = "/courses/HUM.html#hum5"
+
+[LATI]
+name = "Latin American Studies"
+
+[LATI.courses.298]
+title = "Directed Reading"
+catalog = "/courses/LATI.html#lati298"
+note = "Please call 534-7967 for approval to enroll in LATI 298 and 299."
+
+[LATI.courses.299]
+title = "Independent Research"
+catalog = "/courses/LATI.html#lati299"
+
+[LISP]
+name = "Linguistics/Spanish"
+
+[LISP.courses.5C]
+title = "Fundamentals of Spanish"
+catalog = "/courses/LING.html#lisp5c"
+
+[LTEN]
+name = "Literatures in English"
+
+[LTEN.courses.148]
+title = "Genres/English&American Lit"
+catalog = "/courses/LIT.html#lten148"
+
+[LTEN.courses.159]
+title = "20th Century Amer Lit&Culture"
+catalog = "/courses/LIT.html#lten148"
+
+[LTEN.courses.199]
+title = "Special Studies"
+catalog = "/courses/LIT.html#lten199"
+
+[LTGM]
+name = "Literature/German"
+
+[LTGM.courses.2B]
+title = "Intermediate German II"
+catalog = "/courses/LIT.html#lten199"
+
+[LTNE]
+name = "Literature/Near Eastern"
+
+[LTNE.courses.120B]
+title = "EarlyChristn:Paul&Inventn of"
+catalog = "/courses/LIT.html#lten199"
+
+[LTSP]
+name = "Literature/Spanish"
+
+[LTSP.courses.50C]
+title = "Readings/Latin American Topics"
+catalog = "/courses/LIT.html#ltsp50c"
+
+[LTWL]
+name = "Literatures of the World"
+
+[LTWL.courses.176]
+title = "Literature and Ideas"
+catalog = "/courses/LIT.html#ltsp50c"
+
+[LTWL.courses.199]
+title = "Special Studies"
+catalog = "/courses/LIT.html#ltwl199"
+
+[LTWR]
+name = "Literature/Writing"
+
+[LTWR.courses.115]
+title = "Experimental Writing"
+catalog = "/courses/LIT.html#ltwr115"
+
+[MAE]
+name = "Mechanical & Aerospace Engin"
+
+[MAE.courses.5]
+title = "Quantitative Computer Skills"
+catalog = "/courses/MAE.html#mae5"
+
+[MAE.courses.9]
+title = "C/C++ Programming"
+catalog = "/courses/MAE.html#mae9"
+
+[MAE.courses.10]
+title = "Fortran for Engineers"
+catalog = "/courses/MAE.html#mae10"
+
+[MAE.courses.131A]
+title = "Fundamentals/Solid Mechanics I"
+catalog = "/courses/MAE.html#mae131a"
+
+[MAE.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/MAE.html#mae199"
+
+[MATH]
+name = "Mathematics"
+
+[MATH.courses.10B]
+title = "Calculus"
+catalog = "/courses/MATH.html#math10b"
+
+[MATH.courses.10C]
+title = "Calculus"
+catalog = "/courses/MATH.html#math10c"
+
+[MATH.courses.15B]
+title = "Math/Algorithm&Systems Analys"
+catalog = "/courses/MATH.html#math15b"
+
+[MATH.courses.20B]
+title = "Calculus/Science & Engineering"
+catalog = "/courses/MATH.html#math20b"
+
+[MATH.courses.21D]
+title = "Intro/Differential Equations"
+
+[MATH.courses.104A]
+title = "Number Theory"
+catalog = "/courses/MATH.html#math104a"
+
+[MATH.courses.109]
+title = "Mathematical Reasoning"
+catalog = "/courses/MATH.html#math109"
+
+[MATH.courses.120A]
+title = "Elements of Complex Analysis"
+catalog = "/courses/MATH.html#math120a"
+
+[MATH.courses.183]
+title = "Statistical Methods"
+catalog = "/courses/MATH.html#math183"
+
+[MATH.courses.199]
+title = "Independent Study/Undergrad"
+catalog = "/courses/MATH.html#math199"
+note = """Students should go to the Mathematics Department Office, APM 7018, \
+  to obtain information and department approval for enrollment in MATH 199."""
+
+[MATH.courses.310]
+title = "Algebraic Think/Algebra 1 Tchr"
+
+[MCWP]
+name = "Muir College Writing Program"
+
+[MCWP.courses.50]
+title = "Critical Writing"
+catalog = "/courses/MCWP.html#mcwp50"
+
+[MED]
+name = "Medicine"
+
+[MED.courses.199]
+title = "Independent Study"
+
+[MMW]
+name = "Making of the Modern World"
+
+[MMW.courses.4]
+title = "European Expan&Clash/Cultures"
+catalog = "/courses/HUM.html#hum5"
+note = """MMW 4 discussion sections begin on Tuesday, October 5, 1999. \
+  Students who place their names on a Registrar wait list through TeSS or \
+  WebReg must come to the MMW/ Writing Program office in 412 UCtr no later \
+  than the end of the first week of classes, October 8, 1999."""
+
+[MMW.courses.6]
+title = "Our Century and After"
+catalog = "/courses/HUM.html#hum5"
+note = """Discussion sections begin on Tuesday, April 4, 2000. Students who \
+  place their names on a Registrar wait list through TeSS or WebReg must come \
+  to the MMW/Writing Program office in 412 UCtr no later than the end of the \
+  first week of classes, April 7, 2000."""
+
+[MUS]
+name = "Music"
+
+[MUS.courses.10]
+title = "Chamber Music"
+catalog = "/courses/MUS.html#mus10"
+
+[NEU]
+name = "Neurosciences"
+
+[NEU.courses.199]
+title = "Clinical Independent Study"
+catalog = "/courses/MUS.html#mus10"
+
+[PHAR]
+name = "Pharmacology"
+
+[PHAR.courses.199]
+title = "Independent Study"
+
+[PHIL]
+name = "Philosophy"
+
+[PHIL.courses.10]
+title = "Introduction to Logic"
+catalog = "/courses/PHIL.html#phil10"
+
+[PHIL.courses.199]
+title = "Directed Individual Study"
+catalog = "/courses/PHIL.html#phil199"
+note = """Students should come to the Philosophy Undergraduate Student \
+  Services Office, HSS 7030, to obtain information and department approval for \
+  enrollment in Philosophy 199."""
+
+[PHYS]
+name = "Physics"
+
+[PHYS.courses.1B]
+title = "Electric, Magnetism&Thermodyn"
+catalog = "/courses/PHIL.html#phil199"
+
+[PHYS.courses.1C]
+title = "Diffusion, Radiation&Mod Phys"
+catalog = "/courses/PHIL.html#phil199"
+
+[PHYS.courses.199]
+title = "Research for Undergraduates"
+catalog = "/courses/PHYS.html#phys199"
+
+[POLI]
+name = "Political Science"
+
+[POLI.courses.12]
+title = "Intro/Poli Sci:Int'l Relations"
+catalog = "/courses/POLI.html#poli12"
+
+[POLI.courses.102JJ]
+title = "Field Research/Urban Politics"
+catalog = "/courses/POLI.html#poli12"
+
+[POLI.courses.120D]
+title = "Germany: Division"
+catalog = "/courses/POLI.html#poli120d"
+
+[POLI.courses.138D]
+title = "Spec Topic/Comparatve Politics"
+catalog = "/courses/POLI.html#poli138d"
+
+[POLI.courses.145A]
+title = "International Politics & Drugs"
+catalog = "/courses/POLI.html#poli145a"
+
+[POLI.courses.199]
+title = "Independent Study"
+catalog = "/courses/POLI.html#poli199"
+note = """Students should go to the Political Science Department Office, \
+  Social Science Building, 3rd floor, to obtain information and department \
+  approval for enrollment in Political Science 199."""
+
+[PSY]
+name = "Psychiatry"
+
+[PSY.courses.199]
+title = "Independent Study"
+
+[PSYC]
+name = "Psychology"
+
+[PSYC.courses.2]
+title = "Gen Psych:Biological Foundatns"
+catalog = "/courses/PSYC.html#psyc2"
+
+[PSYC.courses.3]
+title = "Gen Psych:Cognitive Foundatns"
+catalog = "/courses/PSYC.html#psyc3"
+
+[PSYC.courses.4]
+title = "General Psychology: Behavioral"
+catalog = "/courses/PSYC.html#psyc4"
+
+[PSYC.courses.60]
+title = "Introduction to Statistics"
+catalog = "/courses/PSYC.html#psyc60"
+
+[PSYC.courses.102]
+title = "Intro/Sensation & Perception"
+catalog = "/courses/PSYC.html#psyc102"
+
+[PSYC.courses.104]
+title = "Introduction/Social Psychology"
+catalog = "/courses/PSYC.html#psyc104"
+
+[PSYC.courses.106]
+title = "Introduction/Physiological Psy"
+catalog = "/courses/PSYC.html#psyc106"
+
+[PSYC.courses.139]
+title = "The Social Psychology of Sport"
+catalog = "/courses/PSYC.html#psyc139"
+
+[PSYC.courses.145]
+title = "Psychology of Language"
+catalog = "/courses/PSYC.html#psyc145"
+
+[PSYC.courses.148]
+title = "Psychology/Judgement&Decision"
+catalog = "/courses/PSYC.html#psyc148"
+
+[PSYC.courses.154]
+title = "Behavior Modification"
+catalog = "/courses/PSYC.html#psyc148"
+
+[PSYC.courses.160]
+title = "Groups"
+catalog = "/courses/PSYC.html#psyc160"
+
+[PSYC.courses.169]
+title = "Brain Damage & Mental Function"
+catalog = "/courses/PSYC.html#psyc169"
+
+[PSYC.courses.170]
+title = "Intro to Cognitive Neuropsych"
+catalog = "/courses/PSYC.html#psyc170"
+
+[PSYC.courses.180]
+title = "Adolescence"
+catalog = "/courses/PSYC.html#psyc170"
+
+[PSYC.courses.181]
+title = "Drugs And Behavior"
+catalog = "/courses/PSYC.html#psyc181"
+
+[PSYC.courses.199]
+title = "Independent Study"
+catalog = "/courses/PSYC.html#psyc199"
+note = """Students should see Hildegard Kleiser in the Psychology Department \
+  Office, McGill Hall Annex 1533, to obtain information and department \
+  approval for enrollment in Psychology 199."""
+
+[RMED]
+name = "Reproductive Medicine"
+
+[RMED.courses.199]
+title = "Independent Study"
+
+[SE]
+name = "Structural Engineering"
+
+[SE.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/SE.html#se199"
+
+[SIO]
+name = "Scripps Inst of Oceanography"
+
+[SIO.courses.296]
+title = "Special Topics/Marine Biology"
+catalog = "/courses/SIO.html#sio296"
+
+[SOCC]
+name = "Soc/Soc Organiz & Institutions"
+
+[SOCC.courses.157]
+title = "Religion/Contemporary Society"
+catalog = "/courses/SOC.html#socc157"
+
+[SOCE]
+name = "Soc/Ind Research & Honors Prog"
+
+[SOCE.courses.199]
+title = "Independent Study"
+catalog = "/courses/SOC.html#soce199"
+note = """Students who would like to do an Independent Study (SOCE 199) with a \
+  particular professor, should come to the Sociology Department (SSB 401) to \
+  pick up and file the necessary Special Studies application. Please see the \
+  Undergraduate Coordinator, during her office hours. Students will be given a \
+  Section ID number once the form has been approved and signed by the \
+  Department Chair. To add the 199, take the approved Special Studies \
+  application directly to the Registrar's Office during the first two weeks of \
+  the quarter, AFTER the application has been signed by your instructor and \
+  the Department Chair."""
+
+[SOCL]
+name = "Soc/Lower Division"
+
+[SOCL.courses.60]
+title = "Practice of Social Research"
+catalog = "/courses/SOC.html#socl60"
+
+[SURG]
+name = "Surgery"
+
+[SURG.courses.199]
+title = "Independent Study"
+
+[TEP]
+name = "Teacher Education Program"
+
+[TEP.courses.190]
+title = "Research Practicum"
+catalog = "/courses/TEP.html#tep190"
+
+[TEP.courses.199]
+title = "Special Studies"
+catalog = "/courses/TEP.html#tep199"
+
+[THAC]
+name = "Theatre/Acting"
+
+[THAC.courses.101]
+title = "Acting I"
+catalog = "/courses/TEP.html#tep199"
+
+[THDA]
+name = "Theatre/Dance"
+
+[THDA.courses.25]
+title = "Music for Dancers"
+
+[THDA.courses.163]
+title = "Dance Theory and Pedagogy"
+
+[THDE]
+name = "Theatre/Design"
+
+[THDE.courses.1]
+title = "Intro/Design for the Theatre"
+
+[THGE]
+name = "Theatre/General"
+
+[THGE.courses.25]
+title = "Public Speaking"
+
+[USP]
+name = "Urban Studies & Planning"
+
+[USP.courses.171]
+title = "Sustainable Development"
+catalog = "/courses/USP.html#usp171"
+
+[USP.courses.199]
+title = "Independent Study"
+catalog = "/courses/USP.html#usp199"
+
+[VIS]
+name = "Visual Arts"
+
+[VIS.courses.109]
+title = "Advanced Projects in Media"
+catalog = "/courses/VIS.html#vis109"
+
+[VIS.courses.194]
+title = "Fantasy In Film"
+catalog = "/courses/VIS.html#vis194"
+
+[VIS.courses.199]
+title = "Special Studies"
+catalog = "/courses/VIS.html#vis199"
+
+[WCWP]
+name = "Warren College Writing Program"
+
+[WCWP.courses.10B]
+title = "The Writing Course"

@@ -1,0 +1,896 @@
+[ANLD]
+name = "Anthropology/Lower Division"
+
+[ANLD.courses.1]
+title = "Introduction to Culture"
+catalog = "/courses/ANTH.html#anld1"
+
+[ANLD.courses.2]
+title = "Human Origins"
+catalog = "/courses/ANTH.html#anld2"
+
+[ANLD.courses.42]
+title = "Study of Primates in Nature"
+catalog = "/courses/ANTH.html#anld42"
+
+[ANPR]
+name = "Anthropology/Program"
+
+[ANPR.courses.199]
+title = "Independent Study"
+catalog = "/courses/ANTH.html#anpr199"
+
+[BIBC]
+name = "Biology/Biochemistry"
+
+[BIBC.courses.102]
+title = "Metabolic Biochemistry"
+catalog = "/courses/BIOL.html#bibc102"
+
+[BIBC.courses.103]
+title = "Biochemical Techniques"
+catalog = "/courses/BIOL.html#bibc103"
+note = """Please see note under the Biology heading regarding lab fees, wait \
+  lists, "W" policy, and attendance at the first scheduled meeting of \
+  BIBC 103. In addition to the formal lab hours listed below, there will be at \
+  least 1 hour/ week in which students will be required to work in the class \
+  laboratory to complete experiments and prepare for presentations."""
+
+[BIBC.courses.110]
+title = "Physical Biochemistry"
+catalog = "/courses/BIOL.html#bibc110"
+
+[BIBC.courses.120]
+title = "Nutrition"
+catalog = "/courses/BIOL.html#bibc120"
+
+[BICD]
+name = "Biol/Genetics,Cellular&Develop"
+
+[BICD.courses.110]
+title = "Cell Biology"
+catalog = "/courses/BIOL.html#bicd110"
+
+[BICD.courses.130]
+title = "Embryos, Genes, & Development"
+catalog = "/courses/BIOL.html#bicd130"
+
+[BILD]
+name = "Biology/Lower Division"
+
+[BILD.courses.1]
+title = "The Cell"
+catalog = "/courses/BIOL.html#bild1"
+
+[BILD.courses.2]
+title = "Multicellular Life"
+catalog = "/courses/BIOL.html#bild2"
+
+[BILD.courses.24]
+title = "Biology of Human Reproduction"
+catalog = "/courses/BIOL.html#bild24"
+
+[BIMM]
+name = "Biology/Molec Biol, Microbiol"
+
+[BIMM.courses.120]
+title = "Bacteriology"
+catalog = "/courses/BIOL.html#bimm120"
+
+[CGS]
+name = "Critical Gender Studies"
+
+[CGS.courses.100]
+title = "Conceptlzg Gender:Theory&Methd"
+catalog = "/courses/CGS.html#cgs100"
+
+[CHEM]
+name = "Chemistry and Biochemistry"
+
+[CHEM.courses.6C]
+title = "General Chemistry III"
+catalog = "/courses/CHEM.html#chem6c"
+
+[CHEM.courses.140B]
+title = "Organic Chemistry II"
+catalog = "/courses/CHEM.html#chem140b"
+
+[COCU]
+name = "Communication and Culture"
+
+[COCU.courses.125]
+title = "How to Read a Film"
+catalog = "/courses/COMM.html#cocu125"
+
+[COCU.courses.137]
+title = "The Politics of Bodies"
+catalog = "/courses/COMM.html#cocu137"
+
+[COCU.courses.169]
+title = "Culture Domination & Resistnce"
+catalog = "/courses/COMM.html#cocu169"
+
+[COCU.courses.175]
+title = "Adv Topics/Communication Cult"
+catalog = "/courses/COMM.html#cocu175"
+
+[COGN]
+name = "Communication/General"
+
+[COGN.courses.20]
+title = "Introduction to Communication"
+catalog = "/courses/COMM.html#cogn20"
+
+[COGN.courses.150]
+title = "Required Senior Seminar"
+
+[COGN.courses.199]
+title = "Independent Study/Communicatn"
+catalog = "/courses/COMM.html#cogn199"
+
+[COGS]
+name = "Cognitive Science"
+
+[COGS.courses.17]
+title = "Neurobiology of Cognition"
+catalog = "/courses/COGS.html#cogs17"
+
+[COGS.courses.160]
+title = "Seminar on Special Topics"
+catalog = "/courses/COGS.html#cogs160"
+
+[COMT]
+name = "Communication Media Methods"
+
+[COMT.courses.175]
+title = "Adv Topics/Comm: Media Methods"
+catalog = "/courses/COMM.html#comt175"
+
+[COSF]
+name = "Communication as Social Force"
+
+[COSF.courses.100]
+title = "Intro/Communication/Soc Force"
+catalog = "/courses/COMM.html#cosf100"
+
+[COSF.courses.175]
+title = "Adv Topics/Comm Social Force"
+catalog = "/courses/COMM.html#cosf175"
+
+[CSE]
+name = "Computer Science & Engineering"
+
+[CSE.courses.21]
+title = "Math/Algorithm&Systems Analys"
+catalog = "/courses/CSE.html#cse21"
+note = "CSE 21 is equivalent to MATH 15B."
+
+[CSE.courses.120]
+title = "Princ/Computer Operating Systm"
+catalog = "/courses/CSE.html#cse120"
+
+[CSE.courses.135]
+title = "Server-side Web Applications"
+catalog = "/courses/CSE.html#cse135"
+
+[CSE.courses.141]
+title = "Intro/Computer Architecture"
+catalog = "/courses/CSE.html#cse141"
+
+[CSE.courses.141L]
+title = "Project/Computer Architecture"
+catalog = "/courses/CSE.html#cse141l"
+
+[CSE.courses.143]
+title = "Microelectronic System Design"
+catalog = "/courses/CSE.html#cse143"
+
+[CSE.courses.146]
+title = "Intro to Reliable Hardware"
+catalog = "/courses/CSE.html#cse146"
+
+[ECE]
+name = "Electrical & Computer Engineer"
+
+[ECE.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/ECE.html#ece199"
+
+[ECON]
+name = "Economics"
+
+[ECON.courses.1]
+title = "Elements of Economics I"
+catalog = "/courses/ECON.html#econ1"
+
+[ECON.courses.2]
+title = "Elements of Economics II"
+catalog = "/courses/ECON.html#econ2"
+
+[ECON.courses.3]
+title = "Elements of Economics III"
+catalog = "/courses/ECON.html#econ3"
+
+[ECON.courses.100B]
+title = "Microeconomics B"
+catalog = "/courses/ECON.html#econ100b"
+
+[ECON.courses.110B]
+title = "Macroeconomics B"
+catalog = "/courses/ECON.html#econ110b"
+
+[ECON.courses.111]
+title = "Monetary Economics"
+catalog = "/courses/ECON.html#econ111"
+
+[ECON.courses.120A]
+title = "Econometrics A"
+catalog = "/courses/ECON.html#econ120a"
+
+[ECON.courses.120B]
+title = "Econometrics B"
+catalog = "/courses/ECON.html#econ120b"
+
+[ECON.courses.120C]
+title = "Econometrics C"
+catalog = "/courses/ECON.html#econ120c"
+
+[ECON.courses.130]
+title = "Public Policy"
+catalog = "/courses/ECON.html#econ130"
+
+[ECON.courses.132]
+title = "Energy Economics"
+catalog = "/courses/ECON.html#econ132"
+
+[ECON.courses.139]
+title = "Labor Economics"
+catalog = "/courses/ECON.html#econ139"
+
+[ECON.courses.170B]
+title = "Management Sci Microeconomics"
+catalog = "/courses/ECON.html#econ170b"
+
+[ECON.courses.171]
+title = "Decisions Under Uncertainty"
+catalog = "/courses/ECON.html#econ171"
+
+[ECON.courses.173]
+title = "Corporate Finance"
+catalog = "/courses/ECON.html#econ173"
+
+[ECON.courses.175]
+title = "Financial Investments"
+catalog = "/courses/ECON.html#econ175"
+
+[ERTH]
+name = "Earth Sciences"
+
+[ERTH.courses.20]
+title = "The Atmosphere"
+catalog = "/courses/ERTH.html#erth20"
+
+[ETHN]
+name = "Ethnic Studies"
+
+[ETHN.courses.168]
+title = "Comparative Ethnic Literature"
+catalog = "/courses/ETHN.html#ethn168"
+
+[ETHN.courses.175]
+title = "Literature/Harlem Renaissance"
+catalog = "/courses/ETHN.html#ethn175"
+
+[HIEA]
+name = "History of East Asia"
+
+[HIEA.courses.117]
+title = "Ghosts in Japan"
+catalog = "/courses/HIST.html#hiea117"
+
+[HIEA.courses.136]
+title = "Thought/Reli China: Daoism"
+catalog = "/courses/HIST.html#hiea136"
+
+[HIEA.courses.137]
+title = "Women & Family/Chinese History"
+catalog = "/courses/HIST.html#hiea137"
+
+[HIEU]
+name = "History of Europe"
+
+[HIEU.courses.112S]
+title = "Ancient Explorers"
+catalog = "/courses/HIST.html#hieu112s"
+
+[HILA]
+name = "History of Latin America"
+
+[HILA.courses.103]
+title = "Revolution/Modern Latin Americ"
+catalog = "/courses/HIST.html#hila103"
+
+[HISC]
+name = "History of Science"
+
+[HISC.courses.109]
+title = "Science/Western Civilization"
+catalog = "/courses/HIST.html#hisc109"
+
+[HISC.courses.131]
+title = "Science, Technology, & Law"
+catalog = "/courses/HIST.html#hisc131"
+
+[HITO]
+name = "History Topics"
+
+[HITO.courses.103S]
+title = "Gnosis and Gnosticism"
+catalog = "/courses/HIST.html#hito103s"
+
+[HITO.courses.134]
+title = "Internatnl Law/War Crimes&Geno"
+catalog = "/courses/HIST.html#hito134"
+
+[HIUS]
+name = "History of the United States"
+
+[HIUS.courses.152A]
+title = "Constitutional Hist/US to 1865"
+catalog = "/courses/HIST.html#hius152a"
+
+[HUM]
+name = "Humanities"
+
+[HUM.courses.3]
+title = "Renaissance,Reform&Early Europ"
+catalog = "/courses/HUM.html#hum3"
+
+[HUM.courses.4]
+title = "Enlightmnt,Romnt,Rev/1660-1848"
+catalog = "/courses/HUM.html#hum4"
+
+[ICAM]
+name = "Computing and the Arts"
+
+[ICAM.courses.199]
+title = "Special Studies"
+catalog = "/courses/VIS.html#icam199"
+
+[IRGN]
+name = "Intrnat Relat/Pac Study-Generl"
+
+[IRGN.courses.499]
+title = "Independent Research/Study"
+catalog = "/courses/IRPS.html#irgn499"
+
+[LTCS]
+name = "Literature/Cultural Studies"
+
+[LTCS.courses.120]
+title = "Historical Perspectves/Culture"
+catalog = "/courses/LIT.html#ltcs120"
+
+[LTEA]
+name = "Literatures/East Asian"
+
+[LTEA.courses.120A]
+title = "Chinese Films"
+catalog = "/courses/LIT.html#ltea120a"
+
+[LTEN]
+name = "Literatures in English"
+
+[LTEN.courses.178]
+title = "Comparative Ethnic Literature"
+catalog = "/courses/LIT.html#lten178"
+
+[LTEN.courses.186]
+title = "Literature/Harlem Renaissance"
+catalog = "/courses/LIT.html#lten186"
+
+[LTEN.courses.189]
+title = "20th Century Postcolonial Lits"
+catalog = "/courses/LIT.html#lten189"
+
+[LTFR]
+name = "Literature/French"
+
+[LTFR.courses.115]
+title = "Themes/Intellect&Literary Hist"
+catalog = "/courses/LIT.html#ltfr115"
+
+[LTSP]
+name = "Literature/Spanish"
+
+[LTSP.courses.135B]
+title = "Modern Mexican Literature"
+catalog = "/courses/LIT.html#ltsp135b"
+
+[LTWL]
+name = "Literatures of the World"
+
+[LTWL.courses.172]
+title = "Special Topics in Literature"
+catalog = "/courses/LIT.html#ltwl172"
+
+[LTWL.courses.181]
+title = "Film Studies&Lit:Film Movement"
+catalog = "/courses/LIT.html#ltwl181"
+
+[LTWR]
+name = "Literature/Writing"
+
+[LTWR.courses.102]
+title = "Poetry"
+catalog = "/courses/LIT.html#ltwr102"
+
+[MAE]
+name = "Mechanical & Aerospace Engin"
+
+[MAE.courses.5]
+title = "Quantitative Computer Skills"
+catalog = "/courses/MAE.html#mae5"
+note = "Students must attend the first lecture and lab meeting for MAE 5."
+
+[MAE.courses.101B]
+title = "Advanced Fluid Mechanics"
+catalog = "/courses/MAE.html#mae101b"
+
+[MAE.courses.105]
+title = "Intro To Mathematical Physics"
+catalog = "/courses/MAE.html#mae105"
+
+[MAE.courses.130B]
+title = "Mechanics II: Dynamics"
+catalog = "/courses/MAE.html#mae130b"
+
+[MAE.courses.131A]
+title = "Fundamentals/Solid Mechanics I"
+catalog = "/courses/MAE.html#mae131a"
+
+[MAE.courses.131C]
+title = "Solid Mechanics III"
+catalog = "/courses/MAE.html#mae131c"
+
+[MAE.courses.140]
+title = "Linear Circuits"
+catalog = "/courses/MAE.html#mae140"
+
+[MAE.courses.143B]
+title = "Linear Control"
+catalog = "/courses/MAE.html#mae143b"
+
+[MAE.courses.180B]
+title = "Space Science & Engineering"
+catalog = "/courses/MAE.html#mae180b"
+
+[MAE.courses.299]
+title = "Graduate Research"
+catalog = "/courses/MAE.html#mae299"
+
+[MATH]
+name = "Mathematics"
+
+[MATH.courses.3C]
+title = "Precalculus"
+catalog = "/courses/MATH.html#math3c"
+
+[MATH.courses.10B]
+title = "Calculus"
+catalog = "/courses/MATH.html#math10b"
+
+[MATH.courses.10C]
+title = "Calculus"
+catalog = "/courses/MATH.html#math10c"
+
+[MATH.courses.20B]
+title = "Calculus/Science & Engineering"
+catalog = "/courses/MATH.html#math20b"
+
+[MATH.courses.20D]
+title = "Intro/Differential Equations"
+catalog = "/courses/MATH.html#math20d"
+note = """The location for required MATH 20D lab sections will be announced at \
+  the first lecture."""
+
+[MATH.courses.20F]
+title = "Linear Algebra"
+catalog = "/courses/MATH.html#math20f"
+note = """The location for required MATH 20F lab sections will be announced at \
+  the first lecture."""
+
+[MATH.courses.110]
+title = "Intro/Partial Differ Equations"
+catalog = "/courses/MATH.html#math110"
+
+[MMW]
+name = "Making of the Modern World"
+
+[MMW.courses.4]
+title = "New Ideas/Clash of Cultures"
+catalog = "/courses/MMW.html#mmw4"
+
+[MMW.courses.6]
+title = "Twentieth Century and Beyond"
+catalog = "/courses/MMW.html#mmw6"
+
+[MUS]
+name = "Music"
+
+[MUS.courses.15]
+title = "Popular Music"
+catalog = "/courses/MUS.html#mus15"
+
+[MUS.courses.80]
+title = "Special Topics in Music"
+catalog = "/courses/MUS.html#mus80"
+
+[MUS.courses.111]
+title = "Topics/World Music Traditions"
+catalog = "/courses/MUS.html#mus111"
+
+[MUS.courses.113]
+title = "Topic/Classic&Romantc & Modern"
+catalog = "/courses/MUS.html#mus113"
+
+[PHIL]
+name = "Philosophy"
+
+[PHIL.courses.12]
+title = "Logic and Decision Making"
+catalog = "/courses/PHIL.html#phil12"
+
+[PHIL.courses.27]
+title = "Ethics And Society"
+catalog = "/courses/PHIL.html#phil27"
+
+[PHIL.courses.163]
+title = "Bio-Medical Ethics"
+catalog = "/courses/PHIL.html#phil163"
+
+[PHYS]
+name = "Physics"
+
+[PHYS.courses.1A]
+title = "Mechanics"
+catalog = "/courses/PHYS.html#phys1a"
+note = """You must register for Physics 1A and Physics 1AL concurrently to \
+  receive credit for the course. We will drop you from the course after the \
+  first week of classes if you are not enrolled in both courses. Labs begin \
+  the first week of the quarter."""
+
+[PHYS.courses.1AL]
+title = "Mechanics Laboratory"
+catalog = "/courses/PHYS.html#phys1al"
+
+[PHYS.courses.1B]
+title = "Electricity and Magnetism"
+catalog = "/courses/PHYS.html#phys1b"
+note = """You must register for Physics 1B and Physics 1BL concurrently to \
+  receive credit for the course. We will drop you from the course after the \
+  first week of classes if you are not enrolled in both courses. Labs begin \
+  the first week of the quarter."""
+
+[PHYS.courses.1BL]
+title = "Electricity & Magnetism Lab"
+catalog = "/courses/PHYS.html#phys1bl"
+
+[PHYS.courses.1C]
+title = "Waves, Optics & Modern Physics"
+catalog = "/courses/PHYS.html#phys1c"
+note = """You must register for Physics 1C and Physics 1CL concurrently to \
+  receive credit for the course. We will drop you from the course after the \
+  first week of classes if you are not enrolled in both courses. Labs begin \
+  the first week of the quarter."""
+
+[PHYS.courses.1CL]
+title = "Waves,Optics&Modrn Phys Lab"
+catalog = "/courses/PHYS.html#phys1cl"
+
+[PHYS.courses.2B]
+title = "Phys-Electricity and Magnetism"
+catalog = "/courses/PHYS.html#phys2b"
+
+[PHYS.courses.2C]
+title = "Physics-Flu,Wav,Thrmdyn,Optics"
+catalog = "/courses/PHYS.html#phys2c"
+
+[PHYS.courses.2CL]
+title = "Phys Lab-Elec,Magnetsm,Wav,Opt"
+catalog = "/courses/PHYS.html#phys2cl"
+note = """Students who enroll in Physics 2CL will be charged a $25.00 lab fee \
+  which will be assessed with registration fees. Lab fees will not be refunded \
+  to students who drop after the end of the second week of classes."""
+
+[PHYS.courses.2D]
+title = "Phys-Relativity&Quantm Physics"
+catalog = "/courses/PHYS.html#phys2d"
+
+[PHYS.courses.199]
+title = "Research for Undergraduates"
+catalog = "/courses/PHYS.html#phys199"
+
+[POLI]
+name = "Political Science"
+
+[POLI.courses.10]
+title = "Intro/Poli Sci:Amer Politics"
+catalog = "/courses/POLI.html#poli10"
+
+[POLI.courses.11]
+title = "Intro/Poli Sci:Compar Politics"
+catalog = "/courses/POLI.html#poli11"
+
+[POLI.courses.13]
+title = "Power and Justice"
+catalog = "/courses/POLI.html#poli13"
+
+[POLI.courses.27]
+title = "Ethics And Society"
+catalog = "/courses/POLI.html#poli27"
+
+[POLI.courses.30]
+title = "Political Inquiry"
+catalog = "/courses/POLI.html#poli30"
+
+[POLI.courses.100A]
+title = "The Presidency"
+catalog = "/courses/POLI.html#poli100a"
+
+[POLI.courses.102E]
+title = "Urban Politics"
+catalog = "/courses/POLI.html#poli102e"
+
+[POLI.courses.102G]
+title = "Spec Topics/American Politics"
+catalog = "/courses/POLI.html#poli102g"
+
+[POLI.courses.103A]
+title = "Calif Government & Politics"
+catalog = "/courses/POLI.html#poli103a"
+
+[POLI.courses.110C]
+title = "Politcl Thought/Kant-Nietzsche"
+catalog = "/courses/POLI.html#poli110c"
+
+[POLI.courses.112CS]
+title = "Political Thry&Artistic Vision"
+catalog = "/courses/POLI.html#poli112cs"
+
+[POLI.courses.119A]
+title = "Specl Topics/Political Theory"
+catalog = "/courses/POLI.html#poli119a"
+
+[POLI.courses.134D]
+title = "Topics/Latin American Politics"
+catalog = "/courses/POLI.html#poli134d"
+
+[POLI.courses.142K]
+title = "Politics and Warfare"
+catalog = "/courses/POLI.html#poli142k"
+
+[POLI.courses.144D]
+title = "Internatnl Political Economy"
+
+[POLI.courses.144E]
+title = "Politics/International Trade"
+catalog = "/courses/POLI.html#poli144e"
+
+[PSYC]
+name = "Psychology"
+
+[PSYC.courses.2]
+title = "Gen Psych:Biological Foundatns"
+catalog = "/courses/PSYC.html#psyc2"
+
+[PSYC.courses.6]
+title = "General Psychology: Social"
+catalog = "/courses/PSYC.html#psyc6"
+
+[PSYC.courses.60]
+title = "Introduction to Statistics"
+catalog = "/courses/PSYC.html#psyc60"
+
+[PSYC.courses.101]
+title = "Intro/Developmental Psychology"
+catalog = "/courses/PSYC.html#psyc101"
+
+[PSYC.courses.102]
+title = "Intro/Sensation & Perception"
+catalog = "/courses/PSYC.html#psyc102"
+
+[PSYC.courses.106]
+title = "Introduction/Physiological Psy"
+catalog = "/courses/PSYC.html#psyc106"
+
+[PSYC.courses.136S]
+title = "Cognitive Development"
+
+[PSYC.courses.137]
+title = "Social Cognition"
+catalog = "/courses/PSYC.html#psyc137"
+
+[PSYC.courses.144]
+title = "Memory and Amnesia"
+catalog = "/courses/PSYC.html#psyc144"
+
+[PSYC.courses.154]
+title = "Behavior Modification"
+catalog = "/courses/PSYC.html#psyc154"
+
+[PSYC.courses.155]
+title = "Social Psychology and Medicine"
+catalog = "/courses/PSYC.html#psyc155"
+
+[PSYC.courses.168]
+title = "Psychological Disorders/Child"
+catalog = "/courses/PSYC.html#psyc168"
+
+[PSYC.courses.169]
+title = "Brain Damage & Mental Function"
+catalog = "/courses/PSYC.html#psyc169"
+
+[PSYC.courses.170]
+title = "Intro to Cognitive Neuropsych"
+catalog = "/courses/PSYC.html#psyc170"
+
+[PSYC.courses.172]
+title = "Psychology of Human Sexuality"
+catalog = "/courses/PSYC.html#psyc172"
+
+[PSYC.courses.179]
+title = "Drugs,Addiction&Mental Disordr"
+catalog = "/courses/PSYC.html#psyc179"
+
+[PSYC.courses.187]
+title = "Development/Social Cognition"
+catalog = "/courses/PSYC.html#psyc187"
+
+[PSYC.courses.195]
+title = "Instruction in Psychology"
+catalog = "/courses/PSYC.html#psyc195"
+
+[PSYC.courses.199]
+title = "Independent Study"
+catalog = "/courses/PSYC.html#psyc199"
+note = """Students should go to the Psychology Department Office, \
+  Mandler 1533, to obtain information and department approval for enrollment \
+  in Psychology 199."""
+
+[SDCC]
+name = "San Diego Community College"
+
+[SDCC.courses.4]
+title = "English as a Second Language"
+
+[SE]
+name = "Structural Engineering"
+
+[SE.courses.1]
+title = "Intro. to Structures & Design"
+catalog = "/courses/SE.html#se1"
+
+[SE.courses.2]
+title = "Structural Materials"
+catalog = "/courses/SE.html#se2"
+
+[SE.courses.101B]
+title = "Mechanics II: Dynamics"
+catalog = "/courses/SE.html#se101b"
+
+[SE.courses.130B]
+title = "Structural Analysis"
+catalog = "/courses/SE.html#se130b"
+
+[SE.courses.299]
+title = "Graduate Research"
+catalog = "/courses/SE.html#se299"
+
+[SOCB]
+name = "Soc/Cult, Lang, & Soc Interact"
+
+[SOCB.courses.172]
+title = "Films And Society"
+catalog = "/courses/SOC.html#socb172"
+
+[SOCC]
+name = "Soc/Soc Organiz & Institutions"
+
+[SOCC.courses.157]
+title = "Religion/Contemporary Society"
+catalog = "/courses/SOC.html#socc157"
+
+[SOCL]
+name = "Soc/Lower Division"
+
+[SOCL.courses.60]
+title = "Practice of Social Research"
+catalog = "/courses/SOC.html#socl60"
+
+[TDAC]
+name = "Theatre / Acting"
+
+[TDAC.courses.1]
+title = "Introduction to Acting"
+catalog = "/courses/THEA.html#tdac1"
+
+[TDAC.courses.102]
+title = "Acting II"
+catalog = "/courses/THEA.html#tdac102"
+
+[TDAC.courses.108]
+title = "Advanced Topics"
+catalog = "/courses/THEA.html#tdac108"
+
+[TDGE]
+name = "Theatre / General"
+
+[TDGE.courses.10]
+title = "Theatre And Film"
+catalog = "/courses/THEA.html#tdge10"
+note = """Students will be required to view videos outside class meeting \
+  times."""
+
+[TDGE.courses.11]
+title = "Great Performances on Film"
+catalog = "/courses/THEA.html#tdge11"
+
+[TDMV]
+name = "Dance/Movement"
+
+[TDMV.courses.110]
+title = "Intermediate Ballet"
+catalog = "/courses/THEA.html#tdmv110"
+note = """TDMV 110 has a course material fee of $25.00. Fee will be assessed \
+  with registration fees."""
+
+[TDMV.courses.138]
+title = "Hip Hop"
+catalog = "/courses/THEA.html#tdmv138"
+
+[TDMV.courses.142]
+title = "Latin Dance of the World"
+catalog = "/courses/THEA.html#tdmv142"
+
+[TDPW]
+name = "Theatre / Playwriting"
+
+[TDPW.courses.1]
+title = "Introduction to Playwriting"
+catalog = "/courses/THEA.html#tdpw1"
+
+[USP]
+name = "Urban Studies & Planning"
+
+[USP.courses.2]
+title = "Urban World System"
+catalog = "/courses/USP.html#usp2"
+
+[USP.courses.3]
+title = "City and Social Theory"
+catalog = "/courses/USP.html#usp3"
+
+[USP.courses.107]
+title = "Urban Politics"
+catalog = "/courses/USP.html#usp107"
+
+[USP.courses.109]
+title = "Calif Government & Politics"
+catalog = "/courses/USP.html#usp109"
+
+[VIS]
+name = "Visual Arts"
+
+[VIS.courses.152]
+title = "Film in Social Context"
+catalog = "/courses/VIS.html#vis152"
+note = """Students enrolled in VIS 152 are responsible for a $20.00 materials \
+  fee which will be assessed with registration fees."""
+
+[WCWP]
+name = "Warren College Writing Program"
+
+[WCWP.courses.10B]
+title = "The Writing Course B"
+catalog = "/courses/WARR.html#wcwp10b"

@@ -52,7 +52,7 @@ export type ScrapedCourse = {
    *
    * NOTE: `inc` may be 0.5.
    */
-  units: { from: number; to: number; inc: number };
+  units: UnitRange;
   /**
    * Guaranteed to be populated for summer terms. Each date range corresponds to
    * group.
@@ -60,6 +60,8 @@ export type ScrapedCourse = {
   dateRanges: [DateTuple, DateTuple][];
   sections: ScrapedSection[];
 };
+
+export type UnitRange = { from: number; to: number; inc: number };
 
 /** `month` is 1-indexed. */
 export type DateTuple = [year: number, month: number, date: number];

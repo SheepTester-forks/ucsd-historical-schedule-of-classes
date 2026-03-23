@@ -1,0 +1,117 @@
+[CHIN]
+name = "Chinese Studies"
+
+[CHIN.courses.11]
+title = "First Year Chinese"
+catalog = "/courses/CHIN.html#chin11"
+
+[CHIN.courses.12]
+title = "First Year Chinese"
+catalog = "/courses/CHIN.html#chin12"
+
+[CHIN.courses.13]
+title = "First Year Chinese"
+catalog = "/courses/CHIN.html#chin13"
+
+[CHIN.courses.21]
+title = "Second Year Chinese"
+catalog = "/courses/CHIN.html#chin21"
+
+[CHIN.courses.22]
+title = "Second Year Chinese"
+catalog = "/courses/CHIN.html#chin22"
+
+[CHIN.courses.23]
+title = "Second Year Chinese"
+catalog = "/courses/CHIN.html#chin23"
+
+[JAPN]
+name = "Japanese Studies"
+
+[JAPN.courses.10A]
+title = "First Year Japanese"
+catalog = "/courses/JAPN.html#japn10a"
+
+[JAPN.courses.10B]
+title = "First Year Japanese"
+catalog = "/courses/JAPN.html#japn10b"
+
+[JAPN.courses.10C]
+title = "First Year Japanese"
+catalog = "/courses/JAPN.html#japn10c"
+
+[LIFR]
+name = "Linguistics/French"
+
+[LIFR.courses.5A]
+title = "Fundamentals of French"
+catalog = "/courses/LING.html#lifr5a"
+
+[LIFR.courses.5B]
+title = "Fundamentals of French"
+catalog = "/courses/LING.html#lifr5b"
+
+[LIFR.courses.5C]
+title = "Fundamentals of French"
+catalog = "/courses/LING.html#lifr5c"
+
+[LIGM]
+name = "Linguistics/German"
+
+[LIGM.courses.5A]
+title = "Fundamentals of German"
+catalog = "/courses/LING.html#ligm5a"
+
+[LIGM.courses.5B]
+title = "Fundamentals of German"
+catalog = "/courses/LING.html#ligm5b"
+
+[LIGM.courses.5C]
+title = "Fundamentals of German"
+catalog = "/courses/LING.html#ligm5c"
+
+[LIIT]
+name = "Linguistics/Italian"
+
+[LIIT.courses.5A]
+title = "Fundamentals of Italian"
+
+[LIIT.courses.5B]
+title = "Fundamentals of Italian"
+
+[LIIT.courses.5C]
+title = "Fundamentals of Italian"
+
+[LISP]
+name = "Linguistics/Spanish"
+
+[LISP.courses.5A]
+title = "Fundamentals of Spanish"
+catalog = "/courses/LING.html#lisp5a"
+
+[LISP.courses.5B]
+title = "Fundamentals of Spanish"
+catalog = "/courses/LING.html#lisp5b"
+
+[LISP.courses.5C]
+title = "Fundamentals of Spanish"
+catalog = "/courses/LING.html#lisp5c"
+
+[LISP.courses.5D]
+title = "Fundamentals of Spanish"
+catalog = "/courses/LING.html#lisp5d"
+
+[LTRU]
+name = "Literature/Russian"
+
+[LTRU.courses.2A]
+title = "Second Year Russian"
+catalog = "/courses/LIT.html#ltru2a"
+
+[LTRU.courses.2B]
+title = "Second Year Russian"
+catalog = "/courses/LIT.html#ltru2b"
+
+[LTRU.courses.2C]
+title = "Second Year Russian"
+catalog = "/courses/LIT.html#ltru2c"

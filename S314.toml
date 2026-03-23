@@ -1,0 +1,695 @@
+[AESE]
+name = "ArchitectureBsdEntrpSystmsEngr"
+
+[AESE.courses.279B]
+title = "AESE Capstone Team Project"
+catalog = "/courses/CSE-AESE.html#aese279b"
+
+[AIP]
+name = "Academic Internship Program"
+
+[AIP.courses.197]
+title = "Academic Internship Program"
+catalog = "/courses/AIP.html#aip197"
+note = """To apply, students must have completed 90 units and have a minimum \
+  of 2.5 UC GPA (unless higher GPA is required for a specific field or \
+  industry). Applicants attend an orientation and submit an application via \
+  InternLink at http://aipinternlink.ucsd.edu The AIP office is located in the \
+  Literature Building, room 210. Walk-in hours are Monday, Tuesday, Thursday, \
+  and Friday 8am to 12pm and 1 - 4pm and on Wednesday 8am to 1pm. Students \
+  must apply one quarter before they want to intern. The Academic Internship \
+  Program begins accepting applications the 2nd week of each quarter."""
+
+[AIP.courses.197P]
+title = "Public Service Minor Internshp"
+catalog = "/courses/AIP.html#aip197p"
+
+[AIP.courses.197T]
+title = "AIP: Special Programs"
+catalog = "/courses/AIP.html#aip197t"
+
+[ANES]
+name = "Anesthesiology"
+
+[ANES.courses.199]
+title = "Independent Study"
+
+[ANTH]
+name = "Anthropology"
+
+[ANTH.courses.199]
+title = "Independent Study"
+catalog = "/courses/ANTH.html#anth199"
+
+[BENG]
+name = "Bioengineering"
+
+[BENG.courses.196]
+title = "Bioeng Industrial Internship"
+catalog = "/courses/BENG.html#beng196"
+
+[BENG.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/BENG.html#beng199"
+note = """Students should go to the Powell-Focht Bioengineering Hall, \
+  Room 141, to obtain information and department approval for enrollment in \
+  BENG 199."""
+
+[BGGN]
+name = "Biology/Grad/General"
+
+[BGGN.courses.299]
+title = "Thesis Research in Biology"
+catalog = "/courses/BIOL.html#bggn299"
+
+[BISP]
+name = "Biology/Special Studies"
+
+[BISP.courses.199]
+title = "Individual Research for Ugrads"
+catalog = "/courses/BIOL.html#bisp199"
+
+[CENG]
+name = "Chemical Engineering"
+
+[CENG.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/NANO.html#ceng199"
+
+[CHEM]
+name = "Chemistry and Biochemistry"
+
+[CHEM.courses.199]
+title = "Reading and Research"
+catalog = "/courses/CHEM.html#chem199"
+note = """Students should come to 4010 York Hall for information and forms to \
+  apply for Chemistry 199, Reading and Research."""
+
+[CHEM.courses.299]
+title = "Research in Chemistry"
+catalog = "/courses/CHEM.html#chem299"
+
+[CHIN]
+name = "Chinese Studies"
+
+[CHIN.courses.10AN]
+title = "First Yr Chinese/Non-Native I"
+catalog = "/courses/CHIN.html#chin10an"
+
+[CHIN.courses.10BN]
+title = "First Yr Chinese/Non-Native II"
+catalog = "/courses/CHIN.html#chin10bn"
+
+[CHIN.courses.10CN]
+title = "First Yr Chinese/Non-NativeIII"
+catalog = "/courses/CHIN.html#chin10cn"
+
+[CHIN.courses.20AN]
+title = "Second Yr Chinese/Non-Native I"
+catalog = "/courses/CHIN.html#chin20an"
+
+[CLRE]
+name = "Clinical Research"
+
+[CLRE.courses.250]
+title = "Patient-Oriented Research I"
+catalog = "/courses/CLRE.html#clre250"
+
+[CLRE.courses.251]
+title = "Epidemiology I"
+catalog = "/courses/CLRE.html#clre251"
+
+[CLRE.courses.252]
+title = "Health Services Research"
+catalog = "/courses/CLRE.html#clre252"
+
+[CLRE.courses.253]
+title = "Biostatistics I"
+catalog = "/courses/CLRE.html#clre253"
+
+[CLRE.courses.258]
+title = "Prof Develpmnt/Clinical Resrch"
+catalog = "/courses/CLRE.html#clre258"
+
+[CLRE.courses.259]
+title = "Scientifc Communication Skills"
+catalog = "/courses/CLRE.html#clre259"
+
+[CLRE.courses.264]
+title = "Clinical Decision Analysis"
+catalog = "/courses/CLRE.html#clre264"
+
+[CLRE.courses.265]
+title = "Advanced Regression Methods"
+catalog = "/courses/CLRE.html#clre265"
+
+[CLRE.courses.268]
+title = "Behavioral Science Methods"
+catalog = "/courses/CLRE.html#clre268"
+
+[CLRE.courses.296]
+title = "Independent Study Project"
+catalog = "/courses/CLRE.html#clre296"
+
+[CLRE.courses.298]
+title = "Independent Study Proj-4 units"
+catalog = "/courses/CLRE.html#clre298"
+
+[CLRE.courses.299]
+title = "Mentorship & Career Plan/CLRE"
+catalog = "/courses/CLRE.html#clre299"
+
+[COGS]
+name = "Cognitive Science"
+
+[COGS.courses.199]
+title = "Special Project"
+catalog = "/courses/COGS.html#cogs199"
+
+[CSE]
+name = "Computer Science & Engineering"
+
+[CSE.courses.197]
+title = "Field Study/Computer Sci&Engin"
+catalog = "/courses/CSE.html#cse197"
+note = """CSE Special Studies (CSE 197, CSE 198 or CSE 199) contact the CSE \
+  Dept via the Virtual Advising Center. The Special Studies form is found at \
+  My TrintonLink: Forms."""
+
+[CSE.courses.199]
+title = "Independent Study"
+catalog = "/courses/CSE.html#cse199"
+
+[CSE.courses.299]
+title = "Research"
+catalog = "/courses/CSE.html#cse299"
+
+[ECE]
+name = "Electrical & Computer Engineer"
+
+[ECE.courses.190]
+title = "Engineering Design"
+catalog = "/courses/ECE.html#ece190"
+note = """Students should go to the ECE Undergraduate office, Engineering \
+  Building Unit 1, Room 2906, to obtain a Design enrollment form and \
+  department approval for enrollment in ECE 190."""
+
+[ECE.courses.197]
+title = "Field Study/Electrical&Computr"
+catalog = "/courses/ECE.html#ece197"
+
+[ECE.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/ECE.html#ece199"
+
+[ECE.courses.299]
+title = "Research"
+catalog = "/courses/ECE.html#ece299"
+
+[ECON]
+name = "Economics"
+
+[ECON.courses.199]
+title = "Independent Study"
+catalog = "/courses/ECON.html#econ199"
+note = """Students should see the Economics Undergraduate Advisor to obtain \
+  information and department approval for enrollment in ECON 195 & ECON 199."""
+
+[EDS]
+name = "Education Studies"
+
+[EDS.courses.115]
+title = "Cog Development & Education"
+catalog = "/courses/EDS.html#eds115"
+
+[EDS.courses.117]
+title = "Language, Culture & Education"
+catalog = "/courses/EDS.html#eds117"
+
+[EDS.courses.125]
+title = "Hist,Polic&Theory/Bilingual Ed"
+catalog = "/courses/EDS.html#eds125"
+
+[EDS.courses.128A]
+title = "Intro/Teaching&Learning (Elem)"
+catalog = "/courses/EDS.html#eds128a"
+note = """Students enrolling in this course must complete our placement form \
+  at http://eds.ucsd.edu (undergraduate tab). Students will be authorized to \
+  enroll in the course within 1-2 business days. Concurrent enrollment in \
+  EDS 139 is also required. Along with the required Lecture and discussion, \
+  students are expected to spend 4-6 hours a week at their assigned school \
+  site. Prereq: EDS 130, 131, 136, 137 or 138."""
+
+[EDS.courses.128B]
+title = "Intro/Teaching&Learning (Elem)"
+catalog = "/courses/EDS.html#eds128b"
+
+[EDS.courses.139]
+title = "Practicum in Teaching/Learning"
+catalog = "/courses/EDS.html#eds139"
+note = """EDS 139 is a required co-requisite to all EDS fieldwork courses. You \
+  will want to register for the 139 that corresponds with the faculty of the \
+  course you are taking (i.e. EDS 128A/B 129A/B/C, 130, 131, 136, 137, 138)"""
+
+[EDS.courses.199]
+title = "Special Studies"
+catalog = "/courses/EDS.html#eds199"
+
+[EDS.courses.201]
+title = "Intro/Resources/Tching&Lrning"
+catalog = "/courses/EDS.html#eds201"
+
+[EDS.courses.203]
+title = "Technology,Teaching & Learning"
+catalog = "/courses/EDS.html#eds203"
+
+[EDS.courses.204]
+title = "Tech & Professional Assessment"
+catalog = "/courses/EDS.html#eds204"
+
+[EDS.courses.206]
+title = "Teaching Perf Assessment Portf"
+catalog = "/courses/EDS.html#eds206"
+
+[EDS.courses.229]
+title = "Intro to Educational Resources"
+catalog = "/courses/EDS.html#eds229"
+
+[EDS.courses.232]
+title = "Special Topics in Education"
+catalog = "/courses/EDS.html#eds232"
+
+[EDS.courses.250]
+title = "Equitable Educ/Res & Practice"
+catalog = "/courses/EDS.html#eds250"
+
+[EDS.courses.281]
+title = "Leadership for Learning"
+catalog = "/courses/EDS.html#eds281"
+
+[EDS.courses.284]
+title = "Leadership for Organiztn Devel"
+catalog = "/courses/EDS.html#eds284"
+
+[EDS.courses.286]
+title = "Advanced Topics in Leadership"
+catalog = "/courses/EDS.html#eds286"
+
+[EDS.courses.289C]
+title = "Dissertation Writing Seminar"
+catalog = "/courses/EDS.html#eds289c"
+
+[EDS.courses.290]
+title = "Research Practicum"
+catalog = "/courses/EDS.html#eds290"
+
+[EDS.courses.295]
+title = "M. A. Thesis"
+catalog = "/courses/EDS.html#eds295"
+
+[EDS.courses.299]
+title = "Dissertation Research"
+catalog = "/courses/EDS.html#eds299"
+
+[EDS.courses.372]
+title = "World Lang Teaching Practices"
+catalog = "/courses/EDS.html#eds372"
+
+[EDS.courses.373]
+title = "Secondary Engl Teaching Practs"
+catalog = "/courses/EDS.html#eds373"
+
+[EDS.courses.374]
+title = "Secondary Math Teaching Prac"
+catalog = "/courses/EDS.html#eds374"
+
+[EDS.courses.375]
+title = "Secondary Sci Teaching Prac"
+catalog = "/courses/EDS.html#eds375"
+
+[EDS.courses.376]
+title = "Language & Learning Instructn"
+catalog = "/courses/EDS.html#eds376"
+
+[EDS.courses.385]
+title = "Elem. Schl Math Content & Ped"
+catalog = "/courses/EDS.html#eds385"
+
+[ETHN]
+name = "Ethnic Studies"
+
+[ETHN.courses.199]
+title = "Independent Study and Research"
+catalog = "/courses/ETHN.html#ethn199"
+
+[FPM]
+name = "Family and Preventive Medicine"
+
+[FPM.courses.286]
+title = "Free Clinic II"
+catalog = "/courses/FMPH.html#fpm286"
+
+[FPM.courses.296]
+title = "Community Med Independnt Rsrch"
+
+[HDP]
+name = "Human Development Program"
+
+[HDP.courses.181]
+title = "Exper Proj/Human Dev. Research"
+catalog = "/courses/HDP.html#hdp181"
+
+[HDP.courses.199]
+title = "Independent Study/Human Devlp"
+catalog = "/courses/HDP.html#hdp199"
+
+[HLAW]
+name = "Health Law"
+
+[HLAW.courses.214]
+title = "Health Policy/Law Independ Sdy"
+catalog = "/courses/HLAW.html#hlaw214"
+
+[HLAW.courses.296B]
+title = "Indep Study Project/Health Law"
+catalog = "/courses/HLAW.html#hlaw296b"
+
+[HLAW.courses.298]
+title = "Directed Studies in Health Law"
+catalog = "/courses/HLAW.html#hlaw298"
+
+[HLAW.courses.299]
+title = "Indep Study/Health Law-3 units"
+catalog = "/courses/HLAW.html#hlaw299"
+
+[IRGN]
+name = "Intrnat Relat/Pac Study-Generl"
+
+[IRGN.courses.199]
+title = "Independent Research/Study"
+catalog = "/courses/GPS.html#irgn199"
+
+[LATI]
+name = "Latin American Studies"
+
+[LATI.courses.199]
+title = "Individual Study"
+catalog = "/courses/LATI.html#lati199"
+note = "Please call 534-7967 for approval to enroll in LATI 199."
+
+[LAWS]
+name = "Law and Society"
+
+[LAWS.courses.102S]
+title = "Crimes,Civil Wrongs&Constition"
+catalog = "/courses/LAWS.html#laws102s"
+
+[LHCO]
+name = "Leadership/Health Care Organiz"
+
+[LHCO.courses.201C]
+title = "Tp/Healthcare Mgmt &Innovation"
+catalog = "/courses/LHCO.html#lhco201c"
+
+[LHCO.courses.298]
+title = "ISP in the Mgmt of Healthcare"
+catalog = "/courses/LHCO.html#lhco298"
+
+[LIFR]
+name = "Linguistics/French"
+
+[LIFR.courses.5B]
+title = "Fundamentals of French"
+catalog = "/courses/LING.html#lifr5b"
+
+[LIFR.courses.5C]
+title = "Fundamentals of French"
+catalog = "/courses/LING.html#lifr5c"
+
+[LIFR.courses.5D]
+title = "Fundamentals of French"
+catalog = "/courses/LING.html#lifr5d"
+
+[LIGM]
+name = "Linguistics/German"
+
+[LIGM.courses.5A]
+title = "Fundamentals of German"
+catalog = "/courses/LING.html#ligm5a"
+
+[LIGM.courses.5B]
+title = "Fundamentals of German"
+catalog = "/courses/LING.html#ligm5b"
+
+[LIGM.courses.5C]
+title = "Fundamentals of German"
+catalog = "/courses/LING.html#ligm5c"
+
+[LIIT]
+name = "Linguistics/Italian"
+
+[LIIT.courses.5AS]
+title = "Fundamentals of Italian I"
+catalog = "/courses/LING.html#liit5as"
+
+[LIIT.courses.5BS]
+title = "Fundamentals of Italian II"
+catalog = "/courses/LING.html#liit5bs"
+
+[LIIT.courses.5CS]
+title = "Fundamentals of Italian III"
+catalog = "/courses/LING.html#liit5cs"
+
+[LISP]
+name = "Linguistics/Spanish"
+
+[LISP.courses.5A]
+title = "Fundamentals of Spanish"
+catalog = "/courses/LING.html#lisp5a"
+
+[LISP.courses.5B]
+title = "Fundamentals of Spanish"
+catalog = "/courses/LING.html#lisp5b"
+
+[LISP.courses.5C]
+title = "Fundamentals of Spanish"
+catalog = "/courses/LING.html#lisp5c"
+
+[LISP.courses.5D]
+title = "Fundamentals of Spanish"
+catalog = "/courses/LING.html#lisp5d"
+
+[LTEN]
+name = "Literatures in English"
+
+[LTEN.courses.199]
+title = "Special Studies"
+catalog = "/courses/LIT.html#lten199"
+
+[LTLA]
+name = "Literature/Latin"
+
+[LTLA.courses.4]
+title = "Intensive Elementary Latin"
+catalog = "/courses/LIT.html#ltla4"
+
+[LTSP]
+name = "Literature/Spanish"
+
+[LTSP.courses.199]
+title = "Special Studies"
+catalog = "/courses/LIT.html#ltsp199"
+
+[MAE]
+name = "Mechanical & Aerospace Engin"
+
+[MAE.courses.197]
+title = "Engineering Internship"
+catalog = "/courses/MAE.html#mae197"
+
+[MAE.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/MAE.html#mae199"
+note = """Students should go to Engineering Building Unit 2, Room 180 to \
+  obtain information and department approval for enrollment in MAE 199."""
+
+[MAE.courses.299]
+title = "Graduate Research"
+catalog = "/courses/MAE.html#mae299"
+
+[MATH]
+name = "Mathematics"
+
+[MATH.courses.197]
+title = "Mathematics Internship"
+catalog = "/courses/MATH.html#math197"
+
+[MATH.courses.199]
+title = "Independent Study/Undergrad"
+catalog = "/courses/MATH.html#math199"
+note = """Students should go to the Mathematics Department Office, APM 7018, \
+  to obtain information and department approval for enrollment in MATH 199."""
+
+[MATH.courses.199H]
+title = "Honors/Thesis Resrch/Undergrad"
+catalog = "/courses/MATH.html#math199h"
+note = """MATH 199H students should go to the Mathematics Advising Office, \
+  APM 7018, to obtain information about the Mathematics Honors Program."""
+
+[MED]
+name = "Medicine"
+
+[MED.courses.199]
+title = "Independent Study"
+
+[MGT]
+name = "Rady School of Management"
+
+[MGT.courses.239]
+title = "Topics in Accounting"
+catalog = "/courses/RSM.html#mgt239"
+
+[MGT.courses.401]
+title = "Professional Seminar"
+catalog = "/courses/MGT.html#mgt401"
+
+[MGT.courses.414A]
+title = "Lab to Market Workshop I"
+catalog = "/courses/MGT.html#mgt414a"
+
+[MGT.courses.417]
+title = "Current Business Law Issues"
+catalog = "/courses/MGT.html#mgt417"
+
+[MGT.courses.421]
+title = "CEO & Corporate Governance"
+catalog = "/courses/MGT.html#mgt421"
+
+[MGT.courses.426]
+title = "Creating a High-Perf Workplace"
+catalog = "/courses/MGT.html#mgt426"
+
+[MGT.courses.429]
+title = "Topics in Corporate Governance"
+catalog = "/courses/RSM.html#mgt429"
+
+[MGT.courses.439]
+title = "Topics/Organizational Behavior"
+catalog = "/courses/MGT.html#mgt439"
+
+[MGT.courses.449]
+title = "Topics/Operations & Technology"
+catalog = "/courses/RSM.html#mgt449"
+
+[MGT.courses.452]
+title = "New Product Development"
+catalog = "/courses/MGT.html#mgt452"
+
+[MGT.courses.453]
+title = "Supply Chain Management"
+catalog = "/courses/MGT.html#mgt453"
+
+[MGT.courses.463]
+title = "Projects in Tech Comm"
+catalog = "/courses/RSM.html#mgt463"
+
+[MGT.courses.489]
+title = "Topics in Marketing"
+catalog = "/courses/RSM.html#mgt489"
+
+[MGT.courses.499]
+title = "Individual Directed Study"
+catalog = "/courses/RSM.html#mgt499"
+
+[NANO]
+name = "NanoEngineering"
+
+[NANO.courses.199]
+title = "Independent Study/Undergrad"
+catalog = "/courses/NANO.html#nano199"
+
+[NEU]
+name = "Neurosciences"
+
+[NEU.courses.199]
+title = "Independent Study"
+catalog = "/courses/NEU.html#neu199"
+
+[PHYS]
+name = "Physics"
+
+[PHYS.courses.199]
+title = "Research for Undergraduates"
+catalog = "/courses/PHYS.html#phys199"
+note = """Students should see Antoinette (Toni) Moore, Physics Student Affairs \
+  Office, Mayer Hall Addition 2581, to obtain applications/information \
+  concerning Physics 195, 198, 199, and 199H."""
+
+[POLI]
+name = "Political Science"
+
+[POLI.courses.199]
+title = "Independent Study"
+catalog = "/courses/POLI.html#poli199"
+
+[PSYC]
+name = "Psychology"
+
+[PSYC.courses.199]
+title = "Independent Study"
+catalog = "/courses/PSYC.html#psyc199"
+note = """Students should go to the Psychology Department Office, \
+  Mandler 1533, to obtain information and department approval for enrollment \
+  in Psychology 199."""
+
+[SE]
+name = "Structural Engineering"
+
+[SE.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/SE.html#se199"
+
+[SIO]
+name = "Scripps Inst of Oceanography"
+
+[SIO.courses.199]
+title = "Special Studies"
+catalog = "/courses/SIO.html#sio199"
+
+[SIO.courses.295LS]
+title = "Lab Marine Biodivrsty&Consrvtn"
+catalog = "/courses/SIO.html#sio295ls"
+
+[SIO.courses.295S]
+title = "Marine Biodiversity&Conservatn"
+catalog = "/courses/SIO.html#sio295s"
+
+[SOCI]
+name = "Sociology"
+
+[SOCI.courses.117]
+title = "Language, Culture & Education"
+catalog = "/courses/SOC.html#soci117"
+
+[SOMI]
+name = "Sch of Med Interdisciplinary"
+
+[SOMI.courses.220]
+title = "Core Topics in Biomedical Sci"
+
+[VIS]
+name = "Visual Arts"
+
+[VIS.courses.199]
+title = "Special Studies"
+catalog = "/courses/VIS.html#vis199"
+note = """Students should see the Visual Arts Advisor in Mandeville 216 or e-\
+  mail vis-ug@ucsd.edu to obtain information/application concerning VIS 199 \
+  courses."""
+
+[WES]
+name = "Wireless Embedded Systems"
+
+[WES.courses.265]
+title = "Wireless Comm Circ and Sys"
+catalog = "/courses/MAS.html#wes265"

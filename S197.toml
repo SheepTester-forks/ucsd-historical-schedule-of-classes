@@ -1,0 +1,793 @@
+[AMES]
+name = "Applied Mechanics & Engin Scis"
+
+[AMES.courses.5]
+title = "Quantitative Computer Skills"
+
+[AMES.courses.101A]
+title = "Introductory Fluid Mechanics"
+
+[AMES.courses.103A]
+title = "Introductory Fluid Mechanics"
+
+[AMES.courses.199]
+title = "Independent Study/Undergrads"
+
+[AMES.courses.299]
+title = "Graduate Research"
+
+[ANLD]
+name = "Anthropology/Lower Division"
+
+[ANLD.courses.11]
+title = "Human Origins:World Prehistory"
+
+[ANPR]
+name = "Anthropology/Program"
+
+[ANPR.courses.199]
+title = "Independent Study"
+catalog = "/courses/ANTH.html#anpr199"
+
+[ANRG]
+name = "Anthropology/Regional"
+
+[ANRG.courses.126]
+title = "Mesoamerica and the Andes"
+catalog = "/courses/ANTH.html#anpr199"
+
+[BENG]
+name = "Bioengineering"
+
+[BENG.courses.299]
+title = "Graduate Research"
+catalog = "/courses/BENG.html#beng299"
+
+[BGGN]
+name = "Biology/Grad/General"
+
+[BGGN.courses.271]
+title = "Adv Experimental Methods/Bio"
+catalog = "/courses/BENG.html#beng299"
+note = """BGGN 271 is only open to students enrolled in the Integrated \
+  Bachelors/Masters Degree Program."""
+
+[BGGN.courses.299]
+title = "Thesis Research in Biology"
+catalog = "/courses/BENG.html#beng299"
+
+[BIBC]
+name = "Biology/Biochemistry"
+
+[BIBC.courses.100]
+title = "Structural Biochemistry"
+catalog = "/courses/BIOL.html#bibc100"
+
+[BIBC.courses.102]
+title = "Metabolic Biochemistry"
+catalog = "/courses/BIOL.html#bibc102"
+
+[BICD]
+name = "Biol/Genetics,Cellular&Develop"
+
+[BICD.courses.100]
+title = "Genetics"
+catalog = "/courses/BIOL.html#bibc102"
+
+[BICD.courses.120]
+title = "Fundamentals of Plant Biology"
+catalog = "/courses/BIOL.html#bicd120"
+
+[BILD]
+name = "Biology/Lower Division"
+
+[BILD.courses.1]
+title = "The Cell"
+catalog = "/courses/BIOL.html#bild1"
+
+[BILD.courses.2]
+title = "Multicellular Life"
+catalog = "/courses/BIOL.html#bild2"
+
+[BILD.courses.3]
+title = "Organismic&Evolutionary Biol"
+catalog = "/courses/BIOL.html#bild2"
+
+[BILD.courses.10]
+title = "Fundamental Concepts/Modrn Bio"
+catalog = "/courses/BIOL.html#bild10"
+
+[BILD.courses.80]
+title = "Intro to Bio/Experimental Sci"
+catalog = "/courses/BIOL.html#bild10"
+
+[BILD.courses.82]
+title = "Marine Biology"
+
+[BIMM]
+name = "Biology/Molec Biol, Microbiol"
+
+[BIMM.courses.100]
+title = "Molecular Biology"
+catalog = "/courses/BIOL.html#bimm100"
+
+[BIMM.courses.126]
+title = "Environmental Microbiology"
+catalog = "/courses/BIOL.html#bimm100"
+
+[BIOM]
+name = "Biomedical Sciences"
+
+[BIOM.courses.298]
+title = "Directed Study"
+catalog = "/courses/BIOM.html#biom298"
+
+[BIOM.courses.299]
+title = "Independent Study"
+catalog = "/courses/BIOM.html#biom299"
+
+[BIPN]
+name = "Biology/Animal Physiol&Neurosc"
+
+[BIPN.courses.100]
+title = "Mammalian Physiology I"
+catalog = "/courses/BIOL.html#bipn100"
+
+[BISP]
+name = "Biology/Special Studies"
+
+[BISP.courses.195]
+title = "Intro to Teaching in Biology"
+catalog = "/courses/BIOL.html#bipn100"
+
+[BISP.courses.199]
+title = "Independent Study"
+catalog = "/courses/BIOL.html#bisp199"
+
+[CHEM]
+name = "Chemistry and Biochemistry"
+
+[CHEM.courses.6B]
+title = "General Chemistry"
+catalog = "/courses/BIOM.html#biom299"
+
+[CHEM.courses.6BL]
+title = "Intr Inorganic Chem Laboratory"
+catalog = "/courses/CHEM.html#chem6bl"
+
+[CHEM.courses.6C]
+title = "General Chemistry"
+catalog = "/courses/CHEM.html#chem6bl"
+
+[CHEM.courses.132]
+title = "Physical Chemistry"
+catalog = "/courses/CHEM.html#chem132"
+
+[CHEM.courses.140A]
+title = "Organic Chemistry"
+catalog = "/courses/CHEM.html#chem132"
+
+[CHEM.courses.140C]
+title = "Organic Chemistry"
+catalog = "/courses/CHEM.html#chem132"
+
+[CHEM.courses.143A]
+title = "Organic Chemistry Laboratory"
+catalog = "/courses/CHEM.html#chem132"
+
+[CHEM.courses.299]
+title = "Research in Chemistry"
+catalog = "/courses/CHEM.html#chem299"
+
+[COCU]
+name = "Communication and Culture"
+
+[COCU.courses.125]
+title = "How to Read a Film"
+catalog = "/courses/COGS.html#cogs299"
+
+[COCU.courses.137]
+title = "The Politics of Bodies"
+catalog = "/courses/COMM.html#cocu137"
+
+[COGN]
+name = "Communication/General"
+
+[COGN.courses.20]
+title = "Introduction to Communication"
+catalog = "/courses/COMM.html#cogn20"
+
+[COGN.courses.150]
+title = "Senior Seminar/Communication"
+catalog = "/courses/COMM.html#cogn150"
+
+[COGR]
+name = "Communication/Graduate"
+
+[COGR.courses.299]
+title = "Independent Graduate Study"
+catalog = "/courses/COMM.html#cogn150"
+
+[COGS]
+name = "Cognitive Science"
+
+[COGS.courses.17]
+title = "Neurobiology of Cognition"
+catalog = "/courses/COGS.html#cogs17"
+
+[COGS.courses.298]
+title = "Directed Independent Study"
+catalog = "/courses/COGS.html#cogs298"
+
+[COGS.courses.299]
+title = "Thesis Research"
+catalog = "/courses/COGS.html#cogs299"
+
+[COHI]
+name = "Communication/Human Info Proc"
+
+[COHI.courses.111C]
+title = "Communicating and Computers"
+catalog = "/courses/COMM.html#cogn150"
+
+[CSE]
+name = "Computer Science & Engineering"
+
+[CSE.courses.9A]
+title = "Intr/Computer Science with C++"
+catalog = "/courses/COMM.html#cogn150"
+
+[CSE.courses.20]
+title = "Discrete Mathematics"
+catalog = "/courses/COMM.html#cogn150"
+
+[CSE.courses.101]
+title = "Design & Analysis of Algorithm"
+catalog = "/courses/CSE.html#cse101"
+
+[CSE.courses.199]
+title = "Independent Study"
+catalog = "/courses/CSE.html#cse199"
+
+[CSE.courses.299]
+title = "Research"
+catalog = "/courses/CSE.html#cse199"
+
+[ECE]
+name = "Electrical & Computer Engineer"
+
+[ECE.courses.30]
+title = "Intro to Computer Engineering"
+
+[ECE.courses.60A]
+title = "Circuits and Systems I"
+
+[ECE.courses.60L]
+title = "Circuits & Systems Laboratory"
+
+[ECE.courses.171A]
+title = "Linear Control System Theory"
+catalog = "/courses/ECE.html#ece171a"
+
+[ECE.courses.192]
+title = "Engineering Design"
+catalog = "/courses/ECE.html#ece192"
+
+[ECE.courses.299]
+title = "Research"
+catalog = "/courses/ECE.html#ece192"
+
+[ECON]
+name = "Economics"
+
+[ECON.courses.1A]
+title = "Elements of Economics"
+catalog = "/courses/ECE.html#ece192"
+
+[ECON.courses.80]
+title = "Computer-Aided Methds/Econ&Mgt"
+catalog = "/courses/ECE.html#ece192"
+
+[ECON.courses.100A]
+title = "Microeconomics"
+catalog = "/courses/ECE.html#ece192"
+
+[ECON.courses.101]
+title = "International Trade"
+
+[ECON.courses.103]
+title = "International Monetary Relatns"
+catalog = "/courses/ECON.html#econ103"
+
+[ECON.courses.150]
+title = "Econ/Public Sector: Taxation"
+catalog = "/courses/ECON.html#econ150"
+
+[ECON.courses.182]
+title = "Topics in Microeconomics"
+catalog = "/courses/ECON.html#econ182"
+
+[ECON.courses.299]
+title = "Research in Economics"
+catalog = "/courses/ECON.html#econ299"
+
+[ETHN]
+name = "Ethnic Studies"
+
+[ETHN.courses.156]
+title = "Civil Liberties-Rts Crim&Minor"
+catalog = "/courses/ECON.html#econ299"
+
+[HIEU]
+name = "History of Europe"
+
+[HIEU.courses.142]
+title = "Euro Intellct Hist: 1780-1870"
+catalog = "/courses/HIST.html#hieu142"
+
+[HIEU.courses.154]
+title = "Mod/Germ: Bismark to Hitler"
+catalog = "/courses/HIST.html#hieu142"
+
+[HIGR]
+name = "History, Graduate"
+
+[HIGR.courses.298]
+title = "Directed Reading"
+catalog = "/courses/HIST.html#higr298"
+
+[HIGR.courses.299]
+title = "Ph.D. Thesis Direction"
+catalog = "/courses/HIST.html#higr299"
+
+[HUM]
+name = "Humanities"
+
+[HUM.courses.3]
+title = "Renaissance,Reform&Early Europ"
+catalog = "/courses/HUM.html#hum3"
+
+[LIGN]
+name = "Linguistics/General"
+
+[LIGN.courses.299]
+title = "Doctoral Research"
+catalog = "/courses/MMW.html#mmw5"
+
+[LTCO]
+name = "Literature/Comparative"
+
+[LTCO.courses.299]
+title = "Dissertation"
+catalog = "/courses/LIT.html#ltco299"
+
+[LTCS]
+name = "Literature/Cultural Studies"
+
+[LTCS.courses.296]
+title = "Research Practicum"
+catalog = "/courses/LIT.html#ltcs296"
+
+[LTCS.courses.298]
+title = "Special Projects: Writing Crse"
+catalog = "/courses/LIT.html#ltcs298"
+
+[LTCS.courses.299]
+title = "Dissertation"
+catalog = "/courses/LIT.html#ltcs299"
+
+[LTEN]
+name = "Literatures in English"
+
+[LTEN.courses.114]
+title = "Shakespeare III:Stage,Film,&TV"
+catalog = "/courses/LIT.html#lten114"
+
+[LTEN.courses.158]
+title = "Modern American Literature"
+catalog = "/courses/LIT.html#lten158"
+
+[LTEN.courses.175B]
+title = "New Amer Poetry:Post WWII-Pres"
+catalog = "/courses/LIT.html#lten175b"
+
+[LTEN.courses.297]
+title = "Directed Studies:Readng Course"
+catalog = "/courses/LIT.html#lten297"
+
+[LTGM]
+name = "Literature/German"
+
+[LTGM.courses.2A]
+title = "Readings and Interpretations"
+catalog = "/courses/LIT.html#lten297"
+
+[LTGN]
+name = "Literature/General"
+
+[LTGN.courses.187]
+title = "Women and Literature"
+catalog = "/courses/LIT.html#lten297"
+
+[LTSP]
+name = "Literature/Spanish"
+
+[LTSP.courses.2A]
+title = "Intermed Span I: Foundations"
+catalog = "/courses/LIT.html#lten297"
+
+[LTSP.courses.119C]
+title = "Cervantes: Don Quijote"
+catalog = "/courses/LIT.html#lten297"
+
+[LTSP.courses.296]
+title = "Research Practicum"
+catalog = "/courses/LIT.html#ltsp296"
+
+[LTWR]
+name = "Literature/Writing"
+
+[LTWR.courses.120]
+title = "Personal Narrative"
+catalog = "/courses/LIT.html#ltwr120"
+
+[MATH]
+name = "Mathematics"
+
+[MATH.courses.1A]
+title = "Elements/Mathematical Analysis"
+catalog = "/courses/LIT.html#ltwr120"
+note = """Students must obtain course approval for Math 1A and 20A, from the \
+  Mathematics Placement Office at 3231 Literature Building before adding or \
+  dropping. To receive approval, you must have appropriate placement test \
+  results no older than one year, or proof that you have been enrolled in the \
+  course in a previous quarter, or the appropriate grade from a lower level \
+  math course taken at UCSD. See page 20 for information on the Math Placement \
+  Exam."""
+
+[MATH.courses.20A]
+title = "Calculus"
+catalog = "/courses/LIT.html#ltwr120"
+note = """Students must obtain course approval for MATH 20A, from the \
+  Mathematics Placement Office at 3231 Literature Building before adding or \
+  dropping. To receive approval, you must have appropriate placement test \
+  results no older than one year, or proof that you have been enrolled in the \
+  course in a previous quarter, or the appropriate grade from a lower level \
+  math course taken at UCSD. See page 20 for information on the Math Placement \
+  Exam."""
+
+[MATH.courses.20C]
+title = "Calculus"
+catalog = "/courses/LIT.html#ltwr120"
+
+[MATH.courses.20E]
+title = "Vector Calculus"
+catalog = "/courses/MATH.html#math20e"
+
+[MATH.courses.20F]
+title = "Linear Algebra"
+catalog = "/courses/MATH.html#math20e"
+
+[MATH.courses.299]
+title = "Reading and Research"
+catalog = "/courses/MATH.html#math299"
+
+[MATS]
+name = "Materials Sci & Engineering"
+
+[MATS.courses.299]
+title = "Graduate Research"
+catalog = "/courses/MATS.html#mats299"
+
+[MMW]
+name = "Making of the Modern World"
+
+[MMW.courses.4]
+title = "European Expan&Clash/Cultures"
+catalog = "/courses/HUM.html#hum3"
+
+[MMW.courses.5]
+title = "Revolution,Industry & Empire"
+catalog = "/courses/MMW.html#mmw5"
+note = """Students must attend their first discussion section of MMW 5 or they \
+  will be dropped from the class. Discussion sections for MMW 5 begin on \
+  Wednesday, January 8, 1997. Prior written notification to the teaching \
+  assistant or the Eleanor Roosevelt College Writing Program office regarding \
+  an anticipated absence will ensure a space."""
+
+[MMW.courses.6]
+title = "Our Century and After"
+catalog = "/courses/MMW.html#mmw5"
+note = """Students must attend their first discussion section of MMW 6 or they \
+  will be dropped from the class. Discussion sections begin on Tuesday, \
+  January 5, 1999. Prior notification to the teaching assistant or the Eleanor \
+  Roosevelt College Writing Program office regarding an anticipated absence \
+  will ensure a space."""
+
+[MUS]
+name = "Music"
+
+[MUS.courses.8]
+title = "American Music"
+catalog = "/courses/MUS.html#mus8"
+
+[MUS.courses.80]
+title = "Special Topics in Music"
+catalog = "/courses/MUS.html#mus80"
+
+[NEU]
+name = "Neurosciences"
+
+[NEU.courses.296]
+title = "Neurosciences Independnt Rsrch"
+catalog = "/courses/MUS.html#mus80"
+
+[NEU.courses.299]
+title = "Neurosciences Research"
+catalog = "/courses/NEU.html#neu299"
+
+[PATH]
+name = "Pathology"
+
+[PATH.courses.296]
+title = "Pathology Independent Research"
+catalog = "/courses/PATH.html#path296"
+
+[PHIL]
+name = "Philosophy"
+
+[PHIL.courses.27]
+title = "Ethics And Society"
+catalog = "/courses/PATH.html#path296"
+
+[PHIL.courses.199]
+title = "Directed Individual Study"
+catalog = "/courses/PHIL.html#phil199"
+note = """Students should come to the Philosophy Undergraduate Student \
+  Services Office, HSS 7030, to obtain information and department approval for \
+  enrollment in Philosophy 199."""
+
+[PHIL.courses.299]
+title = "Thesis Research"
+catalog = "/courses/PHIL.html#phil299"
+
+[PHYS]
+name = "Physics"
+
+[PHYS.courses.1A]
+title = "General Physics-Mechanics"
+catalog = "/courses/PHIL.html#phil299"
+
+[PHYS.courses.1B]
+title = "Gen Phys-Heat&Elect&Magnet Fld"
+catalog = "/courses/PHIL.html#phil299"
+
+[PHYS.courses.1C]
+title = "Gen Phys-Wav,Optcs,Relat,Quan"
+catalog = "/courses/PHIL.html#phil299"
+
+[PHYS.courses.2AS]
+title = "Physics-Mechanics"
+catalog = "/courses/PHIL.html#phil299"
+
+[PHYS.courses.2BS]
+title = "Phys-Electricity and Magnetism"
+
+[PHYS.courses.2CS]
+title = "Physics-Flu,Wav,Thrmdyn,Optics"
+
+[PHYS.courses.2DS]
+title = "Phys-Relativity&Quantm Physics"
+
+[PHYS.courses.298]
+title = "Directed Study in Physics"
+catalog = "/courses/PHYS.html#phys298"
+
+[POLI]
+name = "Political Science"
+
+[POLI.courses.11]
+title = "Intro/Poli Sci:Compar Politics"
+catalog = "/courses/POLI.html#poli11"
+
+[POLI.courses.12]
+title = "Intro/Poli Sci:Int'l Relations"
+catalog = "/courses/POLI.html#poli12"
+
+[POLI.courses.27]
+title = "Ethics And Society"
+catalog = "/courses/POLI.html#poli12"
+
+[POLI.courses.102JJ]
+title = "Field Research/Urban Politics"
+catalog = "/courses/POLI.html#poli12"
+
+[POLI.courses.104C]
+title = "Civil Liberties-Rts Crim&Minor"
+catalog = "/courses/POLI.html#poli104c"
+
+[POLI.courses.104I]
+title = "Law&Politcs-Crts&Poli Controv"
+catalog = "/courses/POLI.html#poli104i"
+
+[POLI.courses.110EA]
+title = "American Political Thought"
+
+[POLI.courses.136B]
+title = "Compar Politics&Political Cult"
+catalog = "/courses/POLI.html#poli136b"
+
+[POLI.courses.299]
+title = "Independent Research"
+catalog = "/courses/POLI.html#poli136b"
+
+[PSYC]
+name = "Psychology"
+
+[PSYC.courses.1]
+title = "Psychology"
+catalog = "/courses/PSYC.html#psyc1"
+
+[PSYC.courses.6]
+title = "General Psychology: Social"
+catalog = "/courses/PSYC.html#psyc6"
+
+[PSYC.courses.19]
+title = "Introduction to Personality"
+
+[PSYC.courses.60]
+title = "Introduction to Statistics"
+catalog = "/courses/PSYC.html#psyc60"
+
+[PSYC.courses.102]
+title = "Intro/Sensation & Perception"
+catalog = "/courses/PSYC.html#psyc102"
+
+[PSYC.courses.104]
+title = "Introduction/Social Psychology"
+catalog = "/courses/PSYC.html#psyc102"
+
+[PSYC.courses.128]
+title = "Practicum in Child Development"
+catalog = "/courses/PSYC.html#psyc102"
+
+[PSYC.courses.131]
+title = "Personality Theory & Research"
+catalog = "/courses/PSYC.html#psyc131"
+
+[PSYC.courses.133]
+title = "Brain & Cognitive Development"
+catalog = "/courses/PSYC.html#psyc131"
+
+[PSYC.courses.139]
+title = "The Social Psychology of Sport"
+catalog = "/courses/PSYC.html#psyc139"
+
+[PSYC.courses.155]
+title = "Social Psychology and Medicine"
+catalog = "/courses/PSYC.html#psyc155"
+
+[PSYC.courses.163]
+title = "Abnormal Psychology"
+catalog = "/courses/PSYC.html#psyc163"
+
+[PSYC.courses.170]
+title = "Intro to Cognitive Neuropsych"
+catalog = "/courses/PSYC.html#psyc170"
+
+[PSYC.courses.179]
+title = "Drugs,Addiction&Mental Disordr"
+catalog = "/courses/PSYC.html#psyc179"
+
+[PSYC.courses.183]
+title = "Infancy"
+catalog = "/courses/PSYC.html#psyc179"
+
+[PSYC.courses.296]
+title = "Research Practicum"
+catalog = "/courses/PSYC.html#psyc296"
+
+[PSYC.courses.299]
+title = "Independent Research"
+catalog = "/courses/PSYC.html#psyc299"
+
+[SIO]
+name = "Scripps Inst of Oceanography"
+
+[SIO.courses.299]
+title = "Research"
+catalog = "/courses/SIO.html#sio299"
+
+[SOCC]
+name = "Soc/Soc Organiz & Institutions"
+
+[SOCC.courses.156]
+title = "Sociology of Religion"
+catalog = "/courses/SOC.html#socc156"
+
+[SOCD]
+name = "Soc/Comparative & Historical"
+
+[SOCD.courses.187S]
+title = "The Sixties"
+catalog = "/courses/SOC.html#socd187s"
+
+[SOCE]
+name = "Soc/Ind Research & Honors Prog"
+
+[SOCE.courses.199]
+title = "Independent Study"
+catalog = "/courses/SOC.html#soce199"
+
+[SOCG]
+name = "Soc/Graduate"
+
+[SOCG.courses.299]
+title = "Thesis Research"
+catalog = "/courses/SOC.html#socg299"
+
+[SOSC]
+name = "Social Science"
+
+[SOSC.courses.60]
+title = "Elem Stats: Social Sciences"
+catalog = "/courses/SOC.html#socg299"
+
+[THAC]
+name = "Theatre/Acting"
+
+[THAC.courses.1]
+title = "Introduction to Acting"
+catalog = "/courses/SOC.html#socg299"
+
+[THAC.courses.101]
+title = "Acting I"
+catalog = "/courses/SOC.html#socg299"
+
+[THGE]
+name = "Theatre/General"
+
+[THGE.courses.123]
+title = "Mary Poppins Meets Bladerunner"
+catalog = "/courses/SOC.html#socg299"
+
+[VIS]
+name = "Visual Arts"
+
+[VIS.courses.60]
+title = "Introduction to Photography"
+catalog = "/courses/VIS.html#vis60"
+
+[VIS.courses.105A]
+title = "Beginning Drawing"
+catalog = "/courses/VIS.html#vis60"
+
+[VIS.courses.106A]
+title = "Beginning Painting"
+catalog = "/courses/VIS.html#vis60"
+
+[VIS.courses.107A]
+title = "Beginning Sculpture"
+catalog = "/courses/VIS.html#vis60"
+
+[VIS.courses.194]
+title = "Fantasy In Film"
+catalog = "/courses/VIS.html#vis60"
+
+[VIS.courses.299]
+title = "Graduate Research"
+catalog = "/courses/VIS.html#vis299"
+
+[WCWP]
+name = "Warren College Writing Program"
+
+[WCWP.courses.10A]
+title = "The Writing Course"
+catalog = "/courses/VIS.html#vis299"
+
+[WOMN]
+name = "Women's Studies Program"
+
+[WOMN.courses.2B]
+title = "Contests&Contrversy/Fem Analys"
+catalog = "/courses/VIS.html#vis299"

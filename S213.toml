@@ -1,0 +1,1380 @@
+[ANAR]
+name = "Anthropological Archeology"
+
+[ANAR.courses.100]
+title = "Spec Topics/Anth Archaeology"
+catalog = "/courses/ANTH.html#anar100"
+
+[ANAR.courses.111]
+title = "Anthropological Archaeology"
+catalog = "/courses/ANTH.html#anar111"
+
+[ANAR.courses.155S]
+title = "Stdy Abrd: Ancient Mesoamerica"
+catalog = "/courses/ANTH.html#anar155s"
+note = """Students who enroll in ANAR 155S will be charged a $2,495 Program \
+  Fee which will be assessed with registration fees."""
+
+[ANBI]
+name = "Anthro/Biological Anthropology"
+
+[ANBI.courses.143]
+title = "The Human Skeleton"
+catalog = "/courses/ANTH.html#anbi143"
+
+[ANSC]
+name = "Anthropology/Sociocultural"
+
+[ANSC.courses.123]
+title = "Political Anthropology"
+catalog = "/courses/ANTH.html#ansc123"
+
+[ANSC.courses.125]
+title = "Gender, Sexuality, & Society"
+catalog = "/courses/ANTH.html#ansc125"
+
+[ANSC.courses.166]
+title = "Film and Culture in Asia"
+catalog = "/courses/ANTH.html#ansc166"
+
+[ANSC.courses.167]
+title = "Rituals and Celebrations"
+catalog = "/courses/ANTH.html#ansc167"
+
+[ANTH]
+name = "Anthropology"
+
+[ANTH.courses.1]
+title = "Introduction to Culture"
+catalog = "/courses/ANTH.html#anth1"
+
+[ANTH.courses.3]
+title = "World Prehistory"
+catalog = "/courses/ANTH.html#anth3"
+
+[ANTH.courses.198]
+title = "Directed Group Study"
+catalog = "/courses/ANTH.html#anth198"
+
+[ANTH.courses.289S]
+title = "Tanzania Anthropogny StudyTour"
+catalog = "/courses/ANTH.html#anth289s"
+note = """Students who enroll in ANTH 289S will be charged a $4,386 Program \
+  Fee which will be assessed with registration fees."""
+
+[ANTH.courses.297]
+title = "Research Practicum"
+catalog = "/courses/ANTH.html#anth297"
+
+[ANTH.courses.298]
+title = "Independent Study"
+catalog = "/courses/ANTH.html#anth298"
+
+[BENG]
+name = "Bioengineering"
+
+[BENG.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/BENG.html#beng199"
+note = """Students should go to the Powell-Focht Bioengineering Hall, \
+  Room 141, to obtain information and department approval for enrollment in \
+  BENG 199."""
+
+[BICD]
+name = "Biol/Genetics,Cellular&Develop"
+
+[BICD.courses.110]
+title = "Cell Biology"
+catalog = "/courses/BIOL.html#bicd110"
+
+[BICD.courses.150]
+title = "Endocrinology"
+catalog = "/courses/BIOL.html#bicd150"
+
+[BIEB]
+name = "Biol/Ecology, Behavior, & Evol"
+
+[BIEB.courses.150]
+title = "Evolution"
+catalog = "/courses/BIOL.html#bieb150"
+
+[BILD]
+name = "Biology/Lower Division"
+
+[BILD.courses.2]
+title = "Multicellular Life"
+catalog = "/courses/BIOL.html#bild2"
+
+[BILD.courses.3]
+title = "Organismic&Evolutionary Biol"
+catalog = "/courses/BIOL.html#bild3"
+
+[BIMM]
+name = "Biology/Molec Biol, Microbiol"
+
+[BIMM.courses.100]
+title = "Molecular Biology"
+catalog = "/courses/BIOL.html#bimm100"
+
+[BIMM.courses.101]
+title = "Recombinant DNA Techniques"
+catalog = "/courses/BIOL.html#bimm101"
+note = """Please see note under the Biology heading regarding lab fees, wait \
+  lists, "W" policy, and attendance at the first scheduled meeting of \
+  BIMM 101. For information regarding lab enrollment and waitlist procedures, \
+  please visit http://biology.ucsd.edu/undergrad/Waitlist.html In addition to \
+  the formal lab hours listed below, there will be at least 1 hour/week in \
+  which students will be required to work in the class laboratory to complete \
+  experiments and prepare for presentations."""
+
+[BIMM.courses.121]
+title = "Laboratory in Microbiology"
+catalog = "/courses/BIOL.html#bimm121"
+note = """Please see note under the Biology heading regarding lab fees, wait \
+  lists, "W" policy, and attendance at the first scheduled meeting of \
+  BIMM 121. For information regarding lab enrollment and waitlist please \
+  visit: http://biology.ucsd.edu/undergrad/Waitlist.html In addition to the \
+  formal lab hours listed below, there will be at least 1 hour/week in which \
+  students will be required to work in the class laboratory to complete \
+  experiments and prepare for presentations."""
+
+[BISP]
+name = "Biology/Special Studies"
+
+[BISP.courses.199]
+title = "Individual Research for Ugrads"
+catalog = "/courses/BIOL.html#bisp199"
+
+[CAT]
+name = "Culture, Art, & Technology"
+
+[CAT.courses.124]
+title = "Sixth College Practicum"
+catalog = "/courses/CAT.html#cat124"
+note = """Students must have an approved Practicum Proposal and faculty \
+  acceptance in advance, to be eligible to enroll in this course. For \
+  information about the Online Practicum Proposal visit: http://sixth.ucsd.edu/\
+  practicum/proposal/index.html"""
+
+[CENG]
+name = "Chemical Engineering"
+
+[CENG.courses.15]
+title = "Engin. Comp Using MATLAB"
+catalog = "/courses/NANO.html#ceng15"
+
+[CENG.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/NANO.html#ceng199"
+
+[CGS]
+name = "Critical Gender Studies"
+
+[CGS.courses.2B]
+title = "Intro/CGS:Gender&Institutions"
+catalog = "/courses/CGS.html#cgs2b"
+
+[CGS.courses.102]
+title = "Topics in Critical Gender Stds"
+catalog = "/courses/CGS.html#cgs102"
+
+[CHEM]
+name = "Chemistry and Biochemistry"
+
+[CHEM.courses.6A]
+title = "General Chemistry I"
+catalog = "/courses/CHEM.html#chem6a"
+
+[CHEM.courses.6B]
+title = "General Chemistry II"
+catalog = "/courses/CHEM.html#chem6b"
+
+[CHEM.courses.6C]
+title = "General Chemistry III"
+catalog = "/courses/CHEM.html#chem6c"
+
+[CHEM.courses.108]
+title = "Protein Biochemistry Lab"
+catalog = "/courses/CHEM.html#chem108"
+note = """See Notes at the beginning of Chemistry and Biochemistry regarding \
+  add/drop deadlines, attendance at the first lab section, and fees for all \
+  laboratory courses. In addition to the formal hours listed below, an \
+  additional two to three hours each week may be required to complete the \
+  experiments. It is recommended that students not schedule a class that \
+  immediately follows the listed times. CHEM 108 lab begins Monday, August 5."""
+
+[CHEM.courses.140A]
+title = "Organic Chemistry I"
+catalog = "/courses/CHEM.html#chem140a"
+
+[CHEM.courses.140B]
+title = "Organic Chemistry II"
+catalog = "/courses/CHEM.html#chem140b"
+
+[CHEM.courses.140C]
+title = "Organic Chemistry III"
+catalog = "/courses/CHEM.html#chem140c"
+
+[COGS]
+name = "Cognitive Science"
+
+[COGS.courses.3]
+title = "An Introduction to Computing"
+catalog = "/courses/COGS.html#cogs3"
+
+[COGS.courses.14B]
+title = "Intro. to Statistical Analysis"
+
+[COGS.courses.17]
+title = "Neurobiology of Cognition"
+catalog = "/courses/COGS.html#cogs17"
+
+[COGS.courses.101A]
+title = "Sensation and Perception"
+catalog = "/courses/COGS.html#cogs101a"
+
+[COGS.courses.101C]
+title = "Language"
+catalog = "/courses/COGS.html#cogs101c"
+
+[COGS.courses.107B]
+title = "Systems Neuroscience"
+catalog = "/courses/COGS.html#cogs107b"
+
+[COGS.courses.109]
+title = "Modeling & Data Analysis"
+catalog = "/courses/COGS.html#cogs109"
+
+[COGS.courses.151]
+title = "Analogy and Conceptual Systems"
+catalog = "/courses/COGS.html#cogs151"
+
+[COGS.courses.153]
+title = "Language Comprehension"
+catalog = "/courses/COGS.html#cogs153"
+
+[COGS.courses.187A]
+title = "Usability & Info. Architecture"
+catalog = "/courses/COGS.html#cogs187a"
+
+[COGS.courses.199]
+title = "Special Project"
+catalog = "/courses/COGS.html#cogs199"
+
+[COHI]
+name = "Communication/Human Info Proc"
+
+[COHI.courses.116]
+title = "Language & American Ethnicity"
+
+[COMM]
+name = "Communication"
+
+[COMM.courses.10]
+title = "Introduction to Communication"
+catalog = "/courses/COMM.html#comm10"
+
+[COMM.courses.100B]
+title = "Interpretive Strategies"
+catalog = "/courses/COMM.html#comm100b"
+
+[COMM.courses.103F]
+title = "How to Read a Film"
+catalog = "/courses/COMM.html#comm103f"
+
+[COMM.courses.104G]
+title = "Comp Media Syst:Lat Amr&Carbbn"
+catalog = "/courses/COMM.html#comm104g"
+
+[COMM.courses.105G]
+title = "CT: Computer Game Studies"
+catalog = "/courses/COMM.html#comm105g"
+
+[COMM.courses.120M]
+title = "AMP: Media Stereotypes"
+catalog = "/courses/COMM.html#comm120m"
+
+[COMM.courses.126]
+title = "Children and Media"
+catalog = "/courses/COMM.html#comm126"
+
+[COMM.courses.175]
+title = "Cultures of Consumption"
+catalog = "/courses/COMM.html#comm175"
+
+[COMM.courses.180]
+title = "Adv Communication Theory"
+catalog = "/courses/COMM.html#comm180"
+
+[COMM.courses.190]
+title = "Junior Seminar in Comm"
+
+[CONT]
+name = "Contemporary Issues"
+
+[CONT.courses.1]
+title = "The University in Society"
+catalog = "/courses/CONT.html#cont1"
+
+[CSE]
+name = "Computer Science & Engineering"
+
+[CSE.courses.5A]
+title = "Introduction to Programming I"
+catalog = "/courses/CSE.html#cse5a"
+
+[CSE.courses.11]
+title = "Intr/Computer Sci&Obj-Ori:Java"
+catalog = "/courses/CSE.html#cse11"
+
+[CSE.courses.21]
+title = "Math/Algorithm&Systems Analys"
+catalog = "/courses/CSE.html#cse21"
+note = "CSE 21 is equivalent to MATH 15B."
+
+[CSE.courses.30]
+title = "Computer Organiz&Systms Progrm"
+catalog = "/courses/CSE.html#cse30"
+
+[CSE.courses.100]
+title = "Advanced Data Structures"
+catalog = "/courses/CSE.html#cse100"
+note = "CSE 100 is equivalent to MATH 176."
+
+[CSE.courses.135]
+title = "Server-side Web Applications"
+catalog = "/courses/CSE.html#cse135"
+
+[CSE.courses.136]
+title = "Enterprise-class Web Applcatns"
+catalog = "/courses/CSE.html#cse136"
+
+[CSE.courses.140]
+title = "Component&Desgn Tech/Digtl Sys"
+catalog = "/courses/CSE.html#cse140"
+
+[CSE.courses.140L]
+title = "Digital Systems Laboratory"
+catalog = "/courses/CSE.html#cse140l"
+
+[CSE.courses.190]
+title = "Topics/Computer Sci & Engineer"
+catalog = "/courses/CSE.html#cse190"
+
+[CSE.courses.197]
+title = "Field Study/Computer Sci&Engin"
+catalog = "/courses/CSE.html#cse197"
+note = """CSE Special Studies (CSE 197, CSE 198 or CSE 199) contact the CSE \
+  Dept via the Virtual Advising Center. The Special Studies form is found at \
+  My TrintonLink: Forms."""
+
+[CSE.courses.198]
+title = "Direct Group Study"
+catalog = "/courses/CSE.html#cse198"
+
+[CSE.courses.199]
+title = "Independent Study"
+catalog = "/courses/CSE.html#cse199"
+
+[CSE.courses.199H]
+title = "CSE Honors Thesis Research/UN"
+catalog = "/courses/CSE.html#cse199h"
+
+[ECE]
+name = "Electrical & Computer Engineer"
+
+[ECE.courses.190]
+title = "Engineering Design"
+catalog = "/courses/ECE.html#ece190"
+note = """Students should go to the ECE Undergraduate office, Engineering \
+  Building Unit 1, Room 2906, to obtain a Design enrollment form and \
+  department approval for enrollment in ECE 190."""
+
+[ECE.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/ECE.html#ece199"
+
+[ECE.courses.299]
+title = "Research"
+catalog = "/courses/ECE.html#ece299"
+
+[ECON]
+name = "Economics"
+
+[ECON.courses.1]
+title = "Principles of Microeconomics"
+catalog = "/courses/ECON.html#econ1"
+
+[ECON.courses.2]
+title = "Market Imperfections & Policy"
+catalog = "/courses/ECON.html#econ2"
+
+[ECON.courses.3]
+title = "Principles of Macroeconomics"
+catalog = "/courses/ECON.html#econ3"
+
+[ECON.courses.4]
+title = "Financial Accounting"
+catalog = "/courses/ECON.html#econ4"
+
+[ECON.courses.100A]
+title = "Microeconomics A"
+catalog = "/courses/ECON.html#econ100a"
+
+[ECON.courses.100B]
+title = "Microeconomics B"
+catalog = "/courses/ECON.html#econ100b"
+
+[ECON.courses.100C]
+title = "Microeconomics C"
+catalog = "/courses/ECON.html#econ100c"
+
+[ECON.courses.101]
+title = "International Trade"
+catalog = "/courses/ECON.html#econ101"
+
+[ECON.courses.103]
+title = "International Monetary Relatns"
+catalog = "/courses/ECON.html#econ103"
+
+[ECON.courses.107]
+title = "Economic Reglatn&Antitrst Plcy"
+catalog = "/courses/ECON.html#econ107"
+
+[ECON.courses.109]
+title = "Game Theory"
+catalog = "/courses/ECON.html#econ109"
+
+[ECON.courses.110A]
+title = "Macroeconomics A"
+catalog = "/courses/ECON.html#econ110a"
+
+[ECON.courses.110B]
+title = "Macroeconomics B"
+catalog = "/courses/ECON.html#econ110b"
+
+[ECON.courses.120B]
+title = "Econometrics B"
+catalog = "/courses/ECON.html#econ120b"
+
+[ECON.courses.120C]
+title = "Econometrics C"
+catalog = "/courses/ECON.html#econ120c"
+
+[ECON.courses.131]
+title = "Economics of the Environment"
+catalog = "/courses/ECON.html#econ131"
+
+[ECON.courses.142]
+title = "Behavioral Economics"
+catalog = "/courses/ECON.html#econ142"
+
+[ECON.courses.144]
+title = "Economics of Conservation"
+catalog = "/courses/ECON.html#econ144"
+
+[ECON.courses.171]
+title = "Decisions Under Uncertainty"
+catalog = "/courses/ECON.html#econ171"
+
+[EDS]
+name = "Education Studies"
+
+[EDS.courses.20S]
+title = "Intro/Principles of Learning"
+catalog = "/courses/EDS.html#eds20s"
+
+[ELWR]
+name = "Entry Level Writing Reqt"
+
+[ELWR.courses.1S]
+title = "ELWR: Basic Writing"
+
+[ENVR]
+name = "Environmental Studies"
+
+[ENVR.courses.140]
+title = "Wilderness and Human Values"
+catalog = "/courses/ENVR.html#envr140"
+
+[ESYS]
+name = "Environmental Systems"
+
+[ESYS.courses.199]
+title = "Independent Study"
+catalog = "/courses/ESYS.html#esys199"
+
+[ETHN]
+name = "Ethnic Studies"
+
+[ETHN.courses.109]
+title = "Race & Social Movements"
+catalog = "/courses/ETHN.html#ethn109"
+
+[ETHN.courses.119]
+title = "Race in the Americas"
+catalog = "/courses/ETHN.html#ethn119"
+
+[ETHN.courses.122]
+title = "Asian American Cult & Identity"
+catalog = "/courses/ETHN.html#ethn122"
+
+[ETHN.courses.135B]
+title = "Lat-Chican/Cul Prod:1960toPres"
+catalog = "/courses/ETHN.html#ethn135b"
+
+[ETHN.courses.137]
+title = "Sp Topics:Latina Iss &Cult Prd"
+catalog = "/courses/ETHN.html#ethn137"
+
+[ETHN.courses.140]
+title = "Language & American Ethnicity"
+catalog = "/courses/ETHN.html#ethn140"
+
+[HDP]
+name = "Human Development Program"
+
+[HDP.courses.160]
+title = "Special Topics/Human Develpmnt"
+catalog = "/courses/HDP.html#hdp160"
+note = """Open to all majors. Department authorization required. For \
+  enrollment clearance, please submit a request on the Human Development \
+  Program website. http://hdp.ucsd.edu/forms/HDP160EnrollmentRequest.shtml"""
+
+[HIAF]
+name = "History of Africa"
+
+[HIAF.courses.112]
+title = "West Africa Since 1880"
+catalog = "/courses/HIST.html#hiaf112"
+
+[HIAF.courses.130]
+title = "African Society/Slave Trade"
+catalog = "/courses/HIST.html#hiaf130"
+
+[HIEA]
+name = "History of East Asia"
+
+[HIEA.courses.135]
+title = "Thought&Reli China: Buddhism"
+catalog = "/courses/HIST.html#hiea135"
+
+[HIEA.courses.136]
+title = "Thought/Reli China: Daoism"
+catalog = "/courses/HIST.html#hiea136"
+
+[HIEU]
+name = "History of Europe"
+
+[HIEU.courses.140GS]
+title = "Art&Society in 19th c. London"
+catalog = "/courses/HIST.html#hieu140gs"
+
+[HIEU.courses.144]
+title = "Topics in European History"
+catalog = "/courses/HIST.html#hieu144"
+
+[HIEU.courses.151]
+title = "Spain Since 1808"
+catalog = "/courses/HIST.html#hieu151"
+
+[HIEU.courses.156]
+title = "Hist. Soviet Union 1905-1991"
+catalog = "/courses/HIST.html#hieu156"
+
+[HILA]
+name = "History of Latin America"
+
+[HILA.courses.112]
+title = "Econ & Soc Hist/Andean Region"
+catalog = "/courses/HIST.html#hila112"
+
+[HILD]
+name = "History, Lower Division"
+
+[HILD.courses.7B]
+title = "Race & Ethnicity/United States"
+catalog = "/courses/HIST.html#hild7b"
+
+[HISC]
+name = "History of Science"
+
+[HISC.courses.105]
+title = "History of Environmentalism"
+catalog = "/courses/HIST.html#hisc105"
+
+[HISC.courses.106]
+title = "The Scientific Revolution"
+catalog = "/courses/HIST.html#hisc106"
+
+[HISC.courses.107]
+title = "Emergence of Modern Science"
+catalog = "/courses/HIST.html#hisc107"
+
+[HISC.courses.131]
+title = "Science, Technology, & Law"
+catalog = "/courses/HIST.html#hisc131"
+
+[HITO]
+name = "History Topics"
+
+[HITO.courses.133]
+title = "War & Society/Second World War"
+catalog = "/courses/HIST.html#hito133"
+
+[HITO.courses.134]
+title = "Internatnl Law/War Crimes&Geno"
+catalog = "/courses/HIST.html#hito134"
+
+[HIUS]
+name = "History of the United States"
+
+[HIUS.courses.144]
+title = "Topics in U.S. History"
+catalog = "/courses/HIST.html#hius144"
+
+[HIUS.courses.199]
+title = "Independent Study/US History"
+catalog = "/courses/HIST.html#hius199"
+note = """Students should go to the History Department Office, HSS 5027, to \
+  obtain information and department approval for enrollment in History of the \
+  United States 199."""
+
+[HUM]
+name = "Humanities"
+
+[HUM.courses.3]
+title = "Renaissance,Reform&Early Europ"
+catalog = "/courses/HUM.html#hum3"
+
+[HUM.courses.4]
+title = "Enlightmnt,Romnt,Rev/1660-1848"
+catalog = "/courses/HUM.html#hum4"
+
+[HUM.courses.5]
+title = "Modern Culture (1848-Present)"
+catalog = "/courses/HUM.html#hum5"
+
+[LATI]
+name = "Latin American Studies"
+
+[LATI.courses.50]
+title = "Introduction to Latin America"
+catalog = "/courses/LATI.html#lati50"
+
+[LIGN]
+name = "Linguistics/General"
+
+[LIGN.courses.101]
+title = "Introduction/Study of Language"
+catalog = "/courses/LING.html#lign101"
+
+[LTAM]
+name = "Literature of the Americas"
+
+[LTAM.courses.111]
+title = "Comparative Caribbean Discours"
+catalog = "/courses/LIT.html#ltam111"
+
+[LTEA]
+name = "Literatures/East Asian"
+
+[LTEA.courses.120A]
+title = "Chinese Films"
+catalog = "/courses/LIT.html#ltea120a"
+
+[LTEA.courses.120C]
+title = "Hong Kong Films"
+catalog = "/courses/LIT.html#ltea120c"
+
+[LTEN]
+name = "Literatures in English"
+
+[LTEN.courses.149]
+title = "Topics: English-Language Lit"
+catalog = "/courses/LIT.html#lten149"
+
+[LTGM]
+name = "Literature/German"
+
+[LTGM.courses.199]
+title = "Special Studies"
+catalog = "/courses/LIT.html#ltgm199"
+
+[LTRU]
+name = "Literature/Russian"
+
+[LTRU.courses.199]
+title = "Special Studies"
+catalog = "/courses/LIT.html#ltru199"
+
+[LTSP]
+name = "Literature/Spanish"
+
+[LTSP.courses.150B]
+title = "Lat-Chican/Cul Prod:1960toPres"
+catalog = "/courses/LIT.html#ltsp150b"
+
+[LTWL]
+name = "Literatures of the World"
+
+[LTWL.courses.4M]
+title = "Fiction&Film/20th Cen/Multiple"
+catalog = "/courses/LIT.html#ltwl4m"
+
+[LTWR]
+name = "Literature/Writing"
+
+[LTWR.courses.120]
+title = "Personal Narrative Workshop"
+catalog = "/courses/LIT.html#ltwr120"
+
+[MAE]
+name = "Mechanical & Aerospace Engin"
+
+[MAE.courses.101B]
+title = "Advanced Fluid Mechanics"
+catalog = "/courses/MAE.html#mae101b"
+
+[MAE.courses.104]
+title = "Aerodynamics"
+catalog = "/courses/MAE.html#mae104"
+
+[MAE.courses.130B]
+title = "Mechanics II: Dynamics"
+catalog = "/courses/MAE.html#mae130b"
+
+[MAE.courses.130C]
+title = "Mechanics III: Vibrations"
+catalog = "/courses/MAE.html#mae130c"
+
+[MAE.courses.131A]
+title = "Solid Mechanics I"
+catalog = "/courses/MAE.html#mae131a"
+
+[MAE.courses.143B]
+title = "Linear Control"
+catalog = "/courses/MAE.html#mae143b"
+
+[MATH]
+name = "Mathematics"
+
+[MATH.courses.3C]
+title = "Precalculus"
+catalog = "/courses/MATH.html#math3c"
+
+[MATH.courses.10B]
+title = "Calculus II"
+catalog = "/courses/MATH.html#math10b"
+
+[MATH.courses.10C]
+title = "Calculus III"
+catalog = "/courses/MATH.html#math10c"
+
+[MATH.courses.20B]
+title = "Calculus/Science & Engineering"
+catalog = "/courses/MATH.html#math20b"
+
+[MATH.courses.20C]
+title = "Calculus&Analyt Geom/Sci&Engnr"
+catalog = "/courses/MATH.html#math20c"
+
+[MATH.courses.20D]
+title = "Intro/Differential Equations"
+catalog = "/courses/MATH.html#math20d"
+
+[MATH.courses.20E]
+title = "Vector Calculus"
+catalog = "/courses/MATH.html#math20e"
+
+[MATH.courses.20F]
+title = "Linear Algebra"
+catalog = "/courses/MATH.html#math20f"
+
+[MATH.courses.102]
+title = "Applied Linear Algebra"
+catalog = "/courses/MATH.html#math102"
+
+[MATH.courses.120A]
+title = "Elements of Complex Analysis"
+catalog = "/courses/MATH.html#math120a"
+
+[MATH.courses.142B]
+title = "Introduction to Analysis II"
+catalog = "/courses/MATH.html#math142b"
+
+[MATH.courses.168A]
+title = "Topics/Applied Math-Comp Sci"
+catalog = "/courses/MATH.html#math168a"
+
+[MATH.courses.193B]
+title = "Actuarial Mathematics II"
+catalog = "/courses/MATH.html#math193b"
+
+[MGT]
+name = "Rady School of Management"
+
+[MGT.courses.4]
+title = "Financial Accounting"
+catalog = "/courses/RSM.html#mgt4"
+
+[MGT.courses.103]
+title = "Product Marketing & Management"
+catalog = "/courses/MGT.html#mgt103"
+
+[MGT.courses.112]
+title = "Global Business Strategy"
+catalog = "/courses/RSM.html#mgt112"
+
+[MGT.courses.131B]
+title = "Intermediate Accounting B"
+catalog = "/courses/MGT.html#mgt131b"
+
+[MGT.courses.136]
+title = "Advanced Accounting"
+catalog = "/courses/MGT.html#mgt136"
+
+[MGT.courses.199]
+title = "Directed Independent Study"
+catalog = "/courses/MGT.html#mgt199"
+
+[MMW]
+name = "Making of the Modern World"
+
+[MMW.courses.14GS]
+title = "Revolution, Industry & Empire"
+note = """Visit http://globalseminar.ucsd.edu for a description of the Global \
+  Seminars Program."""
+
+[MMW.courses.15]
+title = "Twentieth Century and Beyond"
+catalog = "/courses/MMW.html#mmw15"
+note = """MMW 15 discussion sections begin on Monday, August 5, 2013. See \
+  http://blink.ucsd.edu/go/wait for waitlist instructions."""
+
+[MMW.courses.22]
+title = "Exploring the Modern World"
+catalog = "/courses/MMW.html#mmw22"
+note = """MMW 22 discussion sections begin on Monday, August 5, 2013. Please \
+  see http://blink.ucsd.edu/go/wait for wait list instructions."""
+
+[MUS]
+name = "Music"
+
+[MUS.courses.8]
+title = "American Music"
+catalog = "/courses/MUS.html#mus8"
+
+[MUS.courses.11]
+title = "Folk Music"
+catalog = "/courses/MUS.html#mus11"
+
+[MUS.courses.15]
+title = "Popular Music"
+catalog = "/courses/MUS.html#mus15"
+note = "The sections will not meet the first week."
+
+[MUS.courses.80]
+title = "Special Topics in Music"
+catalog = "/courses/MUS.html#mus80"
+
+[MUS.courses.95W]
+title = "World Music Ensembles"
+catalog = "/courses/MUS.html#mus95w"
+note = """Students enrolled in the Music 95W performance ensembles will be \
+  charged a $10 lab fee which will be assessed with registration fees."""
+
+[MUS.courses.173]
+title = "Mixing & Editing"
+catalog = "/courses/MUS.html#mus173"
+
+[NANO]
+name = "NanoEngineering"
+
+[NANO.courses.15]
+title = "Engin. Comp Using MATLAB"
+catalog = "/courses/NANO.html#nano15"
+
+[NANO.courses.199]
+title = "Independent Study/Undergrad"
+catalog = "/courses/NANO.html#nano199"
+
+[NANO.courses.299]
+title = "Grad Research NanoEngineering"
+catalog = "/courses/NANO.html#nano299"
+
+[PHIL]
+name = "Philosophy"
+
+[PHIL.courses.10]
+title = "Introduction to Logic"
+catalog = "/courses/PHIL.html#phil10"
+
+[PHIL.courses.12]
+title = "Scientific Reasoning"
+catalog = "/courses/PHIL.html#phil12"
+
+[PHIL.courses.13]
+title = "Intro to Philosophy: Ethics"
+catalog = "/courses/PHIL.html#phil13"
+
+[PHIL.courses.136]
+title = "Philosophy of Mind"
+catalog = "/courses/PHIL.html#phil136"
+
+[PHIL.courses.145]
+title = "Philosophy of Science"
+catalog = "/courses/PHIL.html#phil145"
+
+[PHIL.courses.148]
+title = "Philosophy and the Environment"
+catalog = "/courses/PHIL.html#phil148"
+
+[PHIL.courses.181]
+title = "Existentialism"
+catalog = "/courses/PHIL.html#phil181"
+
+[PHIL.courses.185]
+title = "Philosophy of Religion"
+catalog = "/courses/PHIL.html#phil185"
+
+[PHYS]
+name = "Physics"
+
+[PHYS.courses.1A]
+title = "Mechanics"
+catalog = "/courses/PHYS.html#phys1a"
+note = "Concurrent enrollment in Physics 1AL is required"
+
+[PHYS.courses.1AL]
+title = "Mechanics Laboratory"
+catalog = "/courses/PHYS.html#phys1al"
+
+[PHYS.courses.1B]
+title = "Electricity and Magnetism"
+catalog = "/courses/PHYS.html#phys1b"
+note = "Concurrent enrollment in Physics 1BL is required."
+
+[PHYS.courses.1BL]
+title = "Electricity & Magnetism Lab"
+catalog = "/courses/PHYS.html#phys1bl"
+note = """Students enrolled in PHYS 1BL are responsible for a $3.00 materials \
+  fee which will be assessed with registration fees."""
+
+[PHYS.courses.1C]
+title = "Waves, Optics & Modern Physics"
+catalog = "/courses/PHYS.html#phys1c"
+note = "Concurrent enrollment in Physics 1CL is required"
+
+[PHYS.courses.1CL]
+title = "Waves,Optics&Modrn Phys Lab"
+catalog = "/courses/PHYS.html#phys1cl"
+note = """Students enrolled in PHYS 1CL are responsible for a $7.00 materials \
+  fee which will be assessed with registration fees."""
+
+[PHYS.courses.2B]
+title = "Phys-Electricity and Magnetism"
+catalog = "/courses/PHYS.html#phys2b"
+
+[PHYS.courses.2C]
+title = "Physics-Flu,Wav,Thrmdyn,Optics"
+catalog = "/courses/PHYS.html#phys2c"
+
+[PHYS.courses.2CL]
+title = "Phys Lab-Elec,Magnetsm,Wav,Opt"
+catalog = "/courses/PHYS.html#phys2cl"
+note = """Students who enroll in Physics 2CL will be charged a $5.00 lab fee \
+  which will be assessed with registration fees."""
+
+[PHYS.courses.2D]
+title = "Phys-Relativity&Quantm Physics"
+catalog = "/courses/PHYS.html#phys2d"
+
+[POLI]
+name = "Political Science"
+
+[POLI.courses.11]
+title = "Intro/Poli Sci:Compar Politics"
+catalog = "/courses/POLI.html#poli11"
+
+[POLI.courses.13]
+title = "Power and Justice"
+catalog = "/courses/POLI.html#poli13"
+
+[POLI.courses.28]
+title = "Ethics And Society II"
+
+[POLI.courses.30]
+title = "Political Inquiry"
+catalog = "/courses/POLI.html#poli30"
+
+[POLI.courses.102G]
+title = "Spec Topics/American Politics"
+catalog = "/courses/POLI.html#poli102g"
+
+[POLI.courses.103A]
+title = "Calif Government & Politics"
+catalog = "/courses/POLI.html#poli103a"
+
+[POLI.courses.103B]
+title = "Politics & Policymaking/L.A."
+catalog = "/courses/POLI.html#poli103b"
+
+[POLI.courses.103C]
+title = "Poli. & Policymaking/San Diego"
+catalog = "/courses/POLI.html#poli103c"
+
+[POLI.courses.110C]
+title = "Politcl Thought/Kant-Nietzsche"
+catalog = "/courses/POLI.html#poli110c"
+
+[POLI.courses.110H]
+title = "Democracy and Its Critics"
+catalog = "/courses/POLI.html#poli110h"
+
+[POLI.courses.110J]
+title = "Power in American Society"
+catalog = "/courses/POLI.html#poli110j"
+
+[POLI.courses.110K]
+title = "Liberty and Equality"
+catalog = "/courses/POLI.html#poli110k"
+
+[POLI.courses.111B]
+title = "Global Justice/Theory & Action"
+catalog = "/courses/POLI.html#poli111b"
+
+[POLI.courses.119A]
+title = "Specl Topics/Political Theory"
+catalog = "/courses/POLI.html#poli119a"
+
+[POLI.courses.121B]
+title = "Politics in Israel"
+catalog = "/courses/POLI.html#poli121b"
+
+[POLI.courses.124A]
+title = "Pol Conseq/Electoral Systems"
+catalog = "/courses/POLI.html#poli124a"
+
+[POLI.courses.127]
+title = "Politics/Developing Countries"
+catalog = "/courses/POLI.html#poli127"
+
+[POLI.courses.133D]
+title = "Poli Instit/E. Asian Countries"
+catalog = "/courses/POLI.html#poli133d"
+
+[POLI.courses.133J]
+title = "Korean Politics"
+catalog = "/courses/POLI.html#poli133j"
+
+[POLI.courses.134D]
+title = "Topics/Latin American Politics"
+catalog = "/courses/POLI.html#poli134d"
+
+[POLI.courses.138D]
+title = "Spec Topic/Comparatve Politics"
+catalog = "/courses/POLI.html#poli138d"
+
+[POLI.courses.142A]
+title = "United States Foreign Policy"
+catalog = "/courses/POLI.html#poli142a"
+
+[POLI.courses.142K]
+title = "Politics and Warfare"
+catalog = "/courses/POLI.html#poli142k"
+
+[POLI.courses.143A]
+title = "War and Society"
+catalog = "/courses/POLI.html#poli143a"
+
+[POLI.courses.150A]
+title = "Politics of Immigration"
+catalog = "/courses/POLI.html#poli150a"
+
+[POLI.courses.151]
+title = "International Organizations"
+catalog = "/courses/POLI.html#poli151"
+
+[PSYC]
+name = "Psychology"
+
+[PSYC.courses.1]
+title = "Psychology"
+catalog = "/courses/PSYC.html#psyc1"
+
+[PSYC.courses.2]
+title = "Gen Psych:Biological Foundatns"
+catalog = "/courses/PSYC.html#psyc2"
+
+[PSYC.courses.60]
+title = "Introduction to Statistics"
+catalog = "/courses/PSYC.html#psyc60"
+
+[PSYC.courses.105]
+title = "Introduction/Cognitive Psych"
+catalog = "/courses/PSYC.html#psyc105"
+
+[PSYC.courses.106]
+title = "Introduction/Physiological Psy"
+catalog = "/courses/PSYC.html#psyc106"
+
+[PSYC.courses.114]
+title = "Lab/Psychophysiological Persp"
+catalog = "/courses/PSYC.html#psyc114"
+
+[PSYC.courses.124]
+title = "Introductn/Clinical Psychology"
+catalog = "/courses/PSYC.html#psyc124"
+
+[PSYC.courses.139]
+title = "The Social Psychology of Sport"
+catalog = "/courses/PSYC.html#psyc139"
+
+[PSYC.courses.143]
+title = "Control & Analysis/Human Behav"
+catalog = "/courses/PSYC.html#psyc143"
+
+[PSYC.courses.144]
+title = "Memory and Amnesia"
+catalog = "/courses/PSYC.html#psyc144"
+
+[PSYC.courses.145]
+title = "Psychology of Language"
+catalog = "/courses/PSYC.html#psyc145"
+
+[PSYC.courses.154]
+title = "Behavior Modification"
+catalog = "/courses/PSYC.html#psyc154"
+
+[PSYC.courses.157]
+title = "Happiness"
+catalog = "/courses/PSYC.html#psyc157"
+
+[PSYC.courses.168]
+title = "Psychological Disorders/Child"
+catalog = "/courses/PSYC.html#psyc168"
+
+[PSYC.courses.169]
+title = "Brain Damage & Mental Function"
+catalog = "/courses/PSYC.html#psyc169"
+
+[PSYC.courses.170]
+title = "Intro to Cognitive Neuropsych"
+catalog = "/courses/PSYC.html#psyc170"
+
+[PSYC.courses.171]
+title = "Neurobiology-Learning & Memory"
+catalog = "/courses/PSYC.html#psyc171"
+
+[PSYC.courses.173]
+title = "Psychology of Food & Behavior"
+catalog = "/courses/PSYC.html#psyc173"
+
+[PSYC.courses.180]
+title = "Adolescence"
+catalog = "/courses/PSYC.html#psyc180"
+
+[PSYC.courses.181]
+title = "Drugs And Behavior"
+catalog = "/courses/PSYC.html#psyc181"
+
+[PSYC.courses.191]
+title = "Psychology of Sleep"
+catalog = "/courses/PSYC.html#psyc191"
+
+[PSYC.courses.193]
+title = "Topics in Psychology"
+catalog = "/courses/PSYC.html#psyc193"
+
+[PSYC.courses.199]
+title = "Independent Study"
+catalog = "/courses/PSYC.html#psyc199"
+note = """Students should go to the Psychology Department Office, \
+  Mandler 1533, to obtain information and department approval for enrollment \
+  in Psychology 199."""
+
+[REV]
+name = "Revelle College"
+
+[REV.courses.160GS]
+title = "Public Health & Epidemiology I"
+note = """Visit http://globalseminar.ucsd.edu for a description of the Global \
+  Seminars Program."""
+
+[REV.courses.165GS]
+title = "Public Health/Epidemiology II"
+note = """Visit http://globalseminar.ucsd.edu for a description of the Global \
+  Seminars Program."""
+
+[SE]
+name = "Structural Engineering"
+
+[SE.courses.2]
+title = "Structural Materials"
+catalog = "/courses/SE.html#se2"
+
+[SE.courses.101B]
+title = "Mechanics II: Dynamics"
+catalog = "/courses/SE.html#se101b"
+
+[SE.courses.101C]
+title = "Mechanics III: Vibrations"
+catalog = "/courses/SE.html#se101c"
+
+[SE.courses.110A]
+title = "Solid Mechanics I"
+catalog = "/courses/SE.html#se110a"
+
+[SE.courses.154]
+title = "Design of Timber Structures"
+catalog = "/courses/SE.html#se154"
+
+[SE.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/SE.html#se199"
+
+[SOCI]
+name = "Sociology"
+
+[SOCI.courses.2]
+title = "The Study of Society"
+catalog = "/courses/SOC.html#soci2"
+
+[SOCI.courses.60]
+title = "Practice of Social Research"
+catalog = "/courses/SOC.html#soci60"
+
+[SOCI.courses.152]
+title = "Soc Inequality & Public Policy"
+catalog = "/courses/SOC.html#soci152"
+
+[SOCI.courses.153]
+title = "Urban Sociology"
+catalog = "/courses/SOC.html#soci153"
+
+[SOCI.courses.157]
+title = "Religion/Contemporary Society"
+catalog = "/courses/SOC.html#soci157"
+
+[SOCI.courses.167]
+title = "Science and War"
+catalog = "/courses/SOC.html#soci167"
+
+[SOCI.courses.171]
+title = "Technology and Society"
+catalog = "/courses/SOC.html#soci171"
+
+[SOCI.courses.172]
+title = "Films And Society"
+catalog = "/courses/SOC.html#soci172"
+
+[SOCI.courses.188D]
+title = "Latin Amer: Society & Politics"
+catalog = "/courses/SOC.html#soci188d"
+
+[SOCI.courses.188J]
+title = "Change in Modern South Africa"
+catalog = "/courses/SOC.html#soci188j"
+
+[TDAC]
+name = "Theatre / Acting"
+
+[TDAC.courses.1]
+title = "Introduction to Acting"
+catalog = "/courses/THEA.html#tdac1"
+
+[TDAC.courses.101]
+title = "Acting I"
+catalog = "/courses/THEA.html#tdac101"
+
+[TDAC.courses.108]
+title = "Advanced Topics"
+catalog = "/courses/THEA.html#tdac108"
+
+[TDGE]
+name = "Theatre / General"
+
+[TDGE.courses.11]
+title = "Great Performances on Film"
+catalog = "/courses/THEA.html#tdge11"
+
+[TDGE.courses.25]
+title = "Public Speaking"
+catalog = "/courses/THEA.html#tdge25"
+
+[TDGE.courses.124]
+title = "Cult Films: Weirdly Dramatic"
+catalog = "/courses/THEA.html#tdge124"
+
+[TDMV]
+name = "Dance/Movement"
+
+[TDMV.courses.1]
+title = "Beginning Ballet"
+catalog = "/courses/THEA.html#tdmv1"
+
+[TDMV.courses.2]
+title = "Beginning Contemporary Dance"
+catalog = "/courses/THEA.html#tdmv2"
+
+[TDMV.courses.11]
+title = "Theatrical Tap"
+catalog = "/courses/THEA.html#tdmv11"
+
+[TDMV.courses.142]
+title = "Latin Dance of the World"
+catalog = "/courses/THEA.html#tdmv142"
+
+[TDMV.courses.144]
+title = "Asian Dance"
+catalog = "/courses/THEA.html#tdmv144"
+
+[USP]
+name = "Urban Studies & Planning"
+
+[USP.courses.2]
+title = "Urban World System"
+catalog = "/courses/USP.html#usp2"
+
+[USP.courses.105]
+title = "Urban Sociology"
+catalog = "/courses/USP.html#usp105"
+
+[USP.courses.109]
+title = "Calif Government & Politics"
+catalog = "/courses/USP.html#usp109"
+
+[USP.courses.113]
+title = "Politics & Policymaking/L.A."
+catalog = "/courses/USP.html#usp113"
+
+[USP.courses.115]
+title = "Poli. & Policymaking/San Diego"
+catalog = "/courses/USP.html#usp115"
+
+[USP.courses.124]
+title = "Land Use Planning"
+catalog = "/courses/USP.html#usp124"
+
+[USP.courses.133]
+title = "Soc Inequality & Public Policy"
+catalog = "/courses/USP.html#usp133"
+
+[USP.courses.154]
+title = "Global Justice/Theory & Action"
+catalog = "/courses/USP.html#usp154"
+
+[VIS]
+name = "Visual Arts"
+
+[VIS.courses.127C]
+title = "Arts of Modern China"
+catalog = "/courses/VIS.html#vis127c"
+
+[WCWP]
+name = "Warren College Writing Program"
+
+[WCWP.courses.10B]
+title = "The Writing Course B"
+catalog = "/courses/WARR.html#wcwp10b"

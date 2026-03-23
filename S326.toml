@@ -1,0 +1,270 @@
+[AIP]
+name = "Academic Internship Program"
+
+[AIP.courses.197EX]
+title = "Internship Seminar"
+
+[CENG]
+name = "Chemical Engineering"
+
+[CENG.courses.101A]
+title = "Introductory Fluid Mechanics"
+catalog = "/courses/NANO.html#ceng101a"
+
+[CLRE]
+name = "Clinical Research"
+
+[CLRE.courses.250]
+title = "Patient Oriented Research I"
+catalog = "/courses/CLRE.html#clre250"
+
+[CLRE.courses.251R]
+title = "Epidemiology I"
+
+[CLRE.courses.252]
+title = "Health Services Research"
+catalog = "/courses/CLRE.html#clre252"
+
+[CLRE.courses.253]
+title = "Biostatistics I"
+catalog = "/courses/CLRE.html#clre253"
+
+[CLRE.courses.260]
+title = "Directed Studies in Clin Rsrch"
+catalog = "/courses/CLRE.html#clre260"
+
+[CLRE.courses.297]
+title = "Independent Study Proj-2 units"
+catalog = "/courses/CLRE.html#clre297"
+
+[CSS]
+name = "Computational Social Science"
+
+[CSS.courses.201S]
+title = "IntrComputationalSocialScience"
+catalog = "/courses/css.html#css201s"
+
+[CSS.courses.202S]
+title = "CompSocSciTechnicalBootcamp"
+catalog = "/courses/css.html#css202s"
+
+[ECE]
+name = "Electrical & Computer Engineer"
+
+[ECE.courses.111]
+title = "Advanced Digital Design Proj"
+catalog = "/courses/ECE.html#ece111"
+
+[EDS]
+name = "Education Studies"
+
+[EDS.courses.117]
+title = "Language, Culture & Education"
+catalog = "/courses/EDS.html#eds117"
+
+[EDS.courses.125]
+title = "Hist,Polic&Theory/Bilingual Ed"
+catalog = "/courses/EDS.html#eds125"
+
+[EDS.courses.128A]
+title = "Intro/Teaching&Learning (Elem)"
+catalog = "/courses/EDS.html#eds128a"
+note = """This course is designated for multiple subject/MEd students. \
+  Students must complete the course authorization form which they can find at: \
+  http://eds.ucsd.edu/undergraduate/forms.html"""
+
+[EDS.courses.128B]
+title = "Intro/Teaching&Learning (Elem)"
+catalog = "/courses/EDS.html#eds128b"
+note = """To enroll, students must submit an online placement form: http://eds.\
+  ucsd.edu/explore/undergraduate/forms.html. Students will receive \
+  authorization to enroll within 1-2 business days. EDS 139 is a required co-\
+  requisite to this course, students must enroll in the EDS 139 section under \
+  the same instructor of this course."""
+
+[EDS.courses.139]
+title = "Practicum in Teaching/Learning"
+catalog = "/courses/EDS.html#eds139"
+note = """EDS 139 is a required co-requisite to all EDS fieldwork courses. You \
+  will want to register for the 139 that corresponds with the faculty of the \
+  course you are taking (i.e. EDS 128A/B 129A/B/C, 130, 131, 136, 137, 138)"""
+
+[EDS.courses.201]
+title = "Intro/Resources/Tching&Lrning"
+catalog = "/courses/EDS.html#eds201"
+
+[EDS.courses.203]
+title = "Technology,Teaching & Learning"
+catalog = "/courses/EDS.html#eds203"
+
+[EDS.courses.204R]
+title = "Tech & Professional Assessment"
+catalog = "/courses/EDS.html#eds204r"
+
+[EDS.courses.206R]
+title = "Teaching Perf Assessment Portf"
+catalog = "/courses/EDS.html#eds206r"
+
+[EDS.courses.250]
+title = "Equitable Educ/Res & Practice"
+catalog = "/courses/EDS.html#eds250"
+
+[EDS.courses.281]
+title = "Leadership for Learning"
+catalog = "/courses/EDS.html#eds281"
+
+[EDS.courses.284]
+title = "Leadership for Organiztn Devel"
+catalog = "/courses/EDS.html#eds284"
+
+[EDS.courses.286]
+title = "Advanced Topics in Leadership"
+catalog = "/courses/EDS.html#eds286"
+
+[EDS.courses.289C]
+title = "Dissertation Writing Seminar"
+catalog = "/courses/EDS.html#eds289c"
+
+[EDS.courses.290]
+title = "Research Practicum"
+catalog = "/courses/EDS.html#eds290"
+
+[EDS.courses.299]
+title = "Dissertation Research"
+catalog = "/courses/EDS.html#eds299"
+
+[EDS.courses.373]
+title = "Secondary Engl Teaching Practs"
+catalog = "/courses/EDS.html#eds373"
+
+[EDS.courses.374]
+title = "Secondary Math Teaching Prac"
+catalog = "/courses/EDS.html#eds374"
+
+[EDS.courses.375]
+title = "Secondary Sci Teaching Prac"
+catalog = "/courses/EDS.html#eds375"
+
+[EDS.courses.376]
+title = "Language & Learning Instructn"
+catalog = "/courses/EDS.html#eds376"
+
+[MCWP]
+name = "Muir College Writing Program"
+
+[MCWP.courses.40R]
+title = "Critical Writing"
+
+[MCWP.courses.50R]
+title = "Critical Writing"
+
+[MGT]
+name = "Rady School of Management"
+
+[MGT.courses.406]
+title = "Leading People"
+catalog = "/courses/MGT.html#mgt406"
+
+[MGT.courses.417]
+title = "Current Business Law Issues"
+catalog = "/courses/MGT.html#mgt417"
+
+[MGT.courses.421]
+title = "CEO & Corporate Governance"
+catalog = "/courses/MGT.html#mgt421"
+
+[MGT.courses.430]
+title = "Biotech Industry,Strutr&Strtgy"
+catalog = "/courses/MGT.html#mgt430"
+
+[MGT.courses.439]
+title = "Topics/Organizational Behavior"
+catalog = "/courses/MGT.html#mgt439"
+
+[MGT.courses.443]
+title = "Topics/International Business"
+catalog = "/courses/MGT.html#mgt443"
+
+[MGT.courses.453]
+title = "Supply Chain Management"
+catalog = "/courses/MGT.html#mgt453"
+
+[MGT.courses.482]
+title = "Brand Management"
+
+[MGT.courses.482R]
+title = "Brand Management"
+
+[MGT.courses.495]
+title = "Topics in Finance"
+catalog = "/courses/MGT.html#mgt495"
+
+[MGT.courses.497]
+title = "Advanced Management Research"
+catalog = "/courses/MGT.html#mgt497"
+
+[MGTF]
+name = "Rady Sch of Management Finance"
+
+[MGTF.courses.490]
+title = "Capstone: Applied Finance Proj"
+catalog = "/courses/MGT.html#mgtf490"
+
+[MMW]
+name = "Making of the Modern World"
+
+[MMW.courses.11R]
+title = "Prehistory/Ancient Foundations"
+catalog = "/courses/MMW.html#mmw11r"
+
+[MMW.courses.12R]
+title = "Transforming Traditions"
+catalog = "/courses/MMW.html#mmw12r"
+
+[MMW.courses.13R]
+title = "Globalizing World, 13th-18th C"
+catalog = "/courses/MMW.html#mmw13r"
+
+[MMW.courses.14R]
+title = "Divergent Paths to Modernity"
+
+[MMW.courses.15]
+title = "The Contemporary Era"
+catalog = "/courses/MMW.html#mmw15"
+
+[MMW.courses.121R]
+title = "Exploring the Pre-Modern World"
+catalog = "/courses/MMW.html#mmw121r"
+
+[MMW.courses.122R]
+title = "Exploring the Modern World"
+catalog = "/courses/MMW.html#mmw122r"
+
+[SIO]
+name = "Scripps Inst of Oceanography"
+
+[SIO.courses.295LS]
+title = "Lab Marine Biodivrsty&Consrvtn"
+catalog = "/courses/SIO.html#sio295ls"
+
+[SIO.courses.295S]
+title = "Marine Biodiversity&Conservatn"
+catalog = "/courses/SIO.html#sio295s"
+
+[SIOC]
+name = "Scripps Inst of Oceanogr/COAP"
+
+[SIOC.courses.290S]
+title = "Climate Math and Science"
+catalog = "/courses/SIO.html#sioc290s"
+
+[SIOC.courses.291S]
+title = "Introduction to Climate Policy"
+catalog = "/courses/SIO.html#sioc291s"
+
+[SOCI]
+name = "Sociology"
+
+[SOCI.courses.117]
+title = "Language, Culture & Education"
+catalog = "/courses/SOC.html#soci117"

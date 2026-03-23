@@ -1,0 +1,725 @@
+[AMES]
+name = "Applied Mechanics & Engin Scis"
+
+[AMES.courses.101A]
+title = "Introductory Fluid Mechanics"
+
+[AMES.courses.103A]
+title = "Introductory Fluid Mechanics"
+
+[AMES.courses.199]
+title = "Independent Study/Undergrads"
+
+[ANLD]
+name = "Anthropology/Lower Division"
+
+[ANLD.courses.22]
+title = "Cultural Anthro: Introduction"
+
+[BICD]
+name = "Biol/Genetics,Cellular&Develop"
+
+[BICD.courses.100]
+title = "Genetics"
+
+[BILD]
+name = "Biology/Lower Division"
+
+[BILD.courses.1]
+title = "The Cell"
+catalog = "/courses/BIOL.html#bild1"
+
+[BILD.courses.2]
+title = "Multicellular Life"
+catalog = "/courses/BIOL.html#bild2"
+
+[BILD.courses.10]
+title = "Fundamental Concepts/Modrn Bio"
+catalog = "/courses/BIOL.html#bild10"
+
+[BILD.courses.28]
+title = "Human Biology"
+catalog = "/courses/BIOL.html#bild10"
+
+[BILD.courses.80]
+title = "Intro to Bio/Experimental Sci"
+
+[BILD.courses.82]
+title = "Marine Biology"
+
+[BIMM]
+name = "Biology/Molec Biol, Microbiol"
+
+[BIMM.courses.100]
+title = "Molecular Biology"
+catalog = "/courses/BIOL.html#bimm100"
+
+[BIMM.courses.126]
+title = "Environmental Microbiology"
+catalog = "/courses/BIOL.html#bimm100"
+
+[BIPN]
+name = "Biology/Animal Physiol&Neurosc"
+
+[BIPN.courses.100]
+title = "Mammalian Physiology I"
+catalog = "/courses/BIOL.html#bipn100"
+
+[BISP]
+name = "Biology/Special Studies"
+
+[BISP.courses.195]
+title = "Intro to Teaching in Biology"
+catalog = "/courses/BIOL.html#bipn100"
+
+[BISP.courses.196]
+title = "Honors Thesis in Biology"
+catalog = "/courses/BIOL.html#bisp196"
+
+[BISP.courses.199]
+title = "Independent Study"
+catalog = "/courses/BIOL.html#bisp199"
+
+[CHEM]
+name = "Chemistry and Biochemistry"
+
+[CHEM.courses.6B]
+title = "General Chemistry"
+catalog = "/courses/BIOL.html#bisp199"
+
+[CHEM.courses.6C]
+title = "General Chemistry"
+catalog = "/courses/BIOL.html#bisp199"
+
+[CHEM.courses.140A]
+title = "Organic Chemistry"
+catalog = "/courses/BIOL.html#bisp199"
+
+[CHEM.courses.140C]
+title = "Organic Chemistry"
+catalog = "/courses/BIOL.html#bisp199"
+
+[COCU]
+name = "Communication and Culture"
+
+[COCU.courses.125]
+title = "How to Read a Film"
+catalog = "/courses/BIOL.html#bisp199"
+
+[COCU.courses.137]
+title = "The Politics of Bodies"
+catalog = "/courses/COMM.html#cocu137"
+
+[COCU.courses.138]
+title = "Feminist Theory"
+catalog = "/courses/COMM.html#cocu138"
+
+[COGN]
+name = "Communication/General"
+
+[COGN.courses.20]
+title = "Introduction to Communication"
+catalog = "/courses/COMM.html#cogn20"
+
+[COGN.courses.150]
+title = "Senior Seminar/Communication"
+catalog = "/courses/COMM.html#cogn150"
+
+[COGN.courses.199]
+title = "Independent Study/Communicatn"
+catalog = "/courses/COMM.html#cogn199"
+
+[COGS]
+name = "Cognitive Science"
+
+[COGS.courses.7]
+title = "Intro/Cognitive Neuroscience"
+catalog = "/courses/BIOL.html#bisp199"
+
+[COSF]
+name = "Communication as Social Force"
+
+[COSF.courses.139A]
+title = "Law,Comm&Freedom of Expression"
+catalog = "/courses/COMM.html#cosf139a"
+
+[CSE]
+name = "Computer Science & Engineering"
+
+[CSE.courses.10]
+title = "Intr/Computer Sci: C++ Version"
+catalog = "/courses/COMM.html#cosf139a"
+
+[CSE.courses.12]
+title = "Basic Data Struct&Obj-Ori Prog"
+catalog = "/courses/COMM.html#cosf139a"
+
+[CSE.courses.20]
+title = "Discrete Mathematics"
+catalog = "/courses/COMM.html#cosf139a"
+
+[CSE.courses.30]
+title = "Computer Organiz&Systms Progrm"
+catalog = "/courses/CSE.html#cse30"
+
+[CSE.courses.101]
+title = "Design & Analysis of Algorithm"
+catalog = "/courses/CSE.html#cse101"
+
+[CSE.courses.199]
+title = "Independent Study"
+catalog = "/courses/CSE.html#cse199"
+
+[ECE]
+name = "Electrical & Computer Engineer"
+
+[ECE.courses.50A]
+title = "Circuits and Systems"
+catalog = "/courses/CSE.html#cse199"
+
+[ECE.courses.52AL]
+title = "Elementary Circuits Laboratory"
+catalog = "/courses/CSE.html#cse199"
+
+[ECE.courses.52BL]
+title = "Elementary Circuits Laboratory"
+catalog = "/courses/CSE.html#cse199"
+
+[ECE.courses.82]
+title = "Elementary Circuits Laboratory"
+catalog = "/courses/CSE.html#cse199"
+
+[ECE.courses.171A]
+title = "Linear Control System Theory"
+catalog = "/courses/ECE.html#ece171a"
+
+[ECON]
+name = "Economics"
+
+[ECON.courses.1A]
+title = "Elements of Economics"
+catalog = "/courses/ECE.html#ece171a"
+
+[ECON.courses.4]
+title = "Financial Accountng"
+catalog = "/courses/ECE.html#ece171a"
+
+[ECON.courses.110A]
+title = "Macroeconomics"
+catalog = "/courses/ECE.html#ece171a"
+
+[ECON.courses.110B]
+title = "Macroeconomics"
+
+[ECON.courses.131]
+title = "Economics of the Environment"
+
+[ECON.courses.132]
+title = "Energy Economics"
+
+[ECON.courses.150]
+title = "Econ/Public Sector: Taxation"
+catalog = "/courses/ECON.html#econ150"
+
+[ECON.courses.151]
+title = "Econ/Public Sector:Expenditure"
+catalog = "/courses/ECON.html#econ151"
+
+[ECON.courses.174]
+title = "Insurance,Economics&Finance"
+catalog = "/courses/ECON.html#econ151"
+
+[ESL]
+name = "English as 2nd Lang (Inactive)"
+
+[ESL.courses.10]
+title = "ESL Writing"
+catalog = "/courses/ECON.html#econ151"
+
+[HIAF]
+name = "History of Africa"
+
+[HIAF.courses.111]
+title = "Modern Africa Since 1880"
+catalog = "/courses/ECON.html#econ151"
+
+[HIEU]
+name = "History of Europe"
+
+[HIEU.courses.142]
+title = "Euro Intellct Hist: 1780-1870"
+catalog = "/courses/HIST.html#hieu142"
+
+[HILA]
+name = "History of Latin America"
+
+[HILA.courses.102]
+title = "Latin America/Twentieth Centry"
+catalog = "/courses/HIST.html#hieu142"
+
+[HIUS]
+name = "History of the United States"
+
+[HIUS.courses.109]
+title = "America's Rural Past"
+
+[HIUS.courses.150]
+title = "American Legal History to 1865"
+catalog = "/courses/HIST.html#hius150"
+
+[LTEN]
+name = "Literatures in English"
+
+[LTEN.courses.158]
+title = "Modern American Literature"
+catalog = "/courses/LIT.html#lten158"
+
+[LTEN.courses.175B]
+title = "New Amer Poetry:Post WWII-Pres"
+catalog = "/courses/LIT.html#lten175b"
+
+[LTEN.courses.180]
+title = "Chicano Literature in English"
+catalog = "/courses/LIT.html#lten180"
+
+[LTEN.courses.183]
+title = "Afro-American Prose"
+catalog = "/courses/LIT.html#lten183"
+
+[LTGK]
+name = "Literature/Greek"
+
+[LTGK.courses.4]
+title = "Intensive Elementary Greek"
+catalog = "/courses/LIT.html#lten183"
+
+[LTGM]
+name = "Literature/German"
+
+[LTGM.courses.2A]
+title = "Readings and Interpretations"
+catalog = "/courses/LIT.html#lten183"
+
+[LTLA]
+name = "Literature/Latin"
+
+[LTLA.courses.4]
+title = "Intensive Elementary Latin"
+catalog = "/courses/LIT.html#ltla4"
+
+[LTSP]
+name = "Literature/Spanish"
+
+[LTSP.courses.2A]
+title = "Intermed Span I: Foundations"
+catalog = "/courses/LIT.html#ltla4"
+
+[LTSP.courses.50B]
+title = "Readings/Latin Amer Literature"
+catalog = "/courses/LIT.html#ltsp50b"
+
+[LTWR]
+name = "Literature/Writing"
+
+[LTWR.courses.100]
+title = "Short Fiction"
+catalog = "/courses/LIT.html#ltwr100"
+
+[LTWR.courses.127]
+title = "Gen Non-Fiction Prose Workshop"
+catalog = "/courses/LIT.html#ltwr127"
+
+[MATH]
+name = "Mathematics"
+
+[MATH.courses.1A]
+title = "Elements/Mathematical Analysis"
+catalog = "/courses/LIT.html#ltwr127"
+
+[MATH.courses.1B]
+title = "Elements/Mathematical Analysis"
+catalog = "/courses/LIT.html#ltwr127"
+
+[MATH.courses.1C]
+title = "Elements/Mathematical Analysis"
+catalog = "/courses/LIT.html#ltwr127"
+
+[MATH.courses.20A]
+title = "Calculus"
+catalog = "/courses/LIT.html#ltwr127"
+
+[MATH.courses.20B]
+title = "Calculus"
+catalog = "/courses/LIT.html#ltwr127"
+
+[MATH.courses.20D]
+title = "Differentl Equatns&VectorCalc"
+catalog = "/courses/LIT.html#ltwr127"
+
+[MATH.courses.20E]
+title = "Vector Calculus"
+catalog = "/courses/MATH.html#math20e"
+
+[MATH.courses.20F]
+title = "Linear Algebra"
+
+[MATH.courses.21C]
+title = "Calculus & Analytic Geometry"
+
+[MATH.courses.102]
+title = "Applied Linear Algebra"
+catalog = "/courses/MATH.html#math102"
+
+[MATH.courses.110]
+title = "Intro/Partial Differ Equations"
+catalog = "/courses/MATH.html#math110"
+
+[MATH.courses.130A]
+title = "Ordinary Differential Equation"
+catalog = "/courses/MATH.html#math130a"
+
+[MCWP]
+name = "Muir College Writing Program"
+
+[MCWP.courses.50]
+title = "Critical Writing"
+catalog = "/courses/MCWP.html#mcwp50"
+
+[MUS]
+name = "Music"
+
+[MUS.courses.8]
+title = "American Music"
+catalog = "/courses/MUS.html#mus8"
+
+[MUS.courses.80]
+title = "Special Topics in Music"
+catalog = "/courses/MUS.html#mus80"
+
+[PHAR]
+name = "Pharmacology"
+
+[PHAR.courses.199]
+title = "Independent Study"
+
+[PHIL]
+name = "Philosophy"
+
+[PHIL.courses.1]
+title = "The Nature of Philosophy"
+catalog = "/courses/PHIL.html#phil1"
+
+[PHIL.courses.27]
+title = "Ethics And Society"
+catalog = "/courses/PHIL.html#phil1"
+
+[PHIL.courses.152]
+title = "Philosophy and Literature"
+catalog = "/courses/PHIL.html#phil1"
+
+[PHIL.courses.156]
+title = "Eastern Philosophy"
+catalog = "/courses/PHIL.html#phil1"
+
+[PHYS]
+name = "Physics"
+
+[PHYS.courses.1A]
+title = "General Physics-Mechanics"
+catalog = "/courses/PHIL.html#phil1"
+
+[PHYS.courses.1B]
+title = "Gen Phys-Electricity&Magnetism"
+catalog = "/courses/PHIL.html#phil1"
+
+[PHYS.courses.1C]
+title = "Gen Phys-Wav,Optcs,Relat,Quan"
+catalog = "/courses/PHIL.html#phil1"
+
+[PHYS.courses.1CL]
+title = "Gen Phys Lab-Elec&Magnetsm&Opt"
+catalog = "/courses/PHIL.html#phil1"
+
+[PHYS.courses.2AS]
+title = "Physics-Mechanics"
+
+[PHYS.courses.2BS]
+title = "Phys-Electricity and Magnetism"
+
+[PHYS.courses.2CS]
+title = "Physics-Flu,Wav,Thrmdyn,Optics"
+
+[PHYS.courses.2DS]
+title = "Phys-Relativity&Quantm Physics"
+
+[PHYS.courses.199]
+title = "Research for Undergraduates"
+catalog = "/courses/PHYS.html#phys199"
+
+[POLI]
+name = "Political Science"
+
+[POLI.courses.10]
+title = "Intro/Poli Sci:Amer Politics"
+catalog = "/courses/PHYS.html#phys199"
+
+[POLI.courses.12]
+title = "Intro/Poli Sci:Int'l Relations"
+catalog = "/courses/POLI.html#poli12"
+
+[POLI.courses.27]
+title = "Ethics And Society"
+catalog = "/courses/POLI.html#poli12"
+
+[POLI.courses.100DA]
+title = "Voting,Campaigning & Elections"
+catalog = "/courses/POLI.html#poli100da"
+
+[POLI.courses.102E]
+title = "Urban Politics"
+catalog = "/courses/POLI.html#poli102e"
+
+[POLI.courses.103A]
+title = "Calif Government & Politics"
+catalog = "/courses/POLI.html#poli102e"
+
+[POLI.courses.104B]
+title = "Civil Liberties-Fundmntl Rghts"
+catalog = "/courses/POLI.html#poli104b"
+
+[POLI.courses.110EA]
+title = "American Political Thought"
+catalog = "/courses/POLI.html#poli104b"
+
+[POLI.courses.112C]
+title = "Political Thry&Artistic Vision"
+
+[POLI.courses.113B]
+title = "Chinese & Japanese Pol Thought"
+
+[POLI.courses.142A]
+title = "United States Foreign Policy"
+catalog = "/courses/POLI.html#poli142a"
+
+[PSYC]
+name = "Psychology"
+
+[PSYC.courses.1]
+title = "Psychology"
+catalog = "/courses/PSYC.html#psyc1"
+
+[PSYC.courses.9]
+title = "Brain Damage and the Mind"
+catalog = "/courses/PSYC.html#psyc1"
+
+[PSYC.courses.19]
+title = "Introduction to Personality"
+
+[PSYC.courses.60]
+title = "Introduction to Statistics"
+catalog = "/courses/PSYC.html#psyc60"
+
+[PSYC.courses.102]
+title = "Intro/Sensation & Perception"
+catalog = "/courses/PSYC.html#psyc102"
+
+[PSYC.courses.103]
+title = "Intro/Principles of Behavior"
+catalog = "/courses/PSYC.html#psyc102"
+
+[PSYC.courses.105]
+title = "Introduction/Cognitive Psych"
+catalog = "/courses/PSYC.html#psyc105"
+
+[PSYC.courses.106]
+title = "Introduction/Physiological Psy"
+catalog = "/courses/PSYC.html#psyc106"
+
+[PSYC.courses.129]
+title = "The Logic of Perception"
+catalog = "/courses/PSYC.html#psyc129"
+
+[PSYC.courses.131]
+title = "Personality Theory & Research"
+catalog = "/courses/PSYC.html#psyc131"
+
+[PSYC.courses.144]
+title = "Memory"
+catalog = "/courses/PSYC.html#psyc131"
+
+[PSYC.courses.163]
+title = "Abnormal Psychology"
+catalog = "/courses/PSYC.html#psyc163"
+
+[PSYC.courses.170]
+title = "Intro to Cognitive Neuropsych"
+catalog = "/courses/PSYC.html#psyc170"
+
+[PSYC.courses.173]
+title = "Perception and Brain Networks"
+catalog = "/courses/PSYC.html#psyc170"
+
+[PSYC.courses.179]
+title = "Drugs,Addiction&Mental Disordr"
+catalog = "/courses/PSYC.html#psyc179"
+
+[PSYC.courses.183]
+title = "Infancy"
+catalog = "/courses/PSYC.html#psyc179"
+
+[PSYC.courses.199]
+title = "Independent Study"
+catalog = "/courses/PSYC.html#psyc199"
+
+[SOCA]
+name = "Soc/Theory & Methods"
+
+[SOCA.courses.100]
+title = "Classical Sociological Theory"
+catalog = "/courses/PSYC.html#psyc199"
+
+[SOCA.courses.103F]
+title = "Feminist Criticism/Soc Theory"
+
+[SOCC]
+name = "Soc/Soc Organiz & Institutions"
+
+[SOCC.courses.141]
+title = "Crime And Society"
+catalog = "/courses/SOC.html#socc141"
+
+[SOCC.courses.156]
+title = "Sociology of Religion"
+catalog = "/courses/SOC.html#socc156"
+
+[SOCC.courses.159]
+title = "Spec Top/Soc/Organztns&Institn"
+catalog = "/courses/SOC.html#socc159"
+
+[SOCE]
+name = "Soc/Ind Research & Honors Prog"
+
+[SOCE.courses.199]
+title = "Independent Study"
+catalog = "/courses/SOC.html#socc159"
+note = """Students who would like to do an Independant Study (SOCE 199) with a \
+  particular professor, should come to the Sociology Department (SSB 401) to \
+  pick up and file the necessary Special Studies application and see the \
+  Undergraduate Coordinator, Carol Sveilich, during her office hours. Students \
+  will be given a Section ID once the form has been approved. To add the 199, \
+  take the approved Special Studies application directly to the Registrar's \
+  Office during the first two weeks of the quarter."""
+
+[SOSC]
+name = "Social Science"
+
+[SOSC.courses.60]
+title = "Elem Stats: Social Sciences"
+
+[STPA]
+name = "Sci, Technology&Public Affairs"
+
+[STPA.courses.10]
+title = "Environmental Studies/Science"
+
+[STPA.courses.25]
+title = "Field Experience/Marine Biol"
+
+[STPA.courses.35]
+title = "Society and the Sea"
+catalog = "/courses/STPA.html#stpa35"
+
+[TEP]
+name = "Teacher Education Program"
+
+[TEP.courses.117]
+title = "Language,Culture & Education"
+catalog = "/courses/TEP.html#tep117"
+
+[TEP.courses.126]
+title = "Social Organization/Education"
+catalog = "/courses/TEP.html#tep126"
+
+[TEP.courses.127B]
+title = "Practicum/Interactive Computng"
+catalog = "/courses/TEP.html#tep127b"
+
+[THAC]
+name = "Theatre/Acting"
+
+[THAC.courses.101]
+title = "Acting I"
+catalog = "/courses/TEP.html#tep127b"
+
+[THDA]
+name = "Theatre/Dance"
+
+[THDA.courses.132]
+title = "Dances Of The World"
+catalog = "/courses/TEP.html#tep127b"
+
+[THGE]
+name = "Theatre/General"
+
+[THGE.courses.197]
+title = "Academic Internship-FieldStudy"
+catalog = "/courses/TEP.html#tep127b"
+
+[TWS]
+name = "Third World Studies"
+
+[TWS.courses.175B]
+title = "Modern Africa Since 1880"
+
+[USP]
+name = "Urban Studies & Planning"
+
+[USP.courses.173]
+title = "History/Urban Planning&Design"
+catalog = "/courses/USP.html#usp173"
+
+[VIS]
+name = "Visual Arts"
+
+[VIS.courses.60]
+title = "Introduction to Photography"
+catalog = "/courses/VIS.html#vis60"
+
+[VIS.courses.105A]
+title = "Beginning Drawing"
+catalog = "/courses/VIS.html#vis60"
+
+[VIS.courses.105D]
+title = "Life Drawing"
+catalog = "/courses/VIS.html#vis60"
+
+[VIS.courses.106A]
+title = "Beginning Painting"
+catalog = "/courses/VIS.html#vis60"
+
+[VIS.courses.107A]
+title = "Beginning Sculpture"
+catalog = "/courses/VIS.html#vis60"
+
+[VIS.courses.130]
+title = "Spec Projects in Visual Arts"
+catalog = "/courses/VIS.html#vis130"
+
+[VIS.courses.131]
+title = "Special Projects in Media"
+catalog = "/courses/VIS.html#vis131"
+
+[VIS.courses.194]
+title = "Fantasy In Film"
+catalog = "/courses/VIS.html#vis131"
+
+[VIS.courses.199]
+title = "Special Studies"
+catalog = "/courses/VIS.html#vis199"
+
+[WCWP]
+name = "Warren College Writing Program"
+
+[WCWP.courses.10A]
+title = "The Writing Course"
+catalog = "/courses/VIS.html#vis199"

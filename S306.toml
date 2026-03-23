@@ -1,0 +1,567 @@
+[AIP]
+name = "Academic Internship Program"
+
+[AIP.courses.197]
+title = "Academic Internship Program"
+catalog = "/courses/AIP.html#aip197"
+
+[AIP.courses.197F]
+title = "Int'l Internship Program"
+
+[AIP.courses.197P]
+title = "Public Service Minor Internshp"
+
+[ANES]
+name = "Anesthesiology"
+
+[ANES.courses.199]
+title = "Independent Study"
+
+[ANPR]
+name = "Anthropology/Program"
+
+[ANPR.courses.199]
+title = "Independent Study"
+catalog = "/courses/ANTH.html#anpr199"
+
+[ANRG]
+name = "Anthropology/Regional"
+
+[ANRG.courses.106]
+title = "Stdy Abrd:Ancient Mesoamerica"
+catalog = "/courses/ANTH.html#anrg106"
+
+[BENG]
+name = "Bioengineering"
+
+[BENG.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/BENG.html#beng199"
+note = """Students should go to the Powell-Focht Bioengineering Hall, \
+  Room 141, to obtain information and department approval for enrollment in \
+  BENG 199."""
+
+[BENG.courses.299]
+title = "Graduate Research"
+catalog = "/courses/BENG.html#beng299"
+
+[CAT]
+name = "Culture, Art, & Technology"
+
+[CAT.courses.124]
+title = "Sixth College Practicum"
+
+[CHIN]
+name = "Chinese Studies"
+
+[CHIN.courses.11]
+title = "First Year Chinese"
+catalog = "/courses/CHIN.html#chin11"
+
+[CHIN.courses.12]
+title = "First Year Chinese"
+catalog = "/courses/CHIN.html#chin12"
+
+[CHIN.courses.13]
+title = "First Year Chinese"
+catalog = "/courses/CHIN.html#chin13"
+
+[CHIN.courses.21]
+title = "Second Year Chinese"
+catalog = "/courses/CHIN.html#chin21"
+
+[CLRE]
+name = "Clinical Research"
+
+[CLRE.courses.252]
+title = "Health Services Research"
+catalog = "/courses/CLRE.html#clre252"
+
+[CLRE.courses.256]
+title = "Patient-Oriented Research II"
+catalog = "/courses/CLRE.html#clre256"
+
+[CLRE.courses.260]
+title = "Directed Studies in Clin Rsrch"
+catalog = "/courses/CLRE.html#clre260"
+
+[CLRE.courses.261]
+title = "Applied Quantitative Analysis"
+catalog = "/courses/CLRE.html#clre261"
+
+[CSE]
+name = "Computer Science & Engineering"
+
+[CSE.courses.199]
+title = "Independent Study"
+catalog = "/courses/CSE.html#cse199"
+
+[DOC]
+name = "Dimensions of Culture"
+
+[DOC.courses.3]
+title = "Imagination"
+catalog = "/courses/DOC.html#doc3"
+
+[ECE]
+name = "Electrical & Computer Engineer"
+
+[ECE.courses.192]
+title = "Engineering Design"
+catalog = "/courses/ECE.html#ece192"
+note = """Students should go to the ECE Undergraduate office, Engineering \
+  Building Unit 1, Room 2705 or 2707, to obtain a Design enrollment form and \
+  department approval for enrollment in ECE 192."""
+
+[ECE.courses.197]
+title = "Field Study/Electrical&Computr"
+catalog = "/courses/ECE.html#ece197"
+
+[ECE.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/ECE.html#ece199"
+
+[ECE.courses.299]
+title = "Research"
+catalog = "/courses/ECE.html#ece299"
+
+[ECON]
+name = "Economics"
+
+[ECON.courses.199]
+title = "Independent Study"
+catalog = "/courses/ECON.html#econ199"
+note = """Students should see the Economics Undergraduate Advisor to obtain \
+  information and department approval for enrollment in ECON 195 and \
+  ECON 199."""
+
+[ECON.courses.299]
+title = "Research in Economics"
+catalog = "/courses/ECON.html#econ299"
+
+[EDS]
+name = "Education Studies"
+
+[EDS.courses.20]
+title = "Intro/Principles of Learning"
+catalog = "/courses/EDS.html#eds20"
+
+[EDS.courses.115]
+title = "Cog Development & Education"
+catalog = "/courses/EDS.html#eds115"
+
+[EDS.courses.125]
+title = "Hist,Polic&Theory/Bilingual Ed"
+catalog = "/courses/EDS.html#eds125"
+
+[EDS.courses.126]
+title = "Social Organization/Education"
+catalog = "/courses/EDS.html#eds126"
+
+[EDS.courses.128A]
+title = "Intro/Teaching&Learning (Elem)"
+catalog = "/courses/EDS.html#eds128a"
+note = """TEP 130 or 134 must be completed before EDS 128A. TEP 128A is \
+  restricted to students who are seniors or EDS-TEP graduate students applying \
+  for the EDS-TEP M.Ed./Multiple Subject Credential Program. Students taking \
+  EDS 128A are required concurrent enrollment in EDS 139, section 576667. \
+  Students must come to the EDS-TEP Student Services lobby, UCtr. 519, and \
+  complete the information form prior to enrolling in the course."""
+
+[EDS.courses.128B]
+title = "Intro/Teaching&Learning (Elem)"
+catalog = "/courses/EDS.html#eds128b"
+note = """TEP 130 or 134 must be completed before EDS 128A & 128B. EDS 128A is \
+  restricted to students who are seniors or EDS-TEP graduate students applying \
+  for the EDS-TEP M.Ed./Multiple Subject Credential Program. Students taking \
+  EDS 128A are required concurrent enrollment in EDS 139, section 576668. \
+  Students must come to the EDS-TEP Student Services lobby, UCtr. 519, and \
+  complete the information form prior to enrolling in the course."""
+
+[EDS.courses.139]
+title = "Practicum in Teaching/Learning"
+catalog = "/courses/EDS.html#eds139"
+
+[EDS.courses.152B]
+title = "Bilingual Instructnl Practices"
+catalog = "/courses/EDS.html#eds152b"
+
+[EDS.courses.169A]
+title = "Mult Subj(Elem) Stdnt Tch Prac"
+catalog = "/courses/EDS.html#eds169a"
+
+[EDS.courses.169B]
+title = "Mult Subj(Elem) Stdnt Tch Prac"
+catalog = "/courses/EDS.html#eds169b"
+
+[EDS.courses.173]
+title = "Secondary Engl Teaching Pract"
+catalog = "/courses/EDS.html#eds173"
+
+[EDS.courses.174]
+title = "Secondary Math Teaching Prac"
+catalog = "/courses/EDS.html#eds174"
+
+[EDS.courses.175]
+title = "Secondary Sci Teaching Prac"
+catalog = "/courses/EDS.html#eds175"
+
+[EDS.courses.176]
+title = "Language & Learning Instructn"
+catalog = "/courses/EDS.html#eds176"
+
+[EDS.courses.185]
+title = "Elem. Schl Math Content & Ped"
+
+[EDS.courses.190]
+title = "Research Practicum"
+catalog = "/courses/EDS.html#eds190"
+
+[EDS.courses.201]
+title = "Intro/Resources/Tching&Lrning"
+catalog = "/courses/EDS.html#eds201"
+
+[EDS.courses.203]
+title = "Technology,Teaching & Learning"
+catalog = "/courses/EDS.html#eds203"
+
+[EDS.courses.204]
+title = "Tech & Professional Assessment"
+catalog = "/courses/EDS.html#eds204"
+
+[EDS.courses.206]
+title = "Teaching Perf Assessment Portf"
+catalog = "/courses/EDS.html#eds206"
+
+[EDS.courses.229]
+title = "Intro to Educational Resources"
+catalog = "/courses/EDS.html#eds229"
+
+[EDS.courses.232]
+title = "Special Topics in Education"
+catalog = "/courses/EDS.html#eds232"
+
+[EDS.courses.250]
+title = "Equitable Educ/Res & Practice"
+catalog = "/courses/EDS.html#eds250"
+
+[EDS.courses.281]
+title = "Leadership for Learning"
+catalog = "/courses/EDS.html#eds281"
+
+[EDS.courses.285]
+title = "Leadership for the Future"
+catalog = "/courses/EDS.html#eds285"
+
+[EDS.courses.287C]
+title = "Educational Rsrch&Eval Design"
+catalog = "/courses/EDS.html#eds287c"
+
+[EDS.courses.288C]
+title = "Adv Researc & Evaluatn Methods"
+catalog = "/courses/EDS.html#eds288c"
+
+[EDS.courses.290]
+title = "Research Practicum"
+catalog = "/courses/EDS.html#eds290"
+
+[EDS.courses.291C]
+title = "Leadership Research Practicum"
+catalog = "/courses/EDS.html#eds291c"
+
+[EDS.courses.293C]
+title = "Adv. Leadership Research Pract"
+catalog = "/courses/EDS.html#eds293c"
+
+[EDS.courses.295]
+title = "M. A. Thesis"
+catalog = "/courses/EDS.html#eds295"
+
+[EDS.courses.306]
+title = "Current Issue/Teaching Writing"
+
+[EDS.courses.307]
+title = "Seminar/Teaching Composition"
+
+[ERTH]
+name = "Earth Sciences"
+
+[ERTH.courses.170]
+title = "Introduction to Volcanology"
+catalog = "/courses/ERTH.html#erth170"
+
+[ETHN]
+name = "Ethnic Studies"
+
+[ETHN.courses.199]
+title = "Independent Study and Research"
+catalog = "/courses/ETHN.html#ethn199"
+
+[HDP]
+name = "Human Development Program"
+
+[HDP.courses.194A]
+title = "Honors Thesis"
+catalog = "/courses/HDP.html#hdp194a"
+
+[HITO]
+name = "History Topics"
+
+[HITO.courses.199]
+title = "Independent Study"
+catalog = "/courses/HIST.html#hito199"
+note = """Students should go to the History Department Office, HSS 5029, to \
+  obtain information and department approval for enrollment in History \
+  Topics 199."""
+
+[JAPN]
+name = "Japanese Studies"
+
+[JAPN.courses.10A]
+title = "First Year Japanese"
+catalog = "/courses/JAPN.html#japn10a"
+
+[JAPN.courses.10B]
+title = "First Year Japanese"
+catalog = "/courses/JAPN.html#japn10b"
+
+[JAPN.courses.10C]
+title = "First Year Japanese"
+catalog = "/courses/JAPN.html#japn10c"
+
+[LAWS]
+name = "Law and Society"
+
+[LAWS.courses.102S]
+title = "Crimes,Civil Wrongs&Constition"
+catalog = "/courses/LAWS.html#laws102s"
+
+[LIFR]
+name = "Linguistics/French"
+
+[LIFR.courses.5B]
+title = "Fundamentals of French"
+catalog = "/courses/LING.html#lifr5b"
+
+[LIFR.courses.5C]
+title = "Fundamentals of French"
+catalog = "/courses/LING.html#lifr5c"
+
+[LIFR.courses.5D]
+title = "Fundamentals of French"
+catalog = "/courses/LING.html#lifr5d"
+
+[LIGM]
+name = "Linguistics/German"
+
+[LIGM.courses.5A]
+title = "Fundamentals of German"
+catalog = "/courses/LING.html#ligm5a"
+
+[LIGM.courses.5B]
+title = "Fundamentals of German"
+catalog = "/courses/LING.html#ligm5b"
+
+[LIGM.courses.5C]
+title = "Fundamentals of German"
+catalog = "/courses/LING.html#ligm5c"
+
+[LISP]
+name = "Linguistics/Spanish"
+
+[LISP.courses.5A]
+title = "Fundamentals of Spanish"
+catalog = "/courses/LING.html#lisp5a"
+
+[LISP.courses.5B]
+title = "Fundamentals of Spanish"
+catalog = "/courses/LING.html#lisp5b"
+
+[LISP.courses.5C]
+title = "Fundamentals of Spanish"
+catalog = "/courses/LING.html#lisp5c"
+
+[LISP.courses.5D]
+title = "Fundamentals of Spanish"
+catalog = "/courses/LING.html#lisp5d"
+
+[LTEN]
+name = "Literatures in English"
+
+[LTEN.courses.199]
+title = "Special Studies"
+catalog = "/courses/LIT.html#lten199"
+
+[LTLA]
+name = "Literature/Latin"
+
+[LTLA.courses.4]
+title = "Intensive Elementary Latin"
+catalog = "/courses/LIT.html#ltla4"
+
+[MAE]
+name = "Mechanical & Aerospace Engin"
+
+[MAE.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/MAE.html#mae199"
+note = """Students should go to Engineering Building Unit 2, Room 180 to \
+  obtain information and department approval for enrollment in MAE 199."""
+
+[MATH]
+name = "Mathematics"
+
+[MATH.courses.199]
+title = "Independent Study/Undergrad"
+catalog = "/courses/MATH.html#math199"
+note = """Students should go to the Mathematics Department Office, APM 7018, \
+  to obtain information and department approval for enrollment in MATH 199."""
+
+[MCWP]
+name = "Muir College Writing Program"
+
+[MCWP.courses.40]
+title = "Critical Writing"
+catalog = "/courses/MCWP.html#mcwp40"
+
+[MCWP.courses.50]
+title = "Critical Writing"
+catalog = "/courses/MCWP.html#mcwp50"
+
+[MCWP.courses.125]
+title = "Argument and Analysis"
+catalog = "/courses/MCWP.html#mcwp125"
+
+[MED]
+name = "Medicine"
+
+[MED.courses.199]
+title = "Independent Study"
+
+[MGT]
+name = "Rady School of Management"
+
+[MGT.courses.111]
+title = "Intro to Tech Business StartUp"
+catalog = "/courses/RSM.html#mgt111"
+
+[MGT.courses.249]
+title = "Topics in Decision Sciences"
+catalog = "/courses/RSM.html#mgt249"
+
+[MGT.courses.250]
+title = "Biotech Industry,Strutr&Strtgy"
+catalog = "/courses/RSM.html#mgt250"
+
+[MGT.courses.251]
+title = "Topics in Business Strategy"
+catalog = "/courses/RSM.html#mgt251"
+
+[MGT.courses.260]
+title = "Negotiation"
+catalog = "/courses/RSM.html#mgt260"
+
+[MGT.courses.269]
+title = "Topics/Organizational Behavior"
+catalog = "/courses/RSM.html#mgt269"
+
+[MGT.courses.271]
+title = "Technolgy Strategy"
+
+[MGT.courses.272]
+title = "New Product Development"
+catalog = "/courses/RSM.html#mgt272"
+
+[MGT.courses.297]
+title = "Advanced Management Research"
+catalog = "/courses/RSM.html#mgt297"
+
+[MGT.courses.299]
+title = "Individual Directed Study"
+catalog = "/courses/RSM.html#mgt299"
+
+[MGT.courses.401]
+title = "Professional Seminar"
+catalog = "/courses/RSM.html#mgt401"
+
+[MGT.courses.414A]
+title = "Technology Workshop I"
+catalog = "/courses/RSM.html#mgt414a"
+
+[MMW]
+name = "Making of the Modern World"
+
+[MMW.courses.2]
+title = "The Great Classical Traditions"
+catalog = "/courses/MMW.html#mmw2"
+
+[MMW.courses.3]
+title = "The Medieval Heritage"
+catalog = "/courses/MMW.html#mmw3"
+
+[MUS]
+name = "Music"
+
+[MUS.courses.199]
+title = "Independent Study"
+catalog = "/courses/MUS.html#mus199"
+
+[NEU]
+name = "Neurosciences"
+
+[NEU.courses.199]
+title = "Independent Study"
+catalog = "/courses/NEU.html#neu199"
+
+[PHYS]
+name = "Physics"
+
+[PHYS.courses.199]
+title = "Research for Undergraduates"
+catalog = "/courses/PHYS.html#phys199"
+
+[PSY]
+name = "Psychiatry"
+
+[PSY.courses.199]
+title = "Independent Study"
+
+[PSYC]
+name = "Psychology"
+
+[PSYC.courses.199]
+title = "Independent Study"
+catalog = "/courses/PSYC.html#psyc199"
+note = """Students should go to the Psychology Department Office, \
+  Mandler 1533, to obtain information and department approval for enrollment \
+  in Psychology 199."""
+
+[RAD]
+name = "Radiology"
+
+[RAD.courses.199]
+title = "Independent Study"
+
+[SE]
+name = "Structural Engineering"
+
+[SE.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/SE.html#se199"
+
+[SIO]
+name = "Scripps Inst of Oceanography"
+
+[SIO.courses.295]
+title = "Marine Biodiversity&Conservatn"
+catalog = "/courses/SIO.html#sio295"
+
+[SIO.courses.295L]
+title = "Lab Marine Biodivrsty&Consrvtn"
+catalog = "/courses/SIO.html#sio295l"
+
+[SURG]
+name = "Surgery"
+
+[SURG.courses.199]
+title = "Independent Study"

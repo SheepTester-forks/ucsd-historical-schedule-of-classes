@@ -1,0 +1,1544 @@
+[ANAR]
+name = "Anthropological Archeology"
+
+[ANAR.courses.100]
+title = "Spec Topics/Anth Archaeology"
+catalog = "/courses/ANTH.html#anar100"
+
+[ANAR.courses.155S]
+title = "Stdy Abrd: Ancient Mesoamerica"
+catalog = "/courses/ANTH.html#anar155s"
+note = """Students enrolled in ANAR 155S are responsible for a program fee \
+  which will be assessed with registration fees."""
+
+[ANSC]
+name = "Anthropology/Sociocultural"
+
+[ANSC.courses.105]
+title = "Global Health & Inequality"
+catalog = "/courses/ANTH.html#ansc105"
+
+[ANSC.courses.164]
+title = "Intro to Medical Anthropology"
+catalog = "/courses/ANTH.html#ansc164"
+
+[ANTH]
+name = "Anthropology"
+
+[ANTH.courses.1]
+title = "Introduction to Culture"
+catalog = "/courses/ANTH.html#anth1"
+
+[ANTH.courses.21]
+title = "Race and Racisms"
+catalog = "/courses/ANTH.html#anth21"
+
+[ANTH.courses.23]
+title = "Debating Multiculturalism"
+catalog = "/courses/ANTH.html#anth23"
+
+[BENG]
+name = "Bioengineering"
+
+[BENG.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/BENG.html#beng199"
+note = """Students should go to the Powell-Focht Bioengineering Hall, \
+  Room 141, to obtain information and department approval for enrollment in \
+  BENG 199."""
+
+[BIBC]
+name = "Biology/Biochemistry"
+
+[BIBC.courses.103]
+title = "Biochemical Techniques"
+catalog = "/courses/BIOL.html#bibc103"
+note = """Please see note under the Biology heading regarding lab fees, wait \
+  lists, "W" policy, and attendance at the first scheduled meeting of \
+  BIBC 103. For information regarding lab enrollment and waitlist procedures, \
+  please visit: http://biology.ucsd.edu/go/ug-waitlist"""
+
+[BICD]
+name = "Biol/Genetics,Cellular&Develop"
+
+[BICD.courses.110]
+title = "Cell Biology"
+catalog = "/courses/BIOL.html#bicd110"
+
+[BICD.courses.136]
+title = "AIDS Science and Society"
+catalog = "/courses/BIOL.html#bicd136"
+
+[BIEB]
+name = "Biol/Ecology, Behavior, & Evol"
+
+[BIEB.courses.102]
+title = "Intro Eclgy/Organisms&Habitats"
+catalog = "/courses/BIOL.html#bieb102"
+
+[BILD]
+name = "Biology/Lower Division"
+
+[BILD.courses.1]
+title = "The Cell"
+catalog = "/courses/BIOL.html#bild1"
+
+[BILD.courses.3]
+title = "Organismic&Evolutionary Biol"
+catalog = "/courses/BIOL.html#bild3"
+
+[BILD.courses.18]
+title = "Human Impact on the Environmnt"
+catalog = "/courses/BIOL.html#bild18"
+
+[BILD.courses.36]
+title = "AIDS Science and Society"
+catalog = "/courses/BIOL.html#bild36"
+
+[BIMM]
+name = "Biology/Molec Biol, Microbiol"
+
+[BIMM.courses.101]
+title = "Recombinant DNA Techniques"
+catalog = "/courses/BIOL.html#bimm101"
+note = """Please see note under the Biology heading regarding lab fees, wait \
+  lists, "W" policy, and attendance at the first scheduled meeting of \
+  BIMM 101. For information regarding lab enrollment and waitlist procedures, \
+  please visit: http://biology.ucsd.edu/go/ug-waitlist"""
+
+[BIPN]
+name = "Biology/Animal Physiol&Neurosc"
+
+[BIPN.courses.100]
+title = "Human Physiology I"
+catalog = "/courses/BIOL.html#bipn100"
+
+[BIPN.courses.106]
+title = "Comparative Physiology"
+catalog = "/courses/BIOL.html#bipn106"
+
+[CAT]
+name = "Culture, Art, & Technology"
+
+[CAT.courses.124]
+title = "Sixth College Practicum"
+catalog = "/courses/CAT.html#cat124"
+note = """Students must have an approved Practicum Proposal and faculty \
+  acceptance in advance, to be eligible to enroll in this course. For \
+  information about the Online Practicum Proposal visit: http://sixth.ucsd.edu/\
+  practicum/proposal/index.html"""
+
+[CAT.courses.125R]
+title = "Pblc Rhetoric Prct Comm Online"
+note = """Online course equivalent to CAT 125 that also satisfies the upper-\
+  division writing requirement. Students will view four hours of recorded \
+  lectures each week and present to small groups online. In addition to two \
+  hours of synchronous (scheduled) online section time each week, students \
+  will participate in two hours of asynchronous interactive activities such as \
+  message boards and blogs. Students are required to have videoconferencing \
+  capability (a computer equipped with a microphone and webcam), a reliable \
+  Internet connection, and a quiet, private location to participat in the \
+  course. Please visit http://sixth.ucsd.edu/cat/courses/cat-125/public-rhetor \
+  ic-online.html for more information."""
+
+[CENG]
+name = "Chemical Engineering"
+
+[CENG.courses.15]
+title = "Engin. Comp Using MATLAB"
+catalog = "/courses/NANO.html#ceng15"
+
+[CENG.courses.100]
+title = "Process Modl&Computn/Chem Engn"
+catalog = "/courses/NANO.html#ceng100"
+
+[CGS]
+name = "Critical Gender Studies"
+
+[CGS.courses.102]
+title = "Topics in Critical Gender Stds"
+catalog = "/courses/CGS.html#cgs102"
+
+[CGS.courses.109B]
+title = "Gender & Info. Technology"
+catalog = "/courses/CGS.html#cgs109b"
+
+[CGS.courses.114]
+title = "Gender,Race,Ethnicity & Class"
+catalog = "/courses/CGS.html#cgs114"
+
+[CHEM]
+name = "Chemistry and Biochemistry"
+
+[CHEM.courses.6A]
+title = "General Chemistry I"
+catalog = "/courses/CHEM.html#chem6a"
+
+[CHEM.courses.6B]
+title = "General Chemistry II"
+catalog = "/courses/CHEM.html#chem6b"
+
+[CHEM.courses.6C]
+title = "General Chemistry III"
+catalog = "/courses/CHEM.html#chem6c"
+
+[CHEM.courses.7L]
+title = "General Chemistry Laboratory"
+catalog = "/courses/CHEM.html#chem7l"
+note = """Lab sections meet starting WEEK 1. Students who miss the first 30 \
+  minutes of the first lab meeting of the quarter will be administratively \
+  dropped from the course. Deadline to ADD or DROP without a W for CHEM LAB \
+  courses is by the end of the scheduled second lab meeting. Students who \
+  enroll in CHEM 7L will be charged a $40.00 lab fee that will be assessed \
+  with registration fees. For more info regarding add/drop deadlines, lab \
+  safety exams, attendance at the first lab section, and fees for all \
+  laboratory courses, see: http://chemistry.ucsd.edu/go/courses"""
+
+[CHEM.courses.11]
+title = "The Periodic Table"
+catalog = "/courses/CHEM.html#chem11"
+
+[CHEM.courses.114A]
+title = "Biochemical Structure&Function"
+catalog = "/courses/CHEM.html#chem114a"
+
+[CHEM.courses.140A]
+title = "Organic Chemistry I"
+catalog = "/courses/CHEM.html#chem140a"
+
+[CHEM.courses.140B]
+title = "Organic Chemistry II"
+catalog = "/courses/CHEM.html#chem140b"
+
+[CHEM.courses.140C]
+title = "Organic Chemistry III"
+catalog = "/courses/CHEM.html#chem140c"
+
+[CHEM.courses.143A]
+title = "Organic Chemistry Laboratory"
+catalog = "/courses/CHEM.html#chem143a"
+note = """See notes at the beginning of Chemistry and Biochemistry regarding \
+  add/drop deadlines, attendance at the first lab section, and fees for all \
+  laboratory courses. CHEM 143A labs begin Monday, June 29th, 2015."""
+
+[CHEM.courses.143B]
+title = "Organic Chemistry Laboratory"
+catalog = "/courses/CHEM.html#chem143b"
+note = """See also notes at the beginning of Chemistry and Biochemistry \
+  regarding add/drop deadlines, attendance at the first lab section, and the \
+  fees for all laboratory courses. CHEM 143B labs begin Monday, \
+  June 29th, 2015."""
+
+[COGS]
+name = "Cognitive Science"
+
+[COGS.courses.11]
+title = "Minds & Brains"
+catalog = "/courses/COGS.html#cogs11"
+
+[COGS.courses.14A]
+title = "Intro. to Research Methods"
+catalog = "/courses/COGS.html#cogs14a"
+
+[COGS.courses.17]
+title = "Neurobiology of Cognition"
+catalog = "/courses/COGS.html#cogs17"
+
+[COGS.courses.101A]
+title = "Sensation and Perception"
+catalog = "/courses/COGS.html#cogs101a"
+
+[COGS.courses.101B]
+title = "Learning, Memory and Attention"
+catalog = "/courses/COGS.html#cogs101b"
+
+[COGS.courses.101C]
+title = "Language"
+catalog = "/courses/COGS.html#cogs101c"
+
+[COGS.courses.107A]
+title = "Neuroanatomy and Physiology"
+catalog = "/courses/COGS.html#cogs107a"
+
+[COGS.courses.154]
+title = "Comm Disorders/Children&Adults"
+catalog = "/courses/COGS.html#cogs154"
+
+[COGS.courses.157]
+title = "Music and the Mind"
+catalog = "/courses/COGS.html#cogs157"
+
+[COGS.courses.171GS]
+title = "Mirror Neuron System"
+
+[COGS.courses.172]
+title = "Brain Disorders and Cognition"
+catalog = "/courses/COGS.html#cogs172"
+
+[COGS.courses.174GS]
+title = "Drugs: Brain, Mind and Culture"
+
+[COGS.courses.188]
+title = "AI Algorithm & Social Language"
+catalog = "/courses/COGS.html#cogs188"
+
+[COMM]
+name = "Communication"
+
+[COMM.courses.10]
+title = "Introduction to Communication"
+catalog = "/courses/COMM.html#comm10"
+
+[COMM.courses.100B]
+title = "Interpretive Strategies"
+catalog = "/courses/COMM.html#comm100b"
+
+[COMM.courses.103F]
+title = "How to Read a Film"
+catalog = "/courses/COMM.html#comm103f"
+
+[COMM.courses.126]
+title = "Children and Media"
+catalog = "/courses/COMM.html#comm126"
+
+[COMM.courses.190]
+title = "Junior Seminar in Comm"
+catalog = "/courses/COMM.html#comm190"
+
+[CSE]
+name = "Computer Science & Engineering"
+
+[CSE.courses.3]
+title = "Fluency/Information Technology"
+catalog = "/courses/CSE.html#cse3"
+
+[CSE.courses.4GS]
+title = "Mathematical Beauty in Rome"
+catalog = "/courses/CSE.html#cse4gs"
+note = """Visit http://globalseminar.ucsd.edu for a description of the Global \
+  Seminars Program."""
+
+[CSE.courses.5A]
+title = "Introduction to Programming I"
+catalog = "/courses/CSE.html#cse5a"
+
+[CSE.courses.6GS]
+title = "Mathematicl Beauty in Rome-Lab"
+catalog = "/courses/CSE.html#cse6gs"
+
+[CSE.courses.7]
+title = "Intro Programming MATLAB"
+catalog = "/courses/CSE.html#cse7"
+
+[CSE.courses.11]
+title = "Intr/Computer Sci&Obj-Ori:Java"
+catalog = "/courses/CSE.html#cse11"
+
+[CSE.courses.12]
+title = "Basic Data Struct & OO Design"
+catalog = "/courses/CSE.html#cse12"
+note = """CSE 12 & CSE 15L should be taken the same quarter, unless you \
+  already have credit for one of the classes."""
+
+[CSE.courses.15L]
+title = "Software Tools&Techniques Lab"
+catalog = "/courses/CSE.html#cse15l"
+note = "CSE 12 & CSE 15L should be taken the same quarter."
+
+[CSE.courses.30]
+title = "Computer Organiz&Systms Progrm"
+catalog = "/courses/CSE.html#cse30"
+
+[CSE.courses.101]
+title = "Design & Analysis of Algorithm"
+catalog = "/courses/CSE.html#cse101"
+note = """CSE 101 is equivalent to MATH 188. Students are required to attend a \
+  CSE 101 discussion section."""
+
+[CSE.courses.134B]
+title = "Web Client Languages"
+catalog = "/courses/CSE.html#cse134b"
+
+[CSE.courses.140]
+title = "Component&Desgn Tech/Digtl Sys"
+catalog = "/courses/CSE.html#cse140"
+note = """CSE 140 & CSE 140L should be taken the same quarter, unless you \
+  already have credit for one of the classes."""
+
+[CSE.courses.140L]
+title = "Digital Systems Laboratory"
+catalog = "/courses/CSE.html#cse140l"
+note = """CSE 140 & CSE 140L should be taken the same quarter, unless you \
+  already have credit for one of the classes."""
+
+[CSE.courses.198]
+title = "Direct Group Study"
+catalog = "/courses/CSE.html#cse198"
+
+[CSE.courses.199]
+title = "Independent Study"
+catalog = "/courses/CSE.html#cse199"
+
+[DOC]
+name = "Dimensions of Culture"
+
+[DOC.courses.100D]
+title = "Promises&Contradictions/USCult"
+catalog = "/courses/DOC.html#doc100d"
+note = """DOC 100D satisfies UCSD's Diversity, Equity, and Inclusion \
+  requirement. It is open to Marshall College transfer students as well as all \
+  upper-division students from the other five colleges. Each lecture of this \
+  course is limited to 30 students. Waitlisted students will only be allowed \
+  into the class if seats become available due to dropping Week 1. Please \
+  email docinfo@ucsd.edu with your PID# if you have questions. This course \
+  will provide a broad overview of the histories of multiple communities and \
+  explore the struggle for social justice in the United States. Topics include \
+  social movements, shifting ideas about "race" and gender, the rise of \
+  corporate power, and the transformation of higher education."""
+
+[ECE]
+name = "Electrical & Computer Engineer"
+
+[ECE.courses.45]
+title = "Circuits and Systems"
+catalog = "/courses/ECE.html#ece45"
+
+[ECE.courses.101]
+title = "Linear Systems Fundamentals"
+catalog = "/courses/ECE.html#ece101"
+
+[ECE.courses.171A]
+title = "Linear Control System Theory"
+catalog = "/courses/ECE.html#ece171a"
+
+[ECON]
+name = "Economics"
+
+[ECON.courses.1]
+title = "Principles of Microeconomics"
+catalog = "/courses/ECON.html#econ1"
+
+[ECON.courses.2]
+title = "Market Imperfections & Policy"
+catalog = "/courses/ECON.html#econ2"
+
+[ECON.courses.3]
+title = "Principles of Macroeconomics"
+catalog = "/courses/ECON.html#econ3"
+
+[ECON.courses.4]
+title = "Financial Accounting"
+catalog = "/courses/ECON.html#econ4"
+
+[ECON.courses.100A]
+title = "Microeconomics A"
+catalog = "/courses/ECON.html#econ100a"
+
+[ECON.courses.100B]
+title = "Microeconomics B"
+catalog = "/courses/ECON.html#econ100b"
+
+[ECON.courses.100C]
+title = "Microeconomics C"
+catalog = "/courses/ECON.html#econ100c"
+
+[ECON.courses.102]
+title = "Globalization"
+catalog = "/courses/ECON.html#econ102"
+
+[ECON.courses.105]
+title = "Industrl Orgniztn&Firm Stratgy"
+catalog = "/courses/ECON.html#econ105"
+
+[ECON.courses.109]
+title = "Game Theory"
+catalog = "/courses/ECON.html#econ109"
+
+[ECON.courses.110A]
+title = "Macroeconomics A"
+catalog = "/courses/ECON.html#econ110a"
+
+[ECON.courses.110B]
+title = "Macroeconomics B"
+catalog = "/courses/ECON.html#econ110b"
+
+[ECON.courses.120A]
+title = "Econometrics A"
+catalog = "/courses/ECON.html#econ120a"
+
+[ECON.courses.130]
+title = "Public Policy"
+catalog = "/courses/ECON.html#econ130"
+
+[ECON.courses.131]
+title = "Economics of the Environment"
+catalog = "/courses/ECON.html#econ131"
+
+[ECON.courses.132]
+title = "Energy Economics"
+catalog = "/courses/ECON.html#econ132"
+
+[ECON.courses.139]
+title = "Labor Economics"
+catalog = "/courses/ECON.html#econ139"
+
+[ECON.courses.171]
+title = "Decisions Under Uncertainty"
+catalog = "/courses/ECON.html#econ171"
+
+[ECON.courses.173A]
+title = "Financial Markets"
+catalog = "/courses/ECON.html#econ173a"
+
+[ELWR]
+name = "Entry Level Writing Reqt"
+
+[ELWR.courses.1S]
+title = "ELWR: Basic Writing"
+note = """Students may drop and add ELWR 1S sections on the online Schedule of \
+  Classes as enrollment limits allow. New students may add a section only if \
+  they took the UC Analytical Writing Placement Exam and did not pass: \
+  prerequisite checking is in place. Instructors will drop students who miss \
+  more than 10% of class meeting time. In keeping with this policy, students \
+  who miss the first class meeting will not be allowed to add ELWR 1S. \
+  Students who enroll in ELWR 1S, but then fail to attend the first meeting \
+  will be dropped. If you have not cleared a ELWR 1S waitlist by the first day \
+  of classes, it is unlikely you will clear at all. Immediately find an open \
+  section of the appropriate class, enroll, and attend the first class \
+  meeting. If you are having trouble finding an open section that fits your \
+  schedule, visit the Basic Writing office (Literature Building 232) for \
+  help."""
+
+[ESYS]
+name = "Environmental Systems"
+
+[ESYS.courses.190A]
+title = "Envir Sys/Senior Project"
+catalog = "/courses/ESYS.html#esys190a"
+
+[ESYS.courses.190B]
+title = "Envir Sys/Senior Seminar"
+catalog = "/courses/ESYS.html#esys190b"
+
+[ESYS.courses.199]
+title = "Independent Study"
+catalog = "/courses/ESYS.html#esys199"
+
+[ETHN]
+name = "Ethnic Studies"
+
+[ETHN.courses.104]
+title = "Race, Space, & Segregation"
+catalog = "/courses/ETHN.html#ethn104"
+
+[ETHN.courses.109]
+title = "Race & Social Movements"
+catalog = "/courses/ETHN.html#ethn109"
+
+[ETHN.courses.110]
+title = "Wrld Views/Indigenous America"
+catalog = "/courses/ETHN.html#ethn110"
+
+[ETHN.courses.129]
+title = "Asn&Latna Immgrnt Wrkrs/Glbl E"
+catalog = "/courses/ETHN.html#ethn129"
+
+[ETHN.courses.139]
+title = "Chicano Literature in English"
+catalog = "/courses/ETHN.html#ethn139"
+
+[ETHN.courses.152]
+title = "Law and Civil Rights"
+catalog = "/courses/ETHN.html#ethn152"
+
+[ETHN.courses.155GS]
+title = "CriticalPerspective/VietnamWar"
+catalog = "/courses/ETHN.html#ethn155gs"
+
+[ETHN.courses.164]
+title = "African Americans & Mass Media"
+catalog = "/courses/ETHN.html#ethn164"
+
+[ETHN.courses.166]
+title = "Topic:Arab/Muslim Amer Identy"
+catalog = "/courses/ETHN.html#ethn166"
+
+[ETHN.courses.173GS]
+title = "Gender, Sexuality and War"
+catalog = "/courses/ETHN.html#ethn173gs"
+
+[ETHN.courses.183]
+title = "Gender,Race,Ethnicity & Class"
+catalog = "/courses/ETHN.html#ethn183"
+
+[FPMU]
+name = "Family&Prev Med Undergraduate"
+
+[FPMU.courses.199]
+title = "Independent Study"
+note = """Students should go to the Public Health Undergraduate Student \
+  Affairs Office, UCtr 202 suite 400, to obtain information and department \
+  approval for enrollment in FPMU 199."""
+
+[GLBH]
+name = "Global Health"
+
+[GLBH.courses.199]
+title = "Indep Study/GLBH Field Exper"
+catalog = "/courses/GHP.html#glbh199"
+note = """Must be Global Health Major or Minor to enroll. For more information \
+  contact the Global Health advisor at ghpadvising@ucsd.edu or \
+  globalhealthprogram.ucsd.edu GLBH 199 must be taken for a letter grade to \
+  count towards Major and Minor Requirements."""
+
+[HDP]
+name = "Human Development Program"
+
+[HDP.courses.150]
+title = "Senior Seminar"
+catalog = "/courses/HDP.html#hdp150"
+note = """Graduating Seniors Only. Department authorization required. To \
+  request enrollment please visit the HDP website."""
+
+[HIEA]
+name = "History of East Asia"
+
+[HIEA.courses.131]
+title = "China/War & Revolution 1911-49"
+catalog = "/courses/HIST.html#hiea131"
+
+[HIEU]
+name = "History of Europe"
+
+[HIEU.courses.117GS]
+title = "Tradtl Greek Society:Ethnogrph"
+note = """Visit http://globalseminar.ucsd.edu for description of the Global \
+  Seminars program."""
+
+[HIEU.courses.121GS]
+title = "Scotl/Engl Civil War 1601-1689"
+catalog = "/courses/HIST.html#hieu121gs"
+
+[HIEU.courses.129]
+title = "Paris, Past and Present"
+catalog = "/courses/HIST.html#hieu129"
+
+[HIEU.courses.144]
+title = "Topics in European History"
+catalog = "/courses/HIST.html#hieu144"
+
+[HIEU.courses.151GS]
+title = "Spain Since 1808"
+
+[HIEU.courses.153]
+title = "Topics/Modern European History"
+catalog = "/courses/HIST.html#hieu153"
+
+[HILA]
+name = "History of Latin America"
+
+[HILA.courses.113]
+title = "Lord&Peasant in Latin America"
+catalog = "/courses/HIST.html#hila113"
+
+[HILD]
+name = "History, Lower Division"
+
+[HILD.courses.2C]
+title = "United States History"
+catalog = "/courses/HIST.html#hild2c"
+
+[HILD.courses.7C]
+title = "Race & Ethnicity/United States"
+catalog = "/courses/HIST.html#hild7c"
+
+[HISC]
+name = "History of Science"
+
+[HISC.courses.105]
+title = "History of Environmentalism"
+catalog = "/courses/HIST.html#hisc105"
+
+[HITO]
+name = "History Topics"
+
+[HITO.courses.126]
+title = "A History of Childhood"
+catalog = "/courses/HIST.html#hito126"
+
+[HUM]
+name = "Humanities"
+
+[HUM.courses.3]
+title = "Renaissance,Reform&Early Europ"
+catalog = "/courses/HUM.html#hum3"
+
+[HUM.courses.3GS]
+title = "Renaissance,Reform&Early Europ"
+catalog = "/courses/HUM.html#hum3gs"
+note = """Visit http://globalseminar.ucsd.edu for a description of the Global \
+  Seminars Program."""
+
+[HUM.courses.4]
+title = "Enlightmnt,Romnt,Rev/1660-1848"
+catalog = "/courses/HUM.html#hum4"
+
+[HUM.courses.4GS]
+title = "Enlightmnt,Romnt,Rev/1660-1848"
+note = """Visit http://globalseminar.ucsd.edu for a description of the Global \
+  Seminars Program. The application period for 2011 programs is now closed, \
+  but look for information about 2012 programs coming later this summer./"""
+
+[HUM.courses.5]
+title = "Modern Culture (1848-Present)"
+catalog = "/courses/HUM.html#hum5"
+
+[INTL]
+name = "International Studies"
+
+[INTL.courses.190]
+title = "Seminar/International Studies"
+catalog = "/courses/INTL.html#intl190"
+
+[LATI]
+name = "Latin American Studies"
+
+[LATI.courses.50]
+title = "Introduction to Latin America"
+catalog = "/courses/LATI.html#lati50"
+
+[LAWS]
+name = "Law and Society"
+
+[LAWS.courses.101]
+title = "Contemporary Legal Issues"
+catalog = "/courses/LAWS.html#laws101"
+
+[LIGN]
+name = "Linguistics/General"
+
+[LIGN.courses.101]
+title = "Introduction/Study of Language"
+catalog = "/courses/LING.html#lign101"
+
+[LIGN.courses.157GS]
+title = "Roma and Gitanos"
+
+[LIGN.courses.187GS]
+title = "Art Lang & Culture-Flamenco"
+
+[LIGN.courses.197]
+title = "Linguistics Internship"
+catalog = "/courses/LING.html#lign197"
+
+[LIGN.courses.199]
+title = "Independent Study/Linguistics"
+catalog = "/courses/LING.html#lign199"
+
+[LTCS]
+name = "Literature/Cultural Studies"
+
+[LTCS.courses.50]
+title = "Intro to Cultural Studies"
+catalog = "/courses/LIT.html#ltcs50"
+
+[LTEA]
+name = "Literatures/East Asian"
+
+[LTEA.courses.120A]
+title = "Chinese Films"
+catalog = "/courses/LIT.html#ltea120a"
+
+[LTEA.courses.120C]
+title = "Hong Kong Films"
+catalog = "/courses/LIT.html#ltea120c"
+
+[LTEN]
+name = "Literatures in English"
+
+[LTEN.courses.179]
+title = "Topic:Arab/Muslim Amer Identy"
+catalog = "/courses/LIT.html#lten179"
+
+[LTEN.courses.180]
+title = "Chicano Literature in English"
+catalog = "/courses/LIT.html#lten180"
+
+[LTKO]
+name = "Literature/Korean"
+
+[LTKO.courses.149]
+title = "Reading Korean Lang Hist&Stru"
+catalog = "/courses/LIT.html#ltko149"
+
+[LTSP]
+name = "Literature/Spanish"
+
+[LTSP.courses.142]
+title = "Latin American Short Story"
+catalog = "/courses/LIT.html#ltsp142"
+
+[LTWL]
+name = "Literatures of the World"
+
+[LTWL.courses.175GS]
+title = "The City of Rome"
+
+[LTWL.courses.180GS]
+title = "Film Studies&Lit:Film History"
+
+[LTWR]
+name = "Literature/Writing"
+
+[LTWR.courses.102]
+title = "Poetry Workshop"
+catalog = "/courses/LIT.html#ltwr102"
+
+[MAE]
+name = "Mechanical & Aerospace Engin"
+
+[MAE.courses.8]
+title = "MATLAB Program for Engr Analys"
+catalog = "/courses/MAE.html#mae8"
+
+[MAE.courses.101A]
+title = "Introductory Fluid Mechanics"
+catalog = "/courses/MAE.html#mae101a"
+
+[MAE.courses.107]
+title = "Computational Methods/Engineer"
+catalog = "/courses/MAE.html#mae107"
+
+[MAE.courses.110A]
+title = "Thermodynamics"
+catalog = "/courses/MAE.html#mae110a"
+
+[MAE.courses.130A]
+title = "Mechanics I: Statics"
+catalog = "/courses/MAE.html#mae130a"
+
+[MAE.courses.160]
+title = "Mechanical Behavior/Materials"
+catalog = "/courses/MAE.html#mae160"
+
+[MAE.courses.165]
+title = "Fatige&Failure Anlys/Eng Comp"
+catalog = "/courses/MAE.html#mae165"
+
+[MAE.courses.197]
+title = "Engineering Internship"
+catalog = "/courses/MAE.html#mae197"
+
+[MATH]
+name = "Mathematics"
+
+[MATH.courses.10A]
+title = "Calculus I"
+catalog = "/courses/MATH.html#math10a"
+
+[MATH.courses.10B]
+title = "Calculus II"
+catalog = "/courses/MATH.html#math10b"
+
+[MATH.courses.20A]
+title = "Calculus/Science & Engineering"
+catalog = "/courses/MATH.html#math20a"
+
+[MATH.courses.20B]
+title = "Calculus/Science & Engineering"
+catalog = "/courses/MATH.html#math20b"
+
+[MATH.courses.20C]
+title = "Calculus&Analyt Geom/Sci&Engnr"
+catalog = "/courses/MATH.html#math20c"
+
+[MATH.courses.20D]
+title = "Intro/Differential Equations"
+catalog = "/courses/MATH.html#math20d"
+
+[MATH.courses.20E]
+title = "Vector Calculus"
+catalog = "/courses/MATH.html#math20e"
+
+[MATH.courses.20F]
+title = "Linear Algebra"
+catalog = "/courses/MATH.html#math20f"
+
+[MATH.courses.109]
+title = "Mathematical Reasoning"
+catalog = "/courses/MATH.html#math109"
+
+[MATH.courses.120A]
+title = "Elements of Complex Analysis"
+catalog = "/courses/MATH.html#math120a"
+
+[MATH.courses.142A]
+title = "Introduction to Analysis I"
+catalog = "/courses/MATH.html#math142a"
+
+[MATH.courses.168A]
+title = "Topics/Applied Math-Comp Sci"
+catalog = "/courses/MATH.html#math168a"
+
+[MATH.courses.193A]
+title = "Actuarial Mathematics I"
+catalog = "/courses/MATH.html#math193a"
+
+[MCWP]
+name = "Muir College Writing Program"
+
+[MCWP.courses.40]
+title = "Critical Writing"
+catalog = "/courses/MCWP.html#mcwp40"
+note = """Please direct questions about enrollment for the next quarter to \
+  muirwriting@ucsd.edu."""
+
+[MCWP.courses.50]
+title = "Critical Writing"
+catalog = "/courses/MCWP.html#mcwp50"
+note = """MCWP 50 sections vary in content and emphasis. Course descriptions \
+  for MCWP 50 are available outside the Muir Writing Program Office (HSS 2346) \
+  and on our web site: http://muir.ucsd.edu/writing/index.html. If you have \
+  more than 90 units and have fulfilled the prerequisites, you will be \
+  preauthorized and a note will be placed on your Virtual Advising Center \
+  contact record(http://vac.ucsd.edu). Please contact us through the Virtual \
+  Advising Center or come into the office if you have questions or concerns \
+  about preauthorization."""
+
+[MCWP.courses.125]
+title = "Argument and Analysis"
+catalog = "/courses/MCWP.html#mcwp125"
+note = """This course is for transfer students who have fulfilled the TAG or \
+  IGETC agreements. MCWP 125 sections vary in content and emphasis. Course \
+  descriptions for MCWP 125 are available outside the Muir Writing Program \
+  Office (HSS 2346) and on our web site: http://muir.ucsd.edu/writing/index.\
+  html If you have more than 90 units and have fulfilled the the \
+  prerequisites, you will be preauthorized and a note will be placed on your \
+  Virtual Advising Center contact record (http://vac.ucsd.edu). Please contact \
+  us through the Virtual Advising Center or come into the office if you have \
+  questions or concerns about preauthorization."""
+
+[MGT]
+name = "Rady School of Management"
+
+[MGT.courses.4]
+title = "Financial Accounting"
+catalog = "/courses/RSM.html#mgt4"
+
+[MGT.courses.5]
+title = "Managerial Accounting"
+catalog = "/courses/MGT.html#mgt5"
+
+[MGT.courses.12]
+title = "Personal Financial Management"
+catalog = "/courses/RSM.html#mgt12"
+
+[MGT.courses.16]
+title = "Personal Ethics at Work"
+catalog = "/courses/MGT.html#mgt16"
+
+[MGT.courses.18]
+title = "Managing Diverse Teams"
+catalog = "/courses/RSM.html#mgt18"
+
+[MGT.courses.45]
+title = "Principles of Accounting"
+catalog = "/courses/MGT.html#mgt45"
+
+[MGT.courses.131A]
+title = "Intermediate Accounting A"
+catalog = "/courses/MGT.html#mgt131a"
+
+[MGT.courses.132]
+title = "Auditing"
+catalog = "/courses/MGT.html#mgt132"
+
+[MGT.courses.172]
+title = "Business Project Management"
+catalog = "/courses/MGT.html#mgt172"
+
+[MGT.courses.181]
+title = "Enterprise Finance"
+catalog = "/courses/RSM.html#mgt181"
+
+[MMW]
+name = "Making of the Modern World"
+
+[MMW.courses.14]
+title = "Revolution,Industry & Empire"
+catalog = "/courses/MMW.html#mmw14"
+note = "MMW 14 discussion sections begin on Monday, June 29, 2015."
+
+[MMW.courses.14GS]
+title = "Revolution, Industry & Empire"
+
+[MMW.courses.15GS]
+title = "Twentieth Century and Beyond"
+
+[MMW.courses.121]
+title = "Exploring the Pre-Modern World"
+catalog = "/courses/MMW.html#mmw121"
+note = "MMW 121 discussion sections begin on Tuesday, June 30, 2015."
+
+[MUS]
+name = "Music"
+
+[MUS.courses.5]
+title = "Sound in Time"
+catalog = "/courses/MUS.html#mus5"
+
+[MUS.courses.8]
+title = "American Music"
+catalog = "/courses/MUS.html#mus8"
+
+[MUS.courses.8GS]
+title = "American Music"
+
+[MUS.courses.11]
+title = "Folk Music"
+catalog = "/courses/MUS.html#mus11"
+
+[MUS.courses.14]
+title = "Contemporary Music"
+catalog = "/courses/MUS.html#mus14"
+
+[MUS.courses.15]
+title = "Popular Music"
+catalog = "/courses/MUS.html#mus15"
+
+[MUS.courses.80]
+title = "Special Topics in Music"
+catalog = "/courses/MUS.html#mus80"
+
+[MUS.courses.150GS]
+title = "Jazz in Paris"
+
+[MUS.courses.153]
+title = "African Americans & Mass Media"
+catalog = "/courses/MUS.html#mus153"
+
+[NANO]
+name = "NanoEngineering"
+
+[NANO.courses.15]
+title = "Engin. Comp Using MATLAB"
+catalog = "/courses/NANO.html#nano15"
+
+[NANO.courses.299]
+title = "Grad Research NanoEngineering"
+catalog = "/courses/NANO.html#nano299"
+
+[PHIL]
+name = "Philosophy"
+
+[PHIL.courses.10]
+title = "Introduction to Logic"
+catalog = "/courses/PHIL.html#phil10"
+
+[PHIL.courses.13]
+title = "Intro to Philosophy: Ethics"
+catalog = "/courses/PHIL.html#phil13"
+
+[PHIL.courses.27]
+title = "Ethics And Society"
+catalog = "/courses/PHIL.html#phil27"
+note = """PHIL 27 must be taken for a letter grade to meet Warren College GE \
+  requirements."""
+
+[PHIL.courses.28]
+title = "Ethics And Society II"
+catalog = "/courses/PHIL.html#phil28"
+note = """PHIL 28 must be taken for a letter grade to meet Warren College GE \
+  requirements."""
+
+[PHIL.courses.136]
+title = "Philosophy of Mind"
+catalog = "/courses/PHIL.html#phil136"
+
+[PHIL.courses.162]
+title = "Contemporary Moral Issues"
+catalog = "/courses/PHIL.html#phil162"
+
+[PHIL.courses.164]
+title = "Technology and Human Values"
+catalog = "/courses/PHIL.html#phil164"
+
+[PHYS]
+name = "Physics"
+
+[PHYS.courses.1A]
+title = "Mechanics"
+catalog = "/courses/PHYS.html#phys1a"
+note = """*Effective Fall 2015* Please contact instructor, directly, regarding \
+  the format of each PHYS 1A section. Corequisites: Physics 1AL and \
+  Mathematics 10B or 20B (prior enrollment in mathematics corequisites is \
+  permitted)."""
+
+[PHYS.courses.1AL]
+title = "Mechanics Laboratory"
+catalog = "/courses/PHYS.html#phys1al"
+note = """Corequisites: Physics 1A and Mathematics 10B or 20B (prior \
+  enrollment in mathematics corequisites is permitted)."""
+
+[PHYS.courses.1B]
+title = "Electricity and Magnetism"
+catalog = "/courses/PHYS.html#phys1b"
+note = """Corequisites: Physics 1BL and Mathematics 10C or 20C or 11 (prior \
+  enrollment in mathematics corequisites is permitted)."""
+
+[PHYS.courses.1BL]
+title = "Electricity & Magnetism Lab"
+catalog = "/courses/PHYS.html#phys1bl"
+note = """Corequisites: Physics 1B and Mathematics 10C or 20C or 11 (prior \
+  enrollment in mathematics corequisites is permitted). Students enrolled in \
+  PHYS 1BL are responsible for a $3.00 materials fee which will be assessed \
+  with registration fees."""
+
+[PHYS.courses.1C]
+title = "Waves, Optics & Modern Physics"
+catalog = "/courses/PHYS.html#phys1c"
+note = "Corequisites: Physics 1CL."
+
+[PHYS.courses.1CL]
+title = "Waves,Optics&Modrn Phys Lab"
+catalog = "/courses/PHYS.html#phys1cl"
+note = """Corequisites: Physics 1C. Students enrolled in PHYS 1CL are \
+  responsible for a $7.00 materials fee which will be assessed with \
+  registration fees."""
+
+[PHYS.courses.2A]
+title = "Physics-Mechanics"
+catalog = "/courses/PHYS.html#phys2a"
+note = """Corequisite: Mathematics 20B (prior completion of mathematics \
+  corequisite is sufficient)."""
+
+[PHYS.courses.2B]
+title = "Phys-Electricity and Magnetism"
+catalog = "/courses/PHYS.html#phys2b"
+note = """Students CANNOT use Physics 1A in place of Physics 2A as a pre-req. \
+  for enrollment in Physics 2B. Corequisite: Mathematics 20C (prior completion \
+  of mathematics corequisite is sufficient)."""
+
+[PHYS.courses.2BL]
+title = "Phys Lab-Mechanics&Electrostat"
+catalog = "/courses/PHYS.html#phys2bl"
+note = """Students CANNOT use Physics 1A in place of Physics 2A as a pre-req. \
+  for enrollment in Physics 2BL. Corequisites: Physics 2B or 4C (prior \
+  completion of Physics 2B or 4C is sufficient)."""
+
+[PHYS.courses.2C]
+title = "Physics-Flu,Wav,Thrmdyn,Optics"
+catalog = "/courses/PHYS.html#phys2c"
+note = """Students CANNOT use Physics 1A in place of Physics 2A as a pre-req. \
+  for enrollment in Physics 2C. Corequisite: Mathematics 20D (prior completion \
+  of mathematics corequisite is sufficient)."""
+
+[PHYS.courses.199]
+title = "Research for Undergraduates"
+catalog = "/courses/PHYS.html#phys199"
+note = """Students should see Antoinette (Toni) Moore, Physics Student Affairs \
+  Office, Mayer Hall Addition 2581, to obtain applications/information \
+  concerning Physics 195, 198, 199, and 199H."""
+
+[POLI]
+name = "Political Science"
+
+[POLI.courses.10]
+title = "Intro/Poli Sci:Amer Politics"
+catalog = "/courses/POLI.html#poli10"
+
+[POLI.courses.12]
+title = "Intro/Poli Sci:Int'l Relations"
+catalog = "/courses/POLI.html#poli12"
+
+[POLI.courses.100A]
+title = "The Presidency"
+catalog = "/courses/POLI.html#poli100a"
+
+[POLI.courses.100M]
+title = "Political Psychology"
+catalog = "/courses/POLI.html#poli100m"
+
+[POLI.courses.102F]
+title = "Mass Media and Politics"
+catalog = "/courses/POLI.html#poli102f"
+
+[POLI.courses.104A]
+title = "Supreme Court & Constitution"
+catalog = "/courses/POLI.html#poli104a"
+
+[POLI.courses.104I]
+title = "Law&Politcs-Crts&Poli Controv"
+catalog = "/courses/POLI.html#poli104i"
+
+[POLI.courses.113A]
+title = "E. Asia Thought/Comp Perspectv"
+catalog = "/courses/POLI.html#poli113a"
+
+[POLI.courses.120D]
+title = "Germany: Division"
+catalog = "/courses/POLI.html#poli120d"
+
+[POLI.courses.120H]
+title = "European Integration"
+catalog = "/courses/POLI.html#poli120h"
+
+[POLI.courses.121B]
+title = "Politics in Israel"
+catalog = "/courses/POLI.html#poli121b"
+
+[POLI.courses.124]
+title = "Israeli-Palestinian Conflict"
+catalog = "/courses/POLI.html#poli124"
+
+[POLI.courses.126AA]
+title = "Politicl Econ:Modrn Capitalism"
+catalog = "/courses/POLI.html#poli126aa"
+
+[POLI.courses.142A]
+title = "United States Foreign Policy"
+catalog = "/courses/POLI.html#poli142a"
+
+[POLI.courses.142J]
+title = "National Security Strategy"
+catalog = "/courses/POLI.html#poli142j"
+
+[POLI.courses.143A]
+title = "War and Society"
+catalog = "/courses/POLI.html#poli143a"
+
+[POLI.courses.151]
+title = "International Organizations"
+catalog = "/courses/POLI.html#poli151"
+
+[POLI.courses.153]
+title = "The EU in World Politics"
+catalog = "/courses/POLI.html#poli153"
+
+[POLI.courses.162]
+title = "Environmental Policy"
+catalog = "/courses/POLI.html#poli162"
+
+[POLI.courses.199]
+title = "Independent Study"
+catalog = "/courses/POLI.html#poli199"
+
+[PSYC]
+name = "Psychology"
+
+[PSYC.courses.4]
+title = "General Psychology: Behavioral"
+catalog = "/courses/PSYC.html#psyc4"
+
+[PSYC.courses.60]
+title = "Introduction to Statistics"
+catalog = "/courses/PSYC.html#psyc60"
+
+[PSYC.courses.102]
+title = "Intro/Sensation & Perception"
+catalog = "/courses/PSYC.html#psyc102"
+
+[PSYC.courses.105]
+title = "Introduction/Cognitive Psych"
+catalog = "/courses/PSYC.html#psyc105"
+
+[PSYC.courses.106]
+title = "Introduction/Physiological Psy"
+catalog = "/courses/PSYC.html#psyc106"
+
+[PSYC.courses.107]
+title = "Lab/Substance Abuse Research"
+catalog = "/courses/PSYC.html#psyc107"
+
+[PSYC.courses.134]
+title = "Eating Disorders"
+catalog = "/courses/PSYC.html#psyc134"
+
+[PSYC.courses.136]
+title = "Cognitive Development"
+catalog = "/courses/PSYC.html#psyc136"
+
+[PSYC.courses.142]
+title = "Psychology of Consciousness"
+catalog = "/courses/PSYC.html#psyc142"
+
+[PSYC.courses.144]
+title = "Memory and Amnesia"
+catalog = "/courses/PSYC.html#psyc144"
+
+[PSYC.courses.147]
+title = "Gender"
+catalog = "/courses/PSYC.html#psyc147"
+
+[PSYC.courses.154]
+title = "Behavior Modification"
+catalog = "/courses/PSYC.html#psyc154"
+
+[PSYC.courses.163]
+title = "Abnormal Psychology"
+catalog = "/courses/PSYC.html#psyc163"
+
+[PSYC.courses.164]
+title = "Criminology"
+catalog = "/courses/PSYC.html#psyc164"
+
+[PSYC.courses.168]
+title = "Psychological Disorders/Child"
+catalog = "/courses/PSYC.html#psyc168"
+
+[PSYC.courses.169]
+title = "Brain Damage & Mental Function"
+catalog = "/courses/PSYC.html#psyc169"
+
+[PSYC.courses.172]
+title = "Psychology of Human Sexuality"
+catalog = "/courses/PSYC.html#psyc172"
+
+[PSYC.courses.176]
+title = "Creativity"
+catalog = "/courses/PSYC.html#psyc176"
+
+[PSYC.courses.181GS]
+title = "Drugs and Behavior"
+note = """Visit http://globalseminar.ucsd.edu for description of the Global \
+  Seminars program."""
+
+[PSYC.courses.193GS]
+title = "Special Topics in Psychology"
+
+[PSYC.courses.199]
+title = "Independent Study"
+catalog = "/courses/PSYC.html#psyc199"
+note = """Students should go to the Psychology Department Office, \
+  Mandler 1533, to obtain information and department approval for enrollment \
+  in Psychology 199."""
+
+[REV]
+name = "Revelle College"
+
+[REV.courses.160GS]
+title = "Public Health & Epidemiology I"
+note = """Visit http://globalseminar.ucsd.edu for a description of the Global \
+  Seminars Program."""
+
+[REV.courses.165GS]
+title = "Public Health/Epidemiology II"
+
+[SE]
+name = "Structural Engineering"
+
+[SE.courses.1]
+title = "Intro. to Structures & Design"
+catalog = "/courses/SE.html#se1"
+
+[SE.courses.101A]
+title = "Mechanics I: Statics"
+catalog = "/courses/SE.html#se101a"
+
+[SE.courses.130A]
+title = "Structural Analysis I"
+catalog = "/courses/SE.html#se130a"
+
+[SE.courses.131]
+title = "Finite Element Analysis"
+catalog = "/courses/SE.html#se131"
+
+[SE.courses.154]
+title = "Design of Timber Structures"
+catalog = "/courses/SE.html#se154"
+
+[SE.courses.180]
+title = "Earthquake Engineering"
+catalog = "/courses/SE.html#se180"
+
+[SIO]
+name = "Scripps Inst of Oceanography"
+
+[SIO.courses.45]
+title = "Volcanoes"
+catalog = "/courses/SIO.html#sio45"
+
+[SIO.courses.299]
+title = "Research"
+catalog = "/courses/SIO.html#sio299"
+
+[SOCI]
+name = "Sociology"
+
+[SOCI.courses.1]
+title = "Introduction to Sociology"
+catalog = "/courses/SOC.html#soci1"
+
+[SOCI.courses.30]
+title = "Science, Technology & Society"
+catalog = "/courses/SOC.html#soci30"
+
+[SOCI.courses.113]
+title = "Sociology of the AIDS Epidemic"
+catalog = "/courses/SOC.html#soci113"
+
+[SOCI.courses.118]
+title = "Sociology of Gender"
+catalog = "/courses/SOC.html#soci118"
+
+[SOCI.courses.131]
+title = "Sociology Of Youth"
+catalog = "/courses/SOC.html#soci131"
+
+[SOCI.courses.139]
+title = "Socl Inequal:Class,Race,Gender"
+catalog = "/courses/SOC.html#soci139"
+
+[SOCI.courses.148GS]
+title = "Political Sociology"
+
+[SOCI.courses.182]
+title = "Ethnicity&IndignsPeople/LatAmr"
+catalog = "/courses/SOC.html#soci182"
+
+[SOCI.courses.185GS]
+title = "Globalization and Social Devel"
+
+[SOCI.courses.188G]
+title = "Chinese Society"
+catalog = "/courses/SOC.html#soci188g"
+
+[SOCI.courses.188GS]
+title = "Change in Modern South Africa"
+
+[SOCI.courses.188I]
+title = "Israeli-Palestinian Conflict"
+catalog = "/courses/SOC.html#soci188i"
+
+[TDAC]
+name = "Theatre / Acting"
+
+[TDAC.courses.1]
+title = "Introduction to Acting"
+catalog = "/courses/THEA.html#tdac1"
+
+[TDAC.courses.107]
+title = "Improvisation for the Theatre"
+catalog = "/courses/THEA.html#tdac107"
+
+[TDGE]
+name = "Theatre / General"
+
+[TDGE.courses.1]
+title = "Introduction to Theatre"
+catalog = "/courses/THEA.html#tdge1"
+
+[TDGE.courses.3]
+title = "Cultivating the Creative Mind"
+catalog = "/courses/THEA.html#tdge3"
+
+[TDGE.courses.10]
+title = "Theatre And Film"
+catalog = "/courses/THEA.html#tdge10"
+note = """Students will be required to view videos outside class meeting \
+  times."""
+
+[TDGE.courses.25]
+title = "Public Speaking"
+catalog = "/courses/THEA.html#tdge25"
+
+[TDGE.courses.124]
+title = "Cult Films: Weirdly Dramatic"
+catalog = "/courses/THEA.html#tdge124"
+
+[TDGE.courses.125]
+title = "Topics in Theatre and Film"
+catalog = "/courses/THEA.html#tdge125"
+
+[TDMV]
+name = "Dance/Movement"
+
+[TDMV.courses.1]
+title = "Beginning Ballet"
+catalog = "/courses/THEA.html#tdmv1"
+
+[TDMV.courses.3]
+title = "Beginning Jazz"
+catalog = "/courses/THEA.html#tdmv3"
+
+[TDMV.courses.142]
+title = "Latin Dance of the World"
+catalog = "/courses/THEA.html#tdmv142"
+
+[TDPW]
+name = "Theatre / Playwriting"
+
+[TDPW.courses.1]
+title = "Introduction to Playwriting"
+catalog = "/courses/THEA.html#tdpw1"
+
+[TWS]
+name = "Third World Studies"
+
+[TWS.courses.21GS]
+title = "TWS: African Literature"
+
+[USP]
+name = "Urban Studies & Planning"
+
+[USP.courses.2]
+title = "Urban World System"
+catalog = "/courses/USP.html#usp2"
+
+[USP.courses.135]
+title = "Asn&Latna Immgrnt Wrkrs/Glbl E"
+catalog = "/courses/USP.html#usp135"
+
+[USP.courses.136]
+title = "Collaborative Comm. Leadership"
+catalog = "/courses/USP.html#usp136"
+
+[VIS]
+name = "Visual Arts"
+
+[VIS.courses.21B]
+title = "Introduction/Asian Art"
+catalog = "/courses/VIS.html#vis21b"
+
+[VIS.courses.60]
+title = "Intro/Digital Photography"
+catalog = "/courses/VIS.html#vis60"
+note = """Students enrolled in VIS 60 are responsible for a $28.50 materials \
+  fee which will be assessed with registration fees. This fee is non-\
+  refundable after Week 2. In addition, students are responsible for providing \
+  their own camera. Recommended camera is a Digital SLR with full manual \
+  control and RAW file capability. Minimum requirement is a digital camera \
+  of 7 Mega Pixels, or higher, with manual exposure and focus controls. Cell \
+  phone cameras are not acceptable."""
+
+[VIS.courses.105D]
+title = "Aesthetics/Chinese Calligraphy"
+catalog = "/courses/VIS.html#vis105d"
+
+[VIS.courses.128C]
+title = "Topics in Modern Art History"
+catalog = "/courses/VIS.html#vis128c"
+
+[VIS.courses.152]
+title = "Film in Social Context"
+catalog = "/courses/VIS.html#vis152"
+note = """Students enrolled in VIS 152 are responsible for a $20.00 materials \
+  fee which will be assessed with registration fees. This fee is non-\
+  refundable after Friday of week 2."""
+
+[VIS.courses.165]
+title = "Camera Tech:Analog Futures"
+catalog = "/courses/VIS.html#vis165"
+note = """Students enrolled in VIS 165 are responsible for a $28.50 materials \
+  fee which will be assessed with registration fees."""
+
+[WCWP]
+name = "Warren College Writing Program"
+
+[WCWP.courses.10A]
+title = "The Writing Course A"
+catalog = "/courses/WARR.html#wcwp10a"
+
+[WCWP.courses.10B]
+title = "The Writing Course B"
+catalog = "/courses/WARR.html#wcwp10b"

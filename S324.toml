@@ -1,0 +1,684 @@
+[AESE]
+name = "ArchitectureBsdEntrpSystmsEngr"
+
+[AESE.courses.279B]
+title = "AESE Capstone Team Project"
+catalog = "/courses/MAS.html#aese279b"
+
+[AIP]
+name = "Academic Internship Program"
+
+[AIP.courses.97]
+title = "Academic Internship"
+catalog = "/courses/AIP.html#aip97"
+note = """Eligibility requirements are 30 units completed and 3.0 minimum UC \
+  gpa"""
+
+[AIP.courses.197]
+title = "Academic Internship Program"
+catalog = "/courses/AIP.html#aip197"
+note = """Eligibility requirements are 90 units completed and minimum 2.5 UC \
+  gpa"""
+
+[ANAR]
+name = "Anthropological Archaeology"
+
+[ANAR.courses.135S]
+title = "Ancient Mediterranean Civ"
+catalog = "/courses/ANTH.html#anar135s"
+note = """Students enrolled in ANAR 135S are responsible for a $3,975.00 \
+  program fee which will be assessed with registration fees."""
+
+[BENG]
+name = "Bioengineering"
+
+[BENG.courses.196]
+title = "Bioeng Industrial Internship"
+catalog = "/courses/BENG.html#beng196"
+
+[BENG.courses.295]
+title = "BENG Design Proj & Industr Trn"
+catalog = "/courses/BENG.html#beng295"
+
+[BISP]
+name = "Biology/Special Studies"
+
+[BISP.courses.197]
+title = "Biology Internship Program"
+catalog = "/courses/BIOL.html#bisp197"
+
+[BISP.courses.199]
+title = "Individual Research for Ugrads"
+catalog = "/courses/BIOL.html#bisp199"
+
+[CAT]
+name = "Culture, Art, & Technology"
+
+[CAT.courses.124RS]
+title = "Sixth Practicum Online GS"
+catalog = "/courses/CAT.html#cat124rs"
+note = """Visit http://globalseminar.ucsd.edu/ for information on Global \
+  Seminars Programs descriptions and fees."""
+
+[CAT.courses.125RS]
+title = "Pub Rhet & Prac Comm Online GS"
+catalog = "/courses/CAT.html#cat125rs"
+note = """Visit http://globalseminar.ucsd.edu/ for information on Global \
+  Seminars Programs descriptions and fees."""
+
+[CCS]
+name = "Climate Change Studies"
+
+[CCS.courses.197]
+title = "Carbon Neutrality Internship"
+catalog = "/courses/CCS.html#ccs197"
+
+[CHEM]
+name = "Chemistry and Biochemistry"
+
+[CHEM.courses.197]
+title = "Chemistry Internship"
+catalog = "/courses/CHEM.html#chem197"
+
+[CHEM.courses.199]
+title = "Reading and Research"
+catalog = "/courses/CHEM.html#chem199"
+note = """For more info, please visit: https://chemistry.ucsd.edu/\
+  undergraduate/research/"""
+
+[CLRE]
+name = "Clinical Research"
+
+[CLRE.courses.250]
+title = "Patient Oriented Research I"
+catalog = "/courses/CLRE.html#clre250"
+
+[CLRE.courses.251]
+title = "Epidemiology I"
+catalog = "/courses/CLRE.html#clre251"
+
+[CLRE.courses.252]
+title = "Health Services Research"
+catalog = "/courses/CLRE.html#clre252"
+
+[CLRE.courses.253]
+title = "Biostatistics I"
+catalog = "/courses/CLRE.html#clre253"
+
+[CLRE.courses.259]
+title = "Scientifc Communication Skills"
+catalog = "/courses/CLRE.html#clre259"
+
+[CLRE.courses.260]
+title = "Directed Studies in Clin Rsrch"
+catalog = "/courses/CLRE.html#clre260"
+
+[CLRE.courses.297]
+title = "Independent Study Proj-2 units"
+catalog = "/courses/CLRE.html#clre297"
+
+[COGS]
+name = "Cognitive Science"
+
+[COGS.courses.197]
+title = "Cognitive Science Internship"
+catalog = "/courses/COGS.html#cogs197"
+
+[COGS.courses.199]
+title = "Special Project"
+catalog = "/courses/COGS.html#cogs199"
+
+[COGS.courses.298]
+title = "Directed Independent Study"
+catalog = "/courses/COGS.html#cogs298"
+
+[COMM]
+name = "Communication"
+
+[COMM.courses.199]
+title = "Independent Study/Communicatn"
+catalog = "/courses/COMM.html#comm199"
+
+[CSE]
+name = "Computer Science & Engineering"
+
+[CSE.courses.191]
+title = "Semnr/Computer Sci & Engineer"
+catalog = "/courses/CSE.html#cse191"
+
+[CSE.courses.197]
+title = "Field Study/Computer Sci&Engin"
+catalog = "/courses/CSE.html#cse197"
+note = """CSE Special Studies (CSE 197, CSE 198 or CSE 199) contact the CSE \
+  Dept via the Virtual Advising Center (vac.ucsd.edu)."""
+
+[CSE.courses.199]
+title = "Independent Study"
+catalog = "/courses/CSE.html#cse199"
+
+[CSE.courses.298]
+title = "Independent Study"
+catalog = "/courses/CSE.html#cse298"
+
+[CSE.courses.299]
+title = "Research"
+catalog = "/courses/CSE.html#cse299"
+
+[CSS]
+name = "Computational Social Science"
+
+[CSS.courses.201S]
+title = "IntrComputationalSocialScience"
+catalog = "/courses/css.html#css201s"
+
+[CSS.courses.202S]
+title = "CompSocSciTechnicalBootcamp"
+catalog = "/courses/css.html#css202s"
+
+[DSC]
+name = "Data Science"
+
+[DSC.courses.197]
+title = "Data Science Internship"
+catalog = "/courses/DSC.html#dsc197"
+
+[DSC.courses.297]
+title = "DSC Graduate Internship"
+catalog = "/courses/DSC.html#dsc297"
+
+[EAP]
+name = "Education Abroad Program"
+
+[EAP.courses.100]
+title = "Education Abroad Program"
+catalog = "/curric/EAP.html"
+
+[ECE]
+name = "Electrical & Computer Engineer"
+
+[ECE.courses.45]
+title = "Circuits and Systems"
+catalog = "/courses/ECE.html#ece45"
+
+[ECE.courses.100]
+title = "Linear Electronic Systems"
+catalog = "/courses/ECE.html#ece100"
+note = """Students who enroll in ECE laboratory courses will be charged a lab \
+  fee which will be assessed with registration fees. This laboratory fee will \
+  be: $10 for ECE 100. Students who drop a lab course before the end of the \
+  second week of the quarter are eligible for a refund of the charged lab \
+  fee."""
+
+[ECE.courses.111]
+title = "Advanced Digital Design Proj"
+catalog = "/courses/ECE.html#ece111"
+
+[ECE.courses.197]
+title = "ECE Internship"
+catalog = "/courses/ECE.html#ece197"
+
+[ECE.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/ECE.html#ece199"
+
+[ECE.courses.298]
+title = "Independent Study"
+catalog = "/courses/ECE.html#ece298"
+
+[ECE.courses.299]
+title = "Research"
+catalog = "/courses/ECE.html#ece299"
+
+[EDS]
+name = "Education Studies"
+
+[EDS.courses.115]
+title = "Cog Development & Education"
+catalog = "/courses/EDS.html#eds115"
+
+[EDS.courses.117]
+title = "Language, Culture & Education"
+catalog = "/courses/EDS.html#eds117"
+
+[EDS.courses.125]
+title = "Hist,Polic&Theory/Bilingual Ed"
+catalog = "/courses/EDS.html#eds125"
+
+[EDS.courses.128A]
+title = "Intro/Teaching&Learning (Elem)"
+catalog = "/courses/EDS.html#eds128a"
+note = """This course is designated for multiple subject/MEd students. \
+  Students must complete the course authorization form which they can find at: \
+  http://eds.ucsd.edu/undergraduate/forms.html"""
+
+[EDS.courses.128B]
+title = "Intro/Teaching&Learning (Elem)"
+catalog = "/courses/EDS.html#eds128b"
+note = """To enroll, students must submit an online placement form: http://eds.\
+  ucsd.edu/explore/undergraduate/forms.html. Students will receive \
+  authorization to enroll within 1-2 business days. EDS 139 is a required co-\
+  requisite to this course, students must enroll in the EDS 139 section under \
+  the same instructor of this course."""
+
+[EDS.courses.139]
+title = "Practicum in Teaching/Learning"
+catalog = "/courses/EDS.html#eds139"
+note = """EDS 139 is a required co-requisite to all EDS fieldwork courses. You \
+  will want to register for the 139 that corresponds with the faculty of the \
+  course you are taking (i.e. EDS 128A/B 129A/B/C, 130, 131, 136, 137, 138)"""
+
+[EDS.courses.201]
+title = "Intro/Resources/Tching&Lrning"
+catalog = "/courses/EDS.html#eds201"
+
+[EDS.courses.203]
+title = "Technology,Teaching & Learning"
+catalog = "/courses/EDS.html#eds203"
+
+[EDS.courses.204R]
+title = "Tech & Professional Assessment"
+catalog = "/courses/EDS.html#eds204r"
+
+[EDS.courses.206R]
+title = "Teaching Perf Assessment Portf"
+catalog = "/courses/EDS.html#eds206r"
+
+[EDS.courses.250]
+title = "Equitable Educ/Res & Practice"
+catalog = "/courses/EDS.html#eds250"
+
+[EDS.courses.281]
+title = "Leadership for Learning"
+catalog = "/courses/EDS.html#eds281"
+
+[EDS.courses.284]
+title = "Leadership for Organiztn Devel"
+catalog = "/courses/EDS.html#eds284"
+
+[EDS.courses.286]
+title = "Advanced Topics in Leadership"
+catalog = "/courses/EDS.html#eds286"
+
+[EDS.courses.289C]
+title = "Dissertation Writing Seminar"
+catalog = "/courses/EDS.html#eds289c"
+
+[EDS.courses.290]
+title = "Research Practicum"
+catalog = "/courses/EDS.html#eds290"
+
+[EDS.courses.299]
+title = "Dissertation Research"
+catalog = "/courses/EDS.html#eds299"
+
+[EDS.courses.373]
+title = "Secondary Engl Teaching Practs"
+catalog = "/courses/EDS.html#eds373"
+
+[EDS.courses.374]
+title = "Secondary Math Teaching Prac"
+catalog = "/courses/EDS.html#eds374"
+
+[EDS.courses.375]
+title = "Secondary Sci Teaching Prac"
+catalog = "/courses/EDS.html#eds375"
+
+[EDS.courses.376]
+title = "Language & Learning Instructn"
+catalog = "/courses/EDS.html#eds376"
+
+[EDS.courses.385]
+title = "Elem. Schl Math Content & Ped"
+catalog = "/courses/EDS.html#eds385"
+
+[ETHN]
+name = "Ethnic Studies"
+
+[ETHN.courses.199]
+title = "Independent Study and Research"
+catalog = "/courses/ETHN.html#ethn199"
+
+[FMPH]
+name = "Family Med & Public Health"
+
+[FMPH.courses.199]
+title = "Independent Study"
+catalog = "/courses/FMPH.html#fmph199"
+
+[FMPH.courses.496B]
+title = "MPH Practicum Field Placement"
+
+[FMPH.courses.498]
+title = "Independent Study"
+catalog = "/courses/FMPH.html#fmph498"
+
+[FPM]
+name = "Family and Preventive Medicine"
+
+[FPM.courses.297]
+title = "SpecialStudy/FamMed&PublicHlth"
+
+[HDS]
+name = "Human Developmental Sciences"
+
+[HDS.courses.193]
+title = "Adv Resrch/Human Development"
+catalog = "/courses/HDS.html#hds193"
+
+[HITO]
+name = "History Topics"
+
+[HITO.courses.199]
+title = "Independent Study/Hist Topics"
+catalog = "/courses/HIST.html#hito199"
+note = """Students should go to the History Department Office, HSS 5029, to \
+  obtain information and department approval for enrollment in History \
+  Topics 199."""
+
+[LIGM]
+name = "Linguistics/German"
+
+[LIGM.courses.5A]
+title = "Fundamentals of German"
+catalog = "/courses/LING.html#ligm5a"
+
+[LIGM.courses.5B]
+title = "Fundamentals of German"
+catalog = "/courses/LING.html#ligm5b"
+
+[LIGM.courses.5C]
+title = "Fundamentals of German"
+catalog = "/courses/LING.html#ligm5c"
+
+[LIIT]
+name = "Linguistics/Italian"
+
+[LIIT.courses.5AS]
+title = "Fundamentals of Italian I"
+catalog = "/courses/LING.html#liit5as"
+
+[LIIT.courses.5BS]
+title = "Fundamentals of Italian II"
+catalog = "/courses/LING.html#liit5bs"
+
+[LIIT.courses.5CS]
+title = "Fundamentals of Italian III"
+catalog = "/courses/LING.html#liit5cs"
+
+[LISP]
+name = "Linguistics/Spanish"
+
+[LISP.courses.5A]
+title = "Fundamentals of Spanish"
+catalog = "/courses/LING.html#lisp5a"
+
+[LISP.courses.5B]
+title = "Fundamentals of Spanish"
+catalog = "/courses/LING.html#lisp5b"
+
+[LISP.courses.5C]
+title = "Fundamentals of Spanish"
+catalog = "/courses/LING.html#lisp5c"
+
+[LTEN]
+name = "Literatures in English"
+
+[LTEN.courses.199]
+title = "Special Studies"
+catalog = "/courses/LIT.html#lten199"
+
+[MAE]
+name = "Mechanical & Aerospace Engin"
+
+[MAE.courses.197]
+title = "Engineering Internship"
+catalog = "/courses/MAE.html#mae197"
+
+[MAE.courses.299]
+title = "Graduate Research"
+catalog = "/courses/MAE.html#mae299"
+
+[MATH]
+name = "Mathematics"
+
+[MATH.courses.10A]
+title = "Calculus I"
+catalog = "/courses/MATH.html#math10a"
+note = """Incoming students, please review information on the Math Placement \
+  Exam (http://mathtesting.ucsd.edu/testing/index.html) before enrolling."""
+
+[MATH.courses.197]
+title = "Industry Practicum"
+catalog = "/courses/MATH.html#math197"
+note = """The Math 197 internship is intended for students who have found a \
+  paid or unpaid position off-campus (in a math-related field) and would like \
+  to earn academic credit for the work. If a student has found a position and \
+  wants to earn academic credit for it, they also need to independently find a \
+  faculty advisor - a Professor in the Math Department who could work with \
+  them on a special studies reading or paper or project related to their \
+  position."""
+
+[MCWP]
+name = "Muir College Writing Program"
+
+[MCWP.courses.40R]
+title = "Critical Writing"
+
+[MCWP.courses.50R]
+title = "Critical Writing"
+
+[MGT]
+name = "Rady School of Management"
+
+[MGT.courses.199]
+title = "Directed Independent Study"
+catalog = "/courses/MGT.html#mgt199"
+
+[MGT.courses.402]
+title = "Management Communications"
+catalog = "/courses/MGT.html#mgt402"
+
+[MGT.courses.406]
+title = "Leadership Skills/Tech Firms"
+catalog = "/courses/MGT.html#mgt406"
+
+[MGT.courses.409]
+title = "Leading in Networks & Orgs"
+catalog = "/courses/MGT.html#mgt409"
+
+[MGT.courses.417]
+title = "Current Business Law Issues"
+catalog = "/courses/MGT.html#mgt417"
+
+[MGT.courses.421]
+title = "CEO & Corporate Governance"
+catalog = "/courses/MGT.html#mgt421"
+
+[MGT.courses.433]
+title = "Managing Healthcare & LifeSci"
+catalog = "/courses/MGT.html#mgt433"
+
+[MGT.courses.439]
+title = "Topics/Organizational Behavior"
+catalog = "/courses/MGT.html#mgt439"
+
+[MGT.courses.446]
+title = "Spreadsheet Modeling"
+catalog = "/courses/MGT.html#mgt446"
+
+[MGT.courses.449]
+title = "Topics/Operations & Technology"
+catalog = "/courses/MGT.html#mgt449"
+
+[MGT.courses.453]
+title = "Supply Chain Management"
+catalog = "/courses/MGT.html#mgt453"
+
+[MGT.courses.489]
+title = "Topics in Marketing"
+catalog = "/courses/MGT.html#mgt489"
+
+[MGT.courses.491]
+title = "Investments"
+catalog = "/courses/MGT.html#mgt491"
+
+[MGT.courses.495]
+title = "Topics in Finance"
+catalog = "/courses/MGT.html#mgt495"
+
+[MGT.courses.497]
+title = "Advanced Management Research"
+catalog = "/courses/MGT.html#mgt497"
+
+[MGT.courses.499]
+title = "Individual Directed Study"
+catalog = "/courses/MGT.html#mgt499"
+
+[MGTA]
+name = "RadySchMgt Business Analytics"
+
+[MGTA.courses.415]
+title = "Analyzing Unstructured Data"
+catalog = "/courses/MGT.html#mgta415"
+
+[MGTA.courses.444]
+title = "Business Analytics Consulting"
+catalog = "/courses/MGT.html#mgta444"
+
+[MGTA.courses.464]
+title = "SQL and ETL"
+catalog = "/courses/MGT.html#mgta464"
+
+[MGTF]
+name = "Rady Sch of Management Finance"
+
+[MGTF.courses.490]
+title = "Capstone: Applied Finance Proj"
+catalog = "/courses/MGT.html#mgtf490"
+
+[MMW]
+name = "Making of the Modern World"
+
+[MMW.courses.12R]
+title = "Transforming Traditions"
+
+[MMW.courses.13R]
+title = "Globalizing World, 13th-18th C"
+catalog = "/courses/MMW.html#mmw13r"
+
+[NEU]
+name = "Neurosciences"
+
+[NEU.courses.199]
+title = "Independent Study"
+catalog = "/courses/NEU.html#neu199"
+
+[NEU.courses.299]
+title = "Neurosciences Research"
+catalog = "/courses/NEU.html#neu299"
+
+[PEDS]
+name = "Pediatrics"
+
+[PEDS.courses.199]
+title = "Independent Study"
+
+[PHIL]
+name = "Philosophy"
+
+[PHIL.courses.191A]
+title = "Philosophy Honors"
+catalog = "/courses/PHIL.html#phil191a"
+
+[PSY]
+name = "Psychiatry"
+
+[PSY.courses.199]
+title = "Independent Study"
+
+[PSYC]
+name = "Psychology"
+
+[PSYC.courses.196A]
+title = "Research Thesis I"
+catalog = "/courses/PSYC.html#psyc196a"
+
+[PSYC.courses.199]
+title = "Independent Study"
+catalog = "/courses/PSYC.html#psyc199"
+note = """Visit the Psychology website at https://go.ucsd.edu/2Q3HERC for \
+  enrollment instructions for PSYC 199s."""
+
+[RMED]
+name = "Reproductive Medicine"
+
+[RMED.courses.296]
+title = "Independent Study"
+
+[SE]
+name = "Structural Engineering"
+
+[SE.courses.197]
+title = "Engineering Internship"
+catalog = "/courses/SE.html#se197"
+
+[SE.courses.199]
+title = "Independent Study/Undergrads"
+catalog = "/courses/SE.html#se199"
+
+[SIO]
+name = "Scripps Inst of Oceanography"
+
+[SIO.courses.199]
+title = "Special Studies"
+catalog = "/courses/SIO.html#sio199"
+
+[SIO.courses.295LS]
+title = "Lab Marine Biodivrsty&Consrvtn"
+catalog = "/courses/SIO.html#sio295ls"
+
+[SIO.courses.295S]
+title = "Marine Biodiversity&Conservatn"
+catalog = "/courses/SIO.html#sio295s"
+
+[SIO.courses.299]
+title = "Research"
+catalog = "/courses/SIO.html#sio299"
+
+[SIOC]
+name = "Scripps Inst of Oceanogr/COAP"
+
+[SIOC.courses.290S]
+title = "Climate Math and Science"
+catalog = "/courses/SIO.html#sioc290s"
+
+[SIOC.courses.291S]
+title = "Introduction to Climate Policy"
+catalog = "/courses/SIO.html#sioc291s"
+
+[SOCG]
+name = "Soc/Graduate"
+
+[SOCG.courses.299]
+title = "Thesis Research"
+catalog = "/courses/SOC.html#socg299"
+
+[SOCI]
+name = "Sociology"
+
+[SOCI.courses.117]
+title = "Language, Culture & Education"
+catalog = "/courses/SOC.html#soci117"
+
+[SOCI.courses.199]
+title = "Independent Study"
+catalog = "/courses/SOC.html#soci199"
+note = """Students should obtain information, forms and department approval \
+  for enrollment in an independent study, SOCE 199, in SSB 401."""
+
+[WES]
+name = "Wireless Embedded Systems"
+
+[WES.courses.237B]
+title = "Software for Embedded Systems"
+catalog = "/courses/MAS.html#wes237b"
