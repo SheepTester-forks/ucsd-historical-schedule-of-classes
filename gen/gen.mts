@@ -97,7 +97,19 @@ for (const jsonName of dir) {
   );
   lastScraped[term] = scrapeTime;
   let toml = "";
-  for (const subjectCourses of Map.groupBy(courses, (course) => course.subject)
+  for (const subjectCourses of Map.groupBy(
+    // Ignore 100x sections for now; will split them into separate courses later
+    // Example: https://act.ucsd.edu/scheduleOfClasses/scheduleOfClassesStudentResult.htm?selectedTerm=FA00&tabNum=tabs-crs&courses=BGGN%20297&page=11
+    // Better example: https://act.ucsd.edu/scheduleOfClasses/scheduleOfClassesStudentResult.htm?selectedTerm=FA00&tabNum=tabs-crs&courses=BISP%20199&page=2
+    courses
+      .values()
+      .filter(
+        (course) =>
+          course.sections[0].section[0] !== "1" &&
+          course.sections[0].section[0] !== "2"
+      ),
+    (course) => course.subject
+  )
     .values()
     .toArray()
     .toSorted((a, b) => a[0].subject.localeCompare(b[0].subject))) {
@@ -127,16 +139,16 @@ for (const jsonName of dir) {
         );
       }
       const title = titles.values().next();
-      // idk why title.done alone doesn't narrow the type
-      if (title.done === true) {
+      if (title.done) {
         throw new Error(`[${debug}] Expected title`);
       }
       const catalogs = new Set(
         groupCourses
           .values()
-          // Second `catalog` may be undefined
-          .filter((course) => course.catalog !== undefined)
           .map((course) => course.catalog)
+          // Second `catalog` may be undefined
+          // idk why I can't just !== undefined
+          .filter((catalog) => typeof catalog === "string")
       );
       if (catalogs.size > 1) {
         throw new Error(
@@ -153,7 +165,7 @@ for (const jsonName of dir) {
       // }
       const catalog = catalogs.values().next();
       toml += tomlSingleLineString("title", title.value);
-      if (catalog.done !== true) {
+      if (!catalog.done) {
         toml += tomlSingleLineString("catalog", catalog.value);
       }
       const restrictions = new Set(
@@ -183,6 +195,60 @@ for (const jsonName of dir) {
       }
       if (groupCourses[0].note !== undefined) {
         toml += tomlSingleLineString("note", groupCourses[0].note);
+      }
+      // TODO: this is so wrong... also, why are we sorting, I think I should be more strict about the order
+      let nextLetter = "";
+      for (const [groupId, courses] of Map.groupBy(groupCourses, (course) => {
+        const sectionCodes = new Set(
+          course.sections
+            .values()
+            .map((section) => section.section)
+            .filter((code) => typeof code === "string")
+        );
+        const sectionCode = sectionCodes.values().next();
+        if (sectionCode.done) {
+          // https://act.ucsd.edu/scheduleOfClasses/scheduleOfClassesStudentResult.htm?selectedTerm=FA00&tabNum=tabs-crs&courses=COSF%20175
+          // this can happen
+          throw new Error(`[${debug}] all of this course's sections are dates`);
+        }
+        if (/^[A-Z]\d\d$/.test(sectionCode.value)) {
+          if (
+            sectionCodes
+              .values()
+              .some((code) => !code.startsWith(sectionCode.value[0]))
+          ) {
+            throw new Error(
+              `[${debug}] inconsistent group letter: ${Array.from(
+                sectionCodes
+              ).join(", ")}`
+            );
+          }
+          nextLetter = String.fromCodePoint(
+            (sectionCode.value[0].codePointAt(0) ?? 0) + 1
+          );
+          return sectionCode.value[0] + "00";
+        } else if (/^\d\d\d$/.test(sectionCode.value)) {
+          if (sectionCodes.size > 1) {
+            throw new Error(
+              `[${debug}] multiple group numbers: ${Array.from(
+                sectionCodes
+              ).join(", ")}`
+            );
+          }
+          return sectionCode.value;
+        } else {
+          throw new Error(
+            `[${debug}] unexpected section code format: ${Array.from(
+              sectionCodes
+            ).join(", ")}`
+          );
+        }
+      })
+        .entries()
+        .toArray()
+        .toSorted((a, b) => a[0].localeCompare(b[0]))) {
+        toml += "\n";
+        toml += `[${groupCourses[0].subject}.courses.${groupCourses[0].number}.groups.${groupId}]\n`;
       }
     }
   }
