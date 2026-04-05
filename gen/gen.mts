@@ -28,6 +28,8 @@ const displayUnits = (units: UnitRange) => {
   return `[${values.join(", ")}]`;
 };
 
+let largestSectionNum = 0;
+
 const MAX_LENGTH = 80;
 const tomlSingleLineString = (key: string, value: string) => {
   if (/[\x00-\x1f\x7f]/.test(value)) {
@@ -113,11 +115,19 @@ for (const jsonName of dir) {
     .values()
     .toArray()
     .toSorted((a, b) => a[0].subject.localeCompare(b[0].subject))) {
+    // I guess it's because it's going by department that it's not alphabetized
+    // if (subjectCourses[0].subject < prevSubject) {
+    //   throw new Error(
+    //     `course order: ${subjectCourses[0].subject} is not alphabetically after ${prevSubject}`
+    //   );
+    // }
+    // prevSubject = subjectCourses[0].subject;
     if (toml) {
       toml += "\n";
     }
     toml += `[${subjectCourses[0].subject}]\n`;
     toml += tomlSingleLineString("name", subjectCourses[0].subjectName);
+
     for (const groupCourses of Map.groupBy(
       subjectCourses,
       (course) => course.number
@@ -128,6 +138,18 @@ for (const jsonName of dir) {
         a[0].number.localeCompare(b[0].number, "en-US", { numeric: true })
       )) {
       const debug = `${term} ${groupCourses[0].subject} ${groupCourses[0].number}`;
+      // Numbers can be out of order too:
+      // https://act.ucsd.edu/scheduleOfClasses/scheduleOfClassesStudentResult.htm?selectedTerm=FA07&tabNum=tabs-crs&courses=SOMI
+      // if (
+      //   groupCourses[0].number.localeCompare(lastNumber, "en-US", {
+      //     numeric: true,
+      //   }) < 0
+      // ) {
+      //   throw new Error(
+      //     `[${debug}] number order: ${groupCourses[0].number} should've been before ${lastNumber}`
+      //   );
+      // }
+      // lastNumber = groupCourses[0].number;
       toml += "\n";
       toml += `[${groupCourses[0].subject}.courses.${groupCourses[0].number}]\n`;
       const titles = new Set(
@@ -147,8 +169,7 @@ for (const jsonName of dir) {
           .values()
           .map((course) => course.catalog)
           // Second `catalog` may be undefined
-          // idk why I can't just !== undefined
-          .filter((catalog) => typeof catalog === "string")
+          .filter((catalog) => catalog !== undefined)
       );
       if (catalogs.size > 1) {
         throw new Error(
@@ -196,57 +217,112 @@ for (const jsonName of dir) {
       if (groupCourses[0].note !== undefined) {
         toml += tomlSingleLineString("note", groupCourses[0].note);
       }
-      // TODO: this is so wrong... also, why are we sorting, I think I should be more strict about the order
-      let nextLetter = "";
-      for (const [groupId, courses] of Map.groupBy(groupCourses, (course) => {
+      let lastGroupId: string | number | undefined;
+      let cancelled = 0;
+      for (let [groupId, courses] of Map.groupBy(groupCourses, (course) => {
         const sectionCodes = new Set(
           course.sections
             .values()
             .map((section) => section.section)
             .filter((code) => typeof code === "string")
+            .map((code) => {
+              if (/^[A-Z]\d\d$/.test(code)) {
+                return code[0];
+              }
+              if (/^\d\d\d$/.test(code)) {
+                return +code;
+              }
+              // typo? https://act.ucsd.edu/scheduleOfClasses/scheduleOfClassesStudentResult.htm?selectedTerm=FA08&tabNum=tabs-crs&courses=BISP%20190
+              if (term === "FA08" && code === "A0") {
+                return "A";
+              }
+              // another typo? https://act.ucsd.edu/scheduleOfClasses/scheduleOfClassesStudentResult.htm?selectedTerm=FA08&tabNum=tabs-crs&courses=MAE%20299&page=4
+              if (term === "FA08" && code === "50") {
+                return 50;
+              }
+              // more typos: https://act.ucsd.edu/scheduleOfClasses/scheduleOfClassesStudentResult.htm?selectedTerm=FA08&tabNum=tabs-crs&courses=MED%20296&page=2
+              if (term === "FA08" && /^[O-R]OO$/.test(code)) {
+                return code[0];
+              }
+              if (term === "FA09" && code === "30") {
+                return 30;
+              }
+              throw new Error(
+                `[${debug}] unexpected section code format: ${code}`
+              );
+            })
         );
         const sectionCode = sectionCodes.values().next();
         if (sectionCode.done) {
           // https://act.ucsd.edu/scheduleOfClasses/scheduleOfClassesStudentResult.htm?selectedTerm=FA00&tabNum=tabs-crs&courses=COSF%20175
           // this can happen
-          throw new Error(`[${debug}] all of this course's sections are dates`);
+          return null;
+          // throw new Error(`[${debug}] all of this course's sections are dates`);
         }
-        if (/^[A-Z]\d\d$/.test(sectionCode.value)) {
-          if (
-            sectionCodes
-              .values()
-              .some((code) => !code.startsWith(sectionCode.value[0]))
-          ) {
-            throw new Error(
-              `[${debug}] inconsistent group letter: ${Array.from(
-                sectionCodes
-              ).join(", ")}`
-            );
-          }
-          nextLetter = String.fromCodePoint(
-            (sectionCode.value[0].codePointAt(0) ?? 0) + 1
-          );
-          return sectionCode.value[0] + "00";
-        } else if (/^\d\d\d$/.test(sectionCode.value)) {
-          if (sectionCodes.size > 1) {
-            throw new Error(
-              `[${debug}] multiple group numbers: ${Array.from(
-                sectionCodes
-              ).join(", ")}`
-            );
-          }
-          return sectionCode.value;
-        } else {
+        if (sectionCodes.size > 1) {
           throw new Error(
-            `[${debug}] unexpected section code format: ${Array.from(
-              sectionCodes
-            ).join(", ")}`
+            `[${debug}] multiple group codes: ${Array.from(sectionCodes).join(
+              ", "
+            )}`
           );
         }
-      })
-        .entries()
-        .toArray()
-        .toSorted((a, b) => a[0].localeCompare(b[0]))) {
+        return sectionCode.value;
+      })) {
+        if (typeof groupId === "string")
+          test: {
+            if (typeof lastGroupId === "number") {
+              console.warn(
+                `[${debug}] code type switch: ${lastGroupId} -> ${groupId}`
+              );
+              // throw new TypeError(
+              //   `[${debug}] code type switch: ${groupId} vs ${lastGroupId}`
+              // );
+              // Apparently this can happen:
+              // https://act.ucsd.edu/scheduleOfClasses/scheduleOfClassesStudentResult.htm?selectedTerm=FA00&tabNum=tabs-crs&courses=BGGN%20271&page=2
+              break test;
+            }
+            // const expected = String.fromCodePoint(
+            //   (lastGroupId.codePointAt(0) ?? 0) + 1
+            // );
+            if (lastGroupId !== undefined && groupId < lastGroupId) {
+              // may skip letters
+              // https://act.ucsd.edu/scheduleOfClasses/scheduleOfClassesStudentResult.htm?selectedTerm=FA00&tabNum=tabs-crs&courses=ERC%2092
+              throw new TypeError(
+                `[${debug}] out of order: ${groupId} should be before ${lastGroupId}`
+              );
+            }
+            lastGroupId = groupId;
+          }
+        else if (typeof groupId === "number") {
+          if (typeof lastGroupId === "string") {
+            throw new TypeError(
+              `[${debug}] code type switch: ${groupId} vs ${lastGroupId}`
+            );
+          }
+          // https://act.ucsd.edu/scheduleOfClasses/scheduleOfClassesStudentResult.htm?selectedTerm=FA00&tabNum=tabs-crs&courses=ANGR%20295
+          // may skip numeric section codes
+          if (lastGroupId !== undefined && groupId < lastGroupId) {
+            // 50 got sorted after 051
+            if (term === "FA08" && groupId === 50) {
+            } else {
+              throw new TypeError(
+                `[${debug}] out of order: ${groupId} should be before ${lastGroupId}`
+              );
+            }
+          }
+          lastGroupId = groupId;
+        } else {
+          if (lastGroupId === undefined) {
+            cancelled++;
+            continue;
+          } else {
+            groupId =
+              typeof lastGroupId === "string"
+                ? String.fromCodePoint((lastGroupId.codePointAt(0) ?? 0) + 1)
+                : lastGroupId + 1;
+          }
+        }
+        lastGroupId = groupId;
         toml += "\n";
         toml += `[${groupCourses[0].subject}.courses.${groupCourses[0].number}.groups.${groupId}]\n`;
       }
@@ -261,4 +337,8 @@ await fs.writeFile(
 console.warn(
   "Unique units:",
   Array.from(uniqueUnits).toSorted((a, b) => a - b)
+);
+console.warn(
+  "Largest section group number",
+  largestSectionNum.toString().padStart(3, "0")
 );
