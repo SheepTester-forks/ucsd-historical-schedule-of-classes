@@ -1,5 +1,7 @@
 /**
  * @file
+ * Usage: node src/index.ts
+ *
  * Dumb scraper that simply downloads and caches HTML files.
  *
  * Based on [UCSD Classrooms' scraper][scraper]. I am rewriting the script
@@ -16,6 +18,8 @@
  * https://github.com/SheepTester/uxdy/blob/main/scheduleofclasses/scrape.ts
  */
 
+import { getDepartments, getResultsHtml } from "./get.ts";
+
 function* terms(): Generator<string> {
   for (let year = 1995; year <= 2026; year++) {
     for (const term of ["WI", "SP", "SA", "FA"]) {
@@ -23,3 +27,11 @@ function* terms(): Generator<string> {
     }
   }
 }
+
+await getResultsHtml(
+  "SP26",
+  await getDepartments("SP26").then((departments) =>
+    departments.map(({ code }) => code),
+  ),
+  1,
+);

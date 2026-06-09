@@ -3,8 +3,10 @@
     "strict": true,
     "types": ["node"],
     "lib": ["ESNext"],
+    "target": "esnext",
     "module": "nodenext",
     "noEmit": true,
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true
   }
 }
