@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "types": ["node"],
+    "lib": ["ESNext"],
+    "module": "nodenext",
+    "noEmit": true,
+    "verbatimModuleSyntax": true
+  }
+}
