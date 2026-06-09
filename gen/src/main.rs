@@ -16,7 +16,7 @@ struct Subject {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    for entry in fs::read_dir("..")? {
+    for entry in fs::read_dir("../gen_data")? {
         let entry = entry?;
         if entry.path().extension().and_then(|s| s.to_str()) == Some("toml") {
             match toml::from_str::<HashMap<String, Subject>>(&fs::read_to_string(entry.path())?) {

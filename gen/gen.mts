@@ -75,7 +75,7 @@ const tomlSingleLineString = (key: string, value: string) => {
   return lines.map((line) => line + "\n").join("");
 };
 
-const repoDir = new URL("../", import.meta.url);
+const repoDir = new URL("../gen_data/", import.meta.url);
 const termsDir = new URL(
   "../../uxdy/scheduleofclasses/terms/",
   import.meta.url
