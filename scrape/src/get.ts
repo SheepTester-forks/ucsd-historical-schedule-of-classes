@@ -1,8 +1,7 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import z from "zod";
-
-const MAX_CONCURRENT = 32;
+import { ConcurrencyLimiter } from "./util.ts";
 
 /**
  * Signals that I was ratelimited or something and it should be good to retry
@@ -11,8 +10,7 @@ export class FetchError extends Error {
   name = this.constructor.name;
 }
 
-let concurrentSpots = MAX_CONCURRENT;
-const queue: PromiseWithResolvers<void>[] = [];
+const fetchConcurrencyLimit = new ConcurrencyLimiter(32);
 
 async function cachedFetch(
   displayName: string,
@@ -32,15 +30,11 @@ async function cachedFetch(
   if (cached !== null) {
     return cached;
   }
-  if (concurrentSpots > 0) {
-    concurrentSpots--;
-  } else {
-    const entry = Promise.withResolvers<void>();
-    queue.push(entry);
-    await entry.promise;
-  }
+
   let response;
-  try {
+  {
+    using stack = new DisposableStack();
+    stack.use(await fetchConcurrencyLimit.acquire());
     response = await fetch(url)
       .catch((cause) =>
         Promise.reject(
@@ -56,13 +50,6 @@ async function cachedFetch(
               ),
             ),
       );
-  } finally {
-    const next = queue.shift();
-    if (next) {
-      next.resolve();
-    } else {
-      concurrentSpots++;
-    }
   }
   await mkdir(dirname(cachePath), { recursive: true });
   if (preprocess) {
