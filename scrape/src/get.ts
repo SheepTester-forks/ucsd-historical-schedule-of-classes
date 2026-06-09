@@ -2,6 +2,18 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import z from "zod";
 
+const MAX_CONCURRENT = 32;
+
+/**
+ * Signals that I was ratelimited or something and it should be good to retry
+ */
+export class FetchError extends Error {
+  name = this.constructor.name;
+}
+
+let concurrentSpots = MAX_CONCURRENT;
+const queue: PromiseWithResolvers<void>[] = [];
+
 async function cachedFetch(
   displayName: string,
   url: string,
@@ -20,21 +32,38 @@ async function cachedFetch(
   if (cached !== null) {
     return cached;
   }
-  let response = await fetch(url)
-    .catch((cause) =>
-      Promise.reject(
-        new Error(`Failed to fetch ${displayName} (${url})`, { cause }),
-      ),
-    )
-    .then((r) =>
-      r.ok
-        ? r.text()
-        : Promise.reject(
-            new Error(
-              `Received HTTP ${r.status}: ${r.statusText} at ${displayName} (${url})`,
+  if (concurrentSpots > 0) {
+    concurrentSpots--;
+  } else {
+    const entry = Promise.withResolvers<void>();
+    queue.push(entry);
+    await entry.promise;
+  }
+  let response;
+  try {
+    response = await fetch(url)
+      .catch((cause) =>
+        Promise.reject(
+          new FetchError(`Failed to fetch ${displayName} (${url})`, { cause }),
+        ),
+      )
+      .then((r) =>
+        r.ok
+          ? r.text()
+          : Promise.reject(
+              new Error(
+                `Received HTTP ${r.status}: ${r.statusText} at ${displayName} (${url})`,
+              ),
             ),
-          ),
-    );
+      );
+  } finally {
+    const next = queue.shift();
+    if (next) {
+      next.resolve();
+    } else {
+      concurrentSpots++;
+    }
+  }
   await mkdir(dirname(cachePath), { recursive: true });
   if (preprocess) {
     try {
@@ -79,20 +108,29 @@ export function getResultsHtml(
       `${page}.html`,
     ),
     (html) => {
-      const table = html.match(
+      const pageCountMatch = html.match(
+        /\bPage  \(\d+&nbsp;of&nbsp;\d+\) &nbsp;/,
+      );
+      if (!pageCountMatch) {
+        throw new Error("Can't find paginator");
+      }
+      const tableMatch = html.match(
         /<table  width="100%" class="tbrdr">\s*<thead>\s*<\/thead>([^]*?)<\/table>/,
       );
-      if (!table) {
+      if (!tableMatch) {
         throw new Error("Can't find table");
       }
-      if (/<\/?table[\s>]/.test(table[1])) {
+      if (/<\/?table[\s>]/.test(tableMatch[1])) {
         throw new Error("I seem to have found a nested table");
       }
       return (
-        table[1]
+        pageCountMatch[0] +
+        "\n" +
+        tableMatch[1]
           .replace(/^[ \t\u00a0]+|[ \t\u00a0]+$/gm, "")
           .replace(/(?:\r?\n)+/g, "\n")
-          .trim() + "\n"
+          .trim() +
+        "\n"
       );
     },
   );
@@ -125,6 +163,8 @@ export async function getDepartments(
   try {
     return departmentItemListSchema.parse(JSON.parse(json));
   } catch (cause) {
-    throw new Error(`Failed to parse response of ${name}`, { cause });
+    throw new Error(`Failed to parse response of ${name}`, {
+      cause,
+    });
   }
 }

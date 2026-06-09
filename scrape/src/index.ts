@@ -28,10 +28,21 @@ function* terms(): Generator<string> {
   }
 }
 
-await getResultsHtml(
-  "SP26",
-  await getDepartments("SP26").then((departments) =>
+for (const term of terms()) {
+  const departments = await getDepartments(term).then((departments) =>
     departments.map(({ code }) => code),
-  ),
-  4,
-);
+  );
+  const html = await getResultsHtml(term, departments, 1);
+  const pageCountMatch = html.match(/\(\d+&nbsp;of&nbsp;(\d+)\)/);
+  if (!pageCountMatch) {
+    console.error(term, "missing page count");
+    break;
+  }
+  const pageCount = +pageCountMatch[1];
+  for (let page = 2; page <= pageCount; page++) {
+    getResultsHtml(term, departments, page).catch((error) => {
+      console.error(term, page, error);
+    });
+  }
+  break;
+}
