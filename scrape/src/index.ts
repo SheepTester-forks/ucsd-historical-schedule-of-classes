@@ -33,5 +33,5 @@ await getResultsHtml(
   await getDepartments("SP26").then((departments) =>
     departments.map(({ code }) => code),
   ),
-  1,
+  4,
 );

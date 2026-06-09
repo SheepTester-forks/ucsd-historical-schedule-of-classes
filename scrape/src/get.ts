@@ -6,6 +6,7 @@ async function cachedFetch(
   displayName: string,
   url: string,
   cachePath: string,
+  preprocess?: (original: string) => string,
 ): Promise<string> {
   const cached = await readFile(cachePath, "utf-8").catch((cause) =>
     cause instanceof Error && "code" in cause && cause.code === "ENOENT"
@@ -19,7 +20,7 @@ async function cachedFetch(
   if (cached !== null) {
     return cached;
   }
-  const response = await fetch(url)
+  let response = await fetch(url)
     .catch((cause) =>
       Promise.reject(
         new Error(`Failed to fetch ${displayName} (${url})`, { cause }),
@@ -35,6 +36,16 @@ async function cachedFetch(
           ),
     );
   await mkdir(dirname(cachePath), { recursive: true });
+  if (preprocess) {
+    try {
+      response = preprocess(response);
+    } catch (cause) {
+      throw new Error(
+        `Error happened during preprocessing of ${displayName} (${url})`,
+        { cause },
+      );
+    }
+  }
   await writeFile(cachePath, response);
   return response;
 }
@@ -67,6 +78,23 @@ export function getResultsHtml(
       departments.length > 1 ? "_all" : departments[0],
       `${page}.html`,
     ),
+    (html) => {
+      const table = html.match(
+        /<table  width="100%" class="tbrdr">\s*<thead>\s*<\/thead>([^]*?)<\/table>/,
+      );
+      if (!table) {
+        throw new Error("Can't find table");
+      }
+      if (/<\/?table[\s>]/.test(table[1])) {
+        throw new Error("I seem to have found a nested table");
+      }
+      return (
+        table[1]
+          .replace(/^[ \t\u00a0]+|[ \t\u00a0]+$/gm, "")
+          .replace(/(?:\r?\n)+/g, "\n")
+          .trim() + "\n"
+      );
+    },
   );
 }
 
