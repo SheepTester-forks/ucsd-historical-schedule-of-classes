@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import z from "zod";
 import { ConcurrencyLimiter } from "./util.ts";
@@ -10,7 +10,7 @@ export class FetchError extends Error {
   name = this.constructor.name;
 }
 
-const fetchConcurrencyLimit = new ConcurrencyLimiter(32);
+const fetchConcurrencyLimit = new ConcurrencyLimiter(4);
 
 async function cachedFetch(
   displayName: string,
@@ -62,7 +62,8 @@ async function cachedFetch(
       );
     }
   }
-  await writeFile(cachePath, response);
+  await writeFile(`${cachePath}~`, response);
+  await rename(`${cachePath}~`, cachePath);
   return response;
 }
 
@@ -80,7 +81,7 @@ const getResultPath = (term: string, departments: string[], page: number) =>
     ["page", String(page)],
   ])}`;
 
-export function getResultsHtml(
+export async function getResultsHtml(
   term: string,
   departments: string[],
   page: number,
@@ -88,15 +89,16 @@ export function getResultsHtml(
   if (departments.length === 0) {
     throw new Error("Departments is empty");
   }
-  return cachedFetch(
+  const cachePath = join(
+    ".cache",
+    term,
+    departments.length > 1 ? "_all" : departments[0],
+    `${page}.html`,
+  );
+  const html = await cachedFetch(
     `${term} ${departments.join(", ")} page ${page}`,
     getResultPath(term, departments, page),
-    join(
-      ".cache",
-      term,
-      departments.length > 1 ? "_all" : departments[0],
-      `${page}.html`,
-    ),
+    cachePath,
     (html) => {
       const pageCountMatch = html.match(
         /\bPage  \(\d+&nbsp;of&nbsp;\d+\) &nbsp;/,
@@ -124,6 +126,11 @@ export function getResultsHtml(
       );
     },
   );
+  if (!html.endsWith("</td>\n</tr>\n")) {
+    console.error("\n" + html.slice(-100));
+    throw new Error(`HTML file may be malformed: ${cachePath}`);
+  }
+  return html;
 }
 
 /**
