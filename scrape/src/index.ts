@@ -20,22 +20,46 @@
 
 import { getDepartments, getResultsHtml } from "./get.ts";
 
-function* terms(): Generator<string> {
+function* terms(): Generator<{ deptTerms: string[]; paginateTerm: string }> {
   for (let year = 1995; year <= 2026; year++) {
     for (const term of ["WI", "SP", "SA", "FA"]) {
-      yield `${term}${(year % 100).toString().padStart(2, "0")}`;
+      const yearShort = (year % 100).toString().padStart(2, "0");
+      const termCode = `${term}${yearShort}`;
+      if (term === "SA") {
+        yield {
+          // It seems that while SAxx terms exist for pagination,
+          // departments.json is only defined for the specific term codes
+          deptTerms: [
+            `S1${yearShort}`,
+            `S2${yearShort}`,
+            `S3${yearShort}`,
+            `SU${yearShort}`,
+          ],
+          paginateTerm: termCode,
+        };
+      } else {
+        yield { deptTerms: [termCode], paginateTerm: termCode };
+      }
     }
   }
 }
 
-for (const term of terms()) {
-  const departments = await getDepartments(term).then((departments) =>
-    departments.map(({ code }) => code),
+for (const { deptTerms, paginateTerm } of terms()) {
+  const departments = Array.from(
+    new Set(
+      await Promise.all(deptTerms.map((term) => getDepartments(term))).then(
+        (departments) =>
+          departments
+            .values()
+            .flatMap((departments) => departments)
+            .map(({ code }) => code),
+      ),
+    ),
   );
-  const html = await getResultsHtml(term, departments, 1);
+  const html = await getResultsHtml(paginateTerm, departments, 1);
   const pageCountMatch = html.match(/\(\d+&nbsp;of&nbsp;(\d+)\)/);
   if (!pageCountMatch) {
-    console.error(term, "missing page count");
+    console.error(paginateTerm, "missing page count");
     break;
   }
   const pageCount = +pageCountMatch[1];
@@ -43,13 +67,15 @@ for (const term of terms()) {
   const promises = [];
   for (let page = 2; page <= pageCount; page++) {
     promises.push(
-      getResultsHtml(term, departments, page)
+      getResultsHtml(paginateTerm, departments, page)
         .then(() => {
           done++;
-          process.stderr.write(`\r[${term}] ${done}/${pageCount}`.padEnd(30));
+          process.stderr.write(
+            `\r[${paginateTerm}] ${done}/${pageCount}`.padEnd(30),
+          );
         })
         .catch((error) => {
-          console.error(term, page, error);
+          console.error(paginateTerm, page, error);
         }),
     );
   }

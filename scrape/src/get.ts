@@ -85,6 +85,9 @@ export function getResultsHtml(
   departments: string[],
   page: number,
 ): Promise<string> {
+  if (departments.length === 0) {
+    throw new Error("Departments is empty");
+  }
   return cachedFetch(
     `${term} ${departments.join(", ")} page ${page}`,
     getResultPath(term, departments, page),
