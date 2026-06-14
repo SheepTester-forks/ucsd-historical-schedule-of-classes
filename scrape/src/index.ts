@@ -1,6 +1,6 @@
 /**
  * @file
- * Usage: node src/index.ts
+ * Usage: node src/index.ts (inside scrape/)
  *
  * Dumb scraper that simply downloads and caches HTML files.
  *
@@ -39,10 +39,20 @@ for (const term of terms()) {
     break;
   }
   const pageCount = +pageCountMatch[1];
+  let done = 1;
+  const promises = [];
   for (let page = 2; page <= pageCount; page++) {
-    getResultsHtml(term, departments, page).catch((error) => {
-      console.error(term, page, error);
-    });
+    promises.push(
+      getResultsHtml(term, departments, page)
+        .then(() => {
+          done++;
+          process.stderr.write(`\r[${term}] ${done}/${pageCount}`.padEnd(30));
+        })
+        .catch((error) => {
+          console.error(term, page, error);
+        }),
+    );
   }
-  break;
+  await Promise.all(promises);
+  console.warn();
 }
