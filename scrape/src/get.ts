@@ -10,7 +10,7 @@ export class FetchError extends Error {
   name = this.constructor.name;
 }
 
-const fetchConcurrencyLimit = new ConcurrencyLimiter(4);
+const fetchConcurrencyLimit = new ConcurrencyLimiter(32);
 
 async function cachedFetch(
   displayName: string,

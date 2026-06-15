@@ -45,6 +45,9 @@ function* terms(): Generator<{ deptTerms: string[]; paginateTerm: string }> {
 }
 
 for (const { deptTerms, paginateTerm } of terms()) {
+  if (paginateTerm === "FA26") {
+    continue;
+  }
   const departments = Array.from(
     new Set(
       await Promise.all(deptTerms.map((term) => getDepartments(term))).then(
