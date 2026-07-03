@@ -2,7 +2,8 @@
  * @file
  * Usage: node scripts/emails.ts (inside scrape/)
  *
- * Need to run src/index.ts first.
+ * Need to run src/index.ts first. May need to run this script a few times
+ * because of ratelimits.
  */
 
 import { join } from "node:path";
@@ -52,15 +53,20 @@ for (const { paginateTerm } of terms()) {
 let done = 0;
 const pairs = await Promise.all(
   encryptedPids.values().map((encryptedPid) =>
-    getEmail(encryptedPid).then((email) => {
-      done++;
-      process.stderr.write(
-        `\r[email] ${done}/${encryptedPids.size}`.padEnd(30),
-      );
-      return { encryptedPid, email: email ?? "" };
-    }),
+    getEmail(encryptedPid)
+      .then((email) => {
+        done++;
+        process.stderr.write(
+          `\r[email] ${done}/${encryptedPids.size}`.padEnd(30),
+        );
+        return { encryptedPid, email: email ?? "" };
+      })
+      .catch(console.error),
   ),
 );
+if (!pairs.every((pair) => pair !== undefined)) {
+  process.exit(1);
+}
 pairs.sort(
   (a, b) =>
     a.email.localeCompare(b.email) ||

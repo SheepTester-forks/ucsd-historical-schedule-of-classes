@@ -170,7 +170,7 @@ export async function getEmail(encryptedPid: string): Promise<string | null> {
   const name = `email ${encryptedPid}`;
   const json = await cachedFetch(
     name,
-    `${BASE}/scheduleOfClassesFacultyEmailResult.htm??${new URLSearchParams({ pid: encryptedPid })}`,
+    `${BASE}/scheduleOfClassesFacultyEmailResult.htm?${new URLSearchParams({ pid: encryptedPid })}`,
     join(
       ".cache",
       "email",
