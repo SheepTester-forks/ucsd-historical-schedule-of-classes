@@ -30,4 +30,16 @@ for (const { paginateTerm } of terms()) {
   console.log(
     `[${paginateTerm}] ${year}-${month}-${day} ${hour}:${minute}:${second}`,
   );
+  // apparently the date can change from page to page fairly frequently
+  const page2 = await readFile(
+    join(".cache", paginateTerm, "_all", "2.html"),
+    "utf-8",
+  )
+    .then((html) => html.match(regex)?.slice(1, 7).join("-"))
+    .catch(() => null);
+  if (page2 !== match.slice(1, 7).join("-")) {
+    console.error(
+      `[${paginateTerm}] mismatch: ${page2} vs ${match.slice(1, 7).join("-")}`,
+    );
+  }
 }
