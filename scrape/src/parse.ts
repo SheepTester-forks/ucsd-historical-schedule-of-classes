@@ -23,7 +23,6 @@ type State =
   | {
       type: "table-header";
       next:
-        | "tr"
         | "r"
         | "br"
         | "r-link"
@@ -58,7 +57,7 @@ function processLine(state: State, line: string): State | null {
     if (state.next === "td" && line === '<td colspan="13">') {
       return { ...state, next: "br" };
     }
-    if (state.next === "td" && line === "<br>") {
+    if (state.next === "br" && line === "<br>") {
       return { ...state, next: "h2" };
     }
     if (state.next === "h2") {
@@ -85,12 +84,7 @@ function processLine(state: State, line: string): State | null {
     }
   }
   if (state.type === "as-of-br-br" && line === "<br><br>") {
-    const match = line.match(
-      /<span class="centeralign"><span class="bold_text">As of: [01]\d\/[0-3]\d\/20[012]\d, [012]\d:[0-5]\d:00<\/span><\/span>/,
-    );
-    if (match) {
-      return { type: "after-heading", next: "td", wasFrom: "subject" };
-    }
+    return { type: "after-heading", next: "td", wasFrom: "subject" };
   }
   if (state.type === "after-heading") {
     if (state.next === "td" && line === "</td>") {
@@ -101,17 +95,14 @@ function processLine(state: State, line: string): State | null {
     }
     if (state.next === "idk") {
       if (line === "<tr>" && state.wasFrom === "dept") {
-        return { type: "before-heading", next: "tr", cannotBe: "dept" };
+        return { type: "before-heading", next: "td", cannotBe: "dept" };
       }
       if (line === "<tr >" && state.wasFrom === "subject") {
-        return { type: "table-header", next: "tr" };
+        return { type: "table-header", next: "r" };
       }
     }
   }
   if (state.type === "table-header") {
-    if (state.next === "tr" && line === "<tr >") {
-      return { ...state, next: "r" };
-    }
     if (state.next === "r" && line === '<td class="ubrdr" rowspan="2" >R') {
       return { ...state, next: "br" };
     }
