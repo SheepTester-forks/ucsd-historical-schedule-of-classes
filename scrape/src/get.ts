@@ -166,7 +166,7 @@ export async function getDepartments(
   }
 }
 
-export async function getEmail(encryptedPid: string): Promise<string> {
+export async function getEmail(encryptedPid: string): Promise<string | null> {
   const name = `email ${encryptedPid}`;
   const json = await cachedFetch(
     name,
@@ -174,11 +174,12 @@ export async function getEmail(encryptedPid: string): Promise<string> {
     join(
       ".cache",
       "email",
-      `${Uint8Array.fromBase64(encryptedPid).toHex()}.json`,
+      // `${Uint8Array.fromBase64(encryptedPid).toHex()}.json`,
+      `${Buffer.from(encryptedPid, "base64").toString("hex")}.json`,
     ),
   );
   try {
-    return z.string().parse(JSON.parse(json));
+    return z.string().nullable().parse(JSON.parse(json));
   } catch (cause) {
     throw new Error(`Failed to parse response of ${name}`, { cause });
   }

@@ -55,15 +55,19 @@ const pairs = await Promise.all(
     getEmail(encryptedPid).then((email) => {
       done++;
       process.stderr.write(
-        `\r[email}] ${done}/${encryptedPids.size}`.padEnd(30),
+        `\r[email] ${done}/${encryptedPids.size}`.padEnd(30),
       );
-      return { encryptedPid, email };
+      return { encryptedPid, email: email ?? "" };
     }),
   ),
 );
-pairs.sort((a, b) => a.email.localeCompare(b.email));
+pairs.sort(
+  (a, b) =>
+    a.email.localeCompare(b.email) ||
+    a.encryptedPid.localeCompare(b.encryptedPid),
+);
 const file = createWriteStream("scripts/emails.txt");
 for (const { email, encryptedPid } of pairs) {
-  file.write(`${email}: ${encryptedPid}\n`);
+  file.write(`${email || "unknown"}: ${encryptedPid}\n`);
 }
 file.end();
