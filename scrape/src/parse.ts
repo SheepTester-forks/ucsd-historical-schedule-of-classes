@@ -7,18 +7,41 @@
 
 import { readFile } from "node:fs/promises";
 
-type State =
+type Department = {
+  name: string;
+  subjects: Subject[];
+};
+type Subject = {
+  name: string;
+  code: string;
+  asOf: {
+    month: number;
+    date: number;
+    year: number;
+    hour: number;
+    minute: number;
+  };
+};
+
+type State = (
   | {
       type: "before-heading";
       next: "tr" | "td" | "br" | "h2";
-      cannotBe: "subject" | "dept" | null;
+      department: Department | null;
     }
-  | { type: "as-of" }
-  | { type: "as-of-br-br" }
+  | {
+      type: "as-of";
+      department: Department;
+      subject: string;
+      subjectCode: string;
+    }
+  | { type: "as-of-br-br"; department: Department; subject: Subject }
   | {
       type: "after-heading";
       next: "td" | "tr" | "idk";
-      wasFrom: "subject" | "dept";
+      wasFrom:
+        | { type: "dept"; name: string }
+        | { type: "subject"; department: Department; subject: Subject };
     }
   | {
       type: "table-header";
@@ -41,12 +64,33 @@ type State =
         | "available"
         | "limit"
         | "close-final";
-    };
+      department: Department;
+      subject: Subject;
+    }
+  | {
+      type: "after-course";
+      canEnd: boolean;
+      department: Department;
+      subject: Subject;
+    }
+  | {
+      type: "start-course";
+      department: Department;
+      subject: Subject;
+    }
+  | {
+      type: "";
+    }
+  | { type: "done" }
+) & {
+  departments: Department[];
+};
 
 const initState: State = {
   type: "before-heading",
   next: "tr",
-  cannotBe: "subject",
+  department: null,
+  departments: [],
 };
 
 function processLine(state: State, line: string): State | null {
@@ -67,24 +111,57 @@ function processLine(state: State, line: string): State | null {
       const matchSubject = line.match(
         /^<h2>  <span class="centeralign">([A-Za-z ]{30}) \(([A-Z ]{5})\)<\/span> <\/h2>$/,
       );
-      if (matchDept && state.cannotBe !== "dept") {
-        return { type: "after-heading", next: "td", wasFrom: "dept" };
+      if (matchDept) {
+        return {
+          ...state,
+          type: "after-heading",
+          next: "td",
+          departments:
+            state.department !== null
+              ? [...state.departments, state.department]
+              : state.departments,
+          wasFrom: { type: "dept", name: matchDept[1].trimEnd() },
+        };
       }
-      if (matchSubject && state.cannotBe !== "subject") {
-        return { type: "as-of" };
+      if (matchSubject && state.department !== null) {
+        return {
+          ...state,
+          type: "as-of",
+          department: state.department,
+          subject: matchSubject[1].trimEnd(),
+          subjectCode: matchSubject[2].trimEnd(),
+        };
       }
     }
   }
   if (state.type === "as-of") {
     const match = line.match(
-      /<span class="centeralign"><span class="bold_text">As of: [01]\d\/[0-3]\d\/20[012]\d, [012]\d:[0-5]\d:00<\/span><\/span>/,
+      /<span class="centeralign"><span class="bold_text">As of: ([01]\d)\/([0-3]\d)\/(20[012]\d), ([012]\d):([0-5]\d):00<\/span><\/span>/,
     );
     if (match) {
-      return { type: "as-of-br-br" };
+      const [month, date, year, hour, minute] = match.slice(1).map(Number);
+      return {
+        ...state,
+        type: "as-of-br-br",
+        subject: {
+          name: state.subject,
+          code: state.subjectCode,
+          asOf: { month, date, year, hour, minute },
+        },
+      };
     }
   }
   if (state.type === "as-of-br-br" && line === "<br><br>") {
-    return { type: "after-heading", next: "td", wasFrom: "subject" };
+    return {
+      ...state,
+      type: "after-heading",
+      next: "td",
+      wasFrom: {
+        type: "subject",
+        department: state.department,
+        subject: state.subject,
+      },
+    };
   }
   if (state.type === "after-heading") {
     if (state.next === "td" && line === "</td>") {
@@ -94,11 +171,22 @@ function processLine(state: State, line: string): State | null {
       return { ...state, next: "idk" };
     }
     if (state.next === "idk") {
-      if (line === "<tr>" && state.wasFrom === "dept") {
-        return { type: "before-heading", next: "td", cannotBe: "dept" };
+      if (line === "<tr>" && state.wasFrom.type === "dept") {
+        return {
+          ...state,
+          type: "before-heading",
+          next: "td",
+          department: { name: state.wasFrom.name, subjects: [] },
+        };
       }
-      if (line === "<tr >" && state.wasFrom === "subject") {
-        return { type: "table-header", next: "r" };
+      if (line === "<tr >" && state.wasFrom.type === "subject") {
+        return {
+          type: "table-header",
+          next: "r",
+          departments: state.departments,
+          department: state.wasFrom.department,
+          subject: state.wasFrom.subject,
+        };
       }
     }
   }
@@ -196,13 +284,46 @@ function processLine(state: State, line: string): State | null {
       return { ...state, next: "close-final" };
     }
     if (state.next === "close-final" && line === "</tr>") {
-      return { type: "TODO" };
+      return { ...state, type: "after-course", canEnd: false };
+    }
+  }
+  if (state.type === "after-course") {
+    if (line === "<tr>") {
+      return { ...state, type: "start-course" };
+    }
+    if (line === "" && state.canEnd) {
+      return {
+        type: "done",
+        departments: [
+          ...state.departments,
+          {
+            ...state.department,
+            subjects: [...state.department.subjects, state.subject],
+          },
+        ],
+      };
+    }
+  }
+  if (state.type === "start-course") {
+    if (line === '<td colspan="13">') {
+      return {
+        ...state,
+        type: "before-heading",
+        next: "br",
+        department: {
+          ...state.department,
+          subjects: [...state.department.subjects, state.subject],
+        },
+      };
+    }
+    if (line === '<td class="crsheader">') {
+      //
     }
   }
   return null;
 }
 
-const lines = (await readFile(".cache/SA04/_all/1.html", "utf-8"))
+const lines = (await readFile(".cache/SA04/_all/39.html", "utf-8"))
   .split(/\r?\n/)
   .slice(1);
 let state: State = initState;
