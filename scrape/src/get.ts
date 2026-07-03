@@ -165,3 +165,21 @@ export async function getDepartments(
     });
   }
 }
+
+export async function getEmail(encryptedPid: string): Promise<string> {
+  const name = `email ${encryptedPid}`;
+  const json = await cachedFetch(
+    name,
+    `${BASE}/scheduleOfClassesFacultyEmailResult.htm??${new URLSearchParams({ pid: encryptedPid })}`,
+    join(
+      ".cache",
+      "email",
+      `${Uint8Array.fromBase64(encryptedPid).toHex()}.json`,
+    ),
+  );
+  try {
+    return z.string().parse(JSON.parse(json));
+  } catch (cause) {
+    throw new Error(`Failed to parse response of ${name}`, { cause });
+  }
+}
