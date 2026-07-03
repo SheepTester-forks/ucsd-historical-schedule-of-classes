@@ -86,3 +86,11 @@ for (const { email, encryptedPid } of pairs) {
   }
 }
 file.end();
+
+console.error(
+  Object.fromEntries(
+    Map.groupBy(pairs, (pair) => pair.email.split("@")[1])
+      .entries()
+      .map(([address, pairs]) => [address, pairs.length]),
+  ),
+);
