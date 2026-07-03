@@ -50,14 +50,16 @@ for (const { paginateTerm } of terms()) {
   console.warn();
 }
 
+let hasEmail = 0;
 let done = 0;
 const pairs = await Promise.all(
   encryptedPids.values().map((encryptedPid) =>
     getEmail(encryptedPid)
       .then((email) => {
+        hasEmail += +!!email;
         done++;
         process.stderr.write(
-          `\r[email] ${done}/${encryptedPids.size}`.padEnd(30),
+          `\r[email] ${hasEmail}/${done}/${encryptedPids.size}`.padEnd(30),
         );
         return { encryptedPid, email: email ?? "" };
       })
@@ -72,8 +74,15 @@ pairs.sort(
     a.email.localeCompare(b.email) ||
     a.encryptedPid.localeCompare(b.encryptedPid),
 );
-const file = createWriteStream("scripts/emails.txt");
+const file = createWriteStream("scripts/emails.yml");
+file.write(
+  `# stats: successfully found ${hasEmail} of ${encryptedPids.size} emails\n`,
+);
 for (const { email, encryptedPid } of pairs) {
-  file.write(`${email || "unknown"}: ${encryptedPid}\n`);
+  if (email) {
+    file.write(
+      `${email}: ${Buffer.from(encryptedPid, "base64").toString("hex")}\n`,
+    );
+  }
 }
 file.end();
