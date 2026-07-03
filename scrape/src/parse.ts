@@ -68,18 +68,59 @@ type State = (
       subject: Subject;
     }
   | {
-      type: "after-course";
+      type: "after-course-tr";
       canEnd: boolean;
       department: Department;
       subject: Subject;
     }
   | {
-      type: "start-course";
+      type: "start-course-td";
+      department: Department;
+      subject: Subject;
+      canEndSubject: boolean;
+    }
+  | {
+      type: "restrictions-title-next";
       department: Department;
       subject: Subject;
     }
   | {
-      type: "";
+      type: "restrictions-letter-next";
+      department: Department;
+      subject: Subject;
+      title: string;
+    }
+  | {
+      type: "restrictions-td-close-next" | "course-number-next";
+      department: Department;
+      subject: Subject;
+      restriction: { title: string; letter: string } | null;
+    }
+  | {
+      type: "course-num-end-next" | "course-name-next";
+      department: Department;
+      subject: Subject;
+      restriction: { title: string; letter: string } | null;
+      number: string;
+    }
+  | {
+      type: "unit-start-next";
+      department: Department;
+      subject: Subject;
+      restriction: { title: string; letter: string } | null;
+      catalogDept: string;
+      catalogHash: string;
+      title: string;
+    }
+  | {
+      type: "unit-end-next";
+      department: Department;
+      subject: Subject;
+      restriction: { title: string; letter: string } | null;
+      catalogHash: string;
+      title: string;
+      start: number;
+      end: { step: number; end: number } | null;
     }
   | { type: "done" }
 ) & {
@@ -284,12 +325,12 @@ function processLine(state: State, line: string): State | null {
       return { ...state, next: "close-final" };
     }
     if (state.next === "close-final" && line === "</tr>") {
-      return { ...state, type: "after-course", canEnd: false };
+      return { ...state, type: "after-course-tr", canEnd: false };
     }
   }
-  if (state.type === "after-course") {
+  if (state.type === "after-course-tr") {
     if (line === "<tr>") {
-      return { ...state, type: "start-course" };
+      return { ...state, type: "start-course-td", canEndSubject: state.canEnd };
     }
     if (line === "" && state.canEnd) {
       return {
@@ -304,8 +345,8 @@ function processLine(state: State, line: string): State | null {
       };
     }
   }
-  if (state.type === "start-course") {
-    if (line === '<td colspan="13">') {
+  if (state.type === "start-course-td") {
+    if (line === '<td colspan="13">' && state.canEndSubject) {
       return {
         ...state,
         type: "before-heading",
@@ -316,7 +357,74 @@ function processLine(state: State, line: string): State | null {
         },
       };
     }
+    // crsheader = dark blue
     if (line === '<td class="crsheader">') {
+      return { ...state, type: "restrictions-title-next" };
+    }
+    if (line === '<td class="crsheader"></td>') {
+      // no requirements
+      return { ...state, type: "course-number-next", restriction: null };
+    }
+  }
+  if (state.type === "restrictions-title-next") {
+    const match = line.match(/^<span id="crsRestCd" title="[A-Za-z ]+">$/);
+    if (match) {
+      return { ...state, type: "restrictions-letter-next", title: match[1] };
+    }
+  }
+  if (state.type === "restrictions-letter-next") {
+    const match = line.match(/^(D)<\/span><br>$/);
+    if (match) {
+      return {
+        ...state,
+        type: "restrictions-td-close-next",
+        restriction: { title: state.title, letter: match[1] },
+      };
+    }
+  }
+  if (state.type === "restrictions-td-close-next" && line === "</td>") {
+    return { ...state, type: "course-number-next" };
+  }
+  if (state.type === "course-number-next") {
+    const match = line.match(
+      /^<td class="crsheader">(\d{1,3}[A-Z]{0,2})<\/td>$/,
+    );
+    if (match) {
+      return { ...state, type: "course-num-end-next", number: match[1] };
+    }
+  }
+  if (
+    state.type === "course-num-end-next" &&
+    line === '<td  class="crsheader" colspan="5">'
+  ) {
+    return { ...state, type: "course-name-next" };
+  }
+  if (state.type === "course-name-next") {
+    const match = line.match(
+      /^<a href="javascript:openNewWindow\('http:\/\/www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2})'\)"><span class="boldtxt">([A-Za-z ]{30})<\/span> <\/a>$/,
+    );
+    if (match) {
+      return {
+        ...state,
+        type: "unit-start-next",
+        catalogDept: match[1],
+        catalogHash: match[2],
+        title: match[3],
+      };
+    }
+  }
+  if (state.type === "unit-start-next") {
+    const match = line.match(/^\( (\d)$/);
+    if (match) {
+      return { ...state, type: "unit-end-next", start: +match[1], end: null };
+    }
+  }
+  if (state.type === "unit-end-next") {
+    const match = line.match(/^\/(4) by (2)$/);
+    if (match && !state.end) {
+      return { ...state, end: { step: +match[1], end: +match[2] } };
+    }
+    if (line === "Units)") {
       //
     }
   }
