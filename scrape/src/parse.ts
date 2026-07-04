@@ -40,9 +40,10 @@ type Course = {
     end: { month: string; date: number };
   } | null;
   resourcesSectionId: number;
-  meetings: Meeting[];
+  meetings: (Meeting | CancelledMeeting)[];
 };
 type Meeting = {
+  cancelled: false;
   instructionType: keyof typeof instructionTypes;
   sectionCode: string;
   location: {
@@ -70,12 +71,20 @@ type Meeting = {
   } | null;
   comment: string;
 };
+type CancelledMeeting = {
+  cancelled: true;
+  sectionId: number;
+  instructionType: keyof typeof instructionTypes;
+  sectionCode: string;
+  comment: string;
+};
 
 const instructionTypes = {
   LE: "Lecture",
   DI: "Discussion",
-  LA: "Lab",
+  LA: "Laboratory",
   IN: "Independent Study",
+  SE: "Seminar",
 };
 
 type State = (
@@ -95,7 +104,7 @@ type State = (
       type: "after-heading";
       next: "td" | "tr" | "idk";
       wasFrom:
-        | { type: "dept"; name: string }
+        | { type: "dept"; name: string; comment: string }
         | { type: "subject"; department: Department; subject: Subject };
     }
   | {
@@ -205,7 +214,7 @@ type State = (
       department: Department;
       subject: Subject;
       course: Course;
-      prevMeeting: Meeting | null;
+      prevMeeting: Meeting | CancelledMeeting | null;
     }
   | {
       type:
@@ -289,7 +298,14 @@ type State = (
         | "book-link-next"
         | "book-gif-next"
         | "book-span-next"
-        | "book-close-next"
+        | "book-close-next";
+      department: Department;
+      subject: Subject;
+      course: Course;
+      meeting: Meeting;
+    }
+  | {
+      type:
         | "meeting-row-end-next"
         | "white-meeting-start-or-meeting-comment"
         | "meeting-comment-begin-next"
@@ -297,7 +313,7 @@ type State = (
       department: Department;
       subject: Subject;
       course: Course;
-      meeting: Meeting;
+      meeting: Meeting | CancelledMeeting;
     }
   | { type: "done" }
 ) & {
@@ -332,9 +348,11 @@ function processLine(
       const matchDept = line.match(
         /^<h2> <span class="centeralign">([A-Za-z ]{35})<\/span> <\/h2>$/,
       );
-      const matchSubject = line.match(
-        /^<h2>  <span class="centeralign">([A-Za-z ]{30}) \(([A-Z ]{5})\)<\/span> <\/h2>$/,
-      );
+      const matchSubject = line
+        .replaceAll("&amp;", "&")
+        .match(
+          /^<h2>  <span class="centeralign">([A-Za-z&/ ]{30}) \(([A-Z ]{5})\)<\/span> <\/h2>$/,
+        );
       if (matchDept) {
         return {
           ...state,
@@ -344,7 +362,7 @@ function processLine(
             state.department !== null
               ? [...state.departments, state.department]
               : state.departments,
-          wasFrom: { type: "dept", name: matchDept[1].trimEnd() },
+          wasFrom: { type: "dept", name: matchDept[1].trimEnd(), comment: "" },
         };
       }
       if (matchSubject && state.department !== null) {
@@ -389,8 +407,27 @@ function processLine(
     };
   }
   if (state.type === "after-heading") {
-    if (state.next === "td" && line === "</td>") {
-      return { ...state, next: "tr" };
+    if (state.next === "td") {
+      if (state.wasFrom.type === "dept") {
+        if (line === "<br>") {
+          if (!state.wasFrom.comment) {
+            return state;
+          }
+        } else if (line !== "</td>") {
+          return {
+            ...state,
+            wasFrom: {
+              ...state.wasFrom,
+              comment:
+                (state.wasFrom.comment ? state.wasFrom.comment + "\n" : "") +
+                line,
+            },
+          };
+        }
+      }
+      if (state.next === "td" && line === "</td>") {
+        return { ...state, next: "tr" };
+      }
     }
     if (state.next === "tr" && line === "</tr>") {
       return { ...state, next: "idk" };
@@ -581,15 +618,20 @@ function processLine(
     return { ...state, type: "course-number-next" };
   }
   if (state.type === "course-number-next") {
+    // that second space seems to depend on whether there was a restriction
     const match = line.match(
-      /^<td class="crsheader">(\d{1,3}[A-Z]{0,2})<\/td>$/,
+      /^<td ( )?class="crsheader">(\d{1,3}[A-Z]{0,2})<\/td>$/,
     );
     if (match) {
-      return {
-        ...state,
-        type: "course-num-end-next",
-        course: { ...state.course, number: match[1] },
-      };
+      const extraSpace = !!match[1];
+      const restrictionless = state.course.restriction === null;
+      if (extraSpace === restrictionless) {
+        return {
+          ...state,
+          type: "course-num-end-next",
+          course: { ...state.course, number: match[2] },
+        };
+      }
     }
   }
   if (
@@ -599,9 +641,11 @@ function processLine(
     return { ...state, type: "course-name-next" };
   }
   if (state.type === "course-name-next") {
-    const match = line.match(
-      /^<a href="javascript:openNewWindow\('http:\/\/www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2})'\)"><span class="boldtxt">([A-Za-z ]{30})<\/span> <\/a>$/,
-    );
+    const match = line
+      .replaceAll("&amp;", "&")
+      .match(
+        /^<a href="javascript:openNewWindow\('http:\/\/www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2})'\)"><span class="boldtxt">([A-Za-z& ]{30})<\/span> <\/a>$/,
+      );
     if (match) {
       return {
         ...state,
@@ -834,7 +878,13 @@ function processLine(
     );
     if (match) {
       const type = match[2];
-      if (type === "LA" || type === "LE" || type === "IN" || type === "DI") {
+      if (
+        type === "LA" ||
+        type === "LE" ||
+        type === "IN" ||
+        type === "DI" ||
+        type === "SE"
+      ) {
         if (match[1] === instructionTypes[type]) {
           return {
             ...state,
@@ -856,6 +906,22 @@ function processLine(
     }
   }
   if (state.type === "days-or-tba-next") {
+    if (
+      line ===
+        '<td  class="brdr" colspan="8" align="center"><span class="ertext">Cancelled</span></td>' &&
+      state.sectionId !== null
+    ) {
+      return {
+        ...state,
+        type: "meeting-row-end-next",
+        meeting: {
+          ...state.meeting,
+          cancelled: true,
+          sectionId: state.sectionId,
+          comment: "",
+        },
+      };
+    }
     if (line === '<td class="brdr" colspan="4" align="center">TBA</td>') {
       return {
         ...state,
@@ -894,7 +960,7 @@ function processLine(
         }
       }
       const match = line.match(
-        /^<a href="#!" onclick="javascript:sendMail\('\/scheduleOfClasses\/scheduleOfClassesFacultyEmailResult\.htm\?pid=([A-Za-z\d+/]+==)'\)">([A-Za-z, ]{35})<\/a>$/,
+        /^<a href="#!" onclick="javascript:sendMail\('\/scheduleOfClasses\/scheduleOfClassesFacultyEmailResult\.htm\?pid=([A-Za-z\d+/]+==)'\)">([A-Za-z,. ]{35})<\/a>$/,
       );
       if (match) {
         return {
@@ -948,6 +1014,7 @@ function processLine(
       type: "book-link-next",
       meeting: {
         ...state.meeting,
+        cancelled: false,
         enrollable: {
           limit: { type: "unlimited" },
           sectionId: state.sectionId,
@@ -965,6 +1032,7 @@ function processLine(
         type: "book-link-next",
         meeting: {
           ...state.meeting,
+          cancelled: false,
           enrollable: {
             limit: state.isWaitlist
               ? { type: "waitlist", waitlist: state.count, limit }
