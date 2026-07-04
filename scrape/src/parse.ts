@@ -250,6 +250,36 @@ type State = (
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
     }
   | {
+      type: "time-next";
+      department: Department;
+      subject: Subject;
+      course: Course;
+      sectionId: number | null;
+      meeting: Pick<Meeting, "instructionType" | "sectionCode">;
+      days: string;
+    }
+  | {
+      type: "building-start-next" | "building-link-next";
+      department: Department;
+      subject: Subject;
+      course: Course;
+      sectionId: number | null;
+      meeting: Pick<Meeting, "instructionType" | "sectionCode">;
+      days: string;
+      time: string;
+    }
+  | {
+      type: "building-code-next" | "room-next";
+      department: Department;
+      subject: Subject;
+      course: Course;
+      sectionId: number | null;
+      meeting: Pick<Meeting, "instructionType" | "sectionCode">;
+      days: string;
+      time: string;
+      building: string;
+    }
+  | {
       type: "instructor-begin-next";
       department: Department;
       subject: Subject;
@@ -268,6 +298,14 @@ type State = (
         "instructionType" | "sectionCode" | "location" | "instructor"
       >;
       shouldSeeBr: boolean;
+    }
+  | {
+      type: "non-enrollable-skip";
+      skip: 3 | 2 | 1;
+      department: Department;
+      subject: Subject;
+      course: Course;
+      meeting: Meeting;
     }
   | {
       type: "available-next" | "waitlist-count-next" | "unlim-empty-next";
@@ -929,12 +967,55 @@ function processLine(
         meeting: { ...state.meeting, location: null },
       };
     }
-    const match = line.match(/^<td class="brdr">TuTh     <\/td>$/);
+    const match = line.match(/^<td class="brdr">([A-Za-z ]{9})<\/td>$/);
     if (match) {
-      // TODO
+      return { ...state, type: "time-next", days: match[1] };
     }
   }
-  if (state.type === "instructor-begin-next" && line === '<td class="brdr">') {
+  if (state.type === "time-next") {
+    const match = line.match(
+      /^<td class="brdr">(1?\d:[03]0[ap]-1?\d:[25][09][ap])<\/td>$/,
+    );
+    if (match) {
+      return { ...state, type: "building-start-next", time: match[1] };
+    }
+  }
+  if (state.type === "building-start-next" && line === '<td class="brdr">') {
+    return { ...state, type: "building-link-next" };
+  }
+  if (state.type === "building-link-next") {
+    const match = line.match(
+      /^<a href="https:\/\/maps\.ucsd\.edu\/\?id=1005#!s\/([A-Z]{3,5})_Main\?ct\/18312" target="_blank">$/,
+    );
+    if (match) {
+      return { ...state, type: "building-code-next", building: match[1] };
+    }
+  }
+  if (state.type === "building-code-next") {
+    const match = line.match(/^([A-Z]{3}[A-Z ]{0,2})<\/a><\/td>$/);
+    if (match && match[1] === state.building) {
+      return { ...state, type: "room-next" };
+    }
+  }
+  if (state.type === "room-next") {
+    const match = line.match(/^<td class="brdr">([A-Z\d ]{5})<\/td>$/);
+    if (match) {
+      return {
+        ...state,
+        type: "instructor-begin-next",
+        meeting: {
+          ...state.meeting,
+          location: {
+            days: state.days,
+            time: state.time,
+            building: state.building,
+            room: match[1],
+          },
+        },
+      };
+    }
+  }
+  if (state.type === "instructor-begin-next") {
     return {
       ...state,
       type: "instructor-end-next",
@@ -956,7 +1037,17 @@ function processLine(
             sectionId: state.sectionId,
           };
         } else {
-          // TODO
+          return {
+            ...state,
+            type: "non-enrollable-skip",
+            skip: 3,
+            meeting: {
+              ...state.meeting,
+              enrollable: null,
+              cancelled: false,
+              comment: "",
+            },
+          };
         }
       }
       const match = line.match(
@@ -974,6 +1065,15 @@ function processLine(
             },
           },
         };
+      }
+    }
+  }
+  if (state.type === "non-enrollable-skip") {
+    if (line === '<td  class="brdr"><span class="ertext">&nbsp;</span></td>') {
+      if (state.skip === 1) {
+        return { ...state, type: "meeting-row-end-next" };
+      } else {
+        return { ...state, skip: state.skip === 3 ? 2 : 1 };
       }
     }
   }
@@ -1071,6 +1171,10 @@ function processLine(
       !state.meeting.comment
     ) {
       return { ...state, type: "meeting-comment-begin-next" };
+    }
+    if (line === '<td  class="brdr" colspan="2" border="0"></td>') {
+      // final exam: has date instead of section code, plus different meeting
+      // types i presume (TODO)
     }
   }
   if (
