@@ -7,6 +7,11 @@
 
 import { readFile } from "node:fs/promises";
 
+type GlobalOptions = {
+  isSummer: boolean;
+  termYear: number;
+};
+
 type Department = {
   name: string;
   subjects: Subject[];
@@ -21,6 +26,18 @@ type Subject = {
     hour: number;
     minute: number;
   };
+  courses: Course[];
+};
+type Course = {
+  restriction: { title: string; letter: string } | null;
+  catalogHash: string;
+  title: string;
+  units: { start: number; end: { step: number; end: number } | null };
+  summerRange: {
+    term: 1 | 2 | "special" | "med" | null;
+    start: { month: string; date: number };
+    end: { month: string; date: number };
+  } | null;
 };
 
 type State = (
@@ -113,7 +130,7 @@ type State = (
       title: string;
     }
   | {
-      type: "unit-end-next";
+      type: "unit-end-next" | "unit-end-br-next" | "unit-end-summer-next";
       department: Department;
       subject: Subject;
       restriction: { title: string; letter: string } | null;
@@ -121,6 +138,19 @@ type State = (
       title: string;
       start: number;
       end: { step: number; end: number } | null;
+    }
+  | {
+      type: "course-header-end-next";
+      department: Department;
+      subject: Subject;
+      course: Course;
+    }
+  | {
+      type: "ready-for-meeting";
+      department: Department;
+      subject: Subject;
+      course: Course;
+      canEnd: boolean;
     }
   | { type: "done" }
 ) & {
@@ -134,7 +164,11 @@ const initState: State = {
   departments: [],
 };
 
-function processLine(state: State, line: string): State | null {
+function processLine(
+  state: State,
+  line: string,
+  options: GlobalOptions,
+): State | null {
   if (state.type === "before-heading") {
     if (state.next === "tr" && line === "<tr>") {
       return { ...state, next: "td" };
@@ -188,6 +222,7 @@ function processLine(state: State, line: string): State | null {
           name: state.subject,
           code: state.subjectCode,
           asOf: { month, date, year, hour, minute },
+          courses: [],
         },
       };
     }
@@ -425,8 +460,89 @@ function processLine(state: State, line: string): State | null {
       return { ...state, end: { step: +match[1], end: +match[2] } };
     }
     if (line === "Units)") {
-      //
+      return { ...state, type: "unit-end-br-next" };
     }
+  }
+  if (state.type === "unit-end-br-next" && line === "<br>") {
+    if (options.isSummer) {
+      return { ...state, type: "unit-end-summer-next" };
+    } else {
+      return {
+        type: "course-header-end-next",
+        departments: state.departments,
+        department: state.department,
+        subject: state.subject,
+        course: {
+          restriction: state.restriction,
+          catalogHash: state.catalogHash,
+          title: state.title,
+          units: { start: state.start, end: state.end },
+          summerRange: null,
+        },
+      };
+    }
+  }
+  if (state.type === "unit-end-summer-next") {
+    const match = line.match(
+      /^(Sum Sess I|Sum Ses II|SpecSumSes|Summer Qtr)?:&nbsp;([A-Z][a-z]+) ([0-3]\d) (\d{4})&nbsp;-&nbsp;([A-Z][a-z]+) ([0-3]\d) (\d{4})$/,
+    );
+    if (match) {
+      const [
+        ,
+        summerType,
+        startMonth,
+        startDate,
+        startYear,
+        endMonth,
+        endDate,
+        endYear,
+      ] = match;
+      // TODO: can we enforce that this is present after a particular year
+      const parsedType =
+        summerType === "Sum Sess I"
+          ? 1
+          : summerType === "Sum Ses II"
+            ? 2
+            : summerType === "SpecSumSes"
+              ? "special"
+              : summerType === "Summer Qtr"
+                ? "med"
+                : summerType === undefined
+                  ? null
+                  : "idk";
+      if (
+        parsedType !== "idk" &&
+        +startYear === options.termYear &&
+        +endYear === options.termYear
+      ) {
+        return {
+          type: "course-header-end-next",
+          departments: state.departments,
+          department: state.department,
+          subject: state.subject,
+          course: {
+            restriction: state.restriction,
+            catalogHash: state.catalogHash,
+            title: state.title,
+            units: { start: state.start, end: state.end },
+            summerRange: {
+              term: parsedType,
+              start: { month: startMonth, date: +startDate },
+              end: { month: endMonth, date: +endDate },
+            },
+          },
+        };
+      }
+    }
+  }
+  if (state.type === "course-header-end-next" && line === "</td>") {
+    return { ...state, type: "ready-for-meeting", canEnd: false };
+  }
+  if (
+    state.type === "ready-for-meeting" &&
+    line === '<td  class="crsheader" colspan="6" align="right">'
+  ) {
+    //
   }
   return null;
 }
@@ -436,7 +552,7 @@ const lines = (await readFile(".cache/SA04/_all/39.html", "utf-8"))
   .slice(1);
 let state: State = initState;
 for (const [i, line] of lines.entries()) {
-  const next = processLine(state, line);
+  const next = processLine(state, line, { isSummer: true, termYear: 2004 });
   if (!next) {
     console.error("Unexpected line for state");
     console.error(state);
