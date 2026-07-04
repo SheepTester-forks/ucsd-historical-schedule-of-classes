@@ -8,8 +8,8 @@
 import { readFile } from "node:fs/promises";
 
 type GlobalOptions = {
-  isSummer: boolean;
   termYear: number;
+  quarter: "FA" | "WI" | "SP" | "SA";
 };
 
 type Department = {
@@ -29,8 +29,9 @@ type Subject = {
   courses: Course[];
 };
 type Course = {
-  restriction: { title: string; letter: string } | null;
-  catalogHash: string;
+  restriction: string | null;
+  number: string;
+  catalog: { dept: string; hash: string };
   title: string;
   units: { start: number; end: { step: number; end: number } | null };
   summerRange: {
@@ -38,6 +39,43 @@ type Course = {
     start: { month: string; date: number };
     end: { month: string; date: number };
   } | null;
+  resourcesSectionId: number;
+  meetings: Meeting[];
+};
+type Meeting = {
+  instructionType: keyof typeof instructionTypes;
+  sectionCode: string;
+  location: {
+    // TODO: narrow
+    days: string;
+    time: string;
+    building: string;
+    room: string;
+  } | null;
+  instructor: { name: string; encryptedPid: Buffer } | null;
+  enrollable: {
+    sectionId: number;
+    limit:
+      | {
+          type: "waitlist";
+          waitlist: number;
+          limit: number;
+        }
+      | { type: "unlimited" }
+      | {
+          type: "available";
+          available: number;
+          limit: number;
+        };
+  } | null;
+  comment: string;
+};
+
+const instructionTypes = {
+  LE: "Lecture",
+  DI: "Discussion",
+  LA: "Lab",
+  IN: "Independent Study",
 };
 
 type State = (
@@ -111,46 +149,155 @@ type State = (
       type: "restrictions-td-close-next" | "course-number-next";
       department: Department;
       subject: Subject;
-      restriction: { title: string; letter: string } | null;
+      course: Pick<Course, "restriction">;
     }
   | {
       type: "course-num-end-next" | "course-name-next";
       department: Department;
       subject: Subject;
-      restriction: { title: string; letter: string } | null;
-      number: string;
+      course: Pick<Course, "restriction" | "number">;
     }
   | {
       type: "unit-start-next";
       department: Department;
       subject: Subject;
-      restriction: { title: string; letter: string } | null;
-      catalogDept: string;
-      catalogHash: string;
-      title: string;
+      course: Pick<Course, "restriction" | "number" | "catalog" | "title">;
     }
   | {
       type: "unit-end-next" | "unit-end-br-next" | "unit-end-summer-next";
       department: Department;
       subject: Subject;
-      restriction: { title: string; letter: string } | null;
-      catalogHash: string;
-      title: string;
-      start: number;
-      end: { step: number; end: number } | null;
+      course: Pick<
+        Course,
+        "restriction" | "number" | "catalog" | "title" | "units"
+      >;
     }
   | {
-      type: "course-header-end-next";
+      type:
+        | "course-header-end-next"
+        | "ready-for-course-number-links"
+        | "prereq-next"
+        | "resources-next";
+      department: Department;
+      subject: Subject;
+      course: Pick<
+        Course,
+        "restriction" | "number" | "catalog" | "title" | "units" | "summerRange"
+      >;
+    }
+  | {
+      type: "evals-next" | "close-course-links-next";
+      department: Department;
+      subject: Subject;
+      course: Pick<
+        Course,
+        | "restriction"
+        | "number"
+        | "catalog"
+        | "title"
+        | "units"
+        | "summerRange"
+        | "resourcesSectionId"
+      >;
+    }
+  | {
+      type: "meeting-row-begin-next";
+      department: Department;
+      subject: Subject;
+      course: Course;
+      prevMeeting: Meeting | null;
+    }
+  | {
+      type:
+        | "borderless-brdr-next"
+        | "brdr-begin-next"
+        | "brdr-end-next"
+        | "brdr-section-id-begin-next";
       department: Department;
       subject: Subject;
       course: Course;
     }
   | {
-      type: "ready-for-meeting";
+      type: "brdr-section-id-end-next" | "instruction-type-next";
       department: Department;
       subject: Subject;
       course: Course;
-      canEnd: boolean;
+      sectionId: number | null;
+    }
+  | {
+      type: "section-code-next";
+      department: Department;
+      subject: Subject;
+      course: Course;
+      sectionId: number | null;
+      meeting: Pick<Meeting, "instructionType">;
+    }
+  | {
+      type: "days-or-tba-next";
+      department: Department;
+      subject: Subject;
+      course: Course;
+      sectionId: number | null;
+      meeting: Pick<Meeting, "instructionType" | "sectionCode">;
+    }
+  | {
+      type: "instructor-begin-next";
+      department: Department;
+      subject: Subject;
+      course: Course;
+      sectionId: number | null;
+      meeting: Pick<Meeting, "instructionType" | "sectionCode" | "location">;
+    }
+  | {
+      type: "instructor-end-next";
+      department: Department;
+      subject: Subject;
+      course: Course;
+      sectionId: number | null;
+      meeting: Pick<
+        Meeting,
+        "instructionType" | "sectionCode" | "location" | "instructor"
+      >;
+      shouldSeeBr: boolean;
+    }
+  | {
+      type: "available-next" | "waitlist-count-next" | "unlim-empty-next";
+      department: Department;
+      subject: Subject;
+      course: Course;
+      sectionId: number;
+      meeting: Pick<
+        Meeting,
+        "instructionType" | "sectionCode" | "location" | "instructor"
+      >;
+    }
+  | {
+      type: "limit-next" | "waitlist-end-next";
+      department: Department;
+      subject: Subject;
+      course: Course;
+      sectionId: number;
+      meeting: Pick<
+        Meeting,
+        "instructionType" | "sectionCode" | "location" | "instructor"
+      >;
+      count: number;
+      isWaitlist: boolean;
+    }
+  | {
+      type:
+        | "book-link-next"
+        | "book-gif-next"
+        | "book-span-next"
+        | "book-close-next"
+        | "meeting-row-end-next"
+        | "white-meeting-start-or-meeting-comment"
+        | "meeting-comment-begin-next"
+        | "meeting-comment-next";
+      department: Department;
+      subject: Subject;
+      course: Course;
+      meeting: Meeting;
     }
   | { type: "done" }
 ) & {
@@ -169,6 +316,8 @@ function processLine(
   line: string,
   options: GlobalOptions,
 ): State | null {
+  const isSummer = options.quarter === "SA";
+  const year2Digit = (options.termYear % 100).toString().padStart(2, "0");
   if (state.type === "before-heading") {
     if (state.next === "tr" && line === "<tr>") {
       return { ...state, next: "td" };
@@ -398,22 +547,33 @@ function processLine(
     }
     if (line === '<td class="crsheader"></td>') {
       // no requirements
-      return { ...state, type: "course-number-next", restriction: null };
+      return {
+        ...state,
+        type: "course-number-next",
+        course: { restriction: null },
+      };
     }
   }
   if (state.type === "restrictions-title-next") {
-    const match = line.match(/^<span id="crsRestCd" title="[A-Za-z ]+">$/);
+    const match = line.match(
+      /^<span id="crsRestCd" title="([A-Za-z\-() ]+)">$/,
+    );
     if (match) {
       return { ...state, type: "restrictions-letter-next", title: match[1] };
     }
   }
   if (state.type === "restrictions-letter-next") {
-    const match = line.match(/^(D)<\/span><br>$/);
+    const match = line.match(/^([DO])<\/span><br>$/);
     if (match) {
+      // TODO: check against state.title
+      // - D: Department Approval Required
+      // - O: Open to Majors Only (Non-majors require department approval)
       return {
         ...state,
         type: "restrictions-td-close-next",
-        restriction: { title: state.title, letter: match[1] },
+        course: {
+          restriction: match[1],
+        },
       };
     }
   }
@@ -425,7 +585,11 @@ function processLine(
       /^<td class="crsheader">(\d{1,3}[A-Z]{0,2})<\/td>$/,
     );
     if (match) {
-      return { ...state, type: "course-num-end-next", number: match[1] };
+      return {
+        ...state,
+        type: "course-num-end-next",
+        course: { ...state.course, number: match[1] },
+      };
     }
   }
   if (
@@ -442,43 +606,50 @@ function processLine(
       return {
         ...state,
         type: "unit-start-next",
-        catalogDept: match[1],
-        catalogHash: match[2],
-        title: match[3],
+        course: {
+          ...state.course,
+          catalog: { dept: match[1], hash: match[2] },
+          title: match[3].trim(),
+        },
       };
     }
   }
   if (state.type === "unit-start-next") {
     const match = line.match(/^\( (\d)$/);
     if (match) {
-      return { ...state, type: "unit-end-next", start: +match[1], end: null };
+      return {
+        ...state,
+        type: "unit-end-next",
+        course: { ...state.course, units: { start: +match[1], end: null } },
+      };
     }
   }
   if (state.type === "unit-end-next") {
     const match = line.match(/^\/(4) by (2)$/);
-    if (match && !state.end) {
-      return { ...state, end: { step: +match[1], end: +match[2] } };
+    if (match && !state.course.units.end) {
+      return {
+        ...state,
+        course: {
+          ...state.course,
+          units: {
+            start: state.course.units.start,
+            end: { step: +match[1], end: +match[2] },
+          },
+        },
+      };
     }
     if (line === "Units)") {
       return { ...state, type: "unit-end-br-next" };
     }
   }
   if (state.type === "unit-end-br-next" && line === "<br>") {
-    if (options.isSummer) {
+    if (isSummer) {
       return { ...state, type: "unit-end-summer-next" };
     } else {
       return {
+        ...state,
         type: "course-header-end-next",
-        departments: state.departments,
-        department: state.department,
-        subject: state.subject,
-        course: {
-          restriction: state.restriction,
-          catalogHash: state.catalogHash,
-          title: state.title,
-          units: { start: state.start, end: state.end },
-          summerRange: null,
-        },
+        course: { ...state.course, summerRange: null },
       };
     }
   }
@@ -516,15 +687,10 @@ function processLine(
         +endYear === options.termYear
       ) {
         return {
+          ...state,
           type: "course-header-end-next",
-          departments: state.departments,
-          department: state.department,
-          subject: state.subject,
           course: {
-            restriction: state.restriction,
-            catalogHash: state.catalogHash,
-            title: state.title,
-            units: { start: state.start, end: state.end },
+            ...state.course,
             summerRange: {
               term: parsedType,
               start: { month: startMonth, date: +startDate },
@@ -536,13 +702,341 @@ function processLine(
     }
   }
   if (state.type === "course-header-end-next" && line === "</td>") {
-    return { ...state, type: "ready-for-meeting", canEnd: false };
+    return { ...state, type: "ready-for-course-number-links" };
   }
   if (
-    state.type === "ready-for-meeting" &&
+    state.type === "ready-for-course-number-links" &&
     line === '<td  class="crsheader" colspan="6" align="right">'
   ) {
-    //
+    return { ...state, type: "prereq-next" };
+  }
+  if (state.type === "prereq-next") {
+    const match = line.match(
+      /^<span class="boldtxt" onmouseover="" style="cursor: pointer;" onclick="JavaScript:openNewWindow\('\/scheduleOfClasses\/scheduleOfClassesPreReq\.htm\?termCode=([FSW][API123U]\d\d)&courseId=([\dA-Z ]{9})'\);"> Prerequisites  <\/span> &nbsp;\|&nbsp;$/,
+    );
+    if (match) {
+      let matches = match[1].slice(2) === year2Digit;
+      if (isSummer) {
+        matches &&= ["SU", "S1", "S2", "S3"].includes(match[1].slice(0, 2));
+      } else {
+        matches &&= match[1].slice(0, 2) === options.quarter;
+      }
+      matches &&= match[2].trim() === state.subject.code + state.course.number;
+      if (matches) {
+        return { ...state, type: "resources-next" };
+      }
+    }
+  }
+  if (state.type === "resources-next") {
+    const match = line.match(
+      /^<span class="boldtxt" onmouseover="" style="cursor: pointer;" onclick="javascript:openNewWindow\('http:\/\/courses\.ucsd\.edu\/coursemain\.asp\?section=(\d{6})'\)">Resources<\/span>&nbsp;\|&nbsp;$/,
+    );
+    if (match) {
+      return {
+        ...state,
+        type: "evals-next",
+        course: { ...state.course, resourcesSectionId: +match[1] },
+      };
+    }
+  }
+  if (state.type === "evals-next") {
+    // I assume it won't be CAPE for more recent quarters
+    const match = line.match(
+      /^<span class="boldtxt" onmouseover="" style="cursor: pointer;" onclick="javascript:openNewTab\('https:\/\/academicaffairs\.ucsd\.edu\/Modules\/Evals\/SET\/Reports\/Search\.aspx\?courseNumber=([A-Z]{2,4})\+(\d{1,3}[A-Z]{0,2})','CAPE'\)"><span title="CAPE - Course and Professor Evaluations">Evaluations<\/span><\/span><\/td>$/,
+    );
+    if (
+      match &&
+      match[1] === state.subject.code &&
+      match[2] === state.course.number
+    ) {
+      return { ...state, type: "close-course-links-next" };
+    }
+  }
+  if (state.type === "close-course-links-next" && line === "</tr>") {
+    return {
+      type: "meeting-row-begin-next",
+      departments: state.departments,
+      department: state.department,
+      subject: state.subject,
+      course: { ...state.course, meetings: [] },
+      prevMeeting: null,
+    };
+  }
+  if (state.type === "meeting-row-begin-next") {
+    if (line === "<tr>" && state.prevMeeting) {
+      // could either be beginning of course or subject or department, which is
+      // handled by this state i think
+      return {
+        type: "start-course-td",
+        departments: state.departments,
+        department: state.department,
+        subject: {
+          ...state.subject,
+          courses: [...state.subject.courses, state.course],
+        },
+        canEndSubject: true,
+      };
+    }
+    if (line === '<tr class="sectxt">') {
+      return {
+        ...state,
+        type: "borderless-brdr-next",
+        course: state.prevMeeting
+          ? {
+              ...state.course,
+              meetings: [...state.course.meetings, state.prevMeeting],
+            }
+          : state.course,
+      };
+    }
+    if (line === '<tr class="nonenrtxt">' && state.prevMeeting) {
+      return {
+        ...state,
+        type: "white-meeting-start-or-meeting-comment",
+        meeting: state.prevMeeting,
+      };
+    }
+  }
+  if (
+    state.type === "borderless-brdr-next" &&
+    line === '<td class="brdr" border="0"></td>'
+  ) {
+    return { ...state, type: "brdr-begin-next" };
+  }
+  if (state.type === "brdr-begin-next" && line === '<td class="brdr">') {
+    return { ...state, type: "brdr-end-next" };
+  }
+  if (state.type === "brdr-end-next" && line === "</td>") {
+    return { ...state, type: "brdr-section-id-begin-next" };
+  }
+  if (
+    state.type === "brdr-section-id-begin-next" &&
+    line === '<td class="brdr">'
+  ) {
+    return {
+      ...state,
+      type: "brdr-section-id-end-next",
+      sectionId: null,
+    };
+  }
+  if (state.type === "brdr-section-id-end-next") {
+    const match = line.match(/^\d{5,6}$/);
+    if (match && state.sectionId === null) {
+      return { ...state, sectionId: +match[0] };
+    }
+    if (line === "</td>") {
+      return { ...state, type: "instruction-type-next" };
+    }
+  }
+  if (state.type === "instruction-type-next") {
+    const match = line.match(
+      /^<td class="brdr"><span id="insTyp" title="([A-Za-z ]+)">([A-Z]{2})<\/span><\/td>$/,
+    );
+    if (match) {
+      const type = match[2];
+      if (type === "LA" || type === "LE" || type === "IN" || type === "DI") {
+        if (match[1] === instructionTypes[type]) {
+          return {
+            ...state,
+            type: "section-code-next",
+            meeting: { instructionType: type },
+          };
+        }
+      }
+    }
+  }
+  if (state.type === "section-code-next") {
+    const match = line.match(/^<td class="brdr">([A-Z]\d\d)<\/td>$/);
+    if (match) {
+      return {
+        ...state,
+        type: "days-or-tba-next",
+        meeting: { ...state.meeting, sectionCode: match[1] },
+      };
+    }
+  }
+  if (state.type === "days-or-tba-next") {
+    if (line === '<td class="brdr" colspan="4" align="center">TBA</td>') {
+      return {
+        ...state,
+        type: "instructor-begin-next",
+        meeting: { ...state.meeting, location: null },
+      };
+    }
+    const match = line.match(/^<td class="brdr">TuTh     <\/td>$/);
+    if (match) {
+      // TODO
+    }
+  }
+  if (state.type === "instructor-begin-next" && line === '<td class="brdr">') {
+    return {
+      ...state,
+      type: "instructor-end-next",
+      shouldSeeBr: false,
+      meeting: { ...state.meeting, instructor: null },
+    };
+  }
+  if (state.type === "instructor-end-next") {
+    if (state.shouldSeeBr) {
+      if (line === "<br>") {
+        return { ...state, shouldSeeBr: false };
+      }
+    } else {
+      if (line === "</td>") {
+        if (state.sectionId !== null) {
+          return {
+            ...state,
+            type: "available-next",
+            sectionId: state.sectionId,
+          };
+        } else {
+          // TODO
+        }
+      }
+      const match = line.match(
+        /^<a href="#!" onclick="javascript:sendMail\('\/scheduleOfClasses\/scheduleOfClassesFacultyEmailResult\.htm\?pid=([A-Za-z\d+/]+==)'\)">([A-Za-z, ]{35})<\/a>$/,
+      );
+      if (match) {
+        return {
+          ...state,
+          shouldSeeBr: true,
+          meeting: {
+            ...state.meeting,
+            instructor: {
+              encryptedPid: Buffer.from(match[1], "base64"),
+              name: match[2].trim(),
+            },
+          },
+        };
+      }
+    }
+  }
+  if (state.type === "available-next") {
+    if (line === '<td  class="brdr"><span class="ertext">FULL<br>') {
+      return { ...state, type: "waitlist-count-next" };
+    }
+    if (line === '<td class="brdr">Unlim</td>') {
+      return { ...state, type: "unlim-empty-next" };
+    }
+    const matchAvailable = line.match(/^<td class="brdr">(\d+)<\/td>$/);
+    if (matchAvailable) {
+      return {
+        ...state,
+        type: "limit-next",
+        count: +matchAvailable[1],
+        isWaitlist: false,
+      };
+    }
+  }
+  if (state.type === "waitlist-count-next") {
+    const match = line.match(/^Waitlist\((\d+)\)$/);
+    if (match) {
+      return {
+        ...state,
+        type: "waitlist-end-next",
+        count: +match[1],
+        isWaitlist: true,
+      };
+    }
+  }
+  if (state.type === "waitlist-end-next" && line === "</span></td>") {
+    return { ...state, type: "limit-next" };
+  }
+  if (state.type === "unlim-empty-next" && line === '<td class="brdr"></td>') {
+    return {
+      ...state,
+      type: "book-link-next",
+      meeting: {
+        ...state.meeting,
+        enrollable: {
+          limit: { type: "unlimited" },
+          sectionId: state.sectionId,
+        },
+        comment: "",
+      },
+    };
+  }
+  if (state.type === "limit-next") {
+    const match = line.match(/^<td class="brdr">(\d+)<\/td>$/);
+    if (match) {
+      const limit = +match[1];
+      return {
+        ...state,
+        type: "book-link-next",
+        meeting: {
+          ...state.meeting,
+          enrollable: {
+            limit: state.isWaitlist
+              ? { type: "waitlist", waitlist: state.count, limit }
+              : { type: "available", available: state.count, limit },
+            sectionId: state.sectionId,
+          },
+          comment: "",
+        },
+      };
+    }
+  }
+  if (
+    state.type === "book-link-next" &&
+    line ===
+      '<td class="brdr"><span onmouseover="" style="cursor: pointer;" onclick="JavaScript:openNewWindow(\'https://www.bkstr.com/ucsdtextstore/shop/textbooks-and-course-materials\',\'bookstore\');">'
+  ) {
+    return { ...state, type: "book-gif-next" };
+  }
+  if (
+    state.type === "book-gif-next" &&
+    line ===
+      '<img src="/scheduleOfClasses/images/book.gif" height="20" width="20"/>'
+  ) {
+    return { ...state, type: "book-span-next" };
+  }
+  if (state.type === "book-span-next" && line === "</span>") {
+    return { ...state, type: "book-close-next" };
+  }
+  if (state.type === "book-close-next" && line === "</td>") {
+    return { ...state, type: "meeting-row-end-next" };
+  }
+  if (state.type === "white-meeting-start-or-meeting-comment") {
+    if (
+      (line === '<td  class="brdr" colspan="2"></td>' ||
+        line === '<td  class="brdr" colspan="2"></td>') &&
+      !state.meeting.comment
+    ) {
+      return { ...state, type: "meeting-comment-begin-next" };
+    }
+  }
+  if (
+    state.type === "meeting-comment-begin-next" &&
+    (line === '<td colspan="11">' || line === '<td  class="brdr" colspan="11">')
+  ) {
+    return { ...state, type: "meeting-comment-next" };
+  }
+  if (state.type === "meeting-comment-next") {
+    if (line === "</td>") {
+      if (state.meeting.comment) {
+        return { ...state, type: "meeting-row-end-next" };
+      }
+    } else {
+      return {
+        ...state,
+        type: "meeting-comment-next",
+        meeting: {
+          ...state.meeting,
+          comment:
+            (state.meeting.comment ? state.meeting.comment + "\n" : "") + line,
+        },
+      };
+    }
+  }
+  if (state.type === "meeting-row-end-next" && line === "</tr>") {
+    return {
+      type: "meeting-row-begin-next",
+      departments: state.departments,
+      department: state.department,
+      subject: state.subject,
+      course: state.course,
+      prevMeeting: state.meeting,
+    };
   }
   return null;
 }
@@ -552,7 +1046,10 @@ const lines = (await readFile(".cache/SA04/_all/39.html", "utf-8"))
   .slice(1);
 let state: State = initState;
 for (const [i, line] of lines.entries()) {
-  const next = processLine(state, line, { isSummer: true, termYear: 2004 });
+  const next = processLine(state, line, {
+    termYear: 2004,
+    quarter: "SA",
+  });
   if (!next) {
     console.error("Unexpected line for state");
     console.error(state);
