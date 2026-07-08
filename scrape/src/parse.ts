@@ -52,7 +52,11 @@ type Course = {
   enrollables: ((EnrollableMeeting | CancelledEnrollableMeeting) & {
     extra: ExtraMeeting | null;
   })[];
-  additionalMeetings: (UnenrollableMeeting | CancelledUnnrollableMeeting)[];
+  additionalMeetings: ((UnenrollableMeeting | CancelledUnnrollableMeeting) & {
+    // yeah apparently additional meetings can have extras too, like ECE 103,
+    // SA04 page 10
+    extra: ExtraMeeting | null;
+  })[];
   exams: Exam[];
 };
 type EnrollmentInfo = {
@@ -70,24 +74,26 @@ type EnrollmentInfo = {
         limit: number;
       };
 };
-type MeetingLocation = {
-  // TODO: narrow
-  days: string;
-  time: string;
-  building: string;
-  room: string;
-};
 type MeetingBase = {
   cancelled: false;
   isExam: false;
   instructionType: keyof typeof instructionTypes;
   sectionCode: string;
-  location: MeetingLocation | null;
+  location: {
+    days: string;
+    time: string;
+    location: { building: string; room: string } | null;
+  } | null;
   instructors: { name: string; encryptedPid: Buffer }[];
   comment: string;
 };
 type ExtraMeeting = {
-  location: MeetingLocation;
+  location: {
+    days: string;
+    time: string;
+    building: string;
+    room: string;
+  };
 };
 type EnrollableMeeting = MeetingBase & {
   enrollable: EnrollmentInfo;
@@ -599,22 +605,53 @@ function addToMeeting(
     prevMeeting.isExtra
   ) {
     // assume location of extra meeting will never be TBA
-    if (course.additionalMeetings.length === 0 && prevMeeting.location) {
-      const lastEnrollable = course.enrollables.at(-1);
-      if (lastEnrollable) {
+    if (prevMeeting.location?.location) {
+      const extra = {
+        location: {
+          ...prevMeeting.location.location,
+          days: prevMeeting.location.days,
+          time: prevMeeting.location.time,
+        },
+      };
+      const lastAdditional = course.additionalMeetings.at(-1);
+      if (lastAdditional) {
         if (
-          lastEnrollable.extra === null &&
-          lastEnrollable.instructionType === prevMeeting.instructionType &&
-          lastEnrollable.sectionCode === prevMeeting.sectionCode &&
-          lastEnrollable.comment === prevMeeting.comment
+          lastAdditional.extra === null &&
+          lastAdditional.instructionType === prevMeeting.instructionType &&
+          lastAdditional.sectionCode === prevMeeting.sectionCode &&
+          lastAdditional.comment === prevMeeting.comment
         ) {
           return {
             ...course,
-            enrollables: course.enrollables.with(-1, {
-              ...lastEnrollable,
-              extra: { location: prevMeeting.location },
+            additionalMeetings: course.additionalMeetings.with(-1, {
+              ...lastAdditional,
+              extra,
             }),
           };
+        }
+      } else {
+        const lastEnrollable = course.enrollables.at(-1);
+        if (lastEnrollable) {
+          if (
+            lastEnrollable.extra === null &&
+            lastEnrollable.instructionType === prevMeeting.instructionType &&
+            lastEnrollable.sectionCode === prevMeeting.sectionCode &&
+            lastEnrollable.comment === prevMeeting.comment
+          ) {
+            return {
+              ...course,
+              enrollables: course.enrollables.with(-1, {
+                ...lastEnrollable,
+                extra: {
+                  location: {
+                    ...prevMeeting.location.location,
+                    days: prevMeeting.location.days,
+                    time: prevMeeting.location.time,
+                  },
+                },
+              }),
+            };
+          }
         }
       }
     }
@@ -633,7 +670,7 @@ function addToMeeting(
             }
           : course;
       }
-    } else if (!course.commonMeeting) {
+    } else if (!course.commonMeeting && course.enrollables.length === 0) {
       // first meeting (A00) can be unenrollable yet followed by enrollable
       // meetings
       // idk if the first meeting can be cancelled
@@ -644,7 +681,10 @@ function addToMeeting(
       return prevMeeting
         ? {
             ...course,
-            additionalMeetings: [...course.additionalMeetings, prevMeeting],
+            additionalMeetings: [
+              ...course.additionalMeetings,
+              { ...prevMeeting, extra: null },
+            ],
           }
         : course;
     }
@@ -1130,7 +1170,7 @@ function processLine(
     }
   }
   if (state.type === "unit-end-next") {
-    const match = line.match(/^\/(4) by (2)$/);
+    const match = line.match(/^\/(1?\d) by (2|4)$/);
     if (match && !state.course.units.end) {
       return {
         ...state,
@@ -1298,20 +1338,25 @@ function processLine(
   }
   if (state.type === "meeting-row-begin-next") {
     if ((line === "<tr>" || line === "<tr >") && state.prevMeeting) {
+      const newCourse = addToMeeting(state.course, state.prevMeeting);
       // could either be beginning of course or subject or department, which is
       // handled by this state i think
-      return {
-        type:
-          line === "<tr >" ? "course-comment-empty-td-next" : "start-course-td",
-        departments: state.departments,
-        department: state.department,
-        subject: {
-          ...state.subject,
-          courses: [...state.subject.courses, state.course],
-        },
-        canEndSubject: true,
-        expected: null,
-      };
+      if (newCourse) {
+        return {
+          type:
+            line === "<tr >"
+              ? "course-comment-empty-td-next"
+              : "start-course-td",
+          departments: state.departments,
+          department: state.department,
+          subject: {
+            ...state.subject,
+            courses: [...state.subject.courses, newCourse],
+          },
+          canEndSubject: true,
+          expected: null,
+        };
+      }
     }
     if (line === '<tr class="sectxt">') {
       if (!state.prevMeeting) {
@@ -1479,6 +1524,9 @@ function processLine(
     return { ...state, type: "building-link-next" };
   }
   if (state.type === "building-link-next") {
+    if (line === "TBA</td>") {
+      return { ...state, type: "room-next", building: "TBA" };
+    }
     const match = line.match(
       /^<a href="https:\/\/maps\.ucsd\.edu\/\?id=1005#!s\/([A-Z]{3,5})_Main\?ct\/18312" target="_blank">$/,
     );
@@ -1502,13 +1550,26 @@ function processLine(
     }
   }
   if (state.type === "room-next") {
+    if (state.building === "TBA") {
+      if (line === '<td class="brdr">TBA</td>' && state.sectionId !== "extra") {
+        return {
+          ...state,
+          type: "instructor-begin-next",
+          sectionId: state.sectionId,
+          meeting: {
+            ...state.meeting,
+            location: { days: state.days, time: state.time, location: null },
+          },
+        };
+      }
+    }
     const match = line.match(/^<td class="brdr">([A-Z\d][A-Z\d ]{4})<\/td>$/);
     if (match) {
+      const room = match[1].trimEnd();
       const location = {
         days: state.days,
         time: state.time,
-        building: state.building,
-        room: match[1],
+        location: { building: state.building, room },
       };
       if (state.sectionId === "extra") {
         return {
@@ -1883,7 +1944,7 @@ function processLine(
   return null;
 }
 
-const path = ".cache/SA04/_all/9.html";
+const path = ".cache/SA04/_all/10.html";
 const lines = (await readFile(path, "utf-8")).split(/\r?\n/).slice(1);
 let state: State = initState;
 for (const [i, line] of lines.entries()) {
