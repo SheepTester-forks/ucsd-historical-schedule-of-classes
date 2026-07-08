@@ -48,8 +48,10 @@ type Course = {
     end: { month: string; date: number };
   } | null;
   resourcesSectionId: number;
-  commonMeeting: UnenrollableMeeting | CancelledUnnrollableMeeting | null;
-  enrollables: (EnrollableMeeting | CancelledEnrollableMeeting)[];
+  commonMeeting: (UnenrollableMeeting | CancelledUnnrollableMeeting) | null;
+  enrollables: ((EnrollableMeeting | CancelledEnrollableMeeting) & {
+    extra: ExtraMeeting | null;
+  })[];
   additionalMeetings: (UnenrollableMeeting | CancelledUnnrollableMeeting)[];
   exams: Exam[];
 };
@@ -68,26 +70,31 @@ type EnrollmentInfo = {
         limit: number;
       };
 };
+type MeetingLocation = {
+  // TODO: narrow
+  days: string;
+  time: string;
+  building: string;
+  room: string;
+};
 type MeetingBase = {
   cancelled: false;
   isExam: false;
   instructionType: keyof typeof instructionTypes;
   sectionCode: string;
-  location: {
-    // TODO: narrow
-    days: string;
-    time: string;
-    building: string;
-    room: string;
-  } | null;
+  location: MeetingLocation | null;
   instructors: { name: string; encryptedPid: Buffer }[];
   comment: string;
+};
+type ExtraMeeting = {
+  location: MeetingLocation;
 };
 type EnrollableMeeting = MeetingBase & {
   enrollable: EnrollmentInfo;
 };
 type UnenrollableMeeting = MeetingBase & {
   enrollable: null;
+  isExtra: boolean;
 };
 type Meeting = EnrollableMeeting | UnenrollableMeeting;
 type CancelledMeetingBase = {
@@ -128,6 +135,23 @@ const instructionTypes = {
   IN: "Independent Study",
   SE: "Seminar",
 };
+function getInstructionType(
+  type: string,
+  title: string,
+): keyof typeof instructionTypes | null {
+  if (
+    type === "LA" ||
+    type === "LE" ||
+    type === "IN" ||
+    type === "DI" ||
+    type === "SE"
+  ) {
+    if (instructionTypes[type] === title) {
+      return type;
+    }
+  }
+  return null;
+}
 const examTypes = {
   MI: "Midterm",
   FI: "Final",
@@ -136,6 +160,24 @@ const examTypes = {
   RE: "Review Session",
   OT: "Other Additional Meeting",
 };
+function getExamType(
+  type: string,
+  title: string,
+): keyof typeof examTypes | null {
+  if (
+    type === "FI" ||
+    type === "MI" ||
+    type === "MU" ||
+    type === "PB" ||
+    type === "RE" ||
+    type === "OT"
+  ) {
+    if (examTypes[type] === title) {
+      return type;
+    }
+  }
+  return null;
+}
 
 type State = (
   | {
@@ -366,7 +408,7 @@ type State = (
       department: Department;
       subject: Subject;
       course: Course;
-      sectionId: number | null;
+      sectionId: number | null | "extra";
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
     }
   | {
@@ -374,7 +416,7 @@ type State = (
       department: Department;
       subject: Subject;
       course: Course;
-      sectionId: number | null;
+      sectionId: number | null | "extra";
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
       days: string;
     }
@@ -393,7 +435,7 @@ type State = (
       department: Department;
       subject: Subject;
       course: Course;
-      sectionId: number | null;
+      sectionId: number | null | "extra";
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
       days: string;
       time: string;
@@ -489,7 +531,10 @@ type State = (
       department: Department;
       subject: Subject;
       course: Course;
-      exam: Pick<Exam, "examType">;
+      // at this point it is unclear to the state machine whether this is an
+      // extra meeting time for a normal meeting or an actual exam
+      instructionType: keyof typeof instructionTypes | null;
+      examType: keyof typeof examTypes | null;
     }
   | {
       type: "exam-days-next" | "exam-time-next";
@@ -517,7 +562,7 @@ type State = (
       department: Department;
       subject: Subject;
       course: Course;
-      exam: Pick<Exam, "examType" | "date" | "time" | "building" | "room">;
+      exam: Exam | UnenrollableMeeting;
     }
   | { type: "done" }
 ) & {
@@ -530,6 +575,82 @@ const initState: State = {
   department: null,
   departments: [],
 };
+
+function addToMeeting(
+  course: Course,
+  prevMeeting:
+    | Meeting
+    | CancelledEnrollableMeeting
+    | Exam
+    | CancelledUnnrollableMeeting,
+): Course | null {
+  // TODO: may also want to assert based on section code format (e.g. A01 vs
+  // 001)
+  if (prevMeeting.isExam) {
+    return prevMeeting
+      ? {
+          ...course,
+          exams: [...course.exams, prevMeeting],
+        }
+      : course;
+  } else if (
+    !prevMeeting.cancelled &&
+    prevMeeting.enrollable === null &&
+    prevMeeting.isExtra
+  ) {
+    // assume location of extra meeting will never be TBA
+    if (course.additionalMeetings.length === 0 && prevMeeting.location) {
+      const lastEnrollable = course.enrollables.at(-1);
+      if (lastEnrollable) {
+        if (
+          lastEnrollable.extra === null &&
+          lastEnrollable.instructionType === prevMeeting.instructionType &&
+          lastEnrollable.sectionCode === prevMeeting.sectionCode &&
+          lastEnrollable.comment === prevMeeting.comment
+        ) {
+          return {
+            ...course,
+            enrollables: course.enrollables.with(-1, {
+              ...lastEnrollable,
+              extra: { location: prevMeeting.location },
+            }),
+          };
+        }
+      }
+    }
+  } else if (course.exams.length === 0) {
+    if (prevMeeting.enrollable !== null) {
+      if (course.additionalMeetings.length === 0) {
+        // once we have started an additional meeting, the remaining ones must
+        // also be unenrollable
+        return prevMeeting
+          ? {
+              ...course,
+              enrollables: [
+                ...course.enrollables,
+                { ...prevMeeting, extra: null },
+              ],
+            }
+          : course;
+      }
+    } else if (!course.commonMeeting) {
+      // first meeting (A00) can be unenrollable yet followed by enrollable
+      // meetings
+      // idk if the first meeting can be cancelled
+      // actually yes they can (SA04 page 9 CSE 132A)
+      return prevMeeting ? { ...course, commonMeeting: prevMeeting } : course;
+    } else if (course.enrollables.length > 0) {
+      // there must be at least one enrollable
+      return prevMeeting
+        ? {
+            ...course,
+            additionalMeetings: [...course.additionalMeetings, prevMeeting],
+          }
+        : course;
+    }
+  }
+  return null;
+}
 
 function processLine(
   state: State,
@@ -1192,62 +1313,12 @@ function processLine(
         expected: null,
       };
     }
-    const addToMeeting = (
-      prevMeeting:
-        | Meeting
-        | CancelledEnrollableMeeting
-        | Exam
-        | CancelledUnnrollableMeeting,
-    ): Course | null => {
-      // TODO: may also want to assert based on section code format (e.g. A01 vs
-      // 001)
-      if (prevMeeting.isExam) {
-        return prevMeeting
-          ? {
-              ...state.course,
-              exams: [...state.course.exams, prevMeeting],
-            }
-          : state.course;
-      } else if (state.course.exams.length === 0) {
-        if (prevMeeting.enrollable !== null) {
-          if (state.course.additionalMeetings.length === 0) {
-            // once we have started an additional meeting, the remaining ones must
-            // also be unenrollable
-            return prevMeeting
-              ? {
-                  ...state.course,
-                  enrollables: [...state.course.enrollables, prevMeeting],
-                }
-              : state.course;
-          }
-        } else if (!state.course.commonMeeting) {
-          // first meeting (A00) can be unenrollable yet followed by enrollable
-          // meetings
-          // idk if the first meeting can be cancelled
-          // actually yes they can (SA04 page 9 CSE 132A)
-          return prevMeeting
-            ? { ...state.course, commonMeeting: prevMeeting }
-            : state.course;
-        } else {
-          return prevMeeting
-            ? {
-                ...state.course,
-                additionalMeetings: [
-                  ...state.course.additionalMeetings,
-                  prevMeeting,
-                ],
-              }
-            : state.course;
-        }
-      }
-      return null;
-    };
     if (line === '<tr class="sectxt">') {
       if (!state.prevMeeting) {
         // first meeting
         return { ...state, type: "borderless-brdr-next" };
       }
-      const newCourse = addToMeeting(state.prevMeeting);
+      const newCourse = addToMeeting(state.course, state.prevMeeting);
       if (newCourse) {
         return { ...state, type: "borderless-brdr-next", course: newCourse };
       }
@@ -1260,7 +1331,7 @@ function processLine(
       };
     }
     if (line === "" && state.prevMeeting) {
-      const newCourse = addToMeeting(state.prevMeeting);
+      const newCourse = addToMeeting(state.course, state.prevMeeting);
       if (newCourse) {
         return {
           type: "done",
@@ -1321,21 +1392,13 @@ function processLine(
       /^<td class="brdr"><span id="insTyp" title="([A-Za-z ]+)">([A-Z]{2})<\/span><\/td>$/,
     );
     if (match) {
-      const type = match[2];
-      if (
-        type === "LA" ||
-        type === "LE" ||
-        type === "IN" ||
-        type === "DI" ||
-        type === "SE"
-      ) {
-        if (match[1] === instructionTypes[type]) {
-          return {
-            ...state,
-            type: "section-code-next",
-            meeting: { instructionType: type },
-          };
-        }
+      const type = getInstructionType(match[2], match[1]);
+      if (type) {
+        return {
+          ...state,
+          type: "section-code-next",
+          meeting: { instructionType: type },
+        };
       }
     }
   }
@@ -1352,7 +1415,9 @@ function processLine(
   if (state.type === "days-or-tba-next") {
     if (
       line ===
-      '<td  class="brdr" colspan="8" align="center"><span class="ertext">Cancelled</span></td>'
+        '<td  class="brdr" colspan="8" align="center"><span class="ertext">Cancelled</span></td>' &&
+      // let's just assume extra meeting times cannot be cancelled
+      state.sectionId !== "extra"
     ) {
       return {
         ...state,
@@ -1366,10 +1431,14 @@ function processLine(
         },
       };
     }
-    if (line === '<td class="brdr" colspan="4" align="center">TBA</td>') {
+    if (
+      line === '<td class="brdr" colspan="4" align="center">TBA</td>' &&
+      state.sectionId !== "extra"
+    ) {
       return {
         ...state,
         type: "instructor-begin-next",
+        sectionId: state.sectionId,
         meeting: { ...state.meeting, location: null },
       };
     }
@@ -1389,7 +1458,21 @@ function processLine(
       /^<td class="brdr">(1?\d:[035]0[ap]-1?\d:[245][09][ap])<\/td>$/,
     );
     if (match) {
-      return { ...state, type: "building-start-next", time: match[1] };
+      if (state.sectionId === "extra") {
+        return {
+          ...state,
+          type: "building-code-next",
+          building: "unused",
+          time: match[1],
+        };
+      } else {
+        return {
+          ...state,
+          type: "building-start-next",
+          sectionId: state.sectionId,
+          time: match[1],
+        };
+      }
     }
   }
   if (state.type === "building-start-next" && line === '<td class="brdr">') {
@@ -1404,27 +1487,52 @@ function processLine(
     }
   }
   if (state.type === "building-code-next") {
-    const match = line.match(/^([A-Z]{3}[A-Z ]{2})<\/a><\/td>$/);
-    if (match && match[1].trimEnd() === state.building) {
-      return { ...state, type: "room-next" };
+    const match = line.match(
+      /^(<td class="brdr">)?([A-Z]{3}[A-Z ]{2})(<\/a>)?<\/td>$/,
+    );
+    if (match) {
+      const building = match[2].trimEnd();
+      if (
+        (state.sectionId === "extra" || building === state.building) &&
+        ((state.sectionId === "extra") === !!match[1] &&
+          state.sectionId !== "extra") === !!match[3]
+      ) {
+        return { ...state, type: "room-next", building };
+      }
     }
   }
   if (state.type === "room-next") {
     const match = line.match(/^<td class="brdr">([A-Z\d][A-Z\d ]{4})<\/td>$/);
     if (match) {
-      return {
-        ...state,
-        type: "instructor-begin-next",
-        meeting: {
-          ...state.meeting,
-          location: {
-            days: state.days,
-            time: state.time,
-            building: state.building,
-            room: match[1],
-          },
-        },
+      const location = {
+        days: state.days,
+        time: state.time,
+        building: state.building,
+        room: match[1],
       };
+      if (state.sectionId === "extra") {
+        return {
+          ...state,
+          type: "exam-brdr2-begin-next",
+          exam: {
+            ...state.meeting,
+            location,
+            cancelled: false,
+            isExam: false,
+            instructors: [],
+            comment: "",
+            enrollable: null,
+            isExtra: true,
+          },
+        };
+      } else {
+        return {
+          ...state,
+          type: "instructor-begin-next",
+          sectionId: state.sectionId,
+          meeting: { ...state.meeting, location },
+        };
+      }
     }
   }
   if (state.type === "instructor-begin-next" && line === '<td class="brdr">') {
@@ -1466,6 +1574,7 @@ function processLine(
               cancelled: false,
               isExam: false,
               comment: "",
+              isExtra: false,
             },
           };
         }
@@ -1600,25 +1709,30 @@ function processLine(
   if (state.type === "white-meeting-start-or-meeting-comment") {
     if (!state.meeting.comment) {
       if (
-        line === '<td  class="brdr" colspan="2"></td>' &&
-        !state.meeting.isExam
+        line ===
+        (state.meeting.isExam ||
+        (!state.meeting.cancelled &&
+          !state.meeting.enrollable &&
+          state.meeting.isExtra)
+          ? '<td colspan="2"></td>'
+          : '<td  class="brdr" colspan="2"></td>')
       ) {
-        return { ...state, type: "meeting-comment-begin-next" };
-      }
-      if (line === '<td colspan="2"></td>' && state.meeting.isExam) {
         return { ...state, type: "meeting-comment-begin-next" };
       }
     }
     if (line === '<td  class="brdr" colspan="2" border="0"></td>') {
-      // final exam: has date instead of section code, plus different meeting
-      // types i presume
-      return {
-        type: "exam-brdr-begin-next",
-        departments: state.departments,
-        department: state.department,
-        subject: state.subject,
-        course: state.course,
-      };
+      const newCourse = addToMeeting(state.course, state.meeting);
+      if (newCourse) {
+        // final exam: has date instead of section code, plus different meeting
+        // types i presume
+        return {
+          type: "exam-brdr-begin-next",
+          departments: state.departments,
+          department: state.department,
+          subject: state.subject,
+          course: newCourse,
+        };
+      }
     }
   }
   if (state.type === "exam-brdr-begin-next" && line === '<td class="brdr">') {
@@ -1632,30 +1746,38 @@ function processLine(
       /^<td class="brdr"><span id="insTyp" title="([A-Za-z- ]+)">([A-Z]{2})<\/span><\/td>$/,
     );
     if (match) {
-      const type = match[2];
-      if (
-        type === "FI" ||
-        type === "MI" ||
-        type === "MU" ||
-        type === "PB" ||
-        type === "RE" ||
-        type === "OT"
-      ) {
-        if (examTypes[type] === match[1]) {
-          return { ...state, type: "exam-date-next", exam: { examType: type } };
-        }
-      }
+      return {
+        ...state,
+        type: "exam-date-next",
+        examType: getExamType(match[2], match[1]),
+        instructionType: getInstructionType(match[2], match[1]),
+      };
     }
   }
   if (state.type === "exam-date-next") {
     const match = line.match(
       /^<td class="brdr">([01]\d)\/([0-3]\d)\/(\d{4})<\/td>$/,
     );
-    if (match && +match[3] === options.termYear) {
+    if (match && +match[3] === options.termYear && state.examType) {
       return {
         ...state,
         type: "exam-days-next",
-        exam: { ...state.exam, date: { month: +match[1], date: +match[2] } },
+        exam: {
+          examType: state.examType,
+          date: { month: +match[1], date: +match[2] },
+        },
+      };
+    }
+    const matchSecCode = line.match(/^<td class="brdr">([A-Z]\d\d)<\/td>$/);
+    if (matchSecCode && state.instructionType) {
+      return {
+        ...state,
+        type: "days-or-tba-next",
+        meeting: {
+          instructionType: state.instructionType,
+          sectionCode: matchSecCode[1],
+        },
+        sectionId: "extra",
       };
     }
   }
@@ -1698,7 +1820,13 @@ function processLine(
       return {
         ...state,
         type: "exam-brdr2-begin-next",
-        exam: { ...state.exam, room: match[1].trimEnd() },
+        exam: {
+          ...state.exam,
+          room: match[1].trimEnd(),
+          cancelled: false,
+          isExam: true,
+          comment: "",
+        },
       };
     }
   }
@@ -1712,15 +1840,16 @@ function processLine(
     state.type === "exam-brdr3-next" &&
     line === '<td  class="brdr" colspan="3">&nbsp;</td>'
   ) {
-    return {
-      ...state,
-      type: "meeting-row-end-next",
-      meeting: { ...state.exam, cancelled: false, isExam: true, comment: "" },
-    };
+    return { ...state, type: "meeting-row-end-next", meeting: state.exam };
   }
   if (
     state.type === "meeting-comment-begin-next" &&
-    (line === '<td colspan="11">' || line === '<td  class="brdr" colspan="11">')
+    (state.meeting.isExam ||
+    (!state.meeting.cancelled &&
+      !state.meeting.enrollable &&
+      state.meeting.isExtra)
+      ? '<td colspan="11"></td>'
+      : '<td  class="brdr" colspan="11"></td>')
   ) {
     return { ...state, type: "meeting-comment-next" };
   }
