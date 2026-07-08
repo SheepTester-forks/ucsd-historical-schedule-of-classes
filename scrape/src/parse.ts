@@ -43,7 +43,7 @@ type Course = {
   resourcesSectionId: number;
   commonMeeting: UnenrollableMeeting | null;
   enrollables: (EnrollableMeeting | CancelledEnrollableMeeting)[];
-  additionalMeetings: UnenrollableMeeting[];
+  additionalMeetings: (UnenrollableMeeting | CancelledUnnrollableMeeting)[];
   exams: Exam[];
 };
 type EnrollmentInfo = {
@@ -83,13 +83,18 @@ type UnenrollableMeeting = MeetingBase & {
   enrollable: null;
 };
 type Meeting = EnrollableMeeting | UnenrollableMeeting;
-type CancelledEnrollableMeeting = {
+type CancelledMeetingBase = {
   cancelled: true;
   isExam: false;
-  sectionId: number;
   instructionType: keyof typeof instructionTypes;
   sectionCode: string;
   comment: string;
+};
+type CancelledEnrollableMeeting = CancelledMeetingBase & {
+  enrollable: { sectionId: number };
+};
+type CancelledUnnrollableMeeting = CancelledMeetingBase & {
+  enrollable: null;
 };
 type Exam = {
   cancelled: false;
@@ -112,6 +117,7 @@ const instructionTypes = {
 const examTypes = {
   MI: "Midterm",
   FI: "Final",
+  MU: "Make-up Session",
 };
 
 type State = (
@@ -257,7 +263,12 @@ type State = (
       department: Department;
       subject: Subject;
       course: Course;
-      prevMeeting: Meeting | CancelledEnrollableMeeting | Exam | null;
+      prevMeeting:
+        | Meeting
+        | CancelledEnrollableMeeting
+        | Exam
+        | CancelledUnnrollableMeeting
+        | null;
     }
   | {
       type:
@@ -275,6 +286,7 @@ type State = (
       subject: Subject;
       course: Course;
       sectionId: number | null;
+      expectCancelled: boolean;
     }
   | {
       type: "section-code-next";
@@ -283,6 +295,7 @@ type State = (
       course: Course;
       sectionId: number | null;
       meeting: Pick<Meeting, "instructionType">;
+      expectCancelled: boolean;
     }
   | {
       type: "days-or-tba-next";
@@ -395,7 +408,11 @@ type State = (
       department: Department;
       subject: Subject;
       course: Course;
-      meeting: Meeting | CancelledEnrollableMeeting | Exam;
+      meeting:
+        | Meeting
+        | CancelledEnrollableMeeting
+        | Exam
+        | CancelledUnnrollableMeeting;
     }
   | {
       type: "exam-brdr-begin-next" | "exam-brdr-end-next" | "exam-type-next";
@@ -875,7 +892,7 @@ function processLine(
         };
       }
     }
-    const topicMatch = line.match(/^([A-Za-z ]+)$/);
+    const topicMatch = line.replaceAll("&amp;", "&").match(/^([A-Za-z& ]+)$/);
     if (topicMatch && state.course.topic === null) {
       return { ...state, course: { ...state.course, topic: topicMatch[1] } };
     }
@@ -963,7 +980,11 @@ function processLine(
       };
     }
     const addToMeeting = (
-      prevMeeting: Meeting | CancelledEnrollableMeeting | Exam,
+      prevMeeting:
+        | Meeting
+        | CancelledEnrollableMeeting
+        | Exam
+        | CancelledUnnrollableMeeting,
     ): Course | null => {
       // TODO: may also want to assert based on section code format (e.g. A01 vs
       // 001)
@@ -975,7 +996,7 @@ function processLine(
             }
           : state.course;
       } else if (state.course.exams.length === 0) {
-        if (prevMeeting.cancelled || prevMeeting.enrollable !== null) {
+        if (prevMeeting.enrollable !== null) {
           if (state.course.additionalMeetings.length === 0) {
             // once we have started an additional meeting, the remaining ones must
             // also be unenrollable
@@ -989,12 +1010,15 @@ function processLine(
         } else if (!state.course.commonMeeting) {
           // first meeting (A00) can be unenrollable yet followed by enrollable
           // meetings
-          return prevMeeting
-            ? {
-                ...state.course,
-                commonMeeting: prevMeeting,
-              }
-            : state.course;
+          // idk if the first meeting can be cancelled
+          if (!prevMeeting.cancelled) {
+            return prevMeeting
+              ? {
+                  ...state.course,
+                  commonMeeting: prevMeeting,
+                }
+              : state.course;
+          }
         } else {
           return prevMeeting
             ? {
@@ -1068,6 +1092,7 @@ function processLine(
       ...state,
       type: "brdr-section-id-end-next",
       sectionId: null,
+      expectCancelled: false,
     };
   }
   if (state.type === "brdr-section-id-end-next") {
@@ -1077,6 +1102,9 @@ function processLine(
     }
     if (line === "</td>") {
       return { ...state, type: "instruction-type-next" };
+    }
+    if (line === "&nbsp;" && !state.expectCancelled) {
+      return { ...state, expectCancelled: true };
     }
   }
   if (state.type === "instruction-type-next") {
@@ -1115,8 +1143,7 @@ function processLine(
   if (state.type === "days-or-tba-next") {
     if (
       line ===
-        '<td  class="brdr" colspan="8" align="center"><span class="ertext">Cancelled</span></td>' &&
-      state.sectionId !== null
+      '<td  class="brdr" colspan="8" align="center"><span class="ertext">Cancelled</span></td>'
     ) {
       return {
         ...state,
@@ -1125,7 +1152,7 @@ function processLine(
           ...state.meeting,
           cancelled: true,
           isExam: false,
-          sectionId: state.sectionId,
+          enrollable: state.sectionId ? { sectionId: state.sectionId } : null,
           comment: "",
         },
       };
@@ -1383,11 +1410,11 @@ function processLine(
   }
   if (state.type === "exam-type-next") {
     const match = line.match(
-      /^<td class="brdr"><span id="insTyp" title="([A-Za-z]+)">([A-Z]{2})<\/span><\/td>$/,
+      /^<td class="brdr"><span id="insTyp" title="([A-Za-z- ]+)">([A-Z]{2})<\/span><\/td>$/,
     );
     if (match) {
       const type = match[2];
-      if (type === "FI" || type === "MI") {
+      if (type === "FI" || type === "MI" || type === "MU") {
         if (examTypes[type] === match[1]) {
           return { ...state, type: "exam-date-next", exam: { examType: type } };
         }
@@ -1510,9 +1537,11 @@ for (const [i, line] of lines.entries()) {
     quarter: "SA",
   });
   if (!next) {
-    console.error("Unexpected line for state");
     console.error(state);
-    console.error(`${path}:${i + 2}: ${line}`);
+    console.error(
+      `${path}:${i + 2}: unexpected line for state '${state.type}'`,
+    );
+    console.error(line);
     process.exit(1);
   }
   state = next;
