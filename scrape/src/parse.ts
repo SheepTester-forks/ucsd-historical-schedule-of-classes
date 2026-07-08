@@ -31,9 +31,10 @@ type Subject = {
 type Course = {
   restriction: string | null;
   number: string;
-  catalog: { dept: string; hash: string };
+  catalog: { dept: string; hash: string } | null;
   title: string;
-  units: { start: number; end: { step: number; end: number } | null };
+  units: { start: number; end: { step: number | null; end: number } | null };
+  topic: string | null;
   summerRange: {
     term: 1 | 2 | "special" | "med" | null;
     start: { month: string; date: number };
@@ -199,12 +200,21 @@ type State = (
       course: Pick<Course, "restriction" | "number" | "catalog" | "title">;
     }
   | {
-      type: "unit-end-next" | "unit-end-br-next" | "unit-end-summer-next";
+      type: "unit-end-next" | "unit-end-br-next";
       department: Department;
       subject: Subject;
       course: Pick<
         Course,
         "restriction" | "number" | "catalog" | "title" | "units"
+      >;
+    }
+  | {
+      type: "unit-end-summer-next";
+      department: Department;
+      subject: Subject;
+      course: Pick<
+        Course,
+        "restriction" | "number" | "catalog" | "title" | "units" | "topic"
       >;
     }
   | {
@@ -217,7 +227,13 @@ type State = (
       subject: Subject;
       course: Pick<
         Course,
-        "restriction" | "number" | "catalog" | "title" | "units" | "summerRange"
+        | "restriction"
+        | "number"
+        | "catalog"
+        | "title"
+        | "units"
+        | "topic"
+        | "summerRange"
       >;
     }
   | {
@@ -231,6 +247,7 @@ type State = (
         | "catalog"
         | "title"
         | "units"
+        | "topic"
         | "summerRange"
         | "resourcesSectionId"
       >;
@@ -324,6 +341,7 @@ type State = (
         "instructionType" | "sectionCode" | "location" | "instructor"
       >;
       shouldSeeBr: boolean;
+      sawStaff: boolean;
     }
   | {
       type: "non-enrollable-skip";
@@ -735,20 +753,23 @@ function processLine(
   }
   if (state.type === "course-name-next") {
     const match = line
+      .replaceAll("&#039;", "'")
       .replaceAll("&amp;", "&")
       .match(
-        /^<a href="javascript:openNewWindow\('http:\/\/www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2})'\)"><span class="boldtxt">([A-Za-z& ]{30})<\/span> <\/a>$/,
+        /^<a href="javascript:openNewWindow\('(?:http:\/\/registrar\.ucsd\.edu\/studentlink\/cnd\.html|http:\/\/www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2}))'\)"><span class="boldtxt">([A-Za-z&'/ ]{30})<\/span> <\/a>$/,
       );
     if (match) {
-      return {
-        ...state,
-        type: "unit-start-next",
-        course: {
-          ...state.course,
-          catalog: { dept: match[1], hash: match[2] },
-          title: match[3].trim(),
-        },
-      };
+      if (!!match[1] === !!match[2]) {
+        return {
+          ...state,
+          type: "unit-start-next",
+          course: {
+            ...state.course,
+            catalog: match[1] ? { dept: match[1], hash: match[2] } : null,
+            title: match[3].trim(),
+          },
+        };
+      }
     }
   }
   if (state.type === "unit-start-next") {
@@ -775,18 +796,35 @@ function processLine(
         },
       };
     }
+    const matchNoStep = line.match(/^-(1?\d)$/);
+    if (matchNoStep && !state.course.units.end) {
+      return {
+        ...state,
+        course: {
+          ...state.course,
+          units: {
+            start: state.course.units.start,
+            end: { step: null, end: +matchNoStep[1] },
+          },
+        },
+      };
+    }
     if (line === "Units)") {
       return { ...state, type: "unit-end-br-next" };
     }
   }
   if (state.type === "unit-end-br-next" && line === "<br>") {
     if (isSummer) {
-      return { ...state, type: "unit-end-summer-next" };
+      return {
+        ...state,
+        type: "unit-end-summer-next",
+        course: { ...state.course, topic: null },
+      };
     } else {
       return {
         ...state,
         type: "course-header-end-next",
-        course: { ...state.course, summerRange: null },
+        course: { ...state.course, topic: null, summerRange: null },
       };
     }
   }
@@ -836,6 +874,10 @@ function processLine(
           },
         };
       }
+    }
+    const topicMatch = line.match(/^([A-Za-z ]+)$/);
+    if (topicMatch && state.course.topic === null) {
+      return { ...state, course: { ...state.course, topic: topicMatch[1] } };
     }
   }
   if (state.type === "course-header-end-next" && line === "</td>") {
@@ -1154,6 +1196,7 @@ function processLine(
       ...state,
       type: "instructor-end-next",
       shouldSeeBr: false,
+      sawStaff: false,
       meeting: { ...state.meeting, instructor: null },
     };
   }
@@ -1185,10 +1228,17 @@ function processLine(
           };
         }
       }
+      if (
+        line === "Staff" &&
+        !state.sawStaff &&
+        state.meeting.instructor === null
+      ) {
+        return { ...state, shouldSeeBr: true, sawStaff: true };
+      }
       const match = line.match(
         /^<a href="#!" onclick="javascript:sendMail\('\/scheduleOfClasses\/scheduleOfClassesFacultyEmailResult\.htm\?pid=([A-Za-z\d+/]+==)'\)">([A-Za-z,. ]{35})<\/a>$/,
       );
-      if (match) {
+      if (match && !state.sawStaff && !state.meeting.instructor) {
         return {
           ...state,
           shouldSeeBr: true,
@@ -1451,9 +1501,8 @@ function processLine(
   return null;
 }
 
-const lines = (await readFile(".cache/SA04/_all/39.html", "utf-8"))
-  .split(/\r?\n/)
-  .slice(1);
+const path = ".cache/SA04/_all/1.html";
+const lines = (await readFile(path, "utf-8")).split(/\r?\n/).slice(1);
 let state: State = initState;
 for (const [i, line] of lines.entries()) {
   const next = processLine(state, line, {
@@ -1463,7 +1512,7 @@ for (const [i, line] of lines.entries()) {
   if (!next) {
     console.error("Unexpected line for state");
     console.error(state);
-    console.error(`${i + 2}: ${line}`);
+    console.error(`${path}:${i + 2}: ${line}`);
     process.exit(1);
   }
   state = next;
