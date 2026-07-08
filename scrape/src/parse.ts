@@ -40,10 +40,29 @@ type Course = {
     end: { month: string; date: number };
   } | null;
   resourcesSectionId: number;
-  meetings: (Meeting | CancelledMeeting)[];
+  commonMeeting: UnenrollableMeeting | null;
+  enrollables: (EnrollableMeeting | CancelledEnrollableMeeting)[];
+  additionalMeetings: UnenrollableMeeting[];
+  exams: Exam[];
 };
-type Meeting = {
+type EnrollmentInfo = {
+  sectionId: number;
+  limit:
+    | {
+        type: "waitlist";
+        waitlist: number;
+        limit: number;
+      }
+    | { type: "unlimited" }
+    | {
+        type: "available";
+        available: number;
+        limit: number;
+      };
+};
+type MeetingBase = {
   cancelled: false;
+  isExam: false;
   instructionType: keyof typeof instructionTypes;
   sectionCode: string;
   location: {
@@ -54,28 +73,31 @@ type Meeting = {
     room: string;
   } | null;
   instructor: { name: string; encryptedPid: Buffer } | null;
-  enrollable: {
-    sectionId: number;
-    limit:
-      | {
-          type: "waitlist";
-          waitlist: number;
-          limit: number;
-        }
-      | { type: "unlimited" }
-      | {
-          type: "available";
-          available: number;
-          limit: number;
-        };
-  } | null;
   comment: string;
 };
-type CancelledMeeting = {
+type EnrollableMeeting = MeetingBase & {
+  enrollable: EnrollmentInfo;
+};
+type UnenrollableMeeting = MeetingBase & {
+  enrollable: null;
+};
+type Meeting = EnrollableMeeting | UnenrollableMeeting;
+type CancelledEnrollableMeeting = {
   cancelled: true;
+  isExam: false;
   sectionId: number;
   instructionType: keyof typeof instructionTypes;
   sectionCode: string;
+  comment: string;
+};
+type Exam = {
+  cancelled: false;
+  isExam: true;
+  examType: keyof typeof examTypes;
+  date: { month: number; date: number };
+  time: string;
+  building: string;
+  room: string;
   comment: string;
 };
 
@@ -85,6 +107,10 @@ const instructionTypes = {
   LA: "Laboratory",
   IN: "Independent Study",
   SE: "Seminar",
+};
+const examTypes = {
+  MI: "Midterm",
+  FI: "Final",
 };
 
 type State = (
@@ -214,7 +240,7 @@ type State = (
       department: Department;
       subject: Subject;
       course: Course;
-      prevMeeting: Meeting | CancelledMeeting | null;
+      prevMeeting: Meeting | CancelledEnrollableMeeting | Exam | null;
     }
   | {
       type:
@@ -351,7 +377,48 @@ type State = (
       department: Department;
       subject: Subject;
       course: Course;
-      meeting: Meeting | CancelledMeeting;
+      meeting: Meeting | CancelledEnrollableMeeting | Exam;
+    }
+  | {
+      type: "exam-brdr-begin-next" | "exam-brdr-end-next" | "exam-type-next";
+      department: Department;
+      subject: Subject;
+      course: Course;
+    }
+  | {
+      type: "exam-date-next";
+      department: Department;
+      subject: Subject;
+      course: Course;
+      exam: Pick<Exam, "examType">;
+    }
+  | {
+      type: "exam-days-next" | "exam-time-next";
+      department: Department;
+      subject: Subject;
+      course: Course;
+      exam: Pick<Exam, "examType" | "date">;
+    }
+  | {
+      type: "exam-building-next";
+      department: Department;
+      subject: Subject;
+      course: Course;
+      exam: Pick<Exam, "examType" | "date" | "time">;
+    }
+  | {
+      type: "exam-room-next";
+      department: Department;
+      subject: Subject;
+      course: Course;
+      exam: Pick<Exam, "examType" | "date" | "time" | "building">;
+    }
+  | {
+      type: "exam-brdr2-begin-next" | "exam-brdr2-end-next" | "exam-brdr3-next";
+      department: Department;
+      subject: Subject;
+      course: Course;
+      exam: Pick<Exam, "examType" | "date" | "time" | "building" | "room">;
     }
   | { type: "done" }
 ) & {
@@ -389,7 +456,7 @@ function processLine(
       const matchSubject = line
         .replaceAll("&amp;", "&")
         .match(
-          /^<h2>  <span class="centeralign">([A-Za-z&/ ]{30}) \(([A-Z ]{5})\)<\/span> <\/h2>$/,
+          /^<h2>  <span class="centeralign">([A-Za-z&/, ]{30}) \(([A-Z ]{5})\)<\/span> <\/h2>$/,
         );
       if (matchDept) {
         return {
@@ -590,18 +657,6 @@ function processLine(
   if (state.type === "after-course-tr") {
     if (line === "<tr>") {
       return { ...state, type: "start-course-td", canEndSubject: state.canEnd };
-    }
-    if (line === "" && state.canEnd) {
-      return {
-        type: "done",
-        departments: [
-          ...state.departments,
-          {
-            ...state.department,
-            subjects: [...state.department.subjects, state.subject],
-          },
-        ],
-      };
     }
   }
   if (state.type === "start-course-td") {
@@ -840,7 +895,13 @@ function processLine(
       departments: state.departments,
       department: state.department,
       subject: state.subject,
-      course: { ...state.course, meetings: [] },
+      course: {
+        ...state.course,
+        commonMeeting: null,
+        enrollables: [],
+        additionalMeetings: [],
+        exams: [],
+      },
       prevMeeting: null,
     };
   }
@@ -859,17 +920,62 @@ function processLine(
         canEndSubject: true,
       };
     }
-    if (line === '<tr class="sectxt">') {
-      return {
-        ...state,
-        type: "borderless-brdr-next",
-        course: state.prevMeeting
+    const addToMeeting = (
+      prevMeeting: Meeting | CancelledEnrollableMeeting | Exam,
+    ): Course | null => {
+      // TODO: may also want to assert based on section code format (e.g. A01 vs
+      // 001)
+      if (prevMeeting.isExam) {
+        return prevMeeting
           ? {
               ...state.course,
-              meetings: [...state.course.meetings, state.prevMeeting],
+              exams: [...state.course.exams, prevMeeting],
             }
-          : state.course,
-      };
+          : state.course;
+      } else if (state.course.exams.length === 0) {
+        if (prevMeeting.cancelled || prevMeeting.enrollable !== null) {
+          if (state.course.additionalMeetings.length === 0) {
+            // once we have started an additional meeting, the remaining ones must
+            // also be unenrollable
+            return prevMeeting
+              ? {
+                  ...state.course,
+                  enrollables: [...state.course.enrollables, prevMeeting],
+                }
+              : state.course;
+          }
+        } else if (!state.course.commonMeeting) {
+          // first meeting (A00) can be unenrollable yet followed by enrollable
+          // meetings
+          return prevMeeting
+            ? {
+                ...state.course,
+                commonMeeting: prevMeeting,
+              }
+            : state.course;
+        } else {
+          return prevMeeting
+            ? {
+                ...state.course,
+                additionalMeetings: [
+                  ...state.course.additionalMeetings,
+                  prevMeeting,
+                ],
+              }
+            : state.course;
+        }
+      }
+      return null;
+    };
+    if (line === '<tr class="sectxt">') {
+      if (!state.prevMeeting) {
+        // first meeting
+        return { ...state, type: "borderless-brdr-next" };
+      }
+      const newCourse = addToMeeting(state.prevMeeting);
+      if (newCourse) {
+        return { ...state, type: "borderless-brdr-next", course: newCourse };
+      }
     }
     if (line === '<tr class="nonenrtxt">' && state.prevMeeting) {
       return {
@@ -877,6 +983,27 @@ function processLine(
         type: "white-meeting-start-or-meeting-comment",
         meeting: state.prevMeeting,
       };
+    }
+    if (line === "" && state.prevMeeting) {
+      const newCourse = addToMeeting(state.prevMeeting);
+      if (newCourse) {
+        return {
+          type: "done",
+          departments: [
+            ...state.departments,
+            {
+              ...state.department,
+              subjects: [
+                ...state.department.subjects,
+                {
+                  ...state.subject,
+                  courses: [...state.subject.courses, newCourse],
+                },
+              ],
+            },
+          ],
+        };
+      }
     }
   }
   if (
@@ -955,6 +1082,7 @@ function processLine(
         meeting: {
           ...state.meeting,
           cancelled: true,
+          isExam: false,
           sectionId: state.sectionId,
           comment: "",
         },
@@ -967,9 +1095,15 @@ function processLine(
         meeting: { ...state.meeting, location: null },
       };
     }
-    const match = line.match(/^<td class="brdr">([A-Za-z ]{9})<\/td>$/);
-    if (match) {
-      return { ...state, type: "time-next", days: match[1] };
+    // idk what they internally use for sunday but i do know they use R for
+    // thursday
+    const match = line
+      .replace("Sun", "X")
+      .replace("Th", "R")
+      .replace("Tu", "T")
+      .match(/^<td class="brdr">(M?T?W?R?F?S?X? {0,6})<\/td>$/);
+    if (match && match[1].length === 7) {
+      return { ...state, type: "time-next", days: match[1].trimEnd() };
     }
   }
   if (state.type === "time-next") {
@@ -992,13 +1126,13 @@ function processLine(
     }
   }
   if (state.type === "building-code-next") {
-    const match = line.match(/^([A-Z]{3}[A-Z ]{0,2})<\/a><\/td>$/);
-    if (match && match[1] === state.building) {
+    const match = line.match(/^([A-Z]{3}[A-Z ]{2})<\/a><\/td>$/);
+    if (match && match[1].trimEnd() === state.building) {
       return { ...state, type: "room-next" };
     }
   }
   if (state.type === "room-next") {
-    const match = line.match(/^<td class="brdr">([A-Z\d ]{5})<\/td>$/);
+    const match = line.match(/^<td class="brdr">([A-Z\d][A-Z\d ]{4})<\/td>$/);
     if (match) {
       return {
         ...state,
@@ -1045,6 +1179,7 @@ function processLine(
               ...state.meeting,
               enrollable: null,
               cancelled: false,
+              isExam: false,
               comment: "",
             },
           };
@@ -1115,6 +1250,7 @@ function processLine(
       meeting: {
         ...state.meeting,
         cancelled: false,
+        isExam: false,
         enrollable: {
           limit: { type: "unlimited" },
           sectionId: state.sectionId,
@@ -1133,6 +1269,7 @@ function processLine(
         meeting: {
           ...state.meeting,
           cancelled: false,
+          isExam: false,
           enrollable: {
             limit: state.isWaitlist
               ? { type: "waitlist", waitlist: state.count, limit }
@@ -1165,17 +1302,118 @@ function processLine(
     return { ...state, type: "meeting-row-end-next" };
   }
   if (state.type === "white-meeting-start-or-meeting-comment") {
-    if (
-      (line === '<td  class="brdr" colspan="2"></td>' ||
-        line === '<td  class="brdr" colspan="2"></td>') &&
-      !state.meeting.comment
-    ) {
-      return { ...state, type: "meeting-comment-begin-next" };
+    if (!state.meeting.comment) {
+      if (
+        line === '<td  class="brdr" colspan="2"></td>' &&
+        !state.meeting.isExam
+      ) {
+        return { ...state, type: "meeting-comment-begin-next" };
+      }
+      if (line === '<td colspan="2"></td>' && state.meeting.isExam) {
+        return { ...state, type: "meeting-comment-begin-next" };
+      }
     }
     if (line === '<td  class="brdr" colspan="2" border="0"></td>') {
       // final exam: has date instead of section code, plus different meeting
-      // types i presume (TODO)
+      // types i presume
+      return {
+        type: "exam-brdr-begin-next",
+        departments: state.departments,
+        department: state.department,
+        subject: state.subject,
+        course: state.course,
+      };
     }
+  }
+  if (state.type === "exam-brdr-begin-next" && line === '<td class="brdr">') {
+    return { ...state, type: "exam-brdr-end-next" };
+  }
+  if (state.type === "exam-brdr-end-next" && line === "</td>") {
+    return { ...state, type: "exam-type-next" };
+  }
+  if (state.type === "exam-type-next") {
+    const match = line.match(
+      /^<td class="brdr"><span id="insTyp" title="([A-Za-z]+)">([A-Z]{2})<\/span><\/td>$/,
+    );
+    if (match) {
+      const type = match[2];
+      if (type === "FI" || type === "MI") {
+        if (examTypes[type] === match[1]) {
+          return { ...state, type: "exam-date-next", exam: { examType: type } };
+        }
+      }
+    }
+  }
+  if (state.type === "exam-date-next") {
+    const match = line.match(
+      /^<td class="brdr">([01]\d)\/([0-3]\d)\/(\d{4})<\/td>$/,
+    );
+    if (match && +match[3] === options.termYear) {
+      return {
+        ...state,
+        type: "exam-days-next",
+        exam: { ...state.exam, date: { month: +match[1], date: +match[2] } },
+      };
+    }
+  }
+  if (state.type === "exam-days-next") {
+    const match = line
+      .replace("Sun", "X")
+      .replace("Th", "R")
+      .replace("Tu", "T")
+      .match(/^<td class="brdr">(M?T?W?R?F?S?X? {0,6})<\/td>$/);
+    // TODO: validate exam date and day match
+    if (match && match[1].length === 7) {
+      return { ...state, type: "exam-time-next" };
+    }
+  }
+  if (state.type === "exam-time-next") {
+    const match = line.match(
+      /^<td class="brdr">(1?\d:[03]0[ap]-1?\d:[35]0[ap])<\/td>$/,
+    );
+    if (match) {
+      return {
+        ...state,
+        type: "exam-building-next",
+        exam: { ...state.exam, time: match[1] },
+      };
+    }
+  }
+  if (state.type === "exam-building-next") {
+    const match = line.match(/^<td class="brdr">([A-Z][A-Z ]{4})<\/td>$/);
+    if (match) {
+      return {
+        ...state,
+        type: "exam-room-next",
+        exam: { ...state.exam, building: match[1].trimEnd() },
+      };
+    }
+  }
+  if (state.type === "exam-room-next") {
+    const match = line.match(/^<td class="brdr">([A-Z\d][A-Z\d ]{4})<\/td>$/);
+    if (match) {
+      return {
+        ...state,
+        type: "exam-brdr2-begin-next",
+        exam: { ...state.exam, room: match[1].trimEnd() },
+      };
+    }
+  }
+  if (state.type === "exam-brdr2-begin-next" && line === '<td class="brdr">') {
+    return { ...state, type: "exam-brdr2-end-next" };
+  }
+  if (state.type === "exam-brdr2-end-next" && line === "</td>") {
+    return { ...state, type: "exam-brdr3-next" };
+  }
+  if (
+    state.type === "exam-brdr3-next" &&
+    line === '<td  class="brdr" colspan="3">&nbsp;</td>'
+  ) {
+    return {
+      ...state,
+      type: "meeting-row-end-next",
+      meeting: { ...state.exam, cancelled: false, isExam: true, comment: "" },
+    };
   }
   if (
     state.type === "meeting-comment-begin-next" &&
@@ -1230,3 +1468,5 @@ for (const [i, line] of lines.entries()) {
   }
   state = next;
 }
+console.dir(state, { depth: null });
+console.error("success!");
