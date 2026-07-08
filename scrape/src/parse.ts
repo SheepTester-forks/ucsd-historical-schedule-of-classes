@@ -676,8 +676,13 @@ function addToMeeting(
       // idk if the first meeting can be cancelled
       // actually yes they can (SA04 page 9 CSE 132A)
       return prevMeeting ? { ...course, commonMeeting: prevMeeting } : course;
-    } else if (course.enrollables.length > 0) {
+    } else {
       // there must be at least one enrollable
+      // nvm, see CSE 12, SA04 page 8. they converted CSE 12 from a DI-based A01
+      // to LE-based A02, resulting in a crazy situation:
+      // - 12: LE A00 (enrollable)
+      // - 12: DI A01
+      //       LA A50 (cancelleed)
       return prevMeeting
         ? {
             ...course,
@@ -1500,7 +1505,7 @@ function processLine(
   }
   if (state.type === "time-next") {
     const match = line.match(
-      /^<td class="brdr">(1?\d:[035]0[ap]-1?\d:[245][09][ap])<\/td>$/,
+      /^<td class="brdr">(1?\d:(?:00|30|50)[ap]-1?\d:(?:20|40|50)[ap])<\/td>$/,
     );
     if (match) {
       if (state.sectionId === "extra") {
@@ -1855,7 +1860,7 @@ function processLine(
   }
   if (state.type === "exam-time-next") {
     const match = line.match(
-      /^<td class="brdr">(1?\d:[03]0[ap]-1?\d:[0235]0[ap])<\/td>$/,
+      /^<td class="brdr">(1?\d:(?:00|30|45)[ap]-1?\d:(?:00|20|30|50)[ap])<\/td>$/,
     );
     if (match) {
       return {
@@ -1944,23 +1949,24 @@ function processLine(
   return null;
 }
 
-const path = ".cache/SA04/_all/10.html";
-const lines = (await readFile(path, "utf-8")).split(/\r?\n/).slice(1);
-let state: State = initState;
-for (const [i, line] of lines.entries()) {
-  const next = processLine(state, line, {
-    termYear: 2004,
-    quarter: "SA",
-  });
-  if (!next) {
-    console.error(state);
-    console.error(
-      `${path}:${i + 2}: unexpected line for state '${state.type}'`,
-    );
-    console.error(line);
-    process.exit(1);
+for (let i = 1; i <= 12; i++) {
+  const path = `.cache/SA04/_all/${i}.html`;
+  const lines = (await readFile(path, "utf-8")).split(/\r?\n/).slice(1);
+  let state: State = initState;
+  for (const [i, line] of lines.entries()) {
+    const next = processLine(state, line, {
+      termYear: 2004,
+      quarter: "SA",
+    });
+    if (!next) {
+      console.error(state);
+      console.error(
+        `${path}:${i + 2}: unexpected line for state '${state.type}'`,
+      );
+      console.error(line);
+      process.exit(1);
+    }
+    state = next;
   }
-  state = next;
 }
-console.dir(state, { depth: null });
 console.error("success!");
