@@ -48,7 +48,7 @@ type Course = {
     end: { month: string; date: number };
   } | null;
   resourcesSectionId: number;
-  commonMeeting: UnenrollableMeeting | null;
+  commonMeeting: UnenrollableMeeting | CancelledUnnrollableMeeting | null;
   enrollables: (EnrollableMeeting | CancelledEnrollableMeeting)[];
   additionalMeetings: (UnenrollableMeeting | CancelledUnnrollableMeeting)[];
   exams: Exam[];
@@ -134,6 +134,7 @@ const examTypes = {
   MU: "Make-up Session",
   PB: "Problem Session",
   RE: "Review Session",
+  OT: "Other Additional Meeting",
 };
 
 type State = (
@@ -548,9 +549,11 @@ function processLine(
       return { ...state, next: "h2" };
     }
     if (state.next === "h2") {
-      const matchDept = line.match(
-        /^<h2> <span class="centeralign">([A-Za-z ]{35})<\/span> <\/h2>$/,
-      );
+      const matchDept = line
+        .replaceAll("&amp;", "&")
+        .match(
+          /^<h2> <span class="centeralign">([A-Za-z& ]{35})<\/span> <\/h2>$/,
+        );
       const matchSubject = line
         .replaceAll("&amp;", "&")
         .match(
@@ -604,10 +607,11 @@ function processLine(
     }
   }
   if (
-    state.type === "subj-comment-h3" &&
-    line === '<h3><span class="ertext">See Class Sections Below</span></h3>'
+    state.type === "subj-comment-h3" // &&
+    // line === '<h3><span class="ertext">See Class Sections Below</span></h3>'
   ) {
-    return { ...state, type: "subject-comment", comment: "" };
+    // Apparently it can just start with anything
+    return { ...state, type: "subject-comment", comment: line };
   }
   if (state.type === "subject-comment") {
     if (line === "<br>") {
@@ -974,9 +978,9 @@ function processLine(
       .replaceAll("&#039;", "'")
       .replaceAll("&amp;", "&")
       .match(
-        /^<a href="javascript:openNewWindow\('(?:http:\/\/registrar\.ucsd\.edu\/studentlink\/cnd\.html|http:\/\/www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2}))'\)"><span class="boldtxt">([A-Za-z&'/ -]{30})<\/span> <\/a>$/,
+        /^(?:<a href="javascript:openNewWindow\('(?:http:\/\/registrar\.ucsd\.edu\/studentlink\/cnd\.html|http:\/\/www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2}))'\)">)?<span class="boldtxt">([A-Za-z&'/:,. -]{30})<\/span>(?: <\/a>)?$/,
       );
-    if (match) {
+    if (match && line.startsWith("<a") === line.endsWith("a>")) {
       const title = match[3].trimEnd();
       if (
         !!match[1] === !!match[2] &&
@@ -1220,14 +1224,10 @@ function processLine(
           // first meeting (A00) can be unenrollable yet followed by enrollable
           // meetings
           // idk if the first meeting can be cancelled
-          if (!prevMeeting.cancelled) {
-            return prevMeeting
-              ? {
-                  ...state.course,
-                  commonMeeting: prevMeeting,
-                }
-              : state.course;
-          }
+          // actually yes they can (SA04 page 9 CSE 132A)
+          return prevMeeting
+            ? { ...state.course, commonMeeting: prevMeeting }
+            : state.course;
         } else {
           return prevMeeting
             ? {
@@ -1340,7 +1340,7 @@ function processLine(
     }
   }
   if (state.type === "section-code-next") {
-    const match = line.match(/^<td class="brdr">([A-Z]\d\d)<\/td>$/);
+    const match = line.match(/^<td class="brdr">([A-Z\d]\d\d)<\/td>$/);
     if (match) {
       return {
         ...state,
@@ -1638,7 +1638,8 @@ function processLine(
         type === "MI" ||
         type === "MU" ||
         type === "PB" ||
-        type === "RE"
+        type === "RE" ||
+        type === "OT"
       ) {
         if (examTypes[type] === match[1]) {
           return { ...state, type: "exam-date-next", exam: { examType: type } };
@@ -1753,7 +1754,7 @@ function processLine(
   return null;
 }
 
-const path = ".cache/SA04/_all/4.html";
+const path = ".cache/SA04/_all/9.html";
 const lines = (await readFile(path, "utf-8")).split(/\r?\n/).slice(1);
 let state: State = initState;
 for (const [i, line] of lines.entries()) {
