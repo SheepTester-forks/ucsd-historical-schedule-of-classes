@@ -19,6 +19,7 @@ type Department = {
 type Subject = {
   name: string;
   code: string;
+  comment: string;
   asOf: {
     month: number;
     date: number;
@@ -27,6 +28,12 @@ type Subject = {
     minute: number;
   };
   courses: Course[];
+  courseComments: CourseComment[];
+};
+type ExpectedCourseInfo = { number: string; title: string };
+type CourseComment = {
+  number: string;
+  comment: string;
 };
 type Course = {
   restrictions: (keyof typeof restrictionTypes)[];
@@ -136,7 +143,14 @@ type State = (
       department: Department | null;
     }
   | {
-      type: "as-of";
+      type: "as-of" | "subject-comment";
+      department: Department;
+      subject: string;
+      subjectCode: string;
+      comment: string;
+    }
+  | {
+      type: "subj-comment-h3";
       department: Department;
       subject: string;
       subjectCode: string;
@@ -180,16 +194,51 @@ type State = (
       subject: Subject;
     }
   | {
+      type: "course-comment-empty-td-next" | "course-comment-number-next";
+      department: Department;
+      subject: Subject;
+    }
+  | {
+      type: "course-comment-title-begin-next" | "course-comment-title-next";
+      department: Department;
+      subject: Subject;
+      number: string;
+    }
+  | {
+      type:
+        | "course-comment-td-end-next"
+        | "course-comment-tr-end-next"
+        | "course-comment-content-tr-begin-next"
+        | "course-comment-content-empty-td-next"
+        | "course-comment-content-td-begin-next";
+      department: Department;
+      subject: Subject;
+      course: ExpectedCourseInfo;
+    }
+  | {
+      type:
+        | "course-comment-content"
+        | "course-comment-content-td-end-next"
+        | "course-comment-content-tr-end-next"
+        | "non-course-tr-begin-next";
+      department: Department;
+      subject: Subject;
+      course: ExpectedCourseInfo;
+      comment: string;
+    }
+  | {
       type: "start-course-td";
       department: Department;
       subject: Subject;
       canEndSubject: boolean;
+      expected: ExpectedCourseInfo | null;
     }
   | {
       type: "restrictions-title-next";
       department: Department;
       subject: Subject;
       course: Pick<Course, "restrictions">;
+      expected: ExpectedCourseInfo | null;
     }
   | {
       type: "restrictions-letter-next";
@@ -197,18 +246,21 @@ type State = (
       subject: Subject;
       title: string;
       course: Pick<Course, "restrictions">;
+      expected: ExpectedCourseInfo | null;
     }
   | {
       type: "course-number-next";
       department: Department;
       subject: Subject;
       course: Pick<Course, "restrictions">;
+      expected: ExpectedCourseInfo | null;
     }
   | {
       type: "course-num-end-next" | "course-name-next";
       department: Department;
       subject: Subject;
       course: Pick<Course, "restrictions" | "number">;
+      expected: ExpectedCourseInfo | null;
     }
   | {
       type: "unit-start-next";
@@ -523,6 +575,7 @@ function processLine(
           department: state.department,
           subject: matchSubject[1].trimEnd(),
           subjectCode: matchSubject[2].trimEnd(),
+          comment: "",
         };
       }
     }
@@ -539,9 +592,30 @@ function processLine(
         subject: {
           name: state.subject,
           code: state.subjectCode,
+          comment: state.comment,
           asOf: { month, date, year, hour, minute },
           courses: [],
+          courseComments: [],
         },
+      };
+    }
+    if (line === "<br>" && !state.comment) {
+      return { ...state, type: "subj-comment-h3" };
+    }
+  }
+  if (
+    state.type === "subj-comment-h3" &&
+    line === '<h3><span class="ertext">See Class Sections Below</span></h3>'
+  ) {
+    return { ...state, type: "subject-comment", comment: "" };
+  }
+  if (state.type === "subject-comment") {
+    if (line === "<br>") {
+      return { ...state, type: "as-of" };
+    } else {
+      return {
+        ...state,
+        comment: (state.comment ? state.comment + "\n" : "") + line,
       };
     }
   }
@@ -702,8 +776,109 @@ function processLine(
   }
   if (state.type === "after-course-tr") {
     if (line === "<tr>") {
-      return { ...state, type: "start-course-td", canEndSubject: state.canEnd };
+      return {
+        ...state,
+        type: "start-course-td",
+        canEndSubject: state.canEnd,
+        expected: null,
+      };
     }
+    if (line === "<tr >") {
+      return { ...state, type: "course-comment-empty-td-next" };
+    }
+  }
+  if (
+    state.type === "course-comment-empty-td-next" &&
+    line === '<td class="crsheader"></td>'
+  ) {
+    return { ...state, type: "course-comment-number-next" };
+  }
+  if (state.type === "course-comment-number-next") {
+    const match = line.match(
+      /^<td class="crsheader" align="">(\d{1,3}[A-Z]{0,2})<\/td>$/,
+    );
+    if (match) {
+      return {
+        ...state,
+        type: "course-comment-title-begin-next",
+        number: match[1],
+      };
+    }
+  }
+  if (
+    state.type === "course-comment-title-begin-next" &&
+    line === '<td colspan="11" class="crsheader">'
+  ) {
+    return { ...state, type: "course-comment-title-next" };
+  }
+  if (state.type === "course-comment-title-next") {
+    const match = line
+      .replaceAll("&#039;", "'")
+      .replaceAll("&amp;", "&")
+      .match(/^([A-Za-z&'/ -]{1,30})$/);
+    if (match) {
+      return {
+        ...state,
+        type: "course-comment-td-end-next",
+        course: { number: state.number, title: match[1] },
+      };
+    }
+  }
+  if (state.type === "course-comment-td-end-next" && line === "</td>") {
+    return { ...state, type: "course-comment-tr-end-next" };
+  }
+  if (state.type === "course-comment-tr-end-next" && line === "</tr>") {
+    return { ...state, type: "course-comment-content-tr-begin-next" };
+  }
+  if (
+    state.type === "course-comment-content-tr-begin-next" &&
+    line === "<tr>"
+  ) {
+    return { ...state, type: "course-comment-content-empty-td-next" };
+  }
+  if (
+    state.type === "course-comment-content-empty-td-next" &&
+    line === '<td  class="nonenrtxt" colspan="2" align="right"></td>'
+  ) {
+    return { ...state, type: "course-comment-content-td-begin-next" };
+  }
+  if (
+    state.type === "course-comment-content-td-begin-next" &&
+    line === '<td  class="nonenrtxt" colspan="11">'
+  ) {
+    return { ...state, type: "course-comment-content", comment: "" };
+  }
+  if (state.type === "course-comment-content") {
+    if (state.comment === "") {
+      const match = line.match(/^<span class="ertext"> (.+)$/);
+      if (match) {
+        return { ...state, comment: match[1] };
+      }
+    } else if (line === "</span>") {
+      return { ...state, type: "course-comment-content-td-end-next" };
+    } else {
+      return { ...state, comment: state.comment + "\n" + line };
+    }
+  }
+  if (state.type === "course-comment-content-td-end-next" && line === "</td>") {
+    return { ...state, type: "course-comment-content-tr-end-next" };
+  }
+  if (state.type === "course-comment-content-tr-end-next" && line === "</tr>") {
+    return { ...state, type: "non-course-tr-begin-next" };
+  }
+  if (state.type === "non-course-tr-begin-next" && line === "<tr>") {
+    return {
+      ...state,
+      type: "start-course-td",
+      subject: {
+        ...state.subject,
+        courseComments: [
+          { number: state.course.number, comment: state.comment },
+        ],
+      },
+      canEndSubject: state.subject.courses.length > 0,
+      expected: state.course,
+    };
   }
   if (state.type === "start-course-td") {
     if (line === '<td colspan="13">' && state.canEndSubject) {
@@ -776,7 +951,10 @@ function processLine(
     if (match) {
       const extraSpace = !!match[1];
       const restrictionless = state.course.restrictions.length === 0;
-      if (extraSpace === restrictionless) {
+      if (
+        extraSpace === restrictionless &&
+        (state.expected === null || state.expected.number === match[2])
+      ) {
         return {
           ...state,
           type: "course-num-end-next",
@@ -799,14 +977,18 @@ function processLine(
         /^<a href="javascript:openNewWindow\('(?:http:\/\/registrar\.ucsd\.edu\/studentlink\/cnd\.html|http:\/\/www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2}))'\)"><span class="boldtxt">([A-Za-z&'/ -]{30})<\/span> <\/a>$/,
       );
     if (match) {
-      if (!!match[1] === !!match[2]) {
+      const title = match[3].trimEnd();
+      if (
+        !!match[1] === !!match[2] &&
+        (state.expected === null || state.expected.title === title)
+      ) {
         return {
           ...state,
           type: "unit-start-next",
           course: {
             ...state.course,
             catalog: match[1] ? { dept: match[1], hash: match[2] } : null,
-            title: match[3].trim(),
+            title,
           },
         };
       }
@@ -990,11 +1172,12 @@ function processLine(
     };
   }
   if (state.type === "meeting-row-begin-next") {
-    if (line === "<tr>" && state.prevMeeting) {
+    if ((line === "<tr>" || line === "<tr >") && state.prevMeeting) {
       // could either be beginning of course or subject or department, which is
       // handled by this state i think
       return {
-        type: "start-course-td",
+        type:
+          line === "<tr >" ? "course-comment-empty-td-next" : "start-course-td",
         departments: state.departments,
         department: state.department,
         subject: {
@@ -1002,6 +1185,7 @@ function processLine(
           courses: [...state.subject.courses, state.course],
         },
         canEndSubject: true,
+        expected: null,
       };
     }
     const addToMeeting = (
@@ -1202,7 +1386,7 @@ function processLine(
   }
   if (state.type === "time-next") {
     const match = line.match(
-      /^<td class="brdr">(1?\d:[03]0[ap]-1?\d:[25][09][ap])<\/td>$/,
+      /^<td class="brdr">(1?\d:[035]0[ap]-1?\d:[245][09][ap])<\/td>$/,
     );
     if (match) {
       return { ...state, type: "building-start-next", time: match[1] };
@@ -1569,7 +1753,7 @@ function processLine(
   return null;
 }
 
-const path = ".cache/SA04/_all/3.html";
+const path = ".cache/SA04/_all/4.html";
 const lines = (await readFile(path, "utf-8")).split(/\r?\n/).slice(1);
 let state: State = initState;
 for (const [i, line] of lines.entries()) {
