@@ -29,7 +29,7 @@ type Subject = {
   courses: Course[];
 };
 type Course = {
-  restriction: string | null;
+  restrictions: (keyof typeof restrictionTypes)[];
   number: string;
   catalog: { dept: string; hash: string } | null;
   title: string;
@@ -73,7 +73,7 @@ type MeetingBase = {
     building: string;
     room: string;
   } | null;
-  instructor: { name: string; encryptedPid: Buffer } | null;
+  instructors: { name: string; encryptedPid: Buffer }[];
   comment: string;
 };
 type EnrollableMeeting = MeetingBase & {
@@ -107,6 +107,13 @@ type Exam = {
   comment: string;
 };
 
+const restrictionTypes = {
+  D: "Department Approval Required",
+  O: "Open to Majors Only (Non-majors require department approval)",
+  JR: "Open to Juniors Only",
+  SR: "Open to Seniors Only",
+  N: "Not Open to Majors",
+};
 const instructionTypes = {
   LE: "Lecture",
   DI: "Discussion",
@@ -182,30 +189,32 @@ type State = (
       type: "restrictions-title-next";
       department: Department;
       subject: Subject;
+      course: Pick<Course, "restrictions">;
     }
   | {
       type: "restrictions-letter-next";
       department: Department;
       subject: Subject;
       title: string;
+      course: Pick<Course, "restrictions">;
     }
   | {
-      type: "restrictions-td-close-next" | "course-number-next";
+      type: "course-number-next";
       department: Department;
       subject: Subject;
-      course: Pick<Course, "restriction">;
+      course: Pick<Course, "restrictions">;
     }
   | {
       type: "course-num-end-next" | "course-name-next";
       department: Department;
       subject: Subject;
-      course: Pick<Course, "restriction" | "number">;
+      course: Pick<Course, "restrictions" | "number">;
     }
   | {
       type: "unit-start-next";
       department: Department;
       subject: Subject;
-      course: Pick<Course, "restriction" | "number" | "catalog" | "title">;
+      course: Pick<Course, "restrictions" | "number" | "catalog" | "title">;
     }
   | {
       type: "unit-end-next" | "unit-end-br-next";
@@ -213,7 +222,7 @@ type State = (
       subject: Subject;
       course: Pick<
         Course,
-        "restriction" | "number" | "catalog" | "title" | "units"
+        "restrictions" | "number" | "catalog" | "title" | "units"
       >;
     }
   | {
@@ -222,7 +231,7 @@ type State = (
       subject: Subject;
       course: Pick<
         Course,
-        "restriction" | "number" | "catalog" | "title" | "units" | "topic"
+        "restrictions" | "number" | "catalog" | "title" | "units" | "topic"
       >;
     }
   | {
@@ -235,7 +244,7 @@ type State = (
       subject: Subject;
       course: Pick<
         Course,
-        | "restriction"
+        | "restrictions"
         | "number"
         | "catalog"
         | "title"
@@ -250,7 +259,7 @@ type State = (
       subject: Subject;
       course: Pick<
         Course,
-        | "restriction"
+        | "restrictions"
         | "number"
         | "catalog"
         | "title"
@@ -353,7 +362,7 @@ type State = (
       sectionId: number | null;
       meeting: Pick<
         Meeting,
-        "instructionType" | "sectionCode" | "location" | "instructor"
+        "instructionType" | "sectionCode" | "location" | "instructors"
       >;
       shouldSeeBr: boolean;
       sawStaff: boolean;
@@ -374,7 +383,7 @@ type State = (
       sectionId: number;
       meeting: Pick<
         Meeting,
-        "instructionType" | "sectionCode" | "location" | "instructor"
+        "instructionType" | "sectionCode" | "location" | "instructors"
       >;
     }
   | {
@@ -385,7 +394,7 @@ type State = (
       sectionId: number;
       meeting: Pick<
         Meeting,
-        "instructionType" | "sectionCode" | "location" | "instructor"
+        "instructionType" | "sectionCode" | "location" | "instructors"
       >;
       count: number;
       isWaitlist: boolean;
@@ -710,14 +719,18 @@ function processLine(
     }
     // crsheader = dark blue
     if (line === '<td class="crsheader">') {
-      return { ...state, type: "restrictions-title-next" };
+      return {
+        ...state,
+        type: "restrictions-title-next",
+        course: { restrictions: [] },
+      };
     }
     if (line === '<td class="crsheader"></td>') {
       // no requirements
       return {
         ...state,
         type: "course-number-next",
-        course: { restriction: null },
+        course: { restrictions: [] },
       };
     }
   }
@@ -728,24 +741,32 @@ function processLine(
     if (match) {
       return { ...state, type: "restrictions-letter-next", title: match[1] };
     }
-  }
-  if (state.type === "restrictions-letter-next") {
-    const match = line.match(/^([DO])<\/span><br>$/);
-    if (match) {
-      // TODO: check against state.title
-      // - D: Department Approval Required
-      // - O: Open to Majors Only (Non-majors require department approval)
-      return {
-        ...state,
-        type: "restrictions-td-close-next",
-        course: {
-          restriction: match[1],
-        },
-      };
+    if (line === "</td>" && state.course.restrictions.length > 0) {
+      return { ...state, type: "course-number-next" };
     }
   }
-  if (state.type === "restrictions-td-close-next" && line === "</td>") {
-    return { ...state, type: "course-number-next" };
+  if (state.type === "restrictions-letter-next") {
+    const match = line.match(/^([A-Z]{1,2})<\/span><br>$/);
+    if (match) {
+      const type = match[1];
+      if (
+        type === "D" ||
+        type === "O" ||
+        type === "JR" ||
+        type === "SR" ||
+        type === "N"
+      ) {
+        if (state.title === restrictionTypes[type]) {
+          return {
+            ...state,
+            type: "restrictions-title-next",
+            course: {
+              restrictions: [...state.course.restrictions, type],
+            },
+          };
+        }
+      }
+    }
   }
   if (state.type === "course-number-next") {
     // that second space seems to depend on whether there was a restriction
@@ -754,7 +775,7 @@ function processLine(
     );
     if (match) {
       const extraSpace = !!match[1];
-      const restrictionless = state.course.restriction === null;
+      const restrictionless = state.course.restrictions.length === 0;
       if (extraSpace === restrictionless) {
         return {
           ...state,
@@ -1222,13 +1243,13 @@ function processLine(
       };
     }
   }
-  if (state.type === "instructor-begin-next") {
+  if (state.type === "instructor-begin-next" && line === '<td class="brdr">') {
     return {
       ...state,
       type: "instructor-end-next",
       shouldSeeBr: false,
       sawStaff: false,
-      meeting: { ...state.meeting, instructor: null },
+      meeting: { ...state.meeting, instructors: [] },
     };
   }
   if (state.type === "instructor-end-next") {
@@ -1237,7 +1258,13 @@ function processLine(
         return { ...state, shouldSeeBr: false };
       }
     } else {
-      if (line === "</td>") {
+      if (
+        line === "</td>" &&
+        (state.sawStaff ||
+          state.meeting.instructors.length > 0 ||
+          // instructors may or may not be mentioned for unenrollable sections
+          state.sectionId === null)
+      ) {
         if (state.sectionId !== null) {
           return {
             ...state,
@@ -1262,23 +1289,27 @@ function processLine(
       if (
         line === "Staff" &&
         !state.sawStaff &&
-        state.meeting.instructor === null
+        state.meeting.instructors.length === 0 &&
+        state.sectionId !== null
       ) {
         return { ...state, shouldSeeBr: true, sawStaff: true };
       }
       const match = line.match(
-        /^<a href="#!" onclick="javascript:sendMail\('\/scheduleOfClasses\/scheduleOfClassesFacultyEmailResult\.htm\?pid=([A-Za-z\d+/]+==)'\)">([A-Za-z,. ]{35})<\/a>$/,
+        /^<a href="#!" onclick="javascript:sendMail\('\/scheduleOfClasses\/scheduleOfClassesFacultyEmailResult\.htm\?pid=([A-Za-z\d+/]+==)'\)">([A-Za-z,. -]{35})<\/a>$/,
       );
-      if (match && !state.sawStaff && !state.meeting.instructor) {
+      if (match && !state.sawStaff) {
         return {
           ...state,
           shouldSeeBr: true,
           meeting: {
             ...state.meeting,
-            instructor: {
-              encryptedPid: Buffer.from(match[1], "base64"),
-              name: match[2].trim(),
-            },
+            instructors: [
+              ...state.meeting.instructors,
+              {
+                encryptedPid: Buffer.from(match[1], "base64"),
+                name: match[2].trim(),
+              },
+            ],
           },
         };
       }
@@ -1538,7 +1569,7 @@ function processLine(
   return null;
 }
 
-const path = ".cache/SA04/_all/2.html";
+const path = ".cache/SA04/_all/3.html";
 const lines = (await readFile(path, "utf-8")).split(/\r?\n/).slice(1);
 let state: State = initState;
 for (const [i, line] of lines.entries()) {
