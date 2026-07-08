@@ -134,12 +134,31 @@ const restrictionTypes = {
   SR: "Open to Seniors Only",
   N: "Not Open to Majors",
 };
+function getRestrictionType(
+  type: string,
+  title: string,
+): keyof typeof restrictionTypes | null {
+  if (
+    type === "D" ||
+    type === "O" ||
+    type === "JR" ||
+    type === "SR" ||
+    type === "N"
+  ) {
+    if (restrictionTypes[type] === title) {
+      return type;
+    }
+  }
+  return null;
+}
 const instructionTypes = {
   LE: "Lecture",
   DI: "Discussion",
   LA: "Laboratory",
   IN: "Independent Study",
   SE: "Seminar",
+  FW: "Fieldwork",
+  CL: "Clinical Clerkship",
 };
 function getInstructionType(
   type: string,
@@ -150,7 +169,9 @@ function getInstructionType(
     type === "LE" ||
     type === "IN" ||
     type === "DI" ||
-    type === "SE"
+    type === "SE" ||
+    type === "FW" ||
+    type === "CL"
   ) {
     if (instructionTypes[type] === title) {
       return type;
@@ -985,7 +1006,7 @@ function processLine(
     const match = line
       .replaceAll("&#039;", "'")
       .replaceAll("&amp;", "&")
-      .match(/^([A-Za-z&'/ -]{1,30})$/);
+      .match(/^([A-Za-z&'/. -]{1,30})$/);
     if (match) {
       return {
         ...state,
@@ -1093,23 +1114,15 @@ function processLine(
   if (state.type === "restrictions-letter-next") {
     const match = line.match(/^([A-Z]{1,2})<\/span><br>$/);
     if (match) {
-      const type = match[1];
-      if (
-        type === "D" ||
-        type === "O" ||
-        type === "JR" ||
-        type === "SR" ||
-        type === "N"
-      ) {
-        if (state.title === restrictionTypes[type]) {
-          return {
-            ...state,
-            type: "restrictions-title-next",
-            course: {
-              restrictions: [...state.course.restrictions, type],
-            },
-          };
-        }
+      const type = getRestrictionType(match[1], state.title);
+      if (type) {
+        return {
+          ...state,
+          type: "restrictions-title-next",
+          course: {
+            restrictions: [...state.course.restrictions, type],
+          },
+        };
       }
     }
   }
@@ -1144,7 +1157,7 @@ function processLine(
       .replaceAll("&#039;", "'")
       .replaceAll("&amp;", "&")
       .match(
-        /^(?:<a href="javascript:openNewWindow\('(?:http:\/\/registrar\.ucsd\.edu\/studentlink\/cnd\.html|http:\/\/www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2}))'\)">)?<span class="boldtxt">([A-Za-z&'/:,. -]{30})<\/span>(?: <\/a>)?$/,
+        /^(?:<a href="javascript:openNewWindow\('(?:http:\/\/registrar\.ucsd\.edu\/studentlink\/cnd\.html|http:\/\/www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2}))'\)">)?<span class="boldtxt">([A-Za-z&'/:,.\d -]{30})<\/span>(?: <\/a>)?$/,
       );
     if (match && line.startsWith("<a") === line.endsWith("a>")) {
       const title = match[3].trimEnd();
@@ -1949,7 +1962,7 @@ function processLine(
   return null;
 }
 
-for (let i = 1; i <= 12; i++) {
+for (let i = 1; i <= 14; i++) {
   const path = `.cache/SA04/_all/${i}.html`;
   const lines = (await readFile(path, "utf-8")).split(/\r?\n/).slice(1);
   let state: State = initState;
