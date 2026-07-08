@@ -118,6 +118,8 @@ const examTypes = {
   MI: "Midterm",
   FI: "Final",
   MU: "Make-up Session",
+  PB: "Problem Session",
+  RE: "Review Session",
 };
 
 type State = (
@@ -773,7 +775,7 @@ function processLine(
       .replaceAll("&#039;", "'")
       .replaceAll("&amp;", "&")
       .match(
-        /^<a href="javascript:openNewWindow\('(?:http:\/\/registrar\.ucsd\.edu\/studentlink\/cnd\.html|http:\/\/www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2}))'\)"><span class="boldtxt">([A-Za-z&'/ ]{30})<\/span> <\/a>$/,
+        /^<a href="javascript:openNewWindow\('(?:http:\/\/registrar\.ucsd\.edu\/studentlink\/cnd\.html|http:\/\/www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2}))'\)"><span class="boldtxt">([A-Za-z&'/ -]{30})<\/span> <\/a>$/,
       );
     if (match) {
       if (!!match[1] === !!match[2]) {
@@ -790,7 +792,7 @@ function processLine(
     }
   }
   if (state.type === "unit-start-next") {
-    const match = line.match(/^\( (\d)$/);
+    const match = line.match(/^\( (1?\d)$/);
     if (match) {
       return {
         ...state,
@@ -892,7 +894,9 @@ function processLine(
         };
       }
     }
-    const topicMatch = line.replaceAll("&amp;", "&").match(/^([A-Za-z& ]+)$/);
+    const topicMatch = line
+      .replaceAll("&amp;", "&")
+      .match(/^([A-Za-z&., -]+)$/);
     if (topicMatch && state.course.topic === null) {
       return { ...state, course: { ...state.course, topic: topicMatch[1] } };
     }
@@ -1414,7 +1418,13 @@ function processLine(
     );
     if (match) {
       const type = match[2];
-      if (type === "FI" || type === "MI" || type === "MU") {
+      if (
+        type === "FI" ||
+        type === "MI" ||
+        type === "MU" ||
+        type === "PB" ||
+        type === "RE"
+      ) {
         if (examTypes[type] === match[1]) {
           return { ...state, type: "exam-date-next", exam: { examType: type } };
         }
@@ -1446,7 +1456,7 @@ function processLine(
   }
   if (state.type === "exam-time-next") {
     const match = line.match(
-      /^<td class="brdr">(1?\d:[03]0[ap]-1?\d:[35]0[ap])<\/td>$/,
+      /^<td class="brdr">(1?\d:[03]0[ap]-1?\d:[0235]0[ap])<\/td>$/,
     );
     if (match) {
       return {
@@ -1528,7 +1538,7 @@ function processLine(
   return null;
 }
 
-const path = ".cache/SA04/_all/1.html";
+const path = ".cache/SA04/_all/2.html";
 const lines = (await readFile(path, "utf-8")).split(/\r?\n/).slice(1);
 let state: State = initState;
 for (const [i, line] of lines.entries()) {
