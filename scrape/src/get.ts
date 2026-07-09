@@ -73,7 +73,11 @@ const BASE = "https://act.ucsd.edu/scheduleOfClasses";
  * Example:
  * https://act.ucsd.edu/scheduleOfClasses/scheduleOfClassesStudentResult.htm?selectedTerm=SP26&tabNum=tabs-dept&selectedDepartments=ANTH&page=13
  */
-const getResultPath = (term: string, departments: string[], page: number) =>
+export const getResultPath = (
+  term: string,
+  departments: string[],
+  page: number,
+) =>
   `${BASE}/scheduleOfClassesStudentResult.htm?${new URLSearchParams([
     ["selectedTerm", term],
     ["tabNum", "tabs-dept"],

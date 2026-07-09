@@ -7,6 +7,7 @@
 
 import { readFile } from "node:fs/promises";
 import { terms, type Quarter } from "./lib.ts";
+import { getDepartments, getResultPath } from "./get.ts";
 
 type GlobalOptions = {
   termYear: number;
@@ -39,7 +40,7 @@ type CourseComment = {
 type Course = {
   restrictions: (keyof typeof restrictionTypes)[];
   number: string;
-  catalog: { dept: string; hash: string } | "EAP" | null;
+  catalog: { dept: string; hash: string } | "EAP" | "pharmacy" | null;
   title: string;
   units: { start: number; end: { step: number | null; end: number } | null };
   topic: string | null;
@@ -93,8 +94,7 @@ type ExtraMeeting = {
   location: {
     days: string;
     time: string;
-    building: string;
-    room: string;
+    location: { building: string; room: string } | null;
   };
 };
 type EnrollableMeeting = MeetingBase & {
@@ -656,14 +656,10 @@ function addToMeeting(
     prevMeeting.isExtra
   ) {
     // assume location of extra meeting will never be TBA
-    if (prevMeeting.location?.location) {
-      const extra = {
-        location: {
-          ...prevMeeting.location.location,
-          days: prevMeeting.location.days,
-          time: prevMeeting.location.time,
-        },
-      };
+    // nvm they apparently can be, SA05 page 46, MGT 111. but the time should
+    // always be determined, surely
+    if (prevMeeting.location) {
+      const extra: ExtraMeeting = { location: prevMeeting.location };
       const lastAdditional = course.additionalMeetings.at(-1);
       if (lastAdditional) {
         if (
@@ -693,13 +689,7 @@ function addToMeeting(
               ...course,
               enrollables: course.enrollables.with(-1, {
                 ...lastEnrollable,
-                extra: {
-                  location: {
-                    ...prevMeeting.location.location,
-                    days: prevMeeting.location.days,
-                    time: prevMeeting.location.time,
-                  },
-                },
+                extra,
               }),
             };
           }
@@ -781,7 +771,7 @@ function processLine(
       const matchDept = line
         .replaceAll("&amp;", "&")
         .match(
-          /^<h2> <span class="centeralign">([A-Za-z& ]{35})<\/span> <\/h2>$/,
+          /^<h2> <span class="centeralign">([A-Za-z&, ]{35})<\/span> <\/h2>$/,
         );
       const matchSubject = line
         .replaceAll("&amp;", "&")
@@ -1199,7 +1189,7 @@ function processLine(
       .replaceAll("&#039;", "'")
       .replaceAll("&amp;", "&")
       .match(
-        /^(?:<a href="javascript:openNewWindow\('http:\/\/(registrar\.ucsd\.edu\/studentlink\/cnd\.html|www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2})|www\.ucsd\.edu\/catalog\/curric\/EAP\.html)'\)">)?<span class="boldtxt">([A-Za-z&'/:,.\d()+ -]{30})<\/span>(?: <\/a>)?$/,
+        /^(?:<a href="javascript:openNewWindow\('http:\/\/(registrar\.ucsd\.edu\/studentlink\/cnd\.html|www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2})|www\.ucsd\.edu\/catalog\/curric\/EAP\.html|pharmacy\.ucsd\.edu\/current)'\)">)?<span class="boldtxt">([A-Za-z&'/:,.\d()+ -]{30})<\/span>(?: <\/a>)?$/,
       );
     if (match && line.startsWith("<a") === line.endsWith("a>")) {
       const title = match[4].trimEnd();
@@ -1215,9 +1205,11 @@ function processLine(
             catalog:
               match[1] === "www.ucsd.edu/catalog/curric/EAP.html"
                 ? "EAP"
-                : match[2]
-                  ? { dept: match[2], hash: match[3] }
-                  : null,
+                : match[1] === "pharmacy.ucsd.edu/current"
+                  ? "pharmacy"
+                  : match[2]
+                    ? { dept: match[2], hash: match[3] }
+                    : null,
             title,
           },
         };
@@ -1330,7 +1322,7 @@ function processLine(
     const topicMatch = line
       .replaceAll("&amp;", "&")
       .replaceAll("&#039;", "'")
-      .match(/^([A-Za-z&.,?/\d:' -]+)$/);
+      .match(/^([A-Za-z&.,?/\d:'!( -]+)$/);
     if (topicMatch && state.course.topic === null) {
       return { ...state, course: { ...state.course, topic: topicMatch[1] } };
     }
@@ -1566,7 +1558,7 @@ function processLine(
   }
   if (state.type === "time-next") {
     const match = line.match(
-      /^<td class="brdr">(1?\d:(?:00|30|50)[ap]-1?\d:(?:00|15|20|40|45|50)[ap])<\/td>$/,
+      /^<td class="brdr">(1?\d:(?:00|15|30|50)[ap]-1?\d:(?:00|15|20|40|45|50)[ap])<\/td>$/,
     );
     if (match) {
       if (state.sectionId === "extra") {
@@ -1601,6 +1593,9 @@ function processLine(
     }
   }
   if (state.type === "building-code-next") {
+    if (state.sectionId === "extra" && line === '<td class="brdr">TBA</td>') {
+      return { ...state, type: "room-next", building: "TBA" };
+    }
     const match = line.match(
       /^(<td class="brdr">)?([A-Z][A-Z\d]{1}[A-Z\d ]{3})(<\/a>)?<\/td>$/,
     );
@@ -1617,16 +1612,33 @@ function processLine(
   }
   if (state.type === "room-next") {
     if (state.building === "TBA") {
-      if (line === '<td class="brdr">TBA</td>' && state.sectionId !== "extra") {
-        return {
-          ...state,
-          type: "instructor-begin-next",
-          sectionId: state.sectionId,
-          meeting: {
-            ...state.meeting,
-            location: { days: state.days, time: state.time, location: null },
-          },
-        };
+      if (line === '<td class="brdr">TBA</td>') {
+        if (state.sectionId !== "extra") {
+          return {
+            ...state,
+            type: "instructor-begin-next",
+            sectionId: state.sectionId,
+            meeting: {
+              ...state.meeting,
+              location: { days: state.days, time: state.time, location: null },
+            },
+          };
+        } else {
+          return {
+            ...state,
+            type: "exam-brdr2-begin-next",
+            exam: {
+              ...state.meeting,
+              location: { days: state.days, time: state.time, location: null },
+              cancelled: false,
+              isExam: false,
+              instructors: [],
+              comment: "",
+              enrollable: null,
+              isExtra: true,
+            },
+          };
+        }
       }
     }
     const match = line.match(/^<td class="brdr">([A-Z\d][A-Z\d -]{4})<\/td>$/);
@@ -1940,7 +1952,7 @@ function processLine(
   }
   if (state.type === "exam-time-next") {
     const match = line.match(
-      /^<td class="brdr">(1?\d:(?:00|05|10|30|45)[ap]-1?\d:(?:00|20|30|50)[ap])<\/td>$/,
+      /^<td class="brdr">(1?\d:(?:00|01|05|10|30|45|51)[ap]-1?\d:(?:00|20|30|50)[ap])<\/td>$/,
     );
     if (match) {
       return {
@@ -2043,13 +2055,46 @@ function processLine(
   return null;
 }
 
-for (const { paginateTerm: term, year: termYear, quarter } of terms()) {
-  if (!["SA04"].includes(term)) {
+async function printDebug(
+  paginateTerm: string,
+  deptTerms: string[],
+  page: number,
+) {
+  const departments = Array.from(
+    new Set(
+      await Promise.all(deptTerms.map((term) => getDepartments(term))).then(
+        (departments) =>
+          departments
+            .values()
+            .flatMap((departments) => departments)
+            .map(({ code }) => code),
+      ),
+    ),
+  );
+  // https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda#quick-example
+  console.error(
+    `debug: \x1b]8;;${getResultPath(
+      paginateTerm,
+      departments,
+      page,
+    )}\x1b\\scheduleOfClassesStudentResult.htm?selectedTerm=${
+      paginateTerm
+    }&page=${page}\x1b]8;;\x1b\\`,
+  );
+}
+
+for (const {
+  deptTerms,
+  paginateTerm: term,
+  year: termYear,
+  quarter,
+} of terms()) {
+  if (!["SA04", "SA05"].includes(term)) {
     continue;
   }
   let totalPages = 1;
-  for (let i = 1; i <= totalPages; i++) {
-    const path = `.cache/${term}/_all/${i}.html`;
+  for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
+    const path = `.cache/${term}/_all/${pageNumber}.html`;
     const allLines = (
       await readFile(path, "utf-8").catch((error) =>
         error instanceof Error && "code" in error && error.code === "ENOENT"
@@ -2067,11 +2112,12 @@ for (const { paginateTerm: term, year: termYear, quarter } of terms()) {
     );
     if (
       !match ||
-      +match[1] !== i ||
+      +match[1] !== pageNumber ||
       (totalPages !== 1 && +match[2] !== totalPages)
     ) {
       console.error(`${path}:1: page mismatch`);
       console.error(firstLine);
+      await printDebug(term, deptTerms, pageNumber);
       process.exit(1);
     }
     totalPages = +match[2];
@@ -2084,9 +2130,10 @@ for (const { paginateTerm: term, year: termYear, quarter } of terms()) {
       if (!next) {
         console.dir(state, { depth: null });
         console.error(
-          `${path}:${i + 2}: unexpected line for state '${state.type}'`,
+          `${path}:${i + 2}: unexpected line for state '\x1b[1;36m${state.type}\x1b[0m'`,
         );
         console.error(line);
+        await printDebug(term, deptTerms, pageNumber);
         process.exit(1);
       }
       state = next;
