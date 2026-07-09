@@ -2138,6 +2138,14 @@ for (const {
       }
       state = next;
     }
+    if (state.type !== "done") {
+      console.dir(state, { depth: null });
+      console.error(
+        `${path}:${lines.length + 1}: state machine incomplete :( ended at '\x1b[1;36m${state.type}\x1b[0m'`,
+      );
+      await printDebug(term, deptTerms, pageNumber);
+      process.exit(1);
+    }
   }
 }
 console.error("success!");
