@@ -38,7 +38,7 @@ type CourseComment = {
 type Course = {
   restrictions: (keyof typeof restrictionTypes)[];
   number: string;
-  catalog: { dept: string; hash: string } | null;
+  catalog: { dept: string; hash: string } | "EAP" | null;
   title: string;
   units: { start: number; end: { step: number | null; end: number } | null };
   topic: string | null;
@@ -48,7 +48,8 @@ type Course = {
     end: { month: string; date: number };
   } | null;
   resourcesSectionId: number;
-  commonMeeting: (UnenrollableMeeting | CancelledUnnrollableMeeting) | null;
+  // on rare occassions there can be multiple, like SA04 page 31 PHYS 1B & 1C
+  preAdditionalMeetings: (UnenrollableMeeting | CancelledUnnrollableMeeting)[];
   enrollables: ((EnrollableMeeting | CancelledEnrollableMeeting) & {
     extra: ExtraMeeting | null;
   })[];
@@ -175,6 +176,9 @@ const instructionTypes = {
   CL: "Clinical Clerkship",
   TU: "Tutorial",
   SI: "",
+  PR: "Practicum",
+  ST: "Studio",
+  SA: "",
 };
 function getInstructionType(
   type: string,
@@ -189,7 +193,10 @@ function getInstructionType(
     type === "FW" ||
     type === "CL" ||
     type === "TU" ||
-    type === "SI"
+    type === "SI" ||
+    type === "PR" ||
+    type === "ST" ||
+    type === "SA"
   ) {
     if (instructionTypes[type] === title) {
       return type;
@@ -700,9 +707,13 @@ function addToMeeting(
     }
   } else if (course.exams.length === 0) {
     if (prevMeeting.enrollable !== null) {
-      if (course.additionalMeetings.length === 0) {
+      const lastAdditonalMeeting = course.additionalMeetings.at(-1);
+      if (!lastAdditonalMeeting || lastAdditonalMeeting.cancelled) {
         // once we have started an additional meeting, the remaining ones must
         // also be unenrollable
+        // well, an enrollable meeting can show up after a cancelled second
+        // unenrollable meeting (but it'll be out of order so idk; see SA04 page
+        // 31 PHYS 1B)
         return prevMeeting
           ? {
               ...course,
@@ -713,12 +724,20 @@ function addToMeeting(
             }
           : course;
       }
-    } else if (!course.commonMeeting && course.enrollables.length === 0) {
+    } else if (course.enrollables.length === 0) {
       // first meeting (A00) can be unenrollable yet followed by enrollable
       // meetings
       // idk if the first meeting can be cancelled
       // actually yes they can (SA04 page 9 CSE 132A)
-      return prevMeeting ? { ...course, commonMeeting: prevMeeting } : course;
+      return prevMeeting
+        ? {
+            ...course,
+            preAdditionalMeetings: [
+              ...course.preAdditionalMeetings,
+              prevMeeting,
+            ],
+          }
+        : course;
     } else {
       // there must be at least one enrollable
       // nvm, see CSE 12, SA04 page 8. they converted CSE 12 from a DI-based A01
@@ -1028,7 +1047,7 @@ function processLine(
     const match = line
       .replaceAll("&#039;", "'")
       .replaceAll("&amp;", "&")
-      .match(/^([A-Za-z&'/. -]{1,30})$/);
+      .match(/^([A-Za-z&'/.,:\d -]{1,30})$/);
     if (match) {
       return {
         ...state,
@@ -1179,12 +1198,12 @@ function processLine(
       .replaceAll("&#039;", "'")
       .replaceAll("&amp;", "&")
       .match(
-        /^(?:<a href="javascript:openNewWindow\('(?:http:\/\/registrar\.ucsd\.edu\/studentlink\/cnd\.html|http:\/\/www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2}))'\)">)?<span class="boldtxt">([A-Za-z&'/:,.\d()+ -]{30})<\/span>(?: <\/a>)?$/,
+        /^(?:<a href="javascript:openNewWindow\('http:\/\/(registrar\.ucsd\.edu\/studentlink\/cnd\.html|www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2})|www\.ucsd\.edu\/catalog\/curric\/EAP\.html)'\)">)?<span class="boldtxt">([A-Za-z&'/:,.\d()+ -]{30})<\/span>(?: <\/a>)?$/,
       );
     if (match && line.startsWith("<a") === line.endsWith("a>")) {
-      const title = match[3].trimEnd();
+      const title = match[4].trimEnd();
       if (
-        !!match[1] === !!match[2] &&
+        !!match[2] === !!match[3] &&
         (state.expected === null || state.expected.title === title)
       ) {
         return {
@@ -1192,7 +1211,12 @@ function processLine(
           type: "unit-start-next",
           course: {
             ...state.course,
-            catalog: match[1] ? { dept: match[1], hash: match[2] } : null,
+            catalog:
+              match[1] === "www.ucsd.edu/catalog/curric/EAP.html"
+                ? "EAP"
+                : match[2]
+                  ? { dept: match[2], hash: match[3] }
+                  : null,
             title,
           },
         };
@@ -1369,7 +1393,7 @@ function processLine(
       subject: state.subject,
       course: {
         ...state.course,
-        commonMeeting: null,
+        preAdditionalMeetings: [],
         enrollables: [],
         additionalMeetings: [],
         exams: [],
@@ -1541,7 +1565,7 @@ function processLine(
   }
   if (state.type === "time-next") {
     const match = line.match(
-      /^<td class="brdr">(1?\d:(?:00|30|50)[ap]-1?\d:(?:15|20|40|50)[ap])<\/td>$/,
+      /^<td class="brdr">(1?\d:(?:00|30|50)[ap]-1?\d:(?:00|15|20|40|45|50)[ap])<\/td>$/,
     );
     if (match) {
       if (state.sectionId === "extra") {
@@ -1569,7 +1593,7 @@ function processLine(
       return { ...state, type: "room-next", building: "TBA" };
     }
     const match = line.match(
-      /^<a href="https:\/\/maps\.ucsd\.edu\/\?id=1005#!s\/([A-Z][A-Z\d]{2,4})_Main\?ct\/18312" target="_blank">$/,
+      /^<a href="https:\/\/maps\.ucsd\.edu\/\?id=1005#!s\/([A-Z][A-Z\d]{1,4})_Main\?ct\/18312" target="_blank">$/,
     );
     if (match) {
       return { ...state, type: "building-code-next", building: match[1] };
@@ -1577,7 +1601,7 @@ function processLine(
   }
   if (state.type === "building-code-next") {
     const match = line.match(
-      /^(<td class="brdr">)?([A-Z][A-Z\d]{2}[A-Z\d ]{2})(<\/a>)?<\/td>$/,
+      /^(<td class="brdr">)?([A-Z][A-Z\d]{1}[A-Z\d ]{3})(<\/a>)?<\/td>$/,
     );
     if (match) {
       const building = match[2].trimEnd();
@@ -1653,11 +1677,13 @@ function processLine(
       }
     } else {
       if (
-        line === "</td>" &&
-        (state.sawStaff ||
-          state.meeting.instructors.length > 0 ||
-          // instructors may or may not be mentioned for unenrollable sections
-          state.sectionId === null)
+        line === "</td>"
+        // instructors may or may not be mentioned for unenrollable sections
+        // or enrollable, see PHYS 1AL, SA04 page 31
+
+        // (state.sawStaff ||
+        //   state.meeting.instructors.length > 0 ||
+        //   state.sectionId === null)
       ) {
         if (state.sectionId !== null) {
           return {
@@ -1913,7 +1939,7 @@ function processLine(
   }
   if (state.type === "exam-time-next") {
     const match = line.match(
-      /^<td class="brdr">(1?\d:(?:00|30|45)[ap]-1?\d:(?:00|20|30|50)[ap])<\/td>$/,
+      /^<td class="brdr">(1?\d:(?:00|05|10|30|45)[ap]-1?\d:(?:00|20|30|50)[ap])<\/td>$/,
     );
     if (match) {
       return {
@@ -1928,7 +1954,7 @@ function processLine(
       return { ...state, type: "exam-room-next", building: "TBA" };
     }
     const match = line.match(
-      /^<td class="brdr">([A-Z][A-Z\d]{2}[A-Z\d ]{2})<\/td>$/,
+      /^<td class="brdr">([A-Z][A-Z\d]{1}[A-Z\d ]{3})<\/td>$/,
     );
     if (match) {
       return { ...state, type: "exam-room-next", building: match[1].trimEnd() };
@@ -2018,7 +2044,19 @@ function processLine(
 
 for (let i = 1; i <= 50; i++) {
   const path = `.cache/SA04/_all/${i}.html`;
-  const lines = (await readFile(path, "utf-8")).split(/\r?\n/).slice(1);
+  const lines = (
+    await readFile(path, "utf-8").catch((error) =>
+      error instanceof Error && "code" in error && error.code === "ENOENT"
+        ? null
+        : Promise.reject(error),
+    )
+  )
+    ?.split(/\r?\n/)
+    .slice(1);
+  if (!lines) {
+    // some pages are missing
+    continue;
+  }
   let state: State = initState;
   for (const [i, line] of lines.entries()) {
     const next = processLine(state, line, {
@@ -2026,7 +2064,7 @@ for (let i = 1; i <= 50; i++) {
       quarter: "SA",
     });
     if (!next) {
-      console.error(state);
+      console.dir(state, { depth: null });
       console.error(
         `${path}:${i + 2}: unexpected line for state '${state.type}'`,
       );
