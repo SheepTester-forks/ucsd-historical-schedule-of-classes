@@ -6,10 +6,11 @@
  */
 
 import { readFile } from "node:fs/promises";
+import { terms, type Quarter } from "./lib.ts";
 
 type GlobalOptions = {
   termYear: number;
-  quarter: "FA" | "WI" | "SP" | "SA";
+  quarter: Quarter;
 };
 
 type Department = {
@@ -2042,36 +2043,54 @@ function processLine(
   return null;
 }
 
-for (let i = 1; i <= 50; i++) {
-  const path = `.cache/SA04/_all/${i}.html`;
-  const lines = (
-    await readFile(path, "utf-8").catch((error) =>
-      error instanceof Error && "code" in error && error.code === "ENOENT"
-        ? null
-        : Promise.reject(error),
-    )
-  )
-    ?.split(/\r?\n/)
-    .slice(1);
-  if (!lines) {
-    // some pages are missing
+for (const { paginateTerm: term, year: termYear, quarter } of terms()) {
+  if (!["SA04"].includes(term)) {
     continue;
   }
-  let state: State = initState;
-  for (const [i, line] of lines.entries()) {
-    const next = processLine(state, line, {
-      termYear: 2004,
-      quarter: "SA",
-    });
-    if (!next) {
-      console.dir(state, { depth: null });
-      console.error(
-        `${path}:${i + 2}: unexpected line for state '${state.type}'`,
-      );
-      console.error(line);
+  let totalPages = 1;
+  for (let i = 1; i <= totalPages; i++) {
+    const path = `.cache/${term}/_all/${i}.html`;
+    const allLines = (
+      await readFile(path, "utf-8").catch((error) =>
+        error instanceof Error && "code" in error && error.code === "ENOENT"
+          ? null
+          : Promise.reject(error),
+      )
+    )?.split(/\r?\n/);
+    if (!allLines) {
+      // some pages are missing and thats ok
+      continue;
+    }
+    const [firstLine, ...lines] = allLines;
+    const match = firstLine.match(
+      /^Page  \((\d+)&nbsp;of&nbsp;(\d+)\) &nbsp;$/,
+    );
+    if (
+      !match ||
+      +match[1] !== i ||
+      (totalPages !== 1 && +match[2] !== totalPages)
+    ) {
+      console.error(`${path}:1: page mismatch`);
+      console.error(firstLine);
       process.exit(1);
     }
-    state = next;
+    totalPages = +match[2];
+    let state: State = initState;
+    for (const [i, line] of lines.entries()) {
+      const next = processLine(state, line, {
+        termYear,
+        quarter,
+      });
+      if (!next) {
+        console.dir(state, { depth: null });
+        console.error(
+          `${path}:${i + 2}: unexpected line for state '${state.type}'`,
+        );
+        console.error(line);
+        process.exit(1);
+      }
+      state = next;
+    }
   }
 }
 console.error("success!");
