@@ -57,7 +57,7 @@ type Course = {
     // SA04 page 10
     extra: ExtraMeeting | null;
   })[];
-  exams: Exam[];
+  exams: (Exam | CancelledExam)[];
 };
 type EnrollmentInfo = {
   sectionId: number;
@@ -122,8 +122,14 @@ type Exam = {
   examType: keyof typeof examTypes;
   date: { month: number; date: number };
   time: string;
-  building: string;
-  room: string;
+  location: { building: string; room: string } | null;
+  comment: string;
+};
+type CancelledExam = {
+  cancelled: true;
+  isExam: true;
+  examType: keyof typeof examTypes;
+  date: { month: number; date: number };
   comment: string;
 };
 
@@ -133,6 +139,10 @@ const restrictionTypes = {
   JR: "Open to Juniors Only",
   SR: "Open to Seniors Only",
   N: "Not Open to Majors",
+  RE: "Open to Revelle College Students Only",
+  ER: "Open to Eleanor Roosevelt College Students Only",
+  FR: "Open to Freshmen Only",
+  SO: "Open to Sophomores Only",
 };
 function getRestrictionType(
   type: string,
@@ -143,7 +153,11 @@ function getRestrictionType(
     type === "O" ||
     type === "JR" ||
     type === "SR" ||
-    type === "N"
+    type === "N" ||
+    type === "RE" ||
+    type === "ER" ||
+    type === "FR" ||
+    type === "SO"
   ) {
     if (restrictionTypes[type] === title) {
       return type;
@@ -159,6 +173,8 @@ const instructionTypes = {
   SE: "Seminar",
   FW: "Fieldwork",
   CL: "Clinical Clerkship",
+  TU: "Tutorial",
+  SI: "",
 };
 function getInstructionType(
   type: string,
@@ -171,7 +187,9 @@ function getInstructionType(
     type === "DI" ||
     type === "SE" ||
     type === "FW" ||
-    type === "CL"
+    type === "CL" ||
+    type === "TU" ||
+    type === "SI"
   ) {
     if (instructionTypes[type] === title) {
       return type;
@@ -400,6 +418,7 @@ type State = (
         | Meeting
         | CancelledEnrollableMeeting
         | Exam
+        | CancelledExam
         | CancelledUnnrollableMeeting
         | null;
     }
@@ -545,6 +564,7 @@ type State = (
         | Meeting
         | CancelledEnrollableMeeting
         | Exam
+        | CancelledExam
         | CancelledUnnrollableMeeting;
     }
   | {
@@ -582,7 +602,8 @@ type State = (
       department: Department;
       subject: Subject;
       course: Course;
-      exam: Pick<Exam, "examType" | "date" | "time" | "building">;
+      exam: Pick<Exam, "examType" | "date" | "time">;
+      building: string;
     }
   | {
       type: "exam-brdr2-begin-next" | "exam-brdr2-end-next" | "exam-brdr3-next";
@@ -609,6 +630,7 @@ function addToMeeting(
     | Meeting
     | CancelledEnrollableMeeting
     | Exam
+    | CancelledExam
     | CancelledUnnrollableMeeting,
 ): Course | null {
   // TODO: may also want to assert based on section code format (e.g. A01 vs
@@ -1157,7 +1179,7 @@ function processLine(
       .replaceAll("&#039;", "'")
       .replaceAll("&amp;", "&")
       .match(
-        /^(?:<a href="javascript:openNewWindow\('(?:http:\/\/registrar\.ucsd\.edu\/studentlink\/cnd\.html|http:\/\/www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2}))'\)">)?<span class="boldtxt">([A-Za-z&'/:,.\d -]{30})<\/span>(?: <\/a>)?$/,
+        /^(?:<a href="javascript:openNewWindow\('(?:http:\/\/registrar\.ucsd\.edu\/studentlink\/cnd\.html|http:\/\/www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2}))'\)">)?<span class="boldtxt">([A-Za-z&'/:,.\d()+ -]{30})<\/span>(?: <\/a>)?$/,
       );
     if (match && line.startsWith("<a") === line.endsWith("a>")) {
       const title = match[3].trimEnd();
@@ -1282,7 +1304,8 @@ function processLine(
     }
     const topicMatch = line
       .replaceAll("&amp;", "&")
-      .match(/^([A-Za-z&., -]+)$/);
+      .replaceAll("&#039;", "'")
+      .match(/^([A-Za-z&.,?/\d:' -]+)$/);
     if (topicMatch && state.course.topic === null) {
       return { ...state, course: { ...state.course, topic: topicMatch[1] } };
     }
@@ -1452,7 +1475,7 @@ function processLine(
   }
   if (state.type === "instruction-type-next") {
     const match = line.match(
-      /^<td class="brdr"><span id="insTyp" title="([A-Za-z ]+)">([A-Z]{2})<\/span><\/td>$/,
+      /^<td class="brdr"><span id="insTyp" title="([A-Za-z ]*)">([A-Z]{2})<\/span><\/td>$/,
     );
     if (match) {
       const type = getInstructionType(match[2], match[1]);
@@ -1518,7 +1541,7 @@ function processLine(
   }
   if (state.type === "time-next") {
     const match = line.match(
-      /^<td class="brdr">(1?\d:(?:00|30|50)[ap]-1?\d:(?:20|40|50)[ap])<\/td>$/,
+      /^<td class="brdr">(1?\d:(?:00|30|50)[ap]-1?\d:(?:15|20|40|50)[ap])<\/td>$/,
     );
     if (match) {
       if (state.sectionId === "extra") {
@@ -1546,7 +1569,7 @@ function processLine(
       return { ...state, type: "room-next", building: "TBA" };
     }
     const match = line.match(
-      /^<a href="https:\/\/maps\.ucsd\.edu\/\?id=1005#!s\/([A-Z]{3,5})_Main\?ct\/18312" target="_blank">$/,
+      /^<a href="https:\/\/maps\.ucsd\.edu\/\?id=1005#!s\/([A-Z][A-Z\d]{2,4})_Main\?ct\/18312" target="_blank">$/,
     );
     if (match) {
       return { ...state, type: "building-code-next", building: match[1] };
@@ -1554,7 +1577,7 @@ function processLine(
   }
   if (state.type === "building-code-next") {
     const match = line.match(
-      /^(<td class="brdr">)?([A-Z]{3}[A-Z ]{2})(<\/a>)?<\/td>$/,
+      /^(<td class="brdr">)?([A-Z][A-Z\d]{2}[A-Z\d ]{2})(<\/a>)?<\/td>$/,
     );
     if (match) {
       const building = match[2].trimEnd();
@@ -1581,7 +1604,7 @@ function processLine(
         };
       }
     }
-    const match = line.match(/^<td class="brdr">([A-Z\d][A-Z\d ]{4})<\/td>$/);
+    const match = line.match(/^<td class="brdr">([A-Z\d][A-Z\d -]{4})<\/td>$/);
     if (match) {
       const room = match[1].trimEnd();
       const location = {
@@ -1666,9 +1689,11 @@ function processLine(
       ) {
         return { ...state, shouldSeeBr: true, sawStaff: true };
       }
-      const match = line.match(
-        /^<a href="#!" onclick="javascript:sendMail\('\/scheduleOfClasses\/scheduleOfClassesFacultyEmailResult\.htm\?pid=([A-Za-z\d+/]+==)'\)">([A-Za-z,. -]{35})<\/a>$/,
-      );
+      const match = line
+        .replaceAll("&#039;", "'")
+        .match(
+          /^<a href="#!" onclick="javascript:sendMail\('\/scheduleOfClasses\/scheduleOfClassesFacultyEmailResult\.htm\?pid=([A-Za-z\d+/]+==)'\)">([A-Za-z,.' -]{35})<\/a>$/,
+        );
       if (match && !state.sawStaff) {
         return {
           ...state,
@@ -1861,6 +1886,21 @@ function processLine(
     }
   }
   if (state.type === "exam-days-next") {
+    if (
+      line ===
+      '<td class="brdr" colspan="8" align="center"><span class="ertext">Cancelled</span></td>'
+    ) {
+      return {
+        ...state,
+        type: "meeting-row-end-next",
+        meeting: {
+          ...state.exam,
+          cancelled: true,
+          isExam: true,
+          comment: "",
+        },
+      };
+    }
     const match = line
       .replace("Sun", "X")
       .replace("Th", "R")
@@ -1884,24 +1924,38 @@ function processLine(
     }
   }
   if (state.type === "exam-building-next") {
-    const match = line.match(/^<td class="brdr">([A-Z][A-Z ]{4})<\/td>$/);
+    if (line === '<td class="brdr">TBA</td>') {
+      return { ...state, type: "exam-room-next", building: "TBA" };
+    }
+    const match = line.match(
+      /^<td class="brdr">([A-Z][A-Z\d]{2}[A-Z\d ]{2})<\/td>$/,
+    );
     if (match) {
-      return {
-        ...state,
-        type: "exam-room-next",
-        exam: { ...state.exam, building: match[1].trimEnd() },
-      };
+      return { ...state, type: "exam-room-next", building: match[1].trimEnd() };
     }
   }
   if (state.type === "exam-room-next") {
-    const match = line.match(/^<td class="brdr">([A-Z\d][A-Z\d ]{4})<\/td>$/);
+    if (line === '<td class="brdr">TBA</td>' && state.building === "TBA") {
+      return {
+        ...state,
+        type: "exam-brdr2-begin-next",
+        exam: {
+          ...state.exam,
+          location: null,
+          cancelled: false,
+          isExam: true,
+          comment: "",
+        },
+      };
+    }
+    const match = line.match(/^<td class="brdr">([A-Z\d][A-Z\d -]{4})<\/td>$/);
     if (match) {
       return {
         ...state,
         type: "exam-brdr2-begin-next",
         exam: {
           ...state.exam,
-          room: match[1].trimEnd(),
+          location: { building: state.building, room: match[1].trimEnd() },
           cancelled: false,
           isExam: true,
           comment: "",
@@ -1962,7 +2016,7 @@ function processLine(
   return null;
 }
 
-for (let i = 1; i <= 14; i++) {
+for (let i = 1; i <= 50; i++) {
   const path = `.cache/SA04/_all/${i}.html`;
   const lines = (await readFile(path, "utf-8")).split(/\r?\n/).slice(1);
   let state: State = initState;
