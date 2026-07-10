@@ -51,7 +51,14 @@ type Course = {
   } | null;
   resourcesSectionId: number;
   // on rare occassions there can be multiple, like SA04 page 31 PHYS 1B & 1C
-  preAdditionalMeetings: (UnenrollableMeeting | CancelledUnnrollableMeeting)[];
+  preAdditionalMeetings: ((
+    | UnenrollableMeeting
+    | CancelledUnnrollableMeeting
+  ) & {
+    // FA05 page 359, MATH 3C has an extra meeting time for its pre-additional
+    // meeting
+    extra: ExtraMeeting | null;
+  })[];
   enrollables: ((EnrollableMeeting | CancelledEnrollableMeeting) & {
     // SPPS 201, FA05 page 124 has two extra times for its lecture, but it's got
     // to be a mistake because why do they have two friday sessions ??
@@ -149,6 +156,10 @@ const restrictionTypes = {
   FR: "Open to Freshmen Only",
   SO: "Open to Sophomores Only",
   SI: "Open to Sixth College Students Only",
+  TH: "Open to Thurgood Marshall College Students Only",
+  WA: "Open to Warren College Students Only",
+  GR: "",
+  MD: "",
 };
 function getRestrictionType(
   type: string,
@@ -164,7 +175,11 @@ function getRestrictionType(
     type === "ER" ||
     type === "FR" ||
     type === "SO" ||
-    type === "SI"
+    type === "SI" ||
+    type === "TH" ||
+    type === "WA" ||
+    type === "GR" ||
+    type === "MD"
   ) {
     if (restrictionTypes[type] === title) {
       return type;
@@ -701,6 +716,23 @@ function addToMeeting(
               }),
             };
           }
+        } else {
+          const lastPreAdditional = course.preAdditionalMeetings.at(-1);
+          if (
+            lastPreAdditional &&
+            lastPreAdditional.extra === null &&
+            lastPreAdditional.instructionType === prevMeeting.instructionType &&
+            lastPreAdditional.sectionCode === prevMeeting.sectionCode &&
+            lastPreAdditional.comment === prevMeeting.comment
+          ) {
+            return {
+              ...course,
+              preAdditionalMeetings: course.preAdditionalMeetings.with(-1, {
+                ...lastPreAdditional,
+                extra,
+              }),
+            };
+          }
         }
       }
     }
@@ -736,7 +768,7 @@ function addToMeeting(
             ...course,
             preAdditionalMeetings: [
               ...course.preAdditionalMeetings,
-              prevMeeting,
+              { ...prevMeeting, extra: null },
             ],
           }
         : course;
@@ -787,7 +819,7 @@ function processLine(
       const matchSubject = line
         .replaceAll("&amp;", "&")
         .match(
-          /^<h2>  <span class="centeralign">([A-Za-z&/, ]{30}) \(([A-Z ]{5})\)<\/span> <\/h2>$/,
+          /^<h2>  <span class="centeralign">([A-Za-z&/, -]{30}) \(([A-Z ]{5})\)<\/span> <\/h2>$/,
         );
       if (matchDept) {
         return {
@@ -1088,10 +1120,17 @@ function processLine(
       if (match) {
         return { ...state, comment: match[1] };
       }
-    } else if (line === "</span>") {
-      return { ...state, type: "course-comment-content-td-end-next" };
     } else {
-      return { ...state, comment: state.comment + "\n" + line };
+      const match = line.match(/(.*)<\/span>$/);
+      if (match) {
+        return {
+          ...state,
+          type: "course-comment-content-td-end-next",
+          comment: state.comment + "\n" + match[1],
+        };
+      } else {
+        return { ...state, comment: state.comment + "\n" + line };
+      }
     }
   }
   if (state.type === "course-comment-content-td-end-next" && line === "</td>") {
@@ -1145,7 +1184,7 @@ function processLine(
   }
   if (state.type === "restrictions-title-next") {
     const match = line.match(
-      /^<span id="crsRestCd" title="([A-Za-z\-() ]+)">$/,
+      /^<span id="crsRestCd" title="([A-Za-z\-() ]*)">$/,
     );
     if (match) {
       return { ...state, type: "restrictions-letter-next", title: match[1] };
@@ -1228,7 +1267,7 @@ function processLine(
     }
   }
   if (state.type === "unit-start-next") {
-    const match = line.match(/^\( (1?\d)$/);
+    const match = line.match(/^\( ([12]?\d|2\.5)$/);
     if (match) {
       return {
         ...state,
@@ -1238,7 +1277,7 @@ function processLine(
     }
   }
   if (state.type === "unit-end-next") {
-    const match = line.match(/^\/(1?\d) by (2|4)$/);
+    const match = line.match(/^\/([12]?\d) by (2|4|7)$/);
     if (match && !state.course.units.end) {
       return {
         ...state,
@@ -1572,14 +1611,17 @@ function processLine(
       .replace("Sun", "X")
       .replace("Th", "R")
       .replace("Tu", "T")
-      .match(/^<td class="brdr">(M?T?W?R?F?S?X? {0,6})<\/td>$/);
+      .match(
+        // M?T?W?R?F?S?X?
+        /^<td class="brdr">((?:TR|T|MW|MWF|M|R|W|F|MTWR|MTWRF|MF|MR|TWR|WRF|WR|MWR|WF|MTWF|TW|MTW|MTR|RF|S) {0,6})<\/td>$/,
+      );
     if (match && match[1].length === 7) {
       return { ...state, type: "time-next", days: match[1].trimEnd() };
     }
   }
   if (state.type === "time-next") {
     const match = line.match(
-      /^<td class="brdr">(1?\d:(?:00|10|15|20|30|50)[ap]-1?\d:(?:00|05|10|15|20|30|40|45|50)[ap])<\/td>$/,
+      /^<td class="brdr">(1?\d:(?:00|10|15|20|30|45|50)[ap]-1?\d:(?:00|05|10|15|20|25|30|40|45|50|55|59)[ap])<\/td>$/,
     );
     if (match) {
       if (state.sectionId === "extra") {
@@ -1744,8 +1786,8 @@ function processLine(
       if (
         line === "Staff" &&
         !state.sawStaff &&
-        state.meeting.instructors.length === 0 &&
-        state.sectionId !== null
+        state.meeting.instructors.length === 0
+        // FA05 page 525, ENG 100L has staff pre-additional course
       ) {
         return { ...state, shouldSeeBr: true, sawStaff: true };
       }
@@ -1932,7 +1974,7 @@ function processLine(
         },
       };
     }
-    const matchSecCode = line.match(/^<td class="brdr">([A-Z]\d\d)<\/td>$/);
+    const matchSecCode = line.match(/^<td class="brdr">([A-Z\d]\d\d)<\/td>$/);
     if (matchSecCode && state.instructionType) {
       return {
         ...state,
@@ -1965,7 +2007,7 @@ function processLine(
       .replace("Sun", "X")
       .replace("Th", "R")
       .replace("Tu", "T")
-      .match(/^<td class="brdr">(M?T?W?R?F?S?X? {0,6})<\/td>$/);
+      .match(/^<td class="brdr">((?:T|R|S|M|W|F|X) {0,6})<\/td>$/);
     // TODO: validate exam date and day match
     if (match && match[1].length === 7) {
       return { ...state, type: "exam-time-next" };
@@ -1973,7 +2015,7 @@ function processLine(
   }
   if (state.type === "exam-time-next") {
     const match = line.match(
-      /^<td class="brdr">(1?\d:(?:00|01|05|10|30|45|51)[ap]-1?\d:(?:00|20|29|30|50|59)[ap])<\/td>$/,
+      /^<td class="brdr">(1?\d:(?:00|01|05|10|15|30|45|51)[ap]-1?\d:(?:00|20|29|30|40|45|50|59)[ap])<\/td>$/,
     );
     if (match) {
       return {
@@ -2118,7 +2160,11 @@ for (const {
     const path = `.cache/${term}/_all/${pageNumber}.html`;
     if (
       path === ".cache/SA05/_all/46.html" ||
-      path === ".cache/SA05/_all/47.html"
+      path === ".cache/SA05/_all/47.html" ||
+      // MGT 221 again
+      path === ".cache/FA05/_all/492.html" ||
+      path === ".cache/FA05/_all/493.html" ||
+      path === ".cache/FA05/_all/494.html"
     ) {
       // MGT is too weird, it only has exams
       continue;
