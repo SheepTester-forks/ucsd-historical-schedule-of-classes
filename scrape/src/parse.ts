@@ -53,7 +53,10 @@ type Course = {
   // on rare occassions there can be multiple, like SA04 page 31 PHYS 1B & 1C
   preAdditionalMeetings: (UnenrollableMeeting | CancelledUnnrollableMeeting)[];
   enrollables: ((EnrollableMeeting | CancelledEnrollableMeeting) & {
-    extra: ExtraMeeting | null;
+    // SPPS 201, FA05 page 124 has two extra times for its lecture, but it's got
+    // to be a mistake because why do they have two friday sessions ??
+    // whatever..
+    extras: ExtraMeeting[];
   })[];
   additionalMeetings: ((UnenrollableMeeting | CancelledUnnrollableMeeting) & {
     // yeah apparently additional meetings can have extras too, like ECE 103,
@@ -145,6 +148,7 @@ const restrictionTypes = {
   ER: "Open to Eleanor Roosevelt College Students Only",
   FR: "Open to Freshmen Only",
   SO: "Open to Sophomores Only",
+  SI: "Open to Sixth College Students Only",
 };
 function getRestrictionType(
   type: string,
@@ -159,7 +163,8 @@ function getRestrictionType(
     type === "RE" ||
     type === "ER" ||
     type === "FR" ||
-    type === "SO"
+    type === "SO" ||
+    type === "SI"
   ) {
     if (restrictionTypes[type] === title) {
       return type;
@@ -180,6 +185,7 @@ const instructionTypes = {
   PR: "Practicum",
   ST: "Studio",
   SA: "",
+  CO: "Conference",
 };
 function getInstructionType(
   type: string,
@@ -197,7 +203,8 @@ function getInstructionType(
     type === "SI" ||
     type === "PR" ||
     type === "ST" ||
-    type === "SA"
+    type === "SA" ||
+    type === "CO"
   ) {
     if (instructionTypes[type] === title) {
       return type;
@@ -212,6 +219,7 @@ const examTypes = {
   PB: "Problem Session",
   RE: "Review Session",
   OT: "Other Additional Meeting",
+  FM: "Film",
 };
 function getExamType(
   type: string,
@@ -223,7 +231,8 @@ function getExamType(
     type === "MU" ||
     type === "PB" ||
     type === "RE" ||
-    type === "OT"
+    type === "OT" ||
+    type === "FM"
   ) {
     if (examTypes[type] === title) {
       return type;
@@ -680,7 +689,6 @@ function addToMeeting(
         const lastEnrollable = course.enrollables.at(-1);
         if (lastEnrollable) {
           if (
-            lastEnrollable.extra === null &&
             lastEnrollable.instructionType === prevMeeting.instructionType &&
             lastEnrollable.sectionCode === prevMeeting.sectionCode &&
             lastEnrollable.comment === prevMeeting.comment
@@ -689,7 +697,7 @@ function addToMeeting(
               ...course,
               enrollables: course.enrollables.with(-1, {
                 ...lastEnrollable,
-                extra,
+                extras: [...lastEnrollable.extras, extra],
               }),
             };
           }
@@ -698,23 +706,26 @@ function addToMeeting(
     }
   } else if (course.exams.length === 0) {
     if (prevMeeting.enrollable !== null) {
-      const lastAdditonalMeeting = course.additionalMeetings.at(-1);
-      if (!lastAdditonalMeeting || lastAdditonalMeeting.cancelled) {
-        // once we have started an additional meeting, the remaining ones must
-        // also be unenrollable
-        // well, an enrollable meeting can show up after a cancelled second
-        // unenrollable meeting (but it'll be out of order so idk; see SA04 page
-        // 31 PHYS 1B)
-        return prevMeeting
-          ? {
-              ...course,
-              enrollables: [
-                ...course.enrollables,
-                { ...prevMeeting, extra: null },
-              ],
-            }
-          : course;
-      }
+      // const lastAdditonalMeeting = course.additionalMeetings.at(-1);
+      // if (!lastAdditonalMeeting || lastAdditonalMeeting.cancelled) {
+      // once we have started an additional meeting, the remaining ones must
+      // also be unenrollable
+      // well, an enrollable meeting can show up after a cancelled second
+      // unenrollable meeting (but it'll be out of order so idk; see SA04 page
+      // 31 PHYS 1B)
+      // well actually enrollable meetings can be whenever, see FA05 page 68,
+      // BIBC 102, where they for whatever reason made an enrollable lecture and
+      // a bunch of unenrollable discussions, except one that no one enrolled in
+      // is enrollable
+      return prevMeeting
+        ? {
+            ...course,
+            enrollables: [
+              ...course.enrollables,
+              { ...prevMeeting, extras: [] },
+            ],
+          }
+        : course;
     } else if (course.enrollables.length === 0) {
       // first meeting (A00) can be unenrollable yet followed by enrollable
       // meetings
@@ -1240,7 +1251,7 @@ function processLine(
         },
       };
     }
-    const matchNoStep = line.match(/^-(1?\d)$/);
+    const matchNoStep = line.match(/^-([12]?\d)$/);
     if (matchNoStep && !state.course.units.end) {
       return {
         ...state,
@@ -1258,65 +1269,59 @@ function processLine(
     }
   }
   if (state.type === "unit-end-br-next" && line === "<br>") {
-    if (isSummer) {
-      return {
-        ...state,
-        type: "unit-end-summer-next",
-        course: { ...state.course, topic: null },
-      };
-    } else {
-      return {
-        ...state,
-        type: "course-header-end-next",
-        course: { ...state.course, topic: null, summerRange: null },
-      };
-    }
+    return {
+      ...state,
+      type: "unit-end-summer-next",
+      course: { ...state.course, topic: null },
+    };
   }
   if (state.type === "unit-end-summer-next") {
-    const match = line.match(
-      /^(Sum Sess I|Sum Ses II|SpecSumSes|Summer Qtr)?:&nbsp;([A-Z][a-z]+) ([0-3]\d) (\d{4})&nbsp;-&nbsp;([A-Z][a-z]+) ([0-3]\d) (\d{4})$/,
-    );
-    if (match) {
-      const [
-        ,
-        summerType,
-        startMonth,
-        startDate,
-        startYear,
-        endMonth,
-        endDate,
-        endYear,
-      ] = match;
-      // TODO: can we enforce that this is present after a particular year
-      const parsedType =
-        summerType === "Sum Sess I"
-          ? 1
-          : summerType === "Sum Ses II"
-            ? 2
-            : summerType === "SpecSumSes"
-              ? "special"
-              : summerType === "Summer Qtr"
-                ? "med"
-                : summerType === undefined
-                  ? null
-                  : "idk";
-      if (
-        parsedType !== "idk" &&
-        +startYear === options.termYear &&
-        +endYear === options.termYear
-      ) {
-        return {
-          ...state,
-          type: "course-header-end-next",
-          course: {
-            ...state.course,
-            summerRange: {
-              term: parsedType,
-              start: { month: startMonth, date: +startDate },
-              end: { month: endMonth, date: +endDate },
+    if (isSummer) {
+      const match = line.match(
+        /^(Sum Sess I|Sum Ses II|SpecSumSes|Summer Qtr)?:&nbsp;([A-Z][a-z]+) ([0-3]\d) (\d{4})&nbsp;-&nbsp;([A-Z][a-z]+) ([0-3]\d) (\d{4})$/,
+      );
+      if (match) {
+        const [
+          ,
+          summerType,
+          startMonth,
+          startDate,
+          startYear,
+          endMonth,
+          endDate,
+          endYear,
+        ] = match;
+        // TODO: can we enforce that this is present after a particular year
+        const parsedType =
+          summerType === "Sum Sess I"
+            ? 1
+            : summerType === "Sum Ses II"
+              ? 2
+              : summerType === "SpecSumSes"
+                ? "special"
+                : summerType === "Summer Qtr"
+                  ? "med"
+                  : summerType === undefined
+                    ? null
+                    : "idk";
+        if (
+          parsedType !== "idk" &&
+          +startYear === options.termYear &&
+          +endYear === options.termYear
+        ) {
+          return {
+            ...state,
+            type: "course-header-end-next",
+            course: {
+              ...state.course,
+              summerRange: {
+                term: parsedType,
+                start: { month: startMonth, date: +startDate },
+                end: { month: endMonth, date: +endDate },
+              },
             },
-          },
-        };
+          };
+        }
       }
     }
     const topicMatch = line
@@ -1324,7 +1329,23 @@ function processLine(
       .replaceAll("&#039;", "'")
       .match(/^([A-Za-z&.,?/\d:'!( -]+)$/);
     if (topicMatch && state.course.topic === null) {
-      return { ...state, course: { ...state.course, topic: topicMatch[1] } };
+      if (isSummer) {
+        // summer range may follow
+        return { ...state, course: { ...state.course, topic: topicMatch[1] } };
+      } else {
+        return {
+          ...state,
+          type: "course-header-end-next",
+          course: { ...state.course, topic: topicMatch[1], summerRange: null },
+        };
+      }
+    }
+    if (line === "</td>" && !isSummer) {
+      return {
+        ...state,
+        type: "ready-for-course-number-links",
+        course: { ...state.course, summerRange: null },
+      };
     }
   }
   if (state.type === "course-header-end-next" && line === "</td>") {
@@ -1558,7 +1579,7 @@ function processLine(
   }
   if (state.type === "time-next") {
     const match = line.match(
-      /^<td class="brdr">(1?\d:(?:00|15|30|50)[ap]-1?\d:(?:00|15|20|40|45|50)[ap])<\/td>$/,
+      /^<td class="brdr">(1?\d:(?:00|10|15|20|30|50)[ap]-1?\d:(?:00|05|10|15|20|30|40|45|50)[ap])<\/td>$/,
     );
     if (match) {
       if (state.sectionId === "extra") {
@@ -1952,7 +1973,7 @@ function processLine(
   }
   if (state.type === "exam-time-next") {
     const match = line.match(
-      /^<td class="brdr">(1?\d:(?:00|01|05|10|30|45|51)[ap]-1?\d:(?:00|20|30|50)[ap])<\/td>$/,
+      /^<td class="brdr">(1?\d:(?:00|01|05|10|30|45|51)[ap]-1?\d:(?:00|20|29|30|50|59)[ap])<\/td>$/,
     );
     if (match) {
       return {
@@ -2089,7 +2110,7 @@ for (const {
   year: termYear,
   quarter,
 } of terms()) {
-  if (!["SA04", "SA05"].includes(term)) {
+  if (!["SA04", "SA05", "FA05"].includes(term)) {
     continue;
   }
   let totalPages = 1;
