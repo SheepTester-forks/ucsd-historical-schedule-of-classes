@@ -68,7 +68,9 @@ type Course = {
   additionalMeetings: ((UnenrollableMeeting | CancelledUnnrollableMeeting) & {
     // yeah apparently additional meetings can have extras too, like ECE 103,
     // SA04 page 10
-    extra: ExtraMeeting | null;
+    // SP13 page 100 CAT 124 has three extra meetings, though it seems to be a
+    // duplicate pair
+    extras: ExtraMeeting[];
   })[];
   exams: (Exam | CancelledExam)[];
 };
@@ -132,7 +134,13 @@ type Exam = {
   cancelled: false;
   isExam: true;
   examType: keyof typeof examTypes;
-  date: { month: number; date: number };
+  date: {
+    month: number;
+    date: number;
+    // almost always the term year, except when there's a typo, like FA06 page
+    // 164, CSE 290, F00 MU, which is scheduled in 2009
+    year: number;
+  };
   time: string;
   location: { building: string; room: string } | null;
   comment: string;
@@ -162,6 +170,18 @@ const restrictionTypes = {
   MD: "",
   XFR: "Not Open to Freshmen",
   XJR: "Not Open to Juniors",
+  M1: "",
+  M2: "",
+  XM3: "",
+  M4: "",
+  PH: "",
+  M3: "",
+  XSO: "Not Open to Sophomores",
+  D1: "",
+  D2: "",
+  D3: "",
+  P4: "",
+  MU: "Open to Muir College Students Only",
 };
 function getRestrictionType(
   type: string,
@@ -183,7 +203,19 @@ function getRestrictionType(
     type === "GR" ||
     type === "MD" ||
     type === "XFR" ||
-    type === "XJR"
+    type === "XJR" ||
+    type === "M1" ||
+    type === "M2" ||
+    type === "XM3" ||
+    type === "M4" ||
+    type === "PH" ||
+    type === "M3" ||
+    type === "XSO" ||
+    type === "D1" ||
+    type === "D2" ||
+    type === "D3" ||
+    type === "P4" ||
+    type === "MU"
   ) {
     if (restrictionTypes[type] === title) {
       return type;
@@ -205,6 +237,9 @@ const instructionTypes = {
   ST: "Studio",
   SA: "",
   CO: "Conference",
+  OP: "",
+  IT: "",
+  OT: "Other Additional Meeting",
 };
 function getInstructionType(
   type: string,
@@ -223,7 +258,10 @@ function getInstructionType(
     type === "PR" ||
     type === "ST" ||
     type === "SA" ||
-    type === "CO"
+    type === "CO" ||
+    type === "OP" ||
+    type === "IT" ||
+    type === "OT"
   ) {
     if (instructionTypes[type] === title) {
       return type;
@@ -349,6 +387,7 @@ type State = (
       subject: Subject;
       course: ExpectedCourseInfo;
       comment: string;
+      started: boolean;
     }
   | {
       type: "start-course-td";
@@ -691,7 +730,6 @@ function addToMeeting(
       const lastAdditional = course.additionalMeetings.at(-1);
       if (lastAdditional) {
         if (
-          lastAdditional.extra === null &&
           lastAdditional.instructionType === prevMeeting.instructionType &&
           lastAdditional.sectionCode === prevMeeting.sectionCode &&
           lastAdditional.comment === prevMeeting.comment
@@ -700,7 +738,7 @@ function addToMeeting(
             ...course,
             additionalMeetings: course.additionalMeetings.with(-1, {
               ...lastAdditional,
-              extra,
+              extras: [...lastAdditional.extras, extra],
             }),
           };
         }
@@ -788,7 +826,7 @@ function addToMeeting(
             ...course,
             additionalMeetings: [
               ...course.additionalMeetings,
-              { ...prevMeeting, extra: null },
+              { ...prevMeeting, extras: [] },
             ],
           }
         : course;
@@ -818,7 +856,7 @@ function processLine(
       const matchDept = line
         .replaceAll("&amp;", "&")
         .match(
-          /^<h2> <span class="centeralign">([A-Za-z&, ]{35})<\/span> <\/h2>$/,
+          /^<h2> <span class="centeralign">([A-Za-z&,/ ]{35})<\/span> <\/h2>$/,
         );
       const matchSubject = line
         .replaceAll("&amp;", "&")
@@ -870,6 +908,8 @@ function processLine(
     }
     if (line === "<br>" && !state.comment) {
       return { ...state, type: "subj-comment-h3" };
+    } else {
+      return { ...state, comment: state.comment + "\n<br>" };
     }
   }
   if (
@@ -904,10 +944,8 @@ function processLine(
   if (state.type === "after-heading") {
     if (state.next === "td") {
       if (state.wasFrom.type === "dept") {
-        if (line === "<br>") {
-          if (!state.wasFrom.comment) {
-            return state;
-          }
+        if (line === "<br>" && !state.wasFrom.comment) {
+          return state;
         } else if (line !== "</td>") {
           return {
             ...state,
@@ -1085,7 +1123,7 @@ function processLine(
     const match = line
       .replaceAll("&#039;", "'")
       .replaceAll("&amp;", "&")
-      .match(/^([A-Za-z&'/.,:\d() -]{1,30})$/);
+      .match(/^([A-Za-z&'/.,:\d()!? -]{1,30})$/);
     if (match) {
       return {
         ...state,
@@ -1116,13 +1154,21 @@ function processLine(
     state.type === "course-comment-content-td-begin-next" &&
     line === '<td  class="nonenrtxt" colspan="11">'
   ) {
-    return { ...state, type: "course-comment-content", comment: "" };
+    return {
+      ...state,
+      type: "course-comment-content",
+      comment: "",
+      started: false,
+    };
   }
   if (state.type === "course-comment-content") {
-    if (state.comment === "") {
+    if (!state.started) {
+      if (line === '<span class="ertext">') {
+        return { ...state, started: true };
+      }
       const match = line.match(/^<span class="ertext"> (.+)$/);
       if (match) {
-        return { ...state, comment: match[1] };
+        return { ...state, comment: match[1], started: true };
       }
     } else {
       const match = line.match(/(.*)<\/span>$/);
@@ -1198,7 +1244,7 @@ function processLine(
     }
   }
   if (state.type === "restrictions-letter-next") {
-    const match = line.match(/^([A-Z]{1,3})<\/span><br>$/);
+    const match = line.match(/^([A-Z\d]{1,3})<\/span><br>$/);
     if (match) {
       const type = getRestrictionType(match[1], state.title);
       if (type) {
@@ -1244,7 +1290,9 @@ function processLine(
       .replaceAll("&#034;", '"')
       .replaceAll("&amp;", "&")
       .match(
-        /^(?:<a href="javascript:openNewWindow\('http:\/\/(registrar\.ucsd\.edu\/studentlink\/cnd\.html|www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2})|www\.ucsd\.edu\/catalog\/curric\/EAP\.html|pharmacy\.ucsd\.edu\/current)'\)">)?<span class="boldtxt">([A-Za-z&'/:,.\d()+";? -]{30})<\/span>(?: <\/a>)?$/,
+        // SA10 page 46 HIEU 106GS links to SP18.html and idk if that's intentional
+        // idk why they only misspell "EXCLUDE" but SP19 page 500 RMAS 199 links to 'EXCULDE' and one before did 'EXLUDE'
+        /^(?:<a href="javascript:openNewWindow\('http:\/\/(registrar\.ucsd\.edu\/studentlink\/cnd\.html|www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5}|SP18|CSE-AESE|EXLUDE|EXCULDE)\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2})|www\.ucsd\.edu\/catalog\/curric\/EAP\.html|pharmacy\.ucsd\.edu\/current)'\)">)?<span class="boldtxt">([A-Za-z&'/:,.\d()+";?!@# -]{30})<\/span>(?: <\/a>)?$/,
       );
     if (match && line.startsWith("<a") === line.endsWith("a>")) {
       const title = match[4].trimEnd();
@@ -1282,7 +1330,7 @@ function processLine(
     }
   }
   if (state.type === "unit-end-next") {
-    const match = line.match(/^\/([12]?\d) by (2|4|7|0\.5)$/);
+    const match = line.match(/^\/([12]?\d) by (2|3|4|7|0\.5)$/);
     if (match && !state.course.units.end) {
       return {
         ...state,
@@ -1372,7 +1420,22 @@ function processLine(
       .replaceAll("&amp;", "&")
       .replaceAll("&#039;", "'")
       .replaceAll("&#034;", '"')
-      .match(/^([A-Za-z&.,?/\d:'!(" -]+)$/);
+      // 'What=Algebra, What=Analysis' SP09 page 340 MATH 87
+      // 'MoliÛre et les conflits' WI11 page 318 LTFR 122
+      // - pretty sure this is mojibake. but looking at the untrimmed HTML, the
+      //   full string is still 30 chars even with the mojibake. so ig they're
+      //   stored as 30 bytes not chars, which makes sense
+      // - because they send their HTML with 'Content-Type: text/html;charset=UTF-8'
+      // 'El cine de Pedro Almodìvar' WI11 page 322 LTSP 129
+      // - should be Almodóvar
+      // 'Poes¥a reciente' WI11 page 322 LTSP 141
+      // '*LA*' SP11 page 322 LTSP 174
+      // 'God,Satan,& the Desert *$95fee' FA12 page 238 ERC 87
+      // - yes they put the dollar fee into the topic. it is for an anza borrego trip
+      // 'Du Moyen-Age ë 1789' FA12 page 316 LTFR 115
+      // 'La Litt©rature fantastique' WI13 page 317 LTFR 141
+      // 'Hyperk\"ahler manifolds' MATH 206A, FA18 page 363
+      .match(/^([A-Za-z&.,?/\d:'!(")#;=@Ûì¥*+$ë©\\ -]+)$/);
     if (topicMatch && state.course.topic === null) {
       if (isSummer) {
         // summer range may follow
@@ -1421,7 +1484,9 @@ function processLine(
   }
   if (state.type === "resources-next") {
     const match = line.match(
-      /^<span class="boldtxt" onmouseover="" style="cursor: pointer;" onclick="javascript:openNewWindow\('http:\/\/courses\.ucsd\.edu\/coursemain\.asp\?section=(\d{6})'\)">Resources<\/span>&nbsp;\|&nbsp;$/,
+      // FA19 page 6 ANTH 199 has a 4-digit section id here
+      // FA19 page 121 CHEM 99H has '74'
+      /^<span class="boldtxt" onmouseover="" style="cursor: pointer;" onclick="javascript:openNewWindow\('http:\/\/courses\.ucsd\.edu\/coursemain\.asp\?section=(\d{6}|6922|74)'\)">Resources<\/span>&nbsp;\|&nbsp;$/,
     );
     if (match) {
       return {
@@ -1545,7 +1610,9 @@ function processLine(
     };
   }
   if (state.type === "brdr-section-id-end-next") {
-    const match = line.match(/^\d{5,6}$/);
+    // FA19 page 6 ANTH 199 has a 4-digit section id here
+    // FA19 page 121 CHEM 99H has '74'
+    const match = line.match(/^(?:\d{6}|6922|74)$/);
     if (match && state.sectionId === null) {
       return { ...state, sectionId: +match[0] };
     }
@@ -1572,7 +1639,19 @@ function processLine(
     }
   }
   if (state.type === "section-code-next") {
-    const match = line.match(/^<td class="brdr">([A-Z\d]\d\d)<\/td>$/);
+    // two-digit second codes are usually typos i think
+    // SP06 page 274 IRGN section '23 ', which follows 022, 024, 025
+    // or FA08 page 65 BISP 190 cancelled section 'A0 '
+    // FA08 page 332 MAE 299 '50 ' (it is a bit more frequent than once in a blue moon)
+    // there's also FA08 page 359 MED 296 where they used O instead of 0
+    // ^ same with CSE 197 WI14 page 172 'GOO'
+    // FA14 page 397 NANO 299 has ' 10' which puts it before '001'
+    // FA16 page 295 HIUS 183, 'BOO' was cancelled and presumably replaced with 'B00'
+    // guess it's also not super rare
+    // SP19 page 412 NEU 296 has '00?' (cancelled), i guess they held shift or something ??
+    const match = line.match(
+      /^<td class="brdr">([A-Z\d]\d\d|\d\d |A0 |[A-Z]OO| 10|00\?)<\/td>$/,
+    );
     if (match) {
       return {
         ...state,
@@ -1657,7 +1736,7 @@ function processLine(
       return { ...state, type: "room-next", building: "TBA" };
     }
     const match = line.match(
-      /^<a href="https:\/\/maps\.ucsd\.edu\/\?id=1005#!s\/([A-Z][A-Z\d]{1,4})_Main\?ct\/18312" target="_blank">$/,
+      /^<a href="https:\/\/maps\.ucsd\.edu\/\?id=1005#!s\/([A-Z][A-Z\d-]{1,4})_Main\?ct\/18312" target="_blank">$/,
     );
     if (match) {
       return { ...state, type: "building-code-next", building: match[1] };
@@ -1668,7 +1747,7 @@ function processLine(
       return { ...state, type: "room-next", building: "TBA" };
     }
     const match = line.match(
-      /^(<td class="brdr">)?([A-Z][A-Z\d]{1}[A-Z\d ]{3})(<\/a>)?<\/td>$/,
+      /^(<td class="brdr">)?([A-Z][A-Z\d]{1}[A-Z\d -]{3})(<\/a>)?<\/td>$/,
     );
     if (match) {
       const building = match[2].trimEnd();
@@ -1799,11 +1878,10 @@ function processLine(
       ) {
         return { ...state, shouldSeeBr: true, sawStaff: true };
       }
-      const match = line
-        .replaceAll("&#039;", "'")
-        .match(
-          /^<a href="#!" onclick="javascript:sendMail\('\/scheduleOfClasses\/scheduleOfClassesFacultyEmailResult\.htm\?pid=([A-Za-z\d+/]+==)'\)">([A-Za-z,.' -]{35})<\/a>$/,
-        );
+      const match = line.replaceAll("&#039;", "'").match(
+        // instructor named 'Error, 243' in FA06 page 235 ERTH 40
+        /^<a href="#!" onclick="javascript:sendMail\('\/scheduleOfClasses\/scheduleOfClassesFacultyEmailResult\.htm\?pid=([A-Za-z\d+/]+==)'\)">([A-Za-z,.'\d() -]{35})<\/a>$/,
+      );
       if (match && !state.sawStaff) {
         return {
           ...state,
@@ -1972,13 +2050,16 @@ function processLine(
     const match = line.match(
       /^<td class="brdr">([01]\d)\/([0-3]\d)\/(\d{4})<\/td>$/,
     );
-    if (match && +match[3] === options.termYear && state.examType) {
+    // FA06 page 164, CSE 290, F00 MU is scheduled in 2009
+    // at least the day of week (M) is accurate
+    // +match[3] === options.termYear &&
+    if (match && state.examType) {
       return {
         ...state,
         type: "exam-days-next",
         exam: {
           examType: state.examType,
-          date: { month: +match[1], date: +match[2] },
+          date: { month: +match[1], date: +match[2], year: +match[3] },
         },
       };
     }
@@ -2041,7 +2122,7 @@ function processLine(
       return { ...state, type: "exam-room-next", building: "TBA" };
     }
     const match = line.match(
-      /^<td class="brdr">([A-Z][A-Z\d]{1}[A-Z\d ]{3})<\/td>$/,
+      /^<td class="brdr">([A-Z][A-Z\d]{1}[A-Z\d -]{3})<\/td>$/,
     );
     if (match) {
       return { ...state, type: "exam-room-next", building: match[1].trimEnd() };
@@ -2163,7 +2244,7 @@ for (const {
   year: termYear,
   quarter,
 } of terms()) {
-  if (termYear !== 2005) {
+  if (termYear < 2005) {
     continue;
   }
   let totalPages = 1;
@@ -2196,12 +2277,21 @@ for (const {
     }
     totalPages = +match[2];
 
+    const somiIndex = lines.indexOf(
+      '<h2> <span class="centeralign">Sch of Med Interdisciplinary Crses </span> </h2>',
+    );
+    if (somiIndex !== -1) {
+      // TODO: i think when a course header repeats, it uses the previous code
+      console.error(`${path}:${somiIndex + 1}: skipping SOMI Crses`);
+      continue;
+    }
+
     const mgtIndex = lines.findIndex((line) =>
       line.includes("http://courses.ucsd.edu/coursemain.asp?section=0"),
     );
     if (mgtIndex !== -1) {
+      // TODO: MGT is too weird, it only has exams
       console.error(`${path}:${mgtIndex + 1}: skipping MGT 221`);
-      // MGT is too weird, it only has exams
       continue;
     }
 
