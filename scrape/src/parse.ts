@@ -2095,6 +2095,13 @@ for (const {
   let totalPages = 1;
   for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
     const path = `.cache/${term}/_all/${pageNumber}.html`;
+    if (
+      path === ".cache/SA05/_all/46.html" ||
+      path === ".cache/SA05/_all/47.html"
+    ) {
+      // MGT is too weird, it only has exams
+      continue;
+    }
     const allLines = (
       await readFile(path, "utf-8").catch((error) =>
         error instanceof Error && "code" in error && error.code === "ENOENT"
