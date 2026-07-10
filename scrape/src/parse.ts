@@ -160,6 +160,8 @@ const restrictionTypes = {
   WA: "Open to Warren College Students Only",
   GR: "",
   MD: "",
+  XFR: "Not Open to Freshmen",
+  XJR: "Not Open to Juniors",
 };
 function getRestrictionType(
   type: string,
@@ -179,7 +181,9 @@ function getRestrictionType(
     type === "TH" ||
     type === "WA" ||
     type === "GR" ||
-    type === "MD"
+    type === "MD" ||
+    type === "XFR" ||
+    type === "XJR"
   ) {
     if (restrictionTypes[type] === title) {
       return type;
@@ -1081,7 +1085,7 @@ function processLine(
     const match = line
       .replaceAll("&#039;", "'")
       .replaceAll("&amp;", "&")
-      .match(/^([A-Za-z&'/.,:\d -]{1,30})$/);
+      .match(/^([A-Za-z&'/.,:\d() -]{1,30})$/);
     if (match) {
       return {
         ...state,
@@ -1194,7 +1198,7 @@ function processLine(
     }
   }
   if (state.type === "restrictions-letter-next") {
-    const match = line.match(/^([A-Z]{1,2})<\/span><br>$/);
+    const match = line.match(/^([A-Z]{1,3})<\/span><br>$/);
     if (match) {
       const type = getRestrictionType(match[1], state.title);
       if (type) {
@@ -1237,9 +1241,10 @@ function processLine(
   if (state.type === "course-name-next") {
     const match = line
       .replaceAll("&#039;", "'")
+      .replaceAll("&#034;", '"')
       .replaceAll("&amp;", "&")
       .match(
-        /^(?:<a href="javascript:openNewWindow\('http:\/\/(registrar\.ucsd\.edu\/studentlink\/cnd\.html|www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2})|www\.ucsd\.edu\/catalog\/curric\/EAP\.html|pharmacy\.ucsd\.edu\/current)'\)">)?<span class="boldtxt">([A-Za-z&'/:,.\d()+ -]{30})<\/span>(?: <\/a>)?$/,
+        /^(?:<a href="javascript:openNewWindow\('http:\/\/(registrar\.ucsd\.edu\/studentlink\/cnd\.html|www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5})\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2})|www\.ucsd\.edu\/catalog\/curric\/EAP\.html|pharmacy\.ucsd\.edu\/current)'\)">)?<span class="boldtxt">([A-Za-z&'/:,.\d()+";? -]{30})<\/span>(?: <\/a>)?$/,
       );
     if (match && line.startsWith("<a") === line.endsWith("a>")) {
       const title = match[4].trimEnd();
@@ -1267,7 +1272,7 @@ function processLine(
     }
   }
   if (state.type === "unit-start-next") {
-    const match = line.match(/^\( ([12]?\d|2\.5)$/);
+    const match = line.match(/^\( ([12]?\d(?:\.5)?)$/);
     if (match) {
       return {
         ...state,
@@ -1277,7 +1282,7 @@ function processLine(
     }
   }
   if (state.type === "unit-end-next") {
-    const match = line.match(/^\/([12]?\d) by (2|4|7)$/);
+    const match = line.match(/^\/([12]?\d) by (2|4|7|0\.5)$/);
     if (match && !state.course.units.end) {
       return {
         ...state,
@@ -1366,7 +1371,8 @@ function processLine(
     const topicMatch = line
       .replaceAll("&amp;", "&")
       .replaceAll("&#039;", "'")
-      .match(/^([A-Za-z&.,?/\d:'!( -]+)$/);
+      .replaceAll("&#034;", '"')
+      .match(/^([A-Za-z&.,?/\d:'!(" -]+)$/);
     if (topicMatch && state.course.topic === null) {
       if (isSummer) {
         // summer range may follow
@@ -1612,8 +1618,8 @@ function processLine(
       .replace("Th", "R")
       .replace("Tu", "T")
       .match(
-        // M?T?W?R?F?S?X?
-        /^<td class="brdr">((?:TR|T|MW|MWF|M|R|W|F|MTWR|MTWRF|MF|MR|TWR|WRF|WR|MWR|WF|MTWF|TW|MTW|MTR|RF|S) {0,6})<\/td>$/,
+        // TR|T|MW|MWF|M|R|W|F|MTWR|MTWRF|MF|MR|TWR|WRF|WR|MWR|WF|MTWF|TW|MTW|MTR|RF|S
+        /^<td class="brdr">(M?T?W?R?F?S?X? {0,6})<\/td>$/,
       );
     if (match && match[1].length === 7) {
       return { ...state, type: "time-next", days: match[1].trimEnd() };
@@ -1621,7 +1627,9 @@ function processLine(
   }
   if (state.type === "time-next") {
     const match = line.match(
-      /^<td class="brdr">(1?\d:(?:00|10|15|20|30|45|50)[ap]-1?\d:(?:00|05|10|15|20|25|30|40|45|50|55|59)[ap])<\/td>$/,
+      // (?:00|10|15|20|30|45|50)
+      // (?:00|05|10|15|20|25|30|40|45|50|55|59)
+      /^<td class="brdr">(1?\d:[0-5]\d[ap]-1?\d:[0-5]\d[ap])<\/td>$/,
     );
     if (match) {
       if (state.sectionId === "extra") {
@@ -2007,7 +2015,8 @@ function processLine(
       .replace("Sun", "X")
       .replace("Th", "R")
       .replace("Tu", "T")
-      .match(/^<td class="brdr">((?:T|R|S|M|W|F|X) {0,6})<\/td>$/);
+      // (?:T|R|S|M|W|F|X)
+      .match(/^<td class="brdr">(M?T?W?R?F?S?X? {0,6})<\/td>$/);
     // TODO: validate exam date and day match
     if (match && match[1].length === 7) {
       return { ...state, type: "exam-time-next" };
@@ -2015,7 +2024,9 @@ function processLine(
   }
   if (state.type === "exam-time-next") {
     const match = line.match(
-      /^<td class="brdr">(1?\d:(?:00|01|05|10|15|30|45|51)[ap]-1?\d:(?:00|20|29|30|40|45|50|59)[ap])<\/td>$/,
+      // (?:00|01|05|10|15|30|45|51)
+      // (?:00|20|29|30|40|45|50|59)
+      /^<td class="brdr">(1?\d:[0-5]\d[ap]-1?\d:[0-5]\d[ap])<\/td>$/,
     );
     if (match) {
       return {
@@ -2152,23 +2163,12 @@ for (const {
   year: termYear,
   quarter,
 } of terms()) {
-  if (!["SA04", "SA05", "FA05"].includes(term)) {
+  if (termYear !== 2005) {
     continue;
   }
   let totalPages = 1;
   for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
     const path = `.cache/${term}/_all/${pageNumber}.html`;
-    if (
-      path === ".cache/SA05/_all/46.html" ||
-      path === ".cache/SA05/_all/47.html" ||
-      // MGT 221 again
-      path === ".cache/FA05/_all/492.html" ||
-      path === ".cache/FA05/_all/493.html" ||
-      path === ".cache/FA05/_all/494.html"
-    ) {
-      // MGT is too weird, it only has exams
-      continue;
-    }
     const allLines = (
       await readFile(path, "utf-8").catch((error) =>
         error instanceof Error && "code" in error && error.code === "ENOENT"
@@ -2195,6 +2195,16 @@ for (const {
       process.exit(1);
     }
     totalPages = +match[2];
+
+    const mgtIndex = lines.findIndex((line) =>
+      line.includes("http://courses.ucsd.edu/coursemain.asp?section=0"),
+    );
+    if (mgtIndex !== -1) {
+      console.error(`${path}:${mgtIndex + 1}: skipping MGT 221`);
+      // MGT is too weird, it only has exams
+      continue;
+    }
+
     let state: State = initState;
     for (const [i, line] of lines.entries()) {
       const next = processLine(state, line, {
