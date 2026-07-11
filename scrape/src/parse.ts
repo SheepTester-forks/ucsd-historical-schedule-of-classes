@@ -86,8 +86,10 @@ type WeirdCourse = CourseBase & {
   // shouldn't be null in practice, at this point i just got lazy
   weirdExam: { index: number; exam: WeirdExam } | null;
   remainingExams: (Exam | CancelledExam)[];
-  // PHYS 2A has two extra C00 lectures attached to.. nothing
-  detachedExtras: UnenrollableMeeting[];
+  // WI06 page 422 PHYS 2A has two extra C00 lectures attached to.. nothing
+  detachedExtras: ExtraMeetingRow[];
+  // ... followed by a regular unenrollable meeting
+  additionalMeetings: UnenrollableMeeting[];
 };
 type EnrollmentInfo = {
   sectionId: number;
@@ -119,9 +121,14 @@ type ExtraMeeting = {
 type EnrollableMeeting = MeetingBase & {
   enrollable: EnrollmentInfo;
 };
-type UnenrollableMeeting = MeetingBase & {
+type UnenrollableMeetingBase = MeetingBase & {
   enrollable: null;
-  isExtra: boolean;
+};
+type UnenrollableMeeting = UnenrollableMeetingBase & {
+  isExtra: false;
+};
+type ExtraMeetingRow = UnenrollableMeetingBase & {
+  isExtra: true;
 };
 type Meeting = EnrollableMeeting | UnenrollableMeeting;
 type CancelledMeetingBase = {
@@ -458,6 +465,7 @@ type State = (
         | CancelledExam
         | CancelledUnnrollableMeeting
         | WeirdExam
+        | ExtraMeetingRow
         | null;
     }
   | {
@@ -580,7 +588,8 @@ type State = (
         | Exam
         | CancelledExam
         | CancelledUnnrollableMeeting
-        | WeirdExam;
+        | WeirdExam
+        | ExtraMeetingRow;
     }
   | {
       type: "white-meeting-start-or-meeting-comment";
@@ -592,6 +601,7 @@ type State = (
         | CancelledExam
         | CancelledUnnrollableMeeting
         | WeirdExam
+        | ExtraMeetingRow
         | null;
     }
   | {
@@ -625,17 +635,17 @@ type State = (
   | {
       type: "exam-brdr2-begin-next";
       course: Course | WeirdCourse;
-      exam: Exam | UnenrollableMeeting;
+      exam: Exam | UnenrollableMeeting | ExtraMeetingRow;
     }
   | {
       type: "exam-brdr2-end-next";
       course: Course | WeirdCourse;
-      exam: Exam | UnenrollableMeeting;
+      exam: Exam | UnenrollableMeeting | ExtraMeetingRow;
     }
   | {
       type: "exam-brdr3-next";
       course: Course | WeirdCourse;
-      exam: Exam | UnenrollableMeeting | WeirdExam;
+      exam: Exam | UnenrollableMeeting | ExtraMeetingRow | WeirdExam;
     }
   | { type: "done" }
 ) & {
@@ -656,7 +666,8 @@ function addMeeting(
     | Exam
     | CancelledExam
     | CancelledUnnrollableMeeting
-    | WeirdExam,
+    | WeirdExam
+    | ExtraMeetingRow,
 ): Course | WeirdCourse | null {
   // TODO: may also want to assert based on section code format (e.g. A01 vs
   // 001)
@@ -681,17 +692,27 @@ function addMeeting(
           remainingExams: [...course.remainingExams, prevMeeting],
         };
       }
-    } else if (
-      !prevMeeting.cancelled &&
-      prevMeeting.enrollable === null &&
-      prevMeeting.isExtra
-    ) {
-      // assume detached extras must be first
-      if (!course.weirdExam && course.remainingExams.length === 0) {
-        return {
-          ...course,
-          detachedExtras: [...course.detachedExtras, prevMeeting],
-        };
+    } else if (!prevMeeting.cancelled && prevMeeting.enrollable === null) {
+      if (prevMeeting.isExtra) {
+        // assume detached extras must be first
+        if (
+          !course.weirdExam &&
+          course.remainingExams.length === 0 &&
+          course.additionalMeetings.length === 0
+        ) {
+          return {
+            ...course,
+            detachedExtras: [...course.detachedExtras, prevMeeting],
+          };
+        }
+      } else {
+        // then follow additional meetings (then exams)
+        if (!course.weirdExam && course.remainingExams.length === 0) {
+          return {
+            ...course,
+            additionalMeetings: [...course.additionalMeetings, prevMeeting],
+          };
+        }
       }
     }
   } else if (prevMeeting.isExam) {
@@ -1524,6 +1545,7 @@ function processLine(
               weirdExam: null,
               remainingExams: [],
               detachedExtras: [],
+              additionalMeetings: [],
               isWeird: true,
             }
           : {
