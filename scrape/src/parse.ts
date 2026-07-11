@@ -38,7 +38,7 @@ type CourseComment = {
   number: string;
   comment: string;
 };
-type Course = {
+type CourseBase = {
   kind: "course";
   restrictions: (keyof typeof restrictionTypes)[];
   number: string;
@@ -51,6 +51,10 @@ type Course = {
     start: { month: string; date: number };
     end: { month: string; date: number };
   } | null;
+  resourcesSectionId: number | null;
+};
+type Course = CourseBase & {
+  isWeird: false;
   resourcesSectionId: number;
   // on rare occassions there can be multiple, like SA04 page 31 PHYS 1B & 1C
   preAdditionalMeetings: ((
@@ -75,6 +79,13 @@ type Course = {
     extras: ExtraMeeting[];
   })[];
   exams: (Exam | CancelledExam)[];
+};
+type WeirdCourse = CourseBase & {
+  isWeird: true;
+  resourcesSectionId: null;
+  // shouldn't be null in practice, at this point i just got lazy
+  firstExam: WeirdExam | CancelledExam | null;
+  remainingExams: (Exam | CancelledExam)[];
 };
 type EnrollmentInfo = {
   sectionId: number;
@@ -124,7 +135,7 @@ type CancelledEnrollableMeeting = CancelledMeetingBase & {
 type CancelledUnnrollableMeeting = CancelledMeetingBase & {
   enrollable: null;
 };
-type Exam = {
+type ExamBase = {
   cancelled: false;
   isExam: true;
   examType: keyof typeof examTypes;
@@ -138,6 +149,13 @@ type Exam = {
   time: string;
   location: { building: string; room: string } | null;
   comment: string;
+};
+type Exam = ExamBase & {
+  isWeird: false;
+};
+type WeirdExam = ExamBase & {
+  isWeird: true;
+  instructors: { name: string; encryptedPid: Buffer }[];
 };
 type CancelledExam = {
   cancelled: true;
@@ -417,7 +435,7 @@ type State = (
   | {
       type: "evals-next" | "close-course-links-next";
       course: Pick<
-        Course,
+        CourseBase,
         | "restrictions"
         | "number"
         | "catalog"
@@ -430,13 +448,14 @@ type State = (
     }
   | {
       type: "meeting-row-begin-next";
-      course: Course;
+      course: Course | WeirdCourse;
       prevMeeting:
         | Meeting
         | CancelledEnrollableMeeting
         | Exam
         | CancelledExam
         | CancelledUnnrollableMeeting
+        | WeirdExam
         | null;
     }
   | {
@@ -498,12 +517,17 @@ type State = (
     }
   | {
       type: "instructor-end-next";
-      course: Course;
-      sectionId: number | null;
-      meeting: Pick<
-        Meeting,
-        "instructionType" | "sectionCode" | "location" | "instructors"
-      >;
+      course: Course | WeirdCourse;
+      mode:
+        | {
+            type: "meeting";
+            sectionId: number | null;
+            meeting: Pick<
+              Meeting,
+              "instructionType" | "sectionCode" | "location" | "instructors"
+            >;
+          }
+        | { type: "weird"; meeting: WeirdExam };
       shouldSeeBr: boolean;
       sawStaff: boolean;
     }
@@ -545,53 +569,82 @@ type State = (
   | {
       type:
         | "meeting-row-end-next"
-        | "white-meeting-start-or-meeting-comment"
         | "meeting-comment-begin-next"
         | "meeting-comment-next";
-      course: Course;
+      course: Course | WeirdCourse;
       meeting:
         | Meeting
         | CancelledEnrollableMeeting
         | Exam
         | CancelledExam
-        | CancelledUnnrollableMeeting;
+        | CancelledUnnrollableMeeting
+        | WeirdExam;
+    }
+  | {
+      type: "white-meeting-start-or-meeting-comment";
+      course: Course | WeirdCourse;
+      meeting:
+        | Meeting
+        | CancelledEnrollableMeeting
+        | Exam
+        | CancelledExam
+        | CancelledUnnrollableMeeting
+        | WeirdExam
+        | null;
     }
   | {
       type: "exam-brdr-begin-next" | "exam-brdr-end-next" | "exam-type-next";
-      course: Course;
+      course: Course | WeirdCourse;
+      // determines whether it can have an instructor
+      isFirstRowInWeirdCourse: boolean;
     }
   | {
       type: "exam-date-next";
-      course: Course;
+      course: Course | WeirdCourse;
       // at this point it is unclear to the state machine whether this is an
       // extra meeting time for a normal meeting or an actual exam
       instructionType: keyof typeof instructionTypes | null;
       examType: keyof typeof examTypes | null;
+      isFirstRowInWeirdCourse: boolean;
     }
   | {
       type: "exam-days-next" | "exam-time-next";
-      course: Course;
+      course: Course | WeirdCourse;
       exam: Pick<Exam, "examType" | "date">;
+      isFirstRowInWeirdCourse: boolean;
     }
   | {
       type: "exam-building-next";
-      course: Course;
+      course: Course | WeirdCourse;
       exam: Pick<Exam, "examType" | "date" | "time">;
+      isFirstRowInWeirdCourse: boolean;
     }
   | {
       type: "exam-room-next";
-      course: Course;
+      course: Course | WeirdCourse;
       exam: Pick<Exam, "examType" | "date" | "time">;
       building: string;
+      isFirstRowInWeirdCourse: boolean;
     }
   | {
-      type: "exam-brdr2-begin-next" | "exam-brdr2-end-next" | "exam-brdr3-next";
-      course: Course;
+      type: "exam-brdr2-begin-next";
+      course: Course | WeirdCourse;
       exam: Exam | UnenrollableMeeting;
+      isFirstRowInWeirdCourse: boolean;
+    }
+  | {
+      type: "exam-brdr2-end-next";
+      course: Course | WeirdCourse;
+      exam: Exam | UnenrollableMeeting;
+    }
+  | {
+      type: "exam-brdr3-next";
+      course: Course | WeirdCourse;
+      exam: Exam | UnenrollableMeeting | WeirdExam;
     }
   | { type: "done" }
 ) & {
-  commands: (Department | Subject | Course | CourseComment)[];
+  commands: (Department | Subject | Course | CourseComment | WeirdCourse)[];
 };
 
 const initState: State = {
@@ -601,23 +654,43 @@ const initState: State = {
 };
 
 function addToMeeting(
-  course: Course,
+  course: Course | WeirdCourse,
   prevMeeting:
     | Meeting
     | CancelledEnrollableMeeting
     | Exam
     | CancelledExam
-    | CancelledUnnrollableMeeting,
-): Course | null {
+    | CancelledUnnrollableMeeting
+    | WeirdExam,
+): Course | WeirdCourse | null {
   // TODO: may also want to assert based on section code format (e.g. A01 vs
   // 001)
-  if (prevMeeting.isExam) {
-    return prevMeeting
-      ? {
-          ...course,
-          exams: [...course.exams, prevMeeting],
+  if (course.isWeird) {
+    if (prevMeeting.isExam) {
+      if (!course.firstExam) {
+        if (prevMeeting.cancelled || prevMeeting.isWeird) {
+          return prevMeeting ? { ...course, firstExam: prevMeeting } : course;
         }
-      : course;
+      } else {
+        if (prevMeeting.cancelled || !prevMeeting.isWeird) {
+          return prevMeeting
+            ? {
+                ...course,
+                remainingExams: [...course.remainingExams, prevMeeting],
+              }
+            : course;
+        }
+      }
+    }
+  } else if (prevMeeting.isExam) {
+    if (prevMeeting.cancelled || !prevMeeting.isWeird) {
+      return prevMeeting
+        ? {
+            ...course,
+            exams: [...course.exams, prevMeeting],
+          }
+        : course;
+    }
   } else if (
     !prevMeeting.cancelled &&
     prevMeeting.enrollable === null &&
@@ -692,15 +765,20 @@ function addToMeeting(
       // BIBC 102, where they for whatever reason made an enrollable lecture and
       // a bunch of unenrollable discussions, except one that no one enrolled in
       // is enrollable
-      return prevMeeting
-        ? {
-            ...course,
-            enrollables: [
-              ...course.enrollables,
-              { ...prevMeeting, extras: [] },
-            ],
-          }
-        : course;
+
+      // if restrictions id is 0, then there should be no enrollable sections
+      // e.g. WI05 page 432 PHYS 239, which only has cancelled exams
+      if (course.resourcesSectionId !== null) {
+        return prevMeeting
+          ? {
+              ...course,
+              enrollables: [
+                ...course.enrollables,
+                { ...prevMeeting, extras: [] },
+              ],
+            }
+          : course;
+      }
     } else if (course.enrollables.length === 0) {
       // first meeting (A00) can be unenrollable yet followed by enrollable
       // meetings
@@ -1408,13 +1486,16 @@ function processLine(
     const match = line.match(
       // FA19 page 6 ANTH 199 has a 4-digit section id here
       // FA19 page 121 CHEM 99H has '74'
-      /^<span class="boldtxt" onmouseover="" style="cursor: pointer;" onclick="javascript:openNewWindow\('http:\/\/courses\.ucsd\.edu\/coursemain\.asp\?section=(\d{6}|6922|74)'\)">Resources<\/span>&nbsp;\|&nbsp;$/,
+      /^<span class="boldtxt" onmouseover="" style="cursor: pointer;" onclick="javascript:openNewWindow\('http:\/\/courses\.ucsd\.edu\/coursemain\.asp\?section=(\d{6}|0|6922|74)'\)">Resources<\/span>&nbsp;\|&nbsp;$/,
     );
     if (match) {
       return {
         ...state,
         type: "evals-next",
-        course: { ...state.course, resourcesSectionId: +match[1] },
+        course: {
+          ...state.course,
+          resourcesSectionId: match[1] === "0" ? null : +match[1],
+        },
       };
     }
   }
@@ -1433,14 +1514,26 @@ function processLine(
     return {
       type: "meeting-row-begin-next",
       commands: state.commands,
-      course: {
-        ...state.course,
-        kind: "course",
-        preAdditionalMeetings: [],
-        enrollables: [],
-        additionalMeetings: [],
-        exams: [],
-      },
+      course:
+        state.course.resourcesSectionId === null
+          ? {
+              ...state.course,
+              kind: "course",
+              resourcesSectionId: null,
+              firstExam: null,
+              remainingExams: [],
+              isWeird: true,
+            }
+          : {
+              ...state.course,
+              kind: "course",
+              resourcesSectionId: state.course.resourcesSectionId,
+              preAdditionalMeetings: [],
+              enrollables: [],
+              additionalMeetings: [],
+              exams: [],
+              isWeird: false,
+            },
       prevMeeting: null,
     };
   }
@@ -1463,14 +1556,26 @@ function processLine(
     if (line === '<tr class="sectxt">') {
       if (!state.prevMeeting) {
         // first meeting
-        return { ...state, type: "borderless-brdr-next" };
-      }
-      const newCourse = addToMeeting(state.course, state.prevMeeting);
-      if (newCourse) {
-        return { ...state, type: "borderless-brdr-next", course: newCourse };
+        if (!state.course.isWeird) {
+          return {
+            ...state,
+            type: "borderless-brdr-next",
+            course: state.course,
+          };
+        }
+      } else {
+        const newCourse = addToMeeting(state.course, state.prevMeeting);
+        if (newCourse && !newCourse.isWeird) {
+          return { ...state, type: "borderless-brdr-next", course: newCourse };
+        }
       }
     }
-    if (line === '<tr class="nonenrtxt">' && state.prevMeeting) {
+    // may only start with a white row if it has no enrollable sections (i.e.
+    // resources section is 0)
+    if (
+      line === '<tr class="nonenrtxt">' &&
+      (state.prevMeeting || state.course.resourcesSectionId === null)
+    ) {
       return {
         ...state,
         type: "white-meeting-start-or-meeting-comment",
@@ -1482,7 +1587,7 @@ function processLine(
       if (newCourse) {
         return {
           type: "done",
-          commands: state.commands,
+          commands: [...state.commands, newCourse],
         };
       }
     }
@@ -1671,7 +1776,11 @@ function processLine(
             sectionId: state.sectionId,
             meeting: {
               ...state.meeting,
-              location: { days: state.days, time: state.time, location: null },
+              location: {
+                days: state.days,
+                time: state.time,
+                location: null,
+              },
             },
           };
         } else {
@@ -1688,6 +1797,7 @@ function processLine(
               enrollable: null,
               isExtra: true,
             },
+            isFirstRowInWeirdCourse: false,
           };
         }
       }
@@ -1714,6 +1824,7 @@ function processLine(
             enrollable: null,
             isExtra: true,
           },
+          isFirstRowInWeirdCourse: false,
         };
       } else {
         return {
@@ -1731,7 +1842,11 @@ function processLine(
       type: "instructor-end-next",
       shouldSeeBr: false,
       sawStaff: false,
-      meeting: { ...state.meeting, instructors: [] },
+      mode: {
+        type: "meeting",
+        sectionId: state.sectionId,
+        meeting: { ...state.meeting, instructors: [] },
+      },
     };
   }
   if (state.type === "instructor-end-next") {
@@ -1749,32 +1864,45 @@ function processLine(
         //   state.meeting.instructors.length > 0 ||
         //   state.sectionId === null)
       ) {
-        if (state.sectionId !== null) {
-          return {
-            ...state,
-            type: "available-next",
-            sectionId: state.sectionId,
-          };
+        if (state.mode.type === "meeting") {
+          if (!state.course.isWeird) {
+            if (state.mode.sectionId !== null) {
+              return {
+                ...state,
+                type: "available-next",
+                sectionId: state.mode.sectionId,
+                meeting: state.mode.meeting,
+                course: state.course,
+              };
+            } else {
+              return {
+                ...state,
+                type: "non-enrollable-skip",
+                skip: 3,
+                meeting: {
+                  ...state.mode.meeting,
+                  enrollable: null,
+                  cancelled: false,
+                  isExam: false,
+                  comment: "",
+                  isExtra: false,
+                },
+                course: state.course,
+              };
+            }
+          }
         } else {
           return {
             ...state,
-            type: "non-enrollable-skip",
-            skip: 3,
-            meeting: {
-              ...state.meeting,
-              enrollable: null,
-              cancelled: false,
-              isExam: false,
-              comment: "",
-              isExtra: false,
-            },
+            type: "exam-brdr3-next",
+            exam: state.mode.meeting,
           };
         }
       }
       if (
         line === "Staff" &&
         !state.sawStaff &&
-        state.meeting.instructors.length === 0
+        state.mode.meeting.instructors.length === 0
         // FA05 page 525, ENG 100L has staff pre-additional course
       ) {
         return { ...state, shouldSeeBr: true, sawStaff: true };
@@ -1784,19 +1912,26 @@ function processLine(
         /^<a href="#!" onclick="javascript:sendMail\('\/scheduleOfClasses\/scheduleOfClassesFacultyEmailResult\.htm\?pid=([A-Za-z\d+/]+==)'\)">([A-Za-z,.'\d() -]{35})<\/a>$/,
       );
       if (match && !state.sawStaff) {
+        const instructors = [
+          ...state.mode.meeting.instructors,
+          {
+            encryptedPid: Buffer.from(match[1], "base64"),
+            name: match[2].trim(),
+          },
+        ];
         return {
           ...state,
           shouldSeeBr: true,
-          meeting: {
-            ...state.meeting,
-            instructors: [
-              ...state.meeting.instructors,
-              {
-                encryptedPid: Buffer.from(match[1], "base64"),
-                name: match[2].trim(),
-              },
-            ],
-          },
+          mode:
+            state.mode.type === "meeting"
+              ? {
+                  ...state.mode,
+                  meeting: { ...state.mode.meeting, instructors },
+                }
+              : {
+                  ...state.mode,
+                  meeting: { ...state.mode.meeting, instructors },
+                },
         };
       }
     }
@@ -1900,28 +2035,44 @@ function processLine(
     return { ...state, type: "meeting-row-end-next" };
   }
   if (state.type === "white-meeting-start-or-meeting-comment") {
-    if (!state.meeting.comment) {
+    if (state.meeting && !state.meeting.comment) {
       if (
         line ===
-        (state.meeting.isExam ||
-        (!state.meeting.cancelled &&
-          !state.meeting.enrollable &&
-          state.meeting.isExtra)
-          ? '<td colspan="2"></td>'
-          : '<td  class="brdr" colspan="2"></td>')
+          (state.meeting.isExam ||
+          (!state.meeting.cancelled &&
+            !state.meeting.enrollable &&
+            state.meeting.isExtra)
+            ? '<td colspan="2"></td>'
+            : '<td  class="brdr" colspan="2"></td>') &&
+        !state.course.isWeird
       ) {
-        return { ...state, type: "meeting-comment-begin-next" };
+        return {
+          ...state,
+          type: "meeting-comment-begin-next",
+          meeting: state.meeting,
+          course: state.course,
+        };
       }
     }
     if (line === '<td  class="brdr" colspan="2" border="0"></td>') {
-      const newCourse = addToMeeting(state.course, state.meeting);
-      if (newCourse) {
-        // final exam: has date instead of section code, plus different meeting
-        // types i presume
+      if (state.meeting) {
+        const newCourse = addToMeeting(state.course, state.meeting);
+        if (newCourse) {
+          // final exam: has date instead of section code, plus different meeting
+          // types i presume
+          return {
+            type: "exam-brdr-begin-next",
+            commands: state.commands,
+            course: newCourse,
+            isFirstRowInWeirdCourse: false,
+          };
+        }
+      } else {
         return {
           type: "exam-brdr-begin-next",
           commands: state.commands,
-          course: newCourse,
+          course: state.course,
+          isFirstRowInWeirdCourse: true,
         };
       }
     }
@@ -1963,7 +2114,7 @@ function processLine(
       };
     }
     const matchSecCode = line.match(/^<td class="brdr">([A-Z\d]\d\d)<\/td>$/);
-    if (matchSecCode && state.instructionType) {
+    if (matchSecCode && state.instructionType && !state.course.isWeird) {
       return {
         ...state,
         type: "days-or-tba-next",
@@ -1972,6 +2123,7 @@ function processLine(
           sectionCode: matchSecCode[1],
         },
         sectionId: "extra",
+        course: state.course,
       };
     }
   }
@@ -2038,6 +2190,7 @@ function processLine(
           cancelled: false,
           isExam: true,
           comment: "",
+          isWeird: false,
         },
       };
     }
@@ -2052,12 +2205,28 @@ function processLine(
           cancelled: false,
           isExam: true,
           comment: "",
+          isWeird: false,
         },
       };
     }
   }
   if (state.type === "exam-brdr2-begin-next" && line === '<td class="brdr">') {
-    return { ...state, type: "exam-brdr2-end-next" };
+    if (state.isFirstRowInWeirdCourse) {
+      if (state.exam.isExam) {
+        return {
+          ...state,
+          type: "instructor-end-next",
+          mode: {
+            type: "weird",
+            meeting: { ...state.exam, isWeird: true, instructors: [] },
+          },
+          shouldSeeBr: false,
+          sawStaff: false,
+        };
+      }
+    } else {
+      return { ...state, type: "exam-brdr2-end-next" };
+    }
   }
   if (state.type === "exam-brdr2-end-next" && line === "</td>") {
     return { ...state, type: "exam-brdr3-next" };
@@ -2173,15 +2342,6 @@ for (const {
       process.exit(1);
     }
     totalPages = +match[2];
-
-    const mgtIndex = lines.findIndex((line) =>
-      line.includes("http://courses.ucsd.edu/coursemain.asp?section=0"),
-    );
-    if (mgtIndex !== -1) {
-      // TODO: MGT is too weird, it only has exams
-      console.error(`${path}:${mgtIndex + 1}: skipping MGT 221`);
-      continue;
-    }
 
     let state: State = initState;
     for (const [i, line] of lines.entries()) {
