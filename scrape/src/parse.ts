@@ -17,9 +17,6 @@ type GlobalOptions = {
 type Department = {
   name: string;
   subjects: Subject[];
-  // new department with no repeated subject header seems to only happen with
-  // 'Sch of Med Interdisciplinary Crses', e.g. FA07 page 518
-  directCourses: Course[] | null;
 };
 type Subject = {
   name: string;
@@ -350,23 +347,23 @@ type State = (
         | "limit"
         | "close-final";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
     }
   | {
       type: "after-course-tr";
       canEnd: boolean;
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
     }
   | {
       type: "course-comment-empty-td-next" | "course-comment-number-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
     }
   | {
       type: "course-comment-title-begin-next" | "course-comment-title-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       number: string;
     }
   | {
@@ -377,7 +374,7 @@ type State = (
         | "course-comment-content-empty-td-next"
         | "course-comment-content-td-begin-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: ExpectedCourseInfo;
     }
   | {
@@ -387,7 +384,7 @@ type State = (
         | "course-comment-content-tr-end-next"
         | "non-course-tr-begin-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: ExpectedCourseInfo;
       comment: string;
       started: boolean;
@@ -395,21 +392,21 @@ type State = (
   | {
       type: "start-course-td";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       canEndSubject: boolean;
       expected: ExpectedCourseInfo | null;
     }
   | {
       type: "restrictions-title-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Pick<Course, "restrictions">;
       expected: ExpectedCourseInfo | null;
     }
   | {
       type: "restrictions-letter-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       title: string;
       course: Pick<Course, "restrictions">;
       expected: ExpectedCourseInfo | null;
@@ -417,27 +414,27 @@ type State = (
   | {
       type: "course-number-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Pick<Course, "restrictions">;
       expected: ExpectedCourseInfo | null;
     }
   | {
       type: "course-num-end-next" | "course-name-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Pick<Course, "restrictions" | "number">;
       expected: ExpectedCourseInfo | null;
     }
   | {
       type: "unit-start-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Pick<Course, "restrictions" | "number" | "catalog" | "title">;
     }
   | {
       type: "unit-end-next" | "unit-end-br-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Pick<
         Course,
         "restrictions" | "number" | "catalog" | "title" | "units"
@@ -446,7 +443,7 @@ type State = (
   | {
       type: "unit-end-summer-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Pick<
         Course,
         "restrictions" | "number" | "catalog" | "title" | "units" | "topic"
@@ -459,7 +456,7 @@ type State = (
         | "prereq-next"
         | "resources-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Pick<
         Course,
         | "restrictions"
@@ -474,7 +471,7 @@ type State = (
   | {
       type: "evals-next" | "close-course-links-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Pick<
         Course,
         | "restrictions"
@@ -490,7 +487,7 @@ type State = (
   | {
       type: "meeting-row-begin-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
       prevMeeting:
         | Meeting
@@ -507,13 +504,13 @@ type State = (
         | "brdr-end-next"
         | "brdr-section-id-begin-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
     }
   | {
       type: "brdr-section-id-end-next" | "instruction-type-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
       sectionId: number | null;
       expectCancelled: boolean;
@@ -521,7 +518,7 @@ type State = (
   | {
       type: "section-code-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
       sectionId: number | null;
       meeting: Pick<Meeting, "instructionType">;
@@ -530,7 +527,7 @@ type State = (
   | {
       type: "days-or-tba-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
       sectionId: number | null | "extra";
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
@@ -538,7 +535,7 @@ type State = (
   | {
       type: "time-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
       sectionId: number | null | "extra";
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
@@ -547,7 +544,7 @@ type State = (
   | {
       type: "building-start-next" | "building-link-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
       sectionId: number | null;
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
@@ -557,7 +554,7 @@ type State = (
   | {
       type: "building-code-next" | "room-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
       sectionId: number | null | "extra";
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
@@ -568,7 +565,7 @@ type State = (
   | {
       type: "instructor-begin-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
       sectionId: number | null;
       meeting: Pick<Meeting, "instructionType" | "sectionCode" | "location">;
@@ -576,7 +573,7 @@ type State = (
   | {
       type: "instructor-end-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
       sectionId: number | null;
       meeting: Pick<
@@ -590,14 +587,14 @@ type State = (
       type: "non-enrollable-skip";
       skip: 3 | 2 | 1;
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
       meeting: Meeting;
     }
   | {
       type: "available-next" | "waitlist-count-next" | "unlim-empty-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
       sectionId: number;
       meeting: Pick<
@@ -608,7 +605,7 @@ type State = (
   | {
       type: "limit-next" | "waitlist-end-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
       sectionId: number;
       meeting: Pick<
@@ -625,7 +622,7 @@ type State = (
         | "book-span-next"
         | "book-close-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
       meeting: Meeting;
     }
@@ -636,7 +633,7 @@ type State = (
         | "meeting-comment-begin-next"
         | "meeting-comment-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
       meeting:
         | Meeting
@@ -648,13 +645,13 @@ type State = (
   | {
       type: "exam-brdr-begin-next" | "exam-brdr-end-next" | "exam-type-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
     }
   | {
       type: "exam-date-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
       // at this point it is unclear to the state machine whether this is an
       // extra meeting time for a normal meeting or an actual exam
@@ -664,21 +661,21 @@ type State = (
   | {
       type: "exam-days-next" | "exam-time-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
       exam: Pick<Exam, "examType" | "date">;
     }
   | {
       type: "exam-building-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
       exam: Pick<Exam, "examType" | "date" | "time">;
     }
   | {
       type: "exam-room-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
       exam: Pick<Exam, "examType" | "date" | "time">;
       building: string;
@@ -686,7 +683,7 @@ type State = (
   | {
       type: "exam-brdr2-begin-next" | "exam-brdr2-end-next" | "exam-brdr3-next";
       department: Department;
-      subject: Subject | null;
+      subject: Subject;
       course: Course;
       exam: Exam | UnenrollableMeeting;
     }
@@ -852,19 +849,6 @@ function processLine(
     if (state.next === "td" && line === '<td colspan="13">') {
       return { ...state, next: "br" };
     }
-    if (
-      state.next === "td" &&
-      state.department?.directCourses &&
-      line === '<td class="crsheader"></td>'
-    ) {
-      // no requirements
-      return {
-        ...state,
-        type: "course-number-next",
-        subject: null,
-        course: { restrictions: [] },
-      };
-    }
     if (state.next === "br" && line === "<br>") {
       return { ...state, next: "h2" };
     }
@@ -879,10 +863,7 @@ function processLine(
         .match(
           /^<h2>  <span class="centeralign">([A-Za-z&/, -]{30}) \(([A-Z ]{5})\)<\/span> <\/h2>$/,
         );
-      if (
-        matchDept &&
-        (!state.department || state.department.subjects.length > 0)
-      ) {
+      if (matchDept) {
         return {
           ...state,
           type: "after-heading",
@@ -990,14 +971,7 @@ function processLine(
           ...state,
           type: "before-heading",
           next: "td",
-          department: {
-            name: state.wasFrom.name,
-            subjects: [],
-            directCourses:
-              state.wasFrom.name === "Sch of Med Interdisciplinary Crses"
-                ? []
-                : null,
-          },
+          department: { name: state.wasFrom.name, subjects: [] },
         };
       }
       if (line === "<tr >" && state.wasFrom.type === "subject") {
@@ -1216,23 +1190,21 @@ function processLine(
     return { ...state, type: "non-course-tr-begin-next" };
   }
   if (state.type === "non-course-tr-begin-next" && line === "<tr>") {
-    if (state.subject !== null) {
-      return {
-        ...state,
-        type: "start-course-td",
-        subject: {
-          ...state.subject,
-          courseComments: [
-            { number: state.course.number, comment: state.comment },
-          ],
-        },
-        canEndSubject: state.subject.courses.length > 0,
-        expected: state.course,
-      };
-    }
+    return {
+      ...state,
+      type: "start-course-td",
+      subject: {
+        ...state.subject,
+        courseComments: [
+          { number: state.course.number, comment: state.comment },
+        ],
+      },
+      canEndSubject: state.subject.courses.length > 0,
+      expected: state.course,
+    };
   }
   if (state.type === "start-course-td") {
-    if (line === '<td colspan="13">' && state.canEndSubject && state.subject) {
+    if (line === '<td colspan="13">' && state.canEndSubject) {
       return {
         ...state,
         type: "before-heading",
