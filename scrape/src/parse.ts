@@ -669,27 +669,23 @@ function addToMeeting(
     if (prevMeeting.isExam) {
       if (!course.firstExam) {
         if (prevMeeting.cancelled || prevMeeting.isWeird) {
-          return prevMeeting ? { ...course, firstExam: prevMeeting } : course;
+          return { ...course, firstExam: prevMeeting };
         }
       } else {
         if (prevMeeting.cancelled || !prevMeeting.isWeird) {
-          return prevMeeting
-            ? {
-                ...course,
-                remainingExams: [...course.remainingExams, prevMeeting],
-              }
-            : course;
+          return {
+            ...course,
+            remainingExams: [...course.remainingExams, prevMeeting],
+          };
         }
       }
     }
   } else if (prevMeeting.isExam) {
     if (prevMeeting.cancelled || !prevMeeting.isWeird) {
-      return prevMeeting
-        ? {
-            ...course,
-            exams: [...course.exams, prevMeeting],
-          }
-        : course;
+      return {
+        ...course,
+        exams: [...course.exams, prevMeeting],
+      };
     }
   } else if (
     !prevMeeting.cancelled &&
@@ -769,30 +765,23 @@ function addToMeeting(
       // if restrictions id is 0, then there should be no enrollable sections
       // e.g. WI05 page 432 PHYS 239, which only has cancelled exams
       if (course.resourcesSectionId !== null) {
-        return prevMeeting
-          ? {
-              ...course,
-              enrollables: [
-                ...course.enrollables,
-                { ...prevMeeting, extras: [] },
-              ],
-            }
-          : course;
+        return {
+          ...course,
+          enrollables: [...course.enrollables, { ...prevMeeting, extras: [] }],
+        };
       }
     } else if (course.enrollables.length === 0) {
       // first meeting (A00) can be unenrollable yet followed by enrollable
       // meetings
       // idk if the first meeting can be cancelled
       // actually yes they can (SA04 page 9 CSE 132A)
-      return prevMeeting
-        ? {
-            ...course,
-            preAdditionalMeetings: [
-              ...course.preAdditionalMeetings,
-              { ...prevMeeting, extra: null },
-            ],
-          }
-        : course;
+      return {
+        ...course,
+        preAdditionalMeetings: [
+          ...course.preAdditionalMeetings,
+          { ...prevMeeting, extra: null },
+        ],
+      };
     } else {
       // there must be at least one enrollable
       // nvm, see CSE 12, SA04 page 8. they converted CSE 12 from a DI-based A01
@@ -800,15 +789,13 @@ function addToMeeting(
       // - 12: LE A00 (enrollable)
       // - 12: DI A01
       //       LA A50 (cancelleed)
-      return prevMeeting
-        ? {
-            ...course,
-            additionalMeetings: [
-              ...course.additionalMeetings,
-              { ...prevMeeting, extras: [] },
-            ],
-          }
-        : course;
+      return {
+        ...course,
+        additionalMeetings: [
+          ...course.additionalMeetings,
+          { ...prevMeeting, extras: [] },
+        ],
+      };
     }
   }
   return null;
