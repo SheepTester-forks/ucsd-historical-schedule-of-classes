@@ -84,7 +84,7 @@ type WeirdCourse = CourseBase & {
   isWeird: true;
   resourcesSectionId: null;
   // shouldn't be null in practice, at this point i just got lazy
-  firstExam: WeirdExam | CancelledExam | null;
+  weirdExam: { index: number; exam: WeirdExam } | null;
   remainingExams: (Exam | CancelledExam)[];
 };
 type EnrollmentInfo = {
@@ -595,8 +595,6 @@ type State = (
   | {
       type: "exam-brdr-begin-next" | "exam-brdr-end-next" | "exam-type-next";
       course: Course | WeirdCourse;
-      // determines whether it can have an instructor
-      isFirstRowInWeirdCourse: boolean;
     }
   | {
       type: "exam-date-next";
@@ -605,32 +603,27 @@ type State = (
       // extra meeting time for a normal meeting or an actual exam
       instructionType: keyof typeof instructionTypes | null;
       examType: keyof typeof examTypes | null;
-      isFirstRowInWeirdCourse: boolean;
     }
   | {
       type: "exam-days-next" | "exam-time-next";
       course: Course | WeirdCourse;
       exam: Pick<Exam, "examType" | "date">;
-      isFirstRowInWeirdCourse: boolean;
     }
   | {
       type: "exam-building-next";
       course: Course | WeirdCourse;
       exam: Pick<Exam, "examType" | "date" | "time">;
-      isFirstRowInWeirdCourse: boolean;
     }
   | {
       type: "exam-room-next";
       course: Course | WeirdCourse;
       exam: Pick<Exam, "examType" | "date" | "time">;
       building: string;
-      isFirstRowInWeirdCourse: boolean;
     }
   | {
       type: "exam-brdr2-begin-next";
       course: Course | WeirdCourse;
       exam: Exam | UnenrollableMeeting;
-      isFirstRowInWeirdCourse: boolean;
     }
   | {
       type: "exam-brdr2-end-next";
@@ -667,17 +660,24 @@ function addToMeeting(
   // 001)
   if (course.isWeird) {
     if (prevMeeting.isExam) {
-      if (!course.firstExam) {
-        if (prevMeeting.cancelled || prevMeeting.isWeird) {
-          return { ...course, firstExam: prevMeeting };
-        }
-      } else {
-        if (prevMeeting.cancelled || !prevMeeting.isWeird) {
+      if (!prevMeeting.cancelled && prevMeeting.isWeird) {
+        if (!course.weirdExam) {
           return {
             ...course,
-            remainingExams: [...course.remainingExams, prevMeeting],
+            weirdExam: {
+              // the exam with the instructor isn't necessarily first
+              // e.g. MGT 280, WI06 page 475
+              // idk why, maybe they sort by a different key
+              index: course.remainingExams.length,
+              exam: prevMeeting,
+            },
           };
         }
+      } else {
+        return {
+          ...course,
+          remainingExams: [...course.remainingExams, prevMeeting],
+        };
       }
     }
   } else if (prevMeeting.isExam) {
@@ -1507,7 +1507,7 @@ function processLine(
               ...state.course,
               kind: "course",
               resourcesSectionId: null,
-              firstExam: null,
+              weirdExam: null,
               remainingExams: [],
               isWeird: true,
             }
@@ -1784,7 +1784,6 @@ function processLine(
               enrollable: null,
               isExtra: true,
             },
-            isFirstRowInWeirdCourse: false,
           };
         }
       }
@@ -1811,7 +1810,6 @@ function processLine(
             enrollable: null,
             isExtra: true,
           },
-          isFirstRowInWeirdCourse: false,
         };
       } else {
         return {
@@ -1879,11 +1877,21 @@ function processLine(
             }
           }
         } else {
-          return {
-            ...state,
-            type: "exam-brdr3-next",
-            exam: state.mode.meeting,
-          };
+          const { instructors, ...rest } = state.mode.meeting;
+          if (!state.sawStaff && instructors.length === 0) {
+            // No instructor listed, demote to normal exam
+            return {
+              ...state,
+              type: "exam-brdr3-next",
+              exam: { ...rest, isWeird: false },
+            };
+          } else {
+            return {
+              ...state,
+              type: "exam-brdr3-next",
+              exam: state.mode.meeting,
+            };
+          }
         }
       }
       if (
@@ -2051,7 +2059,6 @@ function processLine(
             type: "exam-brdr-begin-next",
             commands: state.commands,
             course: newCourse,
-            isFirstRowInWeirdCourse: false,
           };
         }
       } else {
@@ -2059,7 +2066,6 @@ function processLine(
           type: "exam-brdr-begin-next",
           commands: state.commands,
           course: state.course,
-          isFirstRowInWeirdCourse: true,
         };
       }
     }
@@ -2198,7 +2204,8 @@ function processLine(
     }
   }
   if (state.type === "exam-brdr2-begin-next" && line === '<td class="brdr">') {
-    if (state.isFirstRowInWeirdCourse) {
+    if (state.course.isWeird && state.course.weirdExam === null) {
+      // there can only be one weird exam (exam with instructors)
       if (state.exam.isExam) {
         return {
           ...state,
@@ -2303,6 +2310,10 @@ for (const {
   let totalPages = 1;
   for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
     const path = `.cache/${term}/_all/${pageNumber}.html`;
+    if (path === ".cache/WI06/_all/422.html") {
+      // PHYS 2A has two extra C00 lectures attached to.. nothing
+      continue;
+    }
     const allLines = (
       await readFile(path, "utf-8").catch((error) =>
         error instanceof Error && "code" in error && error.code === "ENOENT"
