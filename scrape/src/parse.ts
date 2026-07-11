@@ -750,6 +750,32 @@ function processLine(
     if (state.next === "td" && line === '<td colspan="13">') {
       return { ...state, next: "br" };
     }
+    if (state.next === "td") {
+      // new department with no repeated subject header seems to only happen
+      // with 'Sch of Med Interdisciplinary Crses', e.g. FA07 page 518
+      const lastCmd = state.commands.at(-1);
+      if (
+        lastCmd?.kind === "department" &&
+        lastCmd.name === "Sch of Med Interdisciplinary Crses"
+      ) {
+        if (line === '<td class="crsheader">') {
+          return {
+            commands: state.commands,
+            type: "restrictions-title-next",
+            course: { restrictions: [] },
+            expected: null,
+          };
+        }
+        if (line === '<td class="crsheader"></td>') {
+          return {
+            commands: state.commands,
+            type: "course-number-next",
+            course: { restrictions: [] },
+            expected: null,
+          };
+        }
+      }
+    }
     if (state.next === "br" && line === "<br>") {
       return { ...state, next: "h2" };
     }
@@ -1056,6 +1082,16 @@ function processLine(
     if (!state.started) {
       if (line === '<span class="ertext">') {
         return { ...state, started: true };
+      }
+      const matchSingleLine = line.match(
+        /^<span class="ertext"> (.+)<\/span>$/,
+      );
+      if (matchSingleLine) {
+        return {
+          ...state,
+          type: "course-comment-content-td-end-next",
+          comment: matchSingleLine[1],
+        };
       }
       const match = line.match(/^<span class="ertext"> (.+)$/);
       if (match) {
@@ -2172,9 +2208,9 @@ for (const {
       await printDebug(term, deptTerms, pageNumber);
       process.exit(1);
     }
-    console.dir(state, { depth: null });
-    await printDebug(term, deptTerms, pageNumber);
-    process.exit(0);
+    // console.dir(state, { depth: null });
+    // await printDebug(term, deptTerms, pageNumber);
+    // process.exit(0);
   }
 }
 console.error("success!");
