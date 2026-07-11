@@ -89,7 +89,7 @@ type WeirdCourse = CourseBase & {
   // WI06 page 422 PHYS 2A has two extra C00 lectures attached to.. nothing
   detachedExtras: ExtraMeetingRow[];
   // ... followed by a regular unenrollable meeting
-  additionalMeetings: UnenrollableMeeting[];
+  additionalMeetings: (UnenrollableMeeting & { extra: ExtraMeeting | null })[];
 };
 type EnrollmentInfo = {
   sectionId: number;
@@ -695,22 +695,40 @@ function addMeeting(
     } else if (!prevMeeting.cancelled && prevMeeting.enrollable === null) {
       if (prevMeeting.isExtra) {
         // assume detached extras must be first
-        if (
-          !course.weirdExam &&
-          course.remainingExams.length === 0 &&
-          course.additionalMeetings.length === 0
-        ) {
-          return {
-            ...course,
-            detachedExtras: [...course.detachedExtras, prevMeeting],
-          };
+        if (!course.weirdExam && course.remainingExams.length === 0) {
+          const lastAdditional = course.additionalMeetings.at(-1);
+          if (lastAdditional) {
+            if (
+              lastAdditional.extra === null &&
+              prevMeeting.location &&
+              lastAdditional.instructionType === prevMeeting.instructionType &&
+              lastAdditional.sectionCode === prevMeeting.sectionCode &&
+              lastAdditional.comment === prevMeeting.comment
+            ) {
+              return {
+                ...course,
+                additionalMeetings: course.additionalMeetings.with(-1, {
+                  ...lastAdditional,
+                  extra: { location: prevMeeting.location },
+                }),
+              };
+            }
+          } else {
+            return {
+              ...course,
+              detachedExtras: [...course.detachedExtras, prevMeeting],
+            };
+          }
         }
       } else {
         // then follow additional meetings (then exams)
         if (!course.weirdExam && course.remainingExams.length === 0) {
           return {
             ...course,
-            additionalMeetings: [...course.additionalMeetings, prevMeeting],
+            additionalMeetings: [
+              ...course.additionalMeetings,
+              { ...prevMeeting, extra: null },
+            ],
           };
         }
       }
@@ -1903,24 +1921,26 @@ function processLine(
           } else {
             // in weird courses, unenrollable meetings seem to have empty
             // instructors
-            if (
-              !state.course.isWeird ||
-              (state.mode.meeting.instructors.length === 0 && !state.sawStaff)
-            ) {
-              return {
-                ...state,
-                type: "non-enrollable-skip",
-                skip: 3,
-                meeting: {
-                  ...state.mode.meeting,
-                  enrollable: null,
-                  cancelled: false,
-                  isExam: false,
-                  comment: "",
-                  isExtra: false,
-                },
-              };
-            }
+            // nvm both enrollable and unenrollable meetings *can* have instructors:
+            // - SA12 page 22 CHEM 140B enrollable
+            // - SP13 page 426 PHYS 2D unenrollable (which also has an attached extra)
+            // if (
+            //   !state.course.isWeird ||
+            //   (state.mode.meeting.instructors.length === 0 && !state.sawStaff)
+            // ) {
+            return {
+              ...state,
+              type: "non-enrollable-skip",
+              skip: 3,
+              meeting: {
+                ...state.mode.meeting,
+                enrollable: null,
+                cancelled: false,
+                isExam: false,
+                comment: "",
+                isExtra: false,
+              },
+            };
           }
         } else {
           const { instructors, ...rest } = state.mode.meeting;
@@ -2355,6 +2375,13 @@ for (const {
   let totalPages = 1;
   for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
     const path = `.cache/${term}/_all/${pageNumber}.html`;
+    if (
+      path === ".cache/SA09/_all/50.html" ||
+      path === ".cache/SA12/_all/22.html"
+    ) {
+      // enrollable meeting in weird course
+      continue;
+    }
     const allLines = (
       await readFile(path, "utf-8").catch((error) =>
         error instanceof Error && "code" in error && error.code === "ENOENT"
