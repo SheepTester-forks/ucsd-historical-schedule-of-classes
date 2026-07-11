@@ -15,10 +15,12 @@ type GlobalOptions = {
 };
 
 type Department = {
+  kind: "department";
+  // TODO: allowlist of department names (or pull from departments.json?)
   name: string;
-  subjects: Subject[];
 };
 type Subject = {
+  kind: "subject";
   name: string;
   code: string;
   comment: string;
@@ -29,15 +31,15 @@ type Subject = {
     hour: number;
     minute: number;
   };
-  courses: Course[];
-  courseComments: CourseComment[];
 };
 type ExpectedCourseInfo = { number: string; title: string };
 type CourseComment = {
+  kind: "course-comment";
   number: string;
   comment: string;
 };
 type Course = {
+  kind: "course";
   restrictions: (keyof typeof restrictionTypes)[];
   number: string;
   catalog: { dept: string; hash: string } | "EAP" | "pharmacy" | null;
@@ -77,17 +79,9 @@ type Course = {
 type EnrollmentInfo = {
   sectionId: number;
   limit:
-    | {
-        type: "waitlist";
-        waitlist: number;
-        limit: number;
-      }
+    | { type: "waitlist"; waitlist: number; limit: number }
     | { type: "unlimited" }
-    | {
-        type: "available";
-        available: number;
-        limit: number;
-      };
+    | { type: "available"; available: number; limit: number };
 };
 type MeetingBase = {
   cancelled: false;
@@ -299,31 +293,19 @@ function getExamType(
 }
 
 type State = (
-  | {
-      type: "before-heading";
-      next: "tr" | "td" | "br" | "h2";
-      department: Department | null;
-    }
+  | { type: "before-heading"; next: "tr" | "td" | "br" | "h2" }
   | {
       type: "as-of" | "subject-comment";
-      department: Department;
       subject: string;
       subjectCode: string;
       comment: string;
     }
-  | {
-      type: "subj-comment-h3";
-      department: Department;
-      subject: string;
-      subjectCode: string;
-    }
-  | { type: "as-of-br-br"; department: Department; subject: Subject }
+  | { type: "subj-comment-h3"; subject: string; subjectCode: string }
+  | { type: "as-of-br-br" }
   | {
       type: "after-heading";
       next: "td" | "tr" | "idk";
-      wasFrom:
-        | { type: "dept"; name: string; comment: string }
-        | { type: "subject"; department: Department; subject: Subject };
+      wasFrom: { type: "dept"; comment: string } | { type: "subject" };
     }
   | {
       type: "table-header";
@@ -346,24 +328,11 @@ type State = (
         | "available"
         | "limit"
         | "close-final";
-      department: Department;
-      subject: Subject;
     }
-  | {
-      type: "after-course-tr";
-      canEnd: boolean;
-      department: Department;
-      subject: Subject;
-    }
-  | {
-      type: "course-comment-empty-td-next" | "course-comment-number-next";
-      department: Department;
-      subject: Subject;
-    }
+  | { type: "after-course-tr"; canEnd: boolean }
+  | { type: "course-comment-empty-td-next" | "course-comment-number-next" }
   | {
       type: "course-comment-title-begin-next" | "course-comment-title-next";
-      department: Department;
-      subject: Subject;
       number: string;
     }
   | {
@@ -373,8 +342,6 @@ type State = (
         | "course-comment-content-tr-begin-next"
         | "course-comment-content-empty-td-next"
         | "course-comment-content-td-begin-next";
-      department: Department;
-      subject: Subject;
       course: ExpectedCourseInfo;
     }
   | {
@@ -383,58 +350,41 @@ type State = (
         | "course-comment-content-td-end-next"
         | "course-comment-content-tr-end-next"
         | "non-course-tr-begin-next";
-      department: Department;
-      subject: Subject;
       course: ExpectedCourseInfo;
       comment: string;
       started: boolean;
     }
   | {
       type: "start-course-td";
-      department: Department;
-      subject: Subject;
-      canEndSubject: boolean;
       expected: ExpectedCourseInfo | null;
     }
   | {
       type: "restrictions-title-next";
-      department: Department;
-      subject: Subject;
       course: Pick<Course, "restrictions">;
       expected: ExpectedCourseInfo | null;
     }
   | {
       type: "restrictions-letter-next";
-      department: Department;
-      subject: Subject;
       title: string;
       course: Pick<Course, "restrictions">;
       expected: ExpectedCourseInfo | null;
     }
   | {
       type: "course-number-next";
-      department: Department;
-      subject: Subject;
       course: Pick<Course, "restrictions">;
       expected: ExpectedCourseInfo | null;
     }
   | {
       type: "course-num-end-next" | "course-name-next";
-      department: Department;
-      subject: Subject;
       course: Pick<Course, "restrictions" | "number">;
       expected: ExpectedCourseInfo | null;
     }
   | {
       type: "unit-start-next";
-      department: Department;
-      subject: Subject;
       course: Pick<Course, "restrictions" | "number" | "catalog" | "title">;
     }
   | {
       type: "unit-end-next" | "unit-end-br-next";
-      department: Department;
-      subject: Subject;
       course: Pick<
         Course,
         "restrictions" | "number" | "catalog" | "title" | "units"
@@ -442,8 +392,6 @@ type State = (
     }
   | {
       type: "unit-end-summer-next";
-      department: Department;
-      subject: Subject;
       course: Pick<
         Course,
         "restrictions" | "number" | "catalog" | "title" | "units" | "topic"
@@ -455,8 +403,6 @@ type State = (
         | "ready-for-course-number-links"
         | "prereq-next"
         | "resources-next";
-      department: Department;
-      subject: Subject;
       course: Pick<
         Course,
         | "restrictions"
@@ -470,8 +416,6 @@ type State = (
     }
   | {
       type: "evals-next" | "close-course-links-next";
-      department: Department;
-      subject: Subject;
       course: Pick<
         Course,
         | "restrictions"
@@ -486,8 +430,6 @@ type State = (
     }
   | {
       type: "meeting-row-begin-next";
-      department: Department;
-      subject: Subject;
       course: Course;
       prevMeeting:
         | Meeting
@@ -503,22 +445,16 @@ type State = (
         | "brdr-begin-next"
         | "brdr-end-next"
         | "brdr-section-id-begin-next";
-      department: Department;
-      subject: Subject;
       course: Course;
     }
   | {
       type: "brdr-section-id-end-next" | "instruction-type-next";
-      department: Department;
-      subject: Subject;
       course: Course;
       sectionId: number | null;
       expectCancelled: boolean;
     }
   | {
       type: "section-code-next";
-      department: Department;
-      subject: Subject;
       course: Course;
       sectionId: number | null;
       meeting: Pick<Meeting, "instructionType">;
@@ -526,16 +462,12 @@ type State = (
     }
   | {
       type: "days-or-tba-next";
-      department: Department;
-      subject: Subject;
       course: Course;
       sectionId: number | null | "extra";
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
     }
   | {
       type: "time-next";
-      department: Department;
-      subject: Subject;
       course: Course;
       sectionId: number | null | "extra";
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
@@ -543,8 +475,6 @@ type State = (
     }
   | {
       type: "building-start-next" | "building-link-next";
-      department: Department;
-      subject: Subject;
       course: Course;
       sectionId: number | null;
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
@@ -553,8 +483,6 @@ type State = (
     }
   | {
       type: "building-code-next" | "room-next";
-      department: Department;
-      subject: Subject;
       course: Course;
       sectionId: number | null | "extra";
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
@@ -564,16 +492,12 @@ type State = (
     }
   | {
       type: "instructor-begin-next";
-      department: Department;
-      subject: Subject;
       course: Course;
       sectionId: number | null;
       meeting: Pick<Meeting, "instructionType" | "sectionCode" | "location">;
     }
   | {
       type: "instructor-end-next";
-      department: Department;
-      subject: Subject;
       course: Course;
       sectionId: number | null;
       meeting: Pick<
@@ -586,15 +510,11 @@ type State = (
   | {
       type: "non-enrollable-skip";
       skip: 3 | 2 | 1;
-      department: Department;
-      subject: Subject;
       course: Course;
       meeting: Meeting;
     }
   | {
       type: "available-next" | "waitlist-count-next" | "unlim-empty-next";
-      department: Department;
-      subject: Subject;
       course: Course;
       sectionId: number;
       meeting: Pick<
@@ -604,8 +524,6 @@ type State = (
     }
   | {
       type: "limit-next" | "waitlist-end-next";
-      department: Department;
-      subject: Subject;
       course: Course;
       sectionId: number;
       meeting: Pick<
@@ -621,8 +539,6 @@ type State = (
         | "book-gif-next"
         | "book-span-next"
         | "book-close-next";
-      department: Department;
-      subject: Subject;
       course: Course;
       meeting: Meeting;
     }
@@ -632,8 +548,6 @@ type State = (
         | "white-meeting-start-or-meeting-comment"
         | "meeting-comment-begin-next"
         | "meeting-comment-next";
-      department: Department;
-      subject: Subject;
       course: Course;
       meeting:
         | Meeting
@@ -644,14 +558,10 @@ type State = (
     }
   | {
       type: "exam-brdr-begin-next" | "exam-brdr-end-next" | "exam-type-next";
-      department: Department;
-      subject: Subject;
       course: Course;
     }
   | {
       type: "exam-date-next";
-      department: Department;
-      subject: Subject;
       course: Course;
       // at this point it is unclear to the state machine whether this is an
       // extra meeting time for a normal meeting or an actual exam
@@ -660,43 +570,34 @@ type State = (
     }
   | {
       type: "exam-days-next" | "exam-time-next";
-      department: Department;
-      subject: Subject;
       course: Course;
       exam: Pick<Exam, "examType" | "date">;
     }
   | {
       type: "exam-building-next";
-      department: Department;
-      subject: Subject;
       course: Course;
       exam: Pick<Exam, "examType" | "date" | "time">;
     }
   | {
       type: "exam-room-next";
-      department: Department;
-      subject: Subject;
       course: Course;
       exam: Pick<Exam, "examType" | "date" | "time">;
       building: string;
     }
   | {
       type: "exam-brdr2-begin-next" | "exam-brdr2-end-next" | "exam-brdr3-next";
-      department: Department;
-      subject: Subject;
       course: Course;
       exam: Exam | UnenrollableMeeting;
     }
   | { type: "done" }
 ) & {
-  departments: Department[];
+  commands: (Department | Subject | Course | CourseComment)[];
 };
 
 const initState: State = {
   type: "before-heading",
   next: "tr",
-  department: null,
-  departments: [],
+  commands: [],
 };
 
 function addToMeeting(
@@ -864,22 +765,24 @@ function processLine(
           /^<h2>  <span class="centeralign">([A-Za-z&/, -]{30}) \(([A-Z ]{5})\)<\/span> <\/h2>$/,
         );
       if (matchDept) {
-        return {
-          ...state,
-          type: "after-heading",
-          next: "td",
-          departments:
-            state.department !== null
-              ? [...state.departments, state.department]
-              : state.departments,
-          wasFrom: { type: "dept", name: matchDept[1].trimEnd(), comment: "" },
-        };
+        const lastCommand = state.commands.at(-1);
+        if (!lastCommand || lastCommand.kind === "course") {
+          return {
+            ...state,
+            type: "after-heading",
+            next: "td",
+            commands: [
+              ...state.commands,
+              { kind: "department", name: matchDept[1].trimEnd() },
+            ],
+            wasFrom: { type: "dept", comment: "" },
+          };
+        }
       }
-      if (matchSubject && state.department !== null) {
+      if (matchSubject) {
         return {
           ...state,
           type: "as-of",
-          department: state.department,
           subject: matchSubject[1].trimEnd(),
           subjectCode: matchSubject[2].trimEnd(),
           comment: "",
@@ -893,18 +796,26 @@ function processLine(
     );
     if (match) {
       const [month, date, year, hour, minute] = match.slice(1).map(Number);
-      return {
-        ...state,
-        type: "as-of-br-br",
-        subject: {
-          name: state.subject,
-          code: state.subjectCode,
-          comment: state.comment,
-          asOf: { month, date, year, hour, minute },
-          courses: [],
-          courseComments: [],
-        },
-      };
+      const lastCommand = state.commands.at(-1);
+      if (
+        lastCommand?.kind === "department" ||
+        lastCommand?.kind === "course"
+      ) {
+        return {
+          ...state,
+          type: "as-of-br-br",
+          commands: [
+            ...state.commands,
+            {
+              kind: "subject",
+              name: state.subject,
+              code: state.subjectCode,
+              comment: state.comment,
+              asOf: { month, date, year, hour, minute },
+            },
+          ],
+        };
+      }
     }
     if (line === "<br>" && !state.comment) {
       return { ...state, type: "subj-comment-h3" };
@@ -934,11 +845,7 @@ function processLine(
       ...state,
       type: "after-heading",
       next: "td",
-      wasFrom: {
-        type: "subject",
-        department: state.department,
-        subject: state.subject,
-      },
+      wasFrom: { type: "subject" },
     };
   }
   if (state.type === "after-heading") {
@@ -967,21 +874,10 @@ function processLine(
     }
     if (state.next === "idk") {
       if (line === "<tr>" && state.wasFrom.type === "dept") {
-        return {
-          ...state,
-          type: "before-heading",
-          next: "td",
-          department: { name: state.wasFrom.name, subjects: [] },
-        };
+        return { ...state, type: "before-heading", next: "td" };
       }
       if (line === "<tr >" && state.wasFrom.type === "subject") {
-        return {
-          type: "table-header",
-          next: "r",
-          departments: state.departments,
-          department: state.wasFrom.department,
-          subject: state.wasFrom.subject,
-        };
+        return { type: "table-header", next: "r", commands: state.commands };
       }
     }
   }
@@ -1084,12 +980,7 @@ function processLine(
   }
   if (state.type === "after-course-tr") {
     if (line === "<tr>") {
-      return {
-        ...state,
-        type: "start-course-td",
-        canEndSubject: state.canEnd,
-        expected: null,
-      };
+      return { ...state, type: "start-course-td", expected: null };
     }
     if (line === "<tr >") {
       return { ...state, type: "course-comment-empty-td-next" };
@@ -1193,27 +1084,20 @@ function processLine(
     return {
       ...state,
       type: "start-course-td",
-      subject: {
-        ...state.subject,
-        courseComments: [
-          { number: state.course.number, comment: state.comment },
-        ],
-      },
-      canEndSubject: state.subject.courses.length > 0,
+      commands: [
+        ...state.commands,
+        {
+          kind: "course-comment",
+          number: state.course.number,
+          comment: state.comment,
+        },
+      ],
       expected: state.course,
     };
   }
   if (state.type === "start-course-td") {
-    if (line === '<td colspan="13">' && state.canEndSubject) {
-      return {
-        ...state,
-        type: "before-heading",
-        next: "br",
-        department: {
-          ...state.department,
-          subjects: [...state.department.subjects, state.subject],
-        },
-      };
+    if (line === '<td colspan="13">') {
+      return { ...state, type: "before-heading", next: "br" };
     }
     // crsheader = dark blue
     if (line === '<td class="crsheader">') {
@@ -1476,7 +1360,9 @@ function processLine(
       } else {
         matches &&= match[1].slice(0, 2) === options.quarter;
       }
-      matches &&= match[2].trim() === state.subject.code + state.course.number;
+      const subject =
+        state.commands.findLast((cmd) => cmd.kind === "subject")?.code ?? " ";
+      matches &&= match[2].trim() === subject + state.course.number;
       if (matches) {
         return { ...state, type: "resources-next" };
       }
@@ -1501,22 +1387,19 @@ function processLine(
     const match = line.match(
       /^<span class="boldtxt" onmouseover="" style="cursor: pointer;" onclick="javascript:openNewTab\('https:\/\/academicaffairs\.ucsd\.edu\/Modules\/Evals\/SET\/Reports\/Search\.aspx\?courseNumber=([A-Z]{2,4})\+(\d{1,3}[A-Z]{0,2})','CAPE'\)"><span title="CAPE - Course and Professor Evaluations">Evaluations<\/span><\/span><\/td>$/,
     );
-    if (
-      match &&
-      match[1] === state.subject.code &&
-      match[2] === state.course.number
-    ) {
+    const subject =
+      state.commands.findLast((cmd) => cmd.kind === "subject")?.code ?? " ";
+    if (match && match[1] === subject && match[2] === state.course.number) {
       return { ...state, type: "close-course-links-next" };
     }
   }
   if (state.type === "close-course-links-next" && line === "</tr>") {
     return {
       type: "meeting-row-begin-next",
-      departments: state.departments,
-      department: state.department,
-      subject: state.subject,
+      commands: state.commands,
       course: {
         ...state.course,
+        kind: "course",
         preAdditionalMeetings: [],
         enrollables: [],
         additionalMeetings: [],
@@ -1536,13 +1419,7 @@ function processLine(
             line === "<tr >"
               ? "course-comment-empty-td-next"
               : "start-course-td",
-          departments: state.departments,
-          department: state.department,
-          subject: {
-            ...state.subject,
-            courses: [...state.subject.courses, newCourse],
-          },
-          canEndSubject: true,
+          commands: [...state.commands, newCourse],
           expected: null,
         };
       }
@@ -1569,19 +1446,7 @@ function processLine(
       if (newCourse) {
         return {
           type: "done",
-          departments: [
-            ...state.departments,
-            {
-              ...state.department,
-              subjects: [
-                ...state.department.subjects,
-                {
-                  ...state.subject,
-                  courses: [...state.subject.courses, newCourse],
-                },
-              ],
-            },
-          ],
+          commands: state.commands,
         };
       }
     }
@@ -2019,9 +1884,7 @@ function processLine(
         // types i presume
         return {
           type: "exam-brdr-begin-next",
-          departments: state.departments,
-          department: state.department,
-          subject: state.subject,
+          commands: state.commands,
           course: newCourse,
         };
       }
@@ -2200,9 +2063,7 @@ function processLine(
   if (state.type === "meeting-row-end-next" && line === "</tr>") {
     return {
       type: "meeting-row-begin-next",
-      departments: state.departments,
-      department: state.department,
-      subject: state.subject,
+      commands: state.commands,
       course: state.course,
       prevMeeting: state.meeting,
     };
@@ -2311,6 +2172,9 @@ for (const {
       await printDebug(term, deptTerms, pageNumber);
       process.exit(1);
     }
+    console.dir(state, { depth: null });
+    await printDebug(term, deptTerms, pageNumber);
+    process.exit(0);
   }
 }
 console.error("success!");
