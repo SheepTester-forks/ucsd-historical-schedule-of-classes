@@ -474,17 +474,17 @@ type State = (
         | "brdr-begin-next"
         | "brdr-end-next"
         | "brdr-section-id-begin-next";
-      course: Course;
+      course: Course | WeirdCourse;
     }
   | {
       type: "brdr-section-id-end-next" | "instruction-type-next";
-      course: Course;
+      course: Course | WeirdCourse;
       sectionId: number | null;
       expectCancelled: boolean;
     }
   | {
       type: "section-code-next";
-      course: Course;
+      course: Course | WeirdCourse;
       sectionId: number | null;
       meeting: Pick<Meeting, "instructionType">;
       expectCancelled: boolean;
@@ -504,7 +504,7 @@ type State = (
     }
   | {
       type: "building-start-next" | "building-link-next";
-      course: Course;
+      course: Course | WeirdCourse;
       sectionId: number | null;
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
       days: string;
@@ -521,7 +521,7 @@ type State = (
     }
   | {
       type: "instructor-begin-next";
-      course: Course;
+      course: Course | WeirdCourse;
       sectionId: number | null;
       meeting: Pick<Meeting, "instructionType" | "sectionCode" | "location">;
     }
@@ -544,7 +544,7 @@ type State = (
   | {
       type: "non-enrollable-skip";
       skip: 3 | 2 | 1;
-      course: Course;
+      course: Course | WeirdCourse;
       meeting: Meeting;
     }
   | {
@@ -1579,7 +1579,8 @@ function processLine(
     }
     if (line === '<tr class="sectxt">') {
       if (!state.prevMeeting) {
-        // first meeting
+        // first meeting of a weird course should not be normal.. that's what
+        // makes them weird
         if (!state.course.isWeird) {
           return {
             ...state,
@@ -1589,8 +1590,8 @@ function processLine(
         }
       } else {
         const newCourse = addMeeting(state.course, state.prevMeeting);
-        if (newCourse && !newCourse.isWeird) {
-          return { ...state, type: "borderless-brdr-next", course: newCourse };
+        if (newCourse) {
+          return { ...state, type: "borderless-brdr-next" };
         }
       }
     }
@@ -1750,13 +1751,12 @@ function processLine(
           building: "unused",
           time: match[1],
         };
-      } else if (!state.course.isWeird) {
+      } else {
         return {
           ...state,
           type: "building-start-next",
           sectionId: state.sectionId,
           time: match[1],
-          course: state.course,
         };
       }
     }
@@ -1797,22 +1797,19 @@ function processLine(
     if (state.building === "TBA") {
       if (line === '<td class="brdr">TBA</td>') {
         if (state.sectionId !== "extra") {
-          if (!state.course.isWeird) {
-            return {
-              ...state,
-              type: "instructor-begin-next",
-              sectionId: state.sectionId,
-              meeting: {
-                ...state.meeting,
-                location: {
-                  days: state.days,
-                  time: state.time,
-                  location: null,
-                },
+          return {
+            ...state,
+            type: "instructor-begin-next",
+            sectionId: state.sectionId,
+            meeting: {
+              ...state.meeting,
+              location: {
+                days: state.days,
+                time: state.time,
+                location: null,
               },
-              course: state.course,
-            };
-          }
+            },
+          };
         } else {
           return {
             ...state,
@@ -1855,15 +1852,12 @@ function processLine(
           },
         };
       } else {
-        if (!state.course.isWeird) {
-          return {
-            ...state,
-            type: "instructor-begin-next",
-            sectionId: state.sectionId,
-            meeting: { ...state.meeting, location },
-            course: state.course,
-          };
-        }
+        return {
+          ...state,
+          type: "instructor-begin-next",
+          sectionId: state.sectionId,
+          meeting: { ...state.meeting, location },
+        };
       }
     }
   }
@@ -1896,8 +1890,8 @@ function processLine(
         //   state.sectionId === null)
       ) {
         if (state.mode.type === "meeting") {
-          if (!state.course.isWeird) {
-            if (state.mode.sectionId !== null) {
+          if (state.mode.sectionId !== null) {
+            if (!state.course.isWeird) {
               return {
                 ...state,
                 type: "available-next",
@@ -1905,7 +1899,14 @@ function processLine(
                 meeting: state.mode.meeting,
                 course: state.course,
               };
-            } else {
+            }
+          } else {
+            // in weird courses, unenrollable meetings seem to have empty
+            // instructors
+            if (
+              !state.course.isWeird ||
+              (state.mode.meeting.instructors.length === 0 && !state.sawStaff)
+            ) {
               return {
                 ...state,
                 type: "non-enrollable-skip",
@@ -1918,7 +1919,6 @@ function processLine(
                   comment: "",
                   isExtra: false,
                 },
-                course: state.course,
               };
             }
           }
@@ -2079,19 +2079,17 @@ function processLine(
     if (state.meeting && !state.meeting.comment) {
       if (
         line ===
-          (state.meeting.isExam ||
-          (!state.meeting.cancelled &&
-            !state.meeting.enrollable &&
-            state.meeting.isExtra)
-            ? '<td colspan="2"></td>'
-            : '<td  class="brdr" colspan="2"></td>') &&
-        !state.course.isWeird
+        (state.meeting.isExam ||
+        (!state.meeting.cancelled &&
+          !state.meeting.enrollable &&
+          state.meeting.isExtra)
+          ? '<td colspan="2"></td>'
+          : '<td  class="brdr" colspan="2"></td>')
       ) {
         return {
           ...state,
           type: "meeting-comment-begin-next",
           meeting: state.meeting,
-          course: state.course,
         };
       }
     }
