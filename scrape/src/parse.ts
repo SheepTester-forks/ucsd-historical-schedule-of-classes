@@ -86,6 +86,8 @@ type WeirdCourse = CourseBase & {
   // shouldn't be null in practice, at this point i just got lazy
   weirdExam: { index: number; exam: WeirdExam } | null;
   remainingExams: (Exam | CancelledExam)[];
+  // PHYS 2A has two extra C00 lectures attached to.. nothing
+  detachedExtras: UnenrollableMeeting[];
 };
 type EnrollmentInfo = {
   sectionId: number;
@@ -481,13 +483,13 @@ type State = (
     }
   | {
       type: "days-or-tba-next";
-      course: Course;
+      course: Course | WeirdCourse;
       sectionId: number | null | "extra";
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
     }
   | {
       type: "time-next";
-      course: Course;
+      course: Course | WeirdCourse;
       sectionId: number | null | "extra";
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
       days: string;
@@ -502,7 +504,7 @@ type State = (
     }
   | {
       type: "building-code-next" | "room-next";
-      course: Course;
+      course: Course | WeirdCourse;
       sectionId: number | null | "extra";
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
       days: string;
@@ -646,7 +648,7 @@ const initState: State = {
   commands: [],
 };
 
-function addToMeeting(
+function addMeeting(
   course: Course | WeirdCourse,
   prevMeeting:
     | Meeting
@@ -677,6 +679,18 @@ function addToMeeting(
         return {
           ...course,
           remainingExams: [...course.remainingExams, prevMeeting],
+        };
+      }
+    } else if (
+      !prevMeeting.cancelled &&
+      prevMeeting.enrollable === null &&
+      prevMeeting.isExtra
+    ) {
+      // assume detached extras must be first
+      if (!course.weirdExam && course.remainingExams.length === 0) {
+        return {
+          ...course,
+          detachedExtras: [...course.detachedExtras, prevMeeting],
         };
       }
     }
@@ -1509,6 +1523,7 @@ function processLine(
               resourcesSectionId: null,
               weirdExam: null,
               remainingExams: [],
+              detachedExtras: [],
               isWeird: true,
             }
           : {
@@ -1526,7 +1541,7 @@ function processLine(
   }
   if (state.type === "meeting-row-begin-next") {
     if ((line === "<tr>" || line === "<tr >") && state.prevMeeting) {
-      const newCourse = addToMeeting(state.course, state.prevMeeting);
+      const newCourse = addMeeting(state.course, state.prevMeeting);
       // could either be beginning of course or subject or department, which is
       // handled by this state i think
       if (newCourse) {
@@ -1551,7 +1566,7 @@ function processLine(
           };
         }
       } else {
-        const newCourse = addToMeeting(state.course, state.prevMeeting);
+        const newCourse = addMeeting(state.course, state.prevMeeting);
         if (newCourse && !newCourse.isWeird) {
           return { ...state, type: "borderless-brdr-next", course: newCourse };
         }
@@ -1570,7 +1585,7 @@ function processLine(
       };
     }
     if (line === "" && state.prevMeeting) {
-      const newCourse = addToMeeting(state.course, state.prevMeeting);
+      const newCourse = addMeeting(state.course, state.prevMeeting);
       if (newCourse) {
         return {
           type: "done",
@@ -1674,13 +1689,15 @@ function processLine(
     }
     if (
       line === '<td class="brdr" colspan="4" align="center">TBA</td>' &&
-      state.sectionId !== "extra"
+      state.sectionId !== "extra" &&
+      !state.course.isWeird
     ) {
       return {
         ...state,
         type: "instructor-begin-next",
         sectionId: state.sectionId,
         meeting: { ...state.meeting, location: null },
+        course: state.course,
       };
     }
     // idk what they internally use for sunday but i do know they use R for
@@ -1711,12 +1728,13 @@ function processLine(
           building: "unused",
           time: match[1],
         };
-      } else {
+      } else if (!state.course.isWeird) {
         return {
           ...state,
           type: "building-start-next",
           sectionId: state.sectionId,
           time: match[1],
+          course: state.course,
         };
       }
     }
@@ -1757,19 +1775,22 @@ function processLine(
     if (state.building === "TBA") {
       if (line === '<td class="brdr">TBA</td>') {
         if (state.sectionId !== "extra") {
-          return {
-            ...state,
-            type: "instructor-begin-next",
-            sectionId: state.sectionId,
-            meeting: {
-              ...state.meeting,
-              location: {
-                days: state.days,
-                time: state.time,
-                location: null,
+          if (!state.course.isWeird) {
+            return {
+              ...state,
+              type: "instructor-begin-next",
+              sectionId: state.sectionId,
+              meeting: {
+                ...state.meeting,
+                location: {
+                  days: state.days,
+                  time: state.time,
+                  location: null,
+                },
               },
-            },
-          };
+              course: state.course,
+            };
+          }
         } else {
           return {
             ...state,
@@ -1812,12 +1833,15 @@ function processLine(
           },
         };
       } else {
-        return {
-          ...state,
-          type: "instructor-begin-next",
-          sectionId: state.sectionId,
-          meeting: { ...state.meeting, location },
-        };
+        if (!state.course.isWeird) {
+          return {
+            ...state,
+            type: "instructor-begin-next",
+            sectionId: state.sectionId,
+            meeting: { ...state.meeting, location },
+            course: state.course,
+          };
+        }
       }
     }
   }
@@ -2051,7 +2075,7 @@ function processLine(
     }
     if (line === '<td  class="brdr" colspan="2" border="0"></td>') {
       if (state.meeting) {
-        const newCourse = addToMeeting(state.course, state.meeting);
+        const newCourse = addMeeting(state.course, state.meeting);
         if (newCourse) {
           // final exam: has date instead of section code, plus different meeting
           // types i presume
@@ -2107,7 +2131,7 @@ function processLine(
       };
     }
     const matchSecCode = line.match(/^<td class="brdr">([A-Z\d]\d\d)<\/td>$/);
-    if (matchSecCode && state.instructionType && !state.course.isWeird) {
+    if (matchSecCode && state.instructionType) {
       return {
         ...state,
         type: "days-or-tba-next",
@@ -2116,7 +2140,6 @@ function processLine(
           sectionCode: matchSecCode[1],
         },
         sectionId: "extra",
-        course: state.course,
       };
     }
   }
@@ -2204,20 +2227,22 @@ function processLine(
     }
   }
   if (state.type === "exam-brdr2-begin-next" && line === '<td class="brdr">') {
-    if (state.course.isWeird && state.course.weirdExam === null) {
+    if (
+      state.course.isWeird &&
+      state.course.weirdExam === null &&
+      state.exam.isExam
+    ) {
       // there can only be one weird exam (exam with instructors)
-      if (state.exam.isExam) {
-        return {
-          ...state,
-          type: "instructor-end-next",
-          mode: {
-            type: "weird",
-            meeting: { ...state.exam, isWeird: true, instructors: [] },
-          },
-          shouldSeeBr: false,
-          sawStaff: false,
-        };
-      }
+      return {
+        ...state,
+        type: "instructor-end-next",
+        mode: {
+          type: "weird",
+          meeting: { ...state.exam, isWeird: true, instructors: [] },
+        },
+        shouldSeeBr: false,
+        sawStaff: false,
+      };
     } else {
       return { ...state, type: "exam-brdr2-end-next" };
     }
@@ -2310,10 +2335,6 @@ for (const {
   let totalPages = 1;
   for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
     const path = `.cache/${term}/_all/${pageNumber}.html`;
-    if (path === ".cache/WI06/_all/422.html") {
-      // PHYS 2A has two extra C00 lectures attached to.. nothing
-      continue;
-    }
     const allLines = (
       await readFile(path, "utf-8").catch((error) =>
         error instanceof Error && "code" in error && error.code === "ENOENT"
