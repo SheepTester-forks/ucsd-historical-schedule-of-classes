@@ -193,6 +193,8 @@ const restrictionTypes = {
   P4: "",
   MU: "Open to Muir College Students Only",
   XSR: "Not Open to Seniors",
+  SN: "Open to Seventh College Students Only",
+  EI: "Open to Eighth College Students Only",
 };
 function getRestrictionType(
   type: string,
@@ -227,7 +229,9 @@ function getRestrictionType(
     type === "D3" ||
     type === "P4" ||
     type === "MU" ||
-    type === "XSR"
+    type === "XSR" ||
+    type === "SN" ||
+    type === "EI"
   ) {
     if (restrictionTypes[type] === title) {
       return type;
@@ -1209,7 +1213,7 @@ function processLine(
       .match(
         // SA10 page 46 HIEU 106GS links to SP18.html and idk if that's intentional
         // idk why they only misspell "EXCLUDE" but SP19 page 500 RMAS 199 links to 'EXCULDE' and one before did 'EXLUDE'
-        /^(?:<a href="javascript:openNewWindow\('http:\/\/(registrar\.ucsd\.edu\/studentlink\/cnd\.html|www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5}|SP18|CSE-AESE|EXLUDE|EXCULDE)\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2})|www\.ucsd\.edu\/catalog\/curric\/EAP\.html|pharmacy\.ucsd\.edu\/current)'\)">)?<span class="boldtxt">([A-Za-z&'/:,.\d()+";?!@# -]{30})<\/span>(?: <\/a>)?$/,
+        /^(?:<a href="javascript:openNewWindow\('http:\/\/(registrar\.ucsd\.edu\/studentlink\/cnd\.html|www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5}|SP18|CSE-AESE|EXLUDE|EXCULDE|css|mae-aese)\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2})|www\.ucsd\.edu\/catalog\/curric\/EAP\.html|pharmacy\.ucsd\.edu\/current)'\)">)?<span class="boldtxt">([A-Za-z&'/:,.\d()+";?!@#\\ -]{30})<\/span>(?: <\/a>)?$/,
       );
     if (match && line.startsWith("<a") === line.endsWith("a>")) {
       const title = match[4].trimEnd();
@@ -1287,12 +1291,14 @@ function processLine(
   if (state.type === "unit-end-summer-next") {
     if (isSummer) {
       const match = line.match(
-        /^(Sum Sess I|Sum Ses II|SpecSumSes|Summer Qtr)?:&nbsp;([A-Z][a-z]+) ([0-3]\d) (\d{4})&nbsp;-&nbsp;([A-Z][a-z]+) ([0-3]\d) (\d{4})$/,
+        // the quarter names only started appearing in 2024
+        /^(?:(Sum Sess I|Sum Ses II|SpecSumSes|Summer Qtr) (20\d\d))?:&nbsp;([A-Z][a-z]+) ([0-3]\d) (\d{4})&nbsp;-&nbsp;([A-Z][a-z]+) ([0-3]\d) (\d{4})$/,
       );
       if (match) {
         const [
           ,
           summerType,
+          summerYear,
           startMonth,
           startDate,
           startYear,
@@ -1314,6 +1320,9 @@ function processLine(
                     ? null
                     : "idk";
         if (
+          (options.termYear < 2024
+            ? summerYear === undefined
+            : +summerYear === options.termYear) &&
           parsedType !== "idk" &&
           +startYear === options.termYear &&
           +endYear === options.termYear
@@ -1352,7 +1361,8 @@ function processLine(
       // 'Du Moyen-Age ë 1789' FA12 page 316 LTFR 115
       // 'La Litt©rature fantastique' WI13 page 317 LTFR 141
       // 'Hyperk\"ahler manifolds' MATH 206A, FA18 page 363
-      .match(/^([A-Za-z&.,?/\d:'!(")#;=@Ûì¥*+$ë©\\ -]+)$/);
+      // 'Machine Learning forÿRobotics' SP22 page 204 CSE 291
+      .match(/^([A-Za-z&.,?/\d:'!(")#;=@Ûì¥*+$ë©\\ÿ -]+)$/);
     if (topicMatch && state.course.topic === null) {
       if (isSummer) {
         // summer range may follow
@@ -1405,14 +1415,11 @@ function processLine(
     const match = line.match(
       // FA19 page 6 ANTH 199 has a 4-digit section id here
       // FA19 page 121 CHEM 99H has '74'
-      /^<span class="boldtxt" onmouseover="" style="cursor: pointer;" onclick="javascript:openNewWindow\('http:\/\/courses\.ucsd\.edu\/coursemain\.asp\?section=([1-9]\d{5}|0|6922|74|160|6986|3221|6840|3252|6893)'\)">Resources<\/span>&nbsp;\|&nbsp;$/,
+      // oh ok that's because their section IDs overflowed
+      // yeah this is section 1: https://courses.ucsd.edu/coursemain.aspx?section=1 (WI20 page 232, CSE 299)
+      /^<span class="boldtxt" onmouseover="" style="cursor: pointer;" onclick="javascript:openNewWindow\('http:\/\/courses\.ucsd\.edu\/coursemain\.asp\?section=([1-9]\d{0,5}|0)'\)">Resources<\/span>&nbsp;\|&nbsp;$/,
     );
-    if (
-      match &&
-      (match[1].length === 6 ||
-        match[1] === "0" ||
-        (options.quarter === "FA" && options.termYear === 2019))
-    ) {
+    if (match) {
       return {
         ...state,
         type: "evals-next",
@@ -1527,15 +1534,8 @@ function processLine(
     // FA19 page 6 ANTH 199 has a 4-digit section id here
     // FA19 page 121 CHEM 99H has '74'
     // yeah they're all from FA19
-    const match = line.match(
-      /^(?:[1-9]\d{5}|6922|74|160|6986|3221|6840|3252|6893)$/,
-    );
-    if (
-      match &&
-      state.sectionId === null &&
-      (match[0].length === 6 ||
-        (options.quarter === "FA" && options.termYear === 2019))
-    ) {
+    const match = line.match(/^(?:[1-9]\d{0,5})$/);
+    if (match && state.sectionId === null) {
       return { ...state, sectionId: +match[0] };
     }
     if (line === "</td>") {
@@ -1575,8 +1575,9 @@ function processLine(
     // WI02 page 11 ANPR 195 has 'AA0'
     // SP02 page 31 BGGN 271 has 'AAA'
     // SP02 page 115 COGS 190C has 'XXX'
+    // SP20 page 228 DSC 500 and 599 have '0AC'
     const match = line.match(
-      /^<td class="brdr">([A-Z\d]\d\d|\d\d |A0 |[A-Z]OO| 10|00\?|  [67]|AA[0A]|XXX)<\/td>$/,
+      /^<td class="brdr">([A-Z\d]\d\d|\d\d |A0 |[A-Z]OO| 10|00\?|  [67]|AA[0A]|XXX|0AC)<\/td>$/,
     );
     if (match) {
       return {
@@ -1661,6 +1662,9 @@ function processLine(
   if (state.type === "building-link-next") {
     if (line === "TBA</td>") {
       return { ...state, type: "room-next", building: "TBA" };
+    }
+    if (line === "RCLAS</td>") {
+      return { ...state, type: "room-next", building: "RCLAS" };
     }
     const match = line.match(
       /^<a href="https:\/\/maps\.ucsd\.edu\/\?id=1005#!s\/([A-Z][A-Z\d-]{1,4})_Main\?ct\/18312" target="_blank">$/,
@@ -2239,9 +2243,9 @@ for (const {
   year: termYear,
   quarter,
 } of terms()) {
-  // if (termYear < 2019) {
-  //   continue;
-  // }
+  if (termYear < 2019) {
+    continue;
+  }
   let totalPages = 1;
   for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
     const path = `.cache/${term}/_all/${pageNumber}.html`;
