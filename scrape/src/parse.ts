@@ -192,6 +192,7 @@ const restrictionTypes = {
   D3: "",
   P4: "",
   MU: "Open to Muir College Students Only",
+  XSR: "Not Open to Seniors",
 };
 function getRestrictionType(
   type: string,
@@ -225,7 +226,8 @@ function getRestrictionType(
     type === "D2" ||
     type === "D3" ||
     type === "P4" ||
-    type === "MU"
+    type === "MU" ||
+    type === "XSR"
   ) {
     if (restrictionTypes[type] === title) {
       return type;
@@ -250,6 +252,7 @@ const instructionTypes = {
   OP: "",
   IT: "",
   OT: "Other Additional Meeting",
+  AC: "Activity",
 };
 function getInstructionType(
   type: string,
@@ -271,7 +274,8 @@ function getInstructionType(
     type === "CO" ||
     type === "OP" ||
     type === "IT" ||
-    type === "OT"
+    type === "OT" ||
+    type === "AC"
   ) {
     if (instructionTypes[type] === title) {
       return type;
@@ -687,7 +691,8 @@ function addMeeting(
     ) {
       // in a weird course, the first meeting must be extra or an exam
       // or cancelled (WI17 page 161, CSE 132A)
-      if (!meeting.cancelled) {
+      // or unenrollable (FA01 page 106 COGS 108A)
+      if (!meeting.cancelled && meeting.enrollable !== null) {
         return null;
       }
     }
@@ -772,13 +777,15 @@ function processLine(
     if (state.next === "h2") {
       const matchDept = line
         .replaceAll("&amp;", "&")
+        .replaceAll("&#039;", "'")
         .match(
-          /^<h2> <span class="centeralign">([A-Za-z&,/ ]{35})<\/span> <\/h2>$/,
+          /^<h2> <span class="centeralign">([A-Za-z&,/' ]{35})<\/span> <\/h2>$/,
         );
       const matchSubject = line
         .replaceAll("&amp;", "&")
+        .replaceAll("&#039;", "'")
         .match(
-          /^<h2>  <span class="centeralign">([A-Za-z&/, -]{30}) \(([A-Z ]{5})\)<\/span> <\/h2>$/,
+          /^<h2>  <span class="centeralign">([A-Za-z&/,2()' -]{30}) \(([A-Z ]{5})\)<\/span> <\/h2>$/,
         );
       if (matchDept) {
         const lastCommand = state.commands.at(-1);
@@ -1240,7 +1247,7 @@ function processLine(
     }
   }
   if (state.type === "unit-end-next") {
-    const match = line.match(/^\/([12]?\d) by (2|3|4|7|0\.5)$/);
+    const match = line.match(/^\/([12]?\d) by (2|3|4|7|0\.5|10)$/);
     if (match && !state.course.units.end) {
       return {
         ...state,
@@ -1564,8 +1571,12 @@ function processLine(
     // FA16 page 295 HIUS 183, 'BOO' was cancelled and presumably replaced with 'B00'
     // guess it's also not super rare
     // SP19 page 412 NEU 296 has '00?' (cancelled), i guess they held shift or something ??
+    // SA01 page 32 PSYC 199 has '  6 and '  7'
+    // WI02 page 11 ANPR 195 has 'AA0'
+    // SP02 page 31 BGGN 271 has 'AAA'
+    // SP02 page 115 COGS 190C has 'XXX'
     const match = line.match(
-      /^<td class="brdr">([A-Z\d]\d\d|\d\d |A0 |[A-Z]OO| 10|00\?)<\/td>$/,
+      /^<td class="brdr">([A-Z\d]\d\d|\d\d |A0 |[A-Z]OO| 10|00\?|  [67]|AA[0A]|XXX)<\/td>$/,
     );
     if (match) {
       return {
@@ -2228,17 +2239,13 @@ for (const {
   year: termYear,
   quarter,
 } of terms()) {
-  if (termYear < 2019) {
-    continue;
-  }
+  // if (termYear < 2019) {
+  //   continue;
+  // }
   let totalPages = 1;
   for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
     const path = `.cache/${term}/_all/${pageNumber}.html`;
-    if (
-      path === ".cache/SA09/_all/50.html" ||
-      path === ".cache/SA12/_all/22.html"
-    ) {
-      // enrollable meeting in weird course
+    if (path === ".cache/SA99/_all/11.html") {
       continue;
     }
     const allLines = (
