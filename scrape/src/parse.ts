@@ -74,10 +74,6 @@ type Course = {
     | CancelledEnrollableMeeting
     | ExtraMeetingRow
   )[];
-  courseMeetingState:
-    | "before-enrollables"
-    | "in-enrollables"
-    | "after-enrollables";
   // there should only be at most one weird exam, and that's only if
   // resourcesSectionId is null
   exams: (Exam | CancelledExam | WeirdExam)[];
@@ -692,23 +688,9 @@ function addMeeting(
       // in a weird course, the first meeting must be extra or an exam
       return null;
     }
-    if (meeting.enrollable !== null) {
-      // enrollables have already been listed
-      if (course.courseMeetingState === "after-enrollables") {
-        return null;
-      }
-    }
     // unenrolalble courses can show up before or after enrollables
-    return {
-      ...course,
-      meetings: [...course.meetings, meeting],
-      courseMeetingState:
-        meeting.enrollable !== null
-          ? "in-enrollables"
-          : course.courseMeetingState === "in-enrollables"
-            ? "after-enrollables"
-            : course.courseMeetingState,
-    };
+    // or in between, see FA05 page 68, BIBC 102, where they seemed to have accidentally made a discussion enrollable
+    return { ...course, meetings: [...course.meetings, meeting] };
     // old comments, idk if they're still interesting
 
     // const lastAdditonalMeeting = course.additionalMeetings.at(-1);
@@ -1445,7 +1427,6 @@ function processLine(
         ...state.course,
         kind: "course",
         resourcesSectionId: state.course.resourcesSectionId,
-        courseMeetingState: "before-enrollables",
         meetings: [],
         exams: [],
       },
@@ -1478,7 +1459,7 @@ function processLine(
       } else {
         const newCourse = addMeeting(state.course, state.prevMeeting);
         if (newCourse) {
-          return { ...state, type: "borderless-brdr-next" };
+          return { ...state, type: "borderless-brdr-next", course: newCourse };
         }
       }
     }
