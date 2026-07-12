@@ -4,6 +4,11 @@ Learnings:
 
 - "As of" dates can change from page to page.
 
+- Schedule of Classes is unstable when I refetch quarters, which affects quarters all the way from SA00:
+  - Instructor encoded PIDs can change
+
+  - Course topics can change
+
 ---
 
 Interesting pages to look up on Web Archive:

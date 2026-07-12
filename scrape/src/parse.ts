@@ -12,11 +12,11 @@ import { getDepartments, getResultPath } from "./get.ts";
 type GlobalOptions = {
   termYear: number;
   quarter: Quarter;
+  departmentNames: Set<string>;
 };
 
 type Department = {
   kind: "department";
-  // TODO: allowlist of department names (or pull from departments.json?)
   name: string;
 };
 type Subject = {
@@ -137,11 +137,15 @@ type ExamBase = {
   isExam: true;
   examType: keyof typeof examTypes;
   date: {
+    // 1-indexed
     month: number;
     date: number;
     // almost always the term year, except when there's a typo, like FA06 page
     // 164, CSE 290, F00 MU, which is scheduled in 2009
     year: number;
+    // Can be inconsistent with date, see LIIT 1BX, WI97 page 257
+    // and omitted for cancelled exams
+    dayOfWeek: number | null;
   };
   time: string;
   location: { building: string; room: string } | null;
@@ -793,15 +797,19 @@ function processLine(
           /^<h2>  <span class="centeralign">([A-Za-z&/,2()' -]{30}) \(([A-Z ]{5})\)<\/span> <\/h2>$/,
         );
       if (matchDept) {
+        const name = matchDept[1];
         const lastCommand = state.commands.at(-1);
-        if (!lastCommand || lastCommand.kind === "course") {
+        if (
+          !lastCommand ||
+          (lastCommand.kind === "course" && options.departmentNames.has(name))
+        ) {
           return {
             ...state,
             type: "after-heading",
             next: "td",
             commands: [
               ...state.commands,
-              { kind: "department", name: matchDept[1].trimEnd() },
+              { kind: "department", name: name.trimEnd() },
             ],
             wasFrom: { type: "dept", comment: "" },
           };
@@ -2046,7 +2054,12 @@ function processLine(
         type: "exam-days-next",
         exam: {
           examType: state.examType,
-          date: { month: +match[1], date: +match[2], year: +match[3] },
+          date: {
+            month: +match[1],
+            date: +match[2],
+            year: +match[3],
+            dayOfWeek: null,
+          },
         },
       };
     }
@@ -2084,10 +2097,22 @@ function processLine(
       .replace("Th", "R")
       .replace("Tu", "T")
       // (?:T|R|S|M|W|F|X)
-      .match(/^<td class="brdr">(M?T?W?R?F?S?X? {0,6})<\/td>$/);
-    // TODO: validate exam date and day match
-    if (match && match[1].length === 7) {
-      return { ...state, type: "exam-time-next" };
+      .match(/^<td class="brdr">([MTWRFSX] {6})<\/td>$/);
+    if (match) {
+      const day = "XMTWRFS".indexOf(match[1][0]);
+      // const date = new Date(
+      //   Date.UTC(
+      //     state.exam.date.year,
+      //     state.exam.date.month - 1,
+      //     state.exam.date.date,
+      //   ),
+      // );
+      // if (date.getUTCDay() === day) {
+      return {
+        ...state,
+        type: "exam-time-next",
+        exam: { ...state.exam, date: { ...state.exam.date, dayOfWeek: day } },
+      };
     }
   }
   if (state.type === "exam-time-next") {
@@ -2213,20 +2238,9 @@ function processLine(
 
 async function printDebug(
   paginateTerm: string,
-  deptTerms: string[],
+  departments: string[],
   page: number,
 ) {
-  const departments = Array.from(
-    new Set(
-      await Promise.all(deptTerms.map((term) => getDepartments(term))).then(
-        (departments) =>
-          departments
-            .values()
-            .flatMap((departments) => departments)
-            .map(({ code }) => code),
-      ),
-    ),
-  );
   // https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda#quick-example
   console.error(
     `debug: \x1b]8;;${getResultPath(
@@ -2245,6 +2259,17 @@ for (const {
   year: termYear,
   quarter,
 } of terms()) {
+  const departments = new Map(
+    await Promise.all(deptTerms.map((term) => getDepartments(term))).then(
+      (departments) =>
+        departments
+          .values()
+          .flatMap((departments) => departments)
+          .map(({ code, value }) => [code, value]),
+    ),
+  );
+  const departmentNames = new Set(departments.values());
+
   let totalPages = 1;
   for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
     const path = `.cache/${term}/_all/${pageNumber}.html`;
@@ -2270,7 +2295,7 @@ for (const {
     ) {
       console.error(`${path}:1: page mismatch`);
       console.error(firstLine);
-      await printDebug(term, deptTerms, pageNumber);
+      await printDebug(term, Array.from(departments.keys()), pageNumber);
       process.exit(1);
     }
     totalPages = +match[2];
@@ -2280,6 +2305,7 @@ for (const {
       const next = processLine(state, line, {
         termYear,
         quarter,
+        departmentNames,
       });
       if (!next) {
         console.dir(state, { depth: null });
@@ -2287,7 +2313,7 @@ for (const {
           `${path}:${i + 2}: unexpected line for state '\x1b[1;36m${state.type}\x1b[0m'`,
         );
         console.error(line);
-        await printDebug(term, deptTerms, pageNumber);
+        await printDebug(term, Array.from(departments.keys()), pageNumber);
         process.exit(1);
       }
       state = next;
@@ -2297,7 +2323,7 @@ for (const {
       console.error(
         `${path}:${lines.length + 1}: state machine incomplete :( ended at '\x1b[1;36m${state.type}\x1b[0m'`,
       );
-      await printDebug(term, deptTerms, pageNumber);
+      await printDebug(term, Array.from(departments.keys()), pageNumber);
       process.exit(1);
     }
     // console.dir(state, { depth: null });
