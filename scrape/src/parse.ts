@@ -686,7 +686,10 @@ function addMeeting(
       course.meetings.length === 0
     ) {
       // in a weird course, the first meeting must be extra or an exam
-      return null;
+      // or cancelled (WI17 page 161, CSE 132A)
+      if (!meeting.cancelled) {
+        return null;
+      }
     }
     // unenrolalble courses can show up before or after enrollables
     // or in between, see FA05 page 68, BIBC 102, where they seemed to have accidentally made a discussion enrollable
@@ -1395,9 +1398,14 @@ function processLine(
     const match = line.match(
       // FA19 page 6 ANTH 199 has a 4-digit section id here
       // FA19 page 121 CHEM 99H has '74'
-      /^<span class="boldtxt" onmouseover="" style="cursor: pointer;" onclick="javascript:openNewWindow\('http:\/\/courses\.ucsd\.edu\/coursemain\.asp\?section=(\d{6}|0|6922|74)'\)">Resources<\/span>&nbsp;\|&nbsp;$/,
+      /^<span class="boldtxt" onmouseover="" style="cursor: pointer;" onclick="javascript:openNewWindow\('http:\/\/courses\.ucsd\.edu\/coursemain\.asp\?section=([1-9]\d{5}|0|6922|74|160|6986|3221|6840|3252|6893)'\)">Resources<\/span>&nbsp;\|&nbsp;$/,
     );
-    if (match) {
+    if (
+      match &&
+      (match[1].length === 6 ||
+        match[1] === "0" ||
+        (options.quarter === "FA" && options.termYear === 2019))
+    ) {
       return {
         ...state,
         type: "evals-next",
@@ -1511,8 +1519,16 @@ function processLine(
   if (state.type === "brdr-section-id-end-next") {
     // FA19 page 6 ANTH 199 has a 4-digit section id here
     // FA19 page 121 CHEM 99H has '74'
-    const match = line.match(/^(?:\d{6}|6922|74)$/);
-    if (match && state.sectionId === null) {
+    // yeah they're all from FA19
+    const match = line.match(
+      /^(?:[1-9]\d{5}|6922|74|160|6986|3221|6840|3252|6893)$/,
+    );
+    if (
+      match &&
+      state.sectionId === null &&
+      (match[0].length === 6 ||
+        (options.quarter === "FA" && options.termYear === 2019))
+    ) {
       return { ...state, sectionId: +match[0] };
     }
     if (line === "</td>") {
@@ -2212,7 +2228,7 @@ for (const {
   year: termYear,
   quarter,
 } of terms()) {
-  if (termYear < 2005) {
+  if (termYear < 2019) {
     continue;
   }
   let totalPages = 1;
