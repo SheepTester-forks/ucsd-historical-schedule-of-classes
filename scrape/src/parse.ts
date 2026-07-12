@@ -696,9 +696,10 @@ function addMeeting(
       // in a weird course, the first meeting must be extra or an exam
       // or cancelled (WI17 page 161, CSE 132A)
       // or unenrollable (FA01 page 106 COGS 108A)
-      if (!meeting.cancelled && meeting.enrollable !== null) {
-        return null;
-      }
+      // or enrollable I guess (SA99 page 11 COGN 20 is the only case of this)
+      // if (!meeting.cancelled && meeting.enrollable !== null) {
+      //   return null;
+      // }
     }
     // unenrolalble courses can show up before or after enrollables
     // or in between, see FA05 page 68, BIBC 102, where they seemed to have accidentally made a discussion enrollable
@@ -2247,13 +2248,6 @@ for (const {
   let totalPages = 1;
   for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
     const path = `.cache/${term}/_all/${pageNumber}.html`;
-    if (path === ".cache/SA99/_all/11.html") {
-      continue;
-    }
-    if (path === ".cache/FA24/_all/336.html") {
-      // cannot repro, may need to scrape again
-      continue;
-    }
     const allLines = (
       await readFile(path, "utf-8").catch((error) =>
         error instanceof Error && "code" in error && error.code === "ENOENT"
