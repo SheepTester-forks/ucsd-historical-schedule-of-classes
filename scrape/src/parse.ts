@@ -1251,7 +1251,7 @@ function processLine(
     }
   }
   if (state.type === "unit-end-next") {
-    const match = line.match(/^\/([12]?\d) by (2|3|4|7|0\.5|10)$/);
+    const match = line.match(/^\/([12]?\d) by (2|3|4|7|0\.5|10|6)$/);
     if (match && !state.course.units.end) {
       return {
         ...state,
@@ -1306,7 +1306,6 @@ function processLine(
           endDate,
           endYear,
         ] = match;
-        // TODO: can we enforce that this is present after a particular year
         const parsedType =
           summerType === "Sum Sess I"
             ? 1
@@ -1322,7 +1321,8 @@ function processLine(
         if (
           (options.termYear < 2024
             ? summerYear === undefined
-            : +summerYear === options.termYear) &&
+            : // even in SA24 page 1 some are missing this like AIP 197
+              summerYear === undefined || +summerYear === options.termYear) &&
           parsedType !== "idk" &&
           +startYear === options.termYear &&
           +endYear === options.termYear
@@ -1362,7 +1362,7 @@ function processLine(
       // 'La Litt©rature fantastique' WI13 page 317 LTFR 141
       // 'Hyperk\"ahler manifolds' MATH 206A, FA18 page 363
       // 'Machine Learning forÿRobotics' SP22 page 204 CSE 291
-      .match(/^([A-Za-z&.,?/\d:'!(")#;=@Ûì¥*+$ë©\\ÿ -]+)$/);
+      .match(/^([A-Za-z&.,?/\d:'!(")#;=@Ûì¥*+$ë©\\ÿ| -]+)$/);
     if (topicMatch && state.course.topic === null) {
       if (isSummer) {
         // summer range may follow
@@ -1576,8 +1576,9 @@ function processLine(
     // SP02 page 31 BGGN 271 has 'AAA'
     // SP02 page 115 COGS 190C has 'XXX'
     // SP20 page 228 DSC 500 and 599 have '0AC'
+    // WI25 page 182 COGS 190B has :00 (cancelled)
     const match = line.match(
-      /^<td class="brdr">([A-Z\d]\d\d|\d\d |A0 |[A-Z]OO| 10|00\?|  [67]|AA[0A]|XXX|0AC)<\/td>$/,
+      /^<td class="brdr">([A-Z\d]\d\d|\d\d |A0 |[A-Z]OO| 10|00\?|  [67]|AA[0A]|XXX|0AC|:00)<\/td>$/,
     );
     if (match) {
       return {
@@ -2243,13 +2244,14 @@ for (const {
   year: termYear,
   quarter,
 } of terms()) {
-  if (termYear < 2019) {
-    continue;
-  }
   let totalPages = 1;
   for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
     const path = `.cache/${term}/_all/${pageNumber}.html`;
     if (path === ".cache/SA99/_all/11.html") {
+      continue;
+    }
+    if (path === ".cache/FA24/_all/336.html") {
+      // cannot repro, may need to scrape again
       continue;
     }
     const allLines = (
