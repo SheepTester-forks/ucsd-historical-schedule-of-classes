@@ -38,7 +38,7 @@ type CourseComment = {
   number: string;
   comment: string;
 };
-type CourseBase = {
+type Course = {
   kind: "course";
   restrictions: (keyof typeof restrictionTypes)[];
   number: string;
@@ -52,44 +52,35 @@ type CourseBase = {
     end: { month: string; date: number };
   } | null;
   resourcesSectionId: number | null;
-};
-type Course = CourseBase & {
-  isWeird: false;
-  resourcesSectionId: number;
-  // on rare occassions there can be multiple, like SA04 page 31 PHYS 1B & 1C
-  preAdditionalMeetings: ((
+  // - o= n rare occassions there can be multiple meetings before an enrollable
+  //   meeting, like SA04 page 31 PHYS 1B & 1C
+  // - FA05 page 359, MATH 3C has an extra meeting time for its pre-additional
+  //   meeting
+  // - SPPS 201, FA05 page 124 has two extra times for its lecture, but it's got
+  //   to be a mistake because why do they have two friday sessions ??
+  //   whatever..
+  // - yeah apparently additional meetings can have extras too, like ECE 103,
+  //   SA04 page 10
+  // - SP13 page 100 CAT 124 has three extra meetings, though it seems to be a
+  //   duplicate pair
+  // - WI06 page 422 PHYS 2A has two extra C00 lectures attached to.. nothing
+  //   ... followed by a regular unenrollable meeting
+  //
+  // for these reasons, i decided to merge them all into one flattened list
+  meetings: (
     | UnenrollableMeeting
     | CancelledUnnrollableMeeting
-  ) & {
-    // FA05 page 359, MATH 3C has an extra meeting time for its pre-additional
-    // meeting
-    extra: ExtraMeeting | null;
-  })[];
-  enrollables: ((EnrollableMeeting | CancelledEnrollableMeeting) & {
-    // SPPS 201, FA05 page 124 has two extra times for its lecture, but it's got
-    // to be a mistake because why do they have two friday sessions ??
-    // whatever..
-    extras: ExtraMeeting[];
-  })[];
-  additionalMeetings: ((UnenrollableMeeting | CancelledUnnrollableMeeting) & {
-    // yeah apparently additional meetings can have extras too, like ECE 103,
-    // SA04 page 10
-    // SP13 page 100 CAT 124 has three extra meetings, though it seems to be a
-    // duplicate pair
-    extras: ExtraMeeting[];
-  })[];
-  exams: (Exam | CancelledExam)[];
-};
-type WeirdCourse = CourseBase & {
-  isWeird: true;
-  resourcesSectionId: null;
-  // shouldn't be null in practice, at this point i just got lazy
-  weirdExam: { index: number; exam: WeirdExam } | null;
-  remainingExams: (Exam | CancelledExam)[];
-  // WI06 page 422 PHYS 2A has two extra C00 lectures attached to.. nothing
-  detachedExtras: ExtraMeetingRow[];
-  // ... followed by a regular unenrollable meeting
-  additionalMeetings: (UnenrollableMeeting & { extra: ExtraMeeting | null })[];
+    | EnrollableMeeting
+    | CancelledEnrollableMeeting
+    | ExtraMeetingRow
+  )[];
+  courseMeetingState:
+    | "before-enrollables"
+    | "in-enrollables"
+    | "after-enrollables";
+  // there should only be at most one weird exam, and that's only if
+  // resourcesSectionId is null
+  exams: (Exam | CancelledExam | WeirdExam)[];
 };
 type EnrollmentInfo = {
   sectionId: number;
@@ -111,13 +102,6 @@ type MeetingBase = {
   instructors: { name: string; encryptedPid: Buffer }[];
   comment: string;
 };
-type ExtraMeeting = {
-  location: {
-    days: string;
-    time: string;
-    location: { building: string; room: string } | null;
-  };
-};
 type EnrollableMeeting = MeetingBase & {
   enrollable: EnrollmentInfo;
 };
@@ -129,6 +113,14 @@ type UnenrollableMeeting = UnenrollableMeetingBase & {
 };
 type ExtraMeetingRow = UnenrollableMeetingBase & {
   isExtra: true;
+  // assume location of extra meeting will never be TBA
+  // nvm they apparently can be, SA05 page 46, MGT 111. but the time should
+  // always be determined, surely
+  location: {
+    days: string;
+    time: string;
+    location: { building: string; room: string } | null;
+  };
 };
 type Meeting = EnrollableMeeting | UnenrollableMeeting;
 type CancelledMeetingBase = {
@@ -162,6 +154,7 @@ type ExamBase = {
 type Exam = ExamBase & {
   isWeird: false;
 };
+// a weird exam is an exam with instructors listed
 type WeirdExam = ExamBase & {
   isWeird: true;
   instructors: { name: string; encryptedPid: Buffer }[];
@@ -444,7 +437,7 @@ type State = (
   | {
       type: "evals-next" | "close-course-links-next";
       course: Pick<
-        CourseBase,
+        Course,
         | "restrictions"
         | "number"
         | "catalog"
@@ -457,7 +450,7 @@ type State = (
     }
   | {
       type: "meeting-row-begin-next";
-      course: Course | WeirdCourse;
+      course: Course;
       prevMeeting:
         | Meeting
         | CancelledEnrollableMeeting
@@ -474,37 +467,37 @@ type State = (
         | "brdr-begin-next"
         | "brdr-end-next"
         | "brdr-section-id-begin-next";
-      course: Course | WeirdCourse;
+      course: Course;
     }
   | {
       type: "brdr-section-id-end-next" | "instruction-type-next";
-      course: Course | WeirdCourse;
+      course: Course;
       sectionId: number | null;
       expectCancelled: boolean;
     }
   | {
       type: "section-code-next";
-      course: Course | WeirdCourse;
+      course: Course;
       sectionId: number | null;
       meeting: Pick<Meeting, "instructionType">;
       expectCancelled: boolean;
     }
   | {
       type: "days-or-tba-next";
-      course: Course | WeirdCourse;
+      course: Course;
       sectionId: number | null | "extra";
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
     }
   | {
       type: "time-next";
-      course: Course | WeirdCourse;
+      course: Course;
       sectionId: number | null | "extra";
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
       days: string;
     }
   | {
       type: "building-start-next" | "building-link-next";
-      course: Course | WeirdCourse;
+      course: Course;
       sectionId: number | null;
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
       days: string;
@@ -512,7 +505,7 @@ type State = (
     }
   | {
       type: "building-code-next" | "room-next";
-      course: Course | WeirdCourse;
+      course: Course;
       sectionId: number | null | "extra";
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
       days: string;
@@ -521,13 +514,13 @@ type State = (
     }
   | {
       type: "instructor-begin-next";
-      course: Course | WeirdCourse;
+      course: Course;
       sectionId: number | null;
       meeting: Pick<Meeting, "instructionType" | "sectionCode" | "location">;
     }
   | {
       type: "instructor-end-next";
-      course: Course | WeirdCourse;
+      course: Course;
       mode:
         | {
             type: "meeting";
@@ -544,7 +537,7 @@ type State = (
   | {
       type: "non-enrollable-skip";
       skip: 3 | 2 | 1;
-      course: Course | WeirdCourse;
+      course: Course;
       meeting: Meeting;
     }
   | {
@@ -581,7 +574,7 @@ type State = (
         | "meeting-row-end-next"
         | "meeting-comment-begin-next"
         | "meeting-comment-next";
-      course: Course | WeirdCourse;
+      course: Course;
       meeting:
         | Meeting
         | CancelledEnrollableMeeting
@@ -593,7 +586,7 @@ type State = (
     }
   | {
       type: "white-meeting-start-or-meeting-comment";
-      course: Course | WeirdCourse;
+      course: Course;
       meeting:
         | Meeting
         | CancelledEnrollableMeeting
@@ -606,11 +599,11 @@ type State = (
     }
   | {
       type: "exam-brdr-begin-next" | "exam-brdr-end-next" | "exam-type-next";
-      course: Course | WeirdCourse;
+      course: Course;
     }
   | {
       type: "exam-date-next";
-      course: Course | WeirdCourse;
+      course: Course;
       // at this point it is unclear to the state machine whether this is an
       // extra meeting time for a normal meeting or an actual exam
       instructionType: keyof typeof instructionTypes | null;
@@ -618,38 +611,38 @@ type State = (
     }
   | {
       type: "exam-days-next" | "exam-time-next";
-      course: Course | WeirdCourse;
+      course: Course;
       exam: Pick<Exam, "examType" | "date">;
     }
   | {
       type: "exam-building-next";
-      course: Course | WeirdCourse;
+      course: Course;
       exam: Pick<Exam, "examType" | "date" | "time">;
     }
   | {
       type: "exam-room-next";
-      course: Course | WeirdCourse;
+      course: Course;
       exam: Pick<Exam, "examType" | "date" | "time">;
       building: string;
     }
   | {
       type: "exam-brdr2-begin-next";
-      course: Course | WeirdCourse;
+      course: Course;
       exam: Exam | UnenrollableMeeting | ExtraMeetingRow;
     }
   | {
       type: "exam-brdr2-end-next";
-      course: Course | WeirdCourse;
+      course: Course;
       exam: Exam | UnenrollableMeeting | ExtraMeetingRow;
     }
   | {
       type: "exam-brdr3-next";
-      course: Course | WeirdCourse;
+      course: Course;
       exam: Exam | UnenrollableMeeting | ExtraMeetingRow | WeirdExam;
     }
   | { type: "done" }
 ) & {
-  commands: (Department | Subject | Course | CourseComment | WeirdCourse)[];
+  commands: (Department | Subject | Course | CourseComment)[];
 };
 
 const initState: State = {
@@ -659,8 +652,8 @@ const initState: State = {
 };
 
 function addMeeting(
-  course: Course | WeirdCourse,
-  prevMeeting:
+  course: Course,
+  meeting:
     | Meeting
     | CancelledEnrollableMeeting
     | Exam
@@ -668,188 +661,82 @@ function addMeeting(
     | CancelledUnnrollableMeeting
     | WeirdExam
     | ExtraMeetingRow,
-): Course | WeirdCourse | null {
+): Course | null {
   // TODO: may also want to assert based on section code format (e.g. A01 vs
   // 001)
-  if (course.isWeird) {
-    if (prevMeeting.isExam) {
-      if (!prevMeeting.cancelled && prevMeeting.isWeird) {
-        if (!course.weirdExam) {
-          return {
-            ...course,
-            weirdExam: {
-              // the exam with the instructor isn't necessarily first
-              // e.g. MGT 280, WI06 page 475
-              // idk why, maybe they sort by a different key
-              index: course.remainingExams.length,
-              exam: prevMeeting,
-            },
-          };
-        }
-      } else {
-        return {
-          ...course,
-          remainingExams: [...course.remainingExams, prevMeeting],
-        };
-      }
-    } else if (!prevMeeting.cancelled && prevMeeting.enrollable === null) {
-      if (prevMeeting.isExtra) {
-        // assume detached extras must be first
-        if (!course.weirdExam && course.remainingExams.length === 0) {
-          const lastAdditional = course.additionalMeetings.at(-1);
-          if (lastAdditional) {
-            if (
-              lastAdditional.extra === null &&
-              prevMeeting.location &&
-              lastAdditional.instructionType === prevMeeting.instructionType &&
-              lastAdditional.sectionCode === prevMeeting.sectionCode &&
-              lastAdditional.comment === prevMeeting.comment
-            ) {
-              return {
-                ...course,
-                additionalMeetings: course.additionalMeetings.with(-1, {
-                  ...lastAdditional,
-                  extra: { location: prevMeeting.location },
-                }),
-              };
-            }
-          } else {
-            return {
-              ...course,
-              detachedExtras: [...course.detachedExtras, prevMeeting],
-            };
-          }
-        }
-      } else {
-        // then follow additional meetings (then exams)
-        if (!course.weirdExam && course.remainingExams.length === 0) {
-          return {
-            ...course,
-            additionalMeetings: [
-              ...course.additionalMeetings,
-              { ...prevMeeting, extra: null },
-            ],
-          };
-        }
-      }
-    }
-  } else if (prevMeeting.isExam) {
-    if (prevMeeting.cancelled || !prevMeeting.isWeird) {
-      return {
-        ...course,
-        exams: [...course.exams, prevMeeting],
-      };
-    }
-  } else if (
-    !prevMeeting.cancelled &&
-    prevMeeting.enrollable === null &&
-    prevMeeting.isExtra
-  ) {
-    // assume location of extra meeting will never be TBA
-    // nvm they apparently can be, SA05 page 46, MGT 111. but the time should
-    // always be determined, surely
-    if (prevMeeting.location) {
-      const extra: ExtraMeeting = { location: prevMeeting.location };
-      const lastAdditional = course.additionalMeetings.at(-1);
-      if (lastAdditional) {
-        if (
-          lastAdditional.instructionType === prevMeeting.instructionType &&
-          lastAdditional.sectionCode === prevMeeting.sectionCode &&
-          lastAdditional.comment === prevMeeting.comment
-        ) {
-          return {
-            ...course,
-            additionalMeetings: course.additionalMeetings.with(-1, {
-              ...lastAdditional,
-              extras: [...lastAdditional.extras, extra],
-            }),
-          };
-        }
-      } else {
-        const lastEnrollable = course.enrollables.at(-1);
-        if (lastEnrollable) {
-          if (
-            lastEnrollable.instructionType === prevMeeting.instructionType &&
-            lastEnrollable.sectionCode === prevMeeting.sectionCode &&
-            lastEnrollable.comment === prevMeeting.comment
-          ) {
-            return {
-              ...course,
-              enrollables: course.enrollables.with(-1, {
-                ...lastEnrollable,
-                extras: [...lastEnrollable.extras, extra],
-              }),
-            };
-          }
-        } else {
-          const lastPreAdditional = course.preAdditionalMeetings.at(-1);
-          if (
-            lastPreAdditional &&
-            lastPreAdditional.extra === null &&
-            lastPreAdditional.instructionType === prevMeeting.instructionType &&
-            lastPreAdditional.sectionCode === prevMeeting.sectionCode &&
-            lastPreAdditional.comment === prevMeeting.comment
-          ) {
-            return {
-              ...course,
-              preAdditionalMeetings: course.preAdditionalMeetings.with(-1, {
-                ...lastPreAdditional,
-                extra,
-              }),
-            };
-          }
-        }
-      }
-    }
-  } else if (course.exams.length === 0) {
-    if (prevMeeting.enrollable !== null) {
-      // const lastAdditonalMeeting = course.additionalMeetings.at(-1);
-      // if (!lastAdditonalMeeting || lastAdditonalMeeting.cancelled) {
-      // once we have started an additional meeting, the remaining ones must
-      // also be unenrollable
-      // well, an enrollable meeting can show up after a cancelled second
-      // unenrollable meeting (but it'll be out of order so idk; see SA04 page
-      // 31 PHYS 1B)
-      // well actually enrollable meetings can be whenever, see FA05 page 68,
-      // BIBC 102, where they for whatever reason made an enrollable lecture and
-      // a bunch of unenrollable discussions, except one that no one enrolled in
-      // is enrollable
-
-      // if restrictions id is 0, then there should be no enrollable sections
-      // e.g. WI05 page 432 PHYS 239, which only has cancelled exams
+  if (meeting.isExam) {
+    if (!meeting.cancelled && meeting.isWeird) {
+      // weird exams are only allowed if resourcesSectionId is 0 (null)
       if (course.resourcesSectionId !== null) {
-        return {
-          ...course,
-          enrollables: [...course.enrollables, { ...prevMeeting, extras: [] }],
-        };
+        return null;
       }
-    } else if (course.enrollables.length === 0) {
-      // first meeting (A00) can be unenrollable yet followed by enrollable
-      // meetings
-      // idk if the first meeting can be cancelled
-      // actually yes they can (SA04 page 9 CSE 132A)
-      return {
-        ...course,
-        preAdditionalMeetings: [
-          ...course.preAdditionalMeetings,
-          { ...prevMeeting, extra: null },
-        ],
-      };
-    } else {
-      // there must be at least one enrollable
-      // nvm, see CSE 12, SA04 page 8. they converted CSE 12 from a DI-based A01
-      // to LE-based A02, resulting in a crazy situation:
-      // - 12: LE A00 (enrollable)
-      // - 12: DI A01
-      //       LA A50 (cancelleed)
-      return {
-        ...course,
-        additionalMeetings: [
-          ...course.additionalMeetings,
-          { ...prevMeeting, extras: [] },
-        ],
-      };
+      if (course.exams.some((exam) => !exam.cancelled && exam.isWeird)) {
+        // there can only be one weird exam
+        return null;
+      }
     }
+    return {
+      ...course,
+      exams: [...course.exams, meeting],
+    };
+  } else if (course.exams.length === 0) {
+    if (!meeting.cancelled && meeting.enrollable === null && meeting.isExtra) {
+      // extra courses can show up basically anywhere:
+      // - after nothing (detached)
+      // - after enrollable or unenrollable courses
+      return { ...course, meetings: [...course.meetings, meeting] };
+    } else if (
+      course.resourcesSectionId === null &&
+      course.meetings.length === 0
+    ) {
+      // in a weird course, the first meeting must be extra or an exam
+      return null;
+    }
+    if (meeting.enrollable !== null) {
+      // enrollables have already been listed
+      if (course.courseMeetingState === "after-enrollables") {
+        return null;
+      }
+    }
+    // unenrolalble courses can show up before or after enrollables
+    return {
+      ...course,
+      meetings: [...course.meetings, meeting],
+      courseMeetingState:
+        meeting.enrollable !== null
+          ? "in-enrollables"
+          : course.courseMeetingState === "in-enrollables"
+            ? "after-enrollables"
+            : course.courseMeetingState,
+    };
+    // old comments, idk if they're still interesting
+
+    // const lastAdditonalMeeting = course.additionalMeetings.at(-1);
+    // if (!lastAdditonalMeeting || lastAdditonalMeeting.cancelled) {
+    // once we have started an additional meeting, the remaining ones must
+    // also be unenrollable
+    // well, an enrollable meeting can show up after a cancelled second
+    // unenrollable meeting (but it'll be out of order so idk; see SA04 page
+    // 31 PHYS 1B)
+    // well actually enrollable meetings can be whenever, see FA05 page 68,
+    // BIBC 102, where they for whatever reason made an enrollable lecture and
+    // a bunch of unenrollable discussions, except one that no one enrolled in
+    // is enrollable
+
+    // if restrictions id is 0, then there should be no enrollable sections
+    // e.g. WI05 page 432 PHYS 239, which only has cancelled exams
+
+    // first meeting (A00) can be unenrollable yet followed by enrollable
+    // meetings
+    // idk if the first meeting can be cancelled
+    // actually yes they can (SA04 page 9 CSE 132A)
+
+    // there must be at least one enrollable
+    // nvm, see CSE 12, SA04 page 8. they converted CSE 12 from a DI-based A01
+    // to LE-based A02, resulting in a crazy situation:
+    // - 12: LE A00 (enrollable)
+    // - 12: DI A01
+    //       LA A50 (cancelleed)
   }
   return null;
 }
@@ -1554,28 +1441,14 @@ function processLine(
     return {
       type: "meeting-row-begin-next",
       commands: state.commands,
-      course:
-        state.course.resourcesSectionId === null
-          ? {
-              ...state.course,
-              kind: "course",
-              resourcesSectionId: null,
-              weirdExam: null,
-              remainingExams: [],
-              detachedExtras: [],
-              additionalMeetings: [],
-              isWeird: true,
-            }
-          : {
-              ...state.course,
-              kind: "course",
-              resourcesSectionId: state.course.resourcesSectionId,
-              preAdditionalMeetings: [],
-              enrollables: [],
-              additionalMeetings: [],
-              exams: [],
-              isWeird: false,
-            },
+      course: {
+        ...state.course,
+        kind: "course",
+        resourcesSectionId: state.course.resourcesSectionId,
+        courseMeetingState: "before-enrollables",
+        meetings: [],
+        exams: [],
+      },
       prevMeeting: null,
     };
   }
@@ -1597,15 +1470,11 @@ function processLine(
     }
     if (line === '<tr class="sectxt">') {
       if (!state.prevMeeting) {
-        // first meeting of a weird course should not be normal.. that's what
-        // makes them weird
-        if (!state.course.isWeird) {
-          return {
-            ...state,
-            type: "borderless-brdr-next",
-            course: state.course,
-          };
-        }
+        return {
+          ...state,
+          type: "borderless-brdr-next",
+          course: state.course,
+        };
       } else {
         const newCourse = addMeeting(state.course, state.prevMeeting);
         if (newCourse) {
@@ -1730,8 +1599,7 @@ function processLine(
     }
     if (
       line === '<td class="brdr" colspan="4" align="center">TBA</td>' &&
-      state.sectionId !== "extra" &&
-      !state.course.isWeird
+      state.sectionId !== "extra"
     ) {
       return {
         ...state,
@@ -1909,15 +1777,13 @@ function processLine(
       ) {
         if (state.mode.type === "meeting") {
           if (state.mode.sectionId !== null) {
-            if (!state.course.isWeird) {
-              return {
-                ...state,
-                type: "available-next",
-                sectionId: state.mode.sectionId,
-                meeting: state.mode.meeting,
-                course: state.course,
-              };
-            }
+            return {
+              ...state,
+              type: "available-next",
+              sectionId: state.mode.sectionId,
+              meeting: state.mode.meeting,
+              course: state.course,
+            };
           } else {
             // in weird courses, unenrollable meetings seem to have empty
             // instructors
@@ -2267,11 +2133,7 @@ function processLine(
     }
   }
   if (state.type === "exam-brdr2-begin-next" && line === '<td class="brdr">') {
-    if (
-      state.course.isWeird &&
-      state.course.weirdExam === null &&
-      state.exam.isExam
-    ) {
+    if (state.exam.isExam) {
       // there can only be one weird exam (exam with instructors)
       return {
         ...state,
