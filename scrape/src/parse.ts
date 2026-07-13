@@ -2411,6 +2411,11 @@ async function printDebug(
   );
 }
 
+const allDeptNames = new Map<string, string>();
+const allSubjectNames = new Map<string, string>();
+const allCourseNames = new Map<`${string} ${string}`, string>();
+const allInstructorNames = new Map<string, string>();
+
 for (const {
   deptTerms,
   paginateTerm: term,
@@ -2427,6 +2432,19 @@ for (const {
     ),
   );
   const departmentNames = new Set(departments.values());
+
+  for (const [code, value] of departments) {
+    const existing = allDeptNames.get(code);
+    if (existing) {
+      if (existing !== value) {
+        console.warn(
+          `warn: department ${code} has new name '${value}', was '${existing}'`,
+        );
+      }
+    } else {
+      allDeptNames.set(code, value);
+    }
+  }
 
   let totalPages = 1;
   for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
@@ -2487,6 +2505,66 @@ for (const {
     // console.dir(state, { depth: null });
     // await printDebug(term, deptTerms, pageNumber);
     // process.exit(0);
+
+    let issue = false;
+    let subject = "";
+    for (const command of state.commands) {
+      if (command.kind === "subject") {
+        const existing = allSubjectNames.get(command.code);
+        if (existing) {
+          if (existing !== command.name) {
+            console.warn(
+              `warn: subject ${command.code} has new name '${command.name}', was '${existing}'`,
+            );
+            issue = true;
+          }
+        } else {
+          allSubjectNames.set(command.code, command.name);
+        }
+        subject = command.code;
+      } else if (command.kind === "course") {
+        const existing = allCourseNames.get(`${subject} ${command.number}`);
+        if (existing) {
+          if (existing !== command.title) {
+            console.warn(
+              `warn: course ${subject} ${command.number} has new title '${command.title}', was '${existing}'`,
+            );
+            issue = true;
+          }
+        } else {
+          allCourseNames.set(`${subject} ${command.number}`, command.title);
+        }
+
+        const instructors = [];
+        for (const meeting of command.meetings) {
+          if (!meeting.cancelled) {
+            instructors.push(...meeting.instructors);
+          }
+        }
+        for (const meeting of command.exams) {
+          if (!meeting.cancelled && meeting.isWeird) {
+            instructors.push(...meeting.instructors);
+          }
+        }
+        for (const instructor of instructors) {
+          const hex = instructor.encryptedPid.toString("hex");
+          const existing = allInstructorNames.get(hex);
+          if (existing) {
+            if (existing !== instructor.name) {
+              console.warn(
+                `warn: instructor with PID ${hex} has new name '${instructor.name}', was '${existing}'`,
+              );
+              issue = true;
+            }
+          } else {
+            allInstructorNames.set(hex, instructor.name);
+          }
+        }
+      }
+    }
+    if (issue) {
+      await printDebug(term, Array.from(departments.keys()), pageNumber);
+    }
   }
 }
 console.error("success!");
