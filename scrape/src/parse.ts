@@ -740,6 +740,53 @@ function addMeeting(
   return null;
 }
 
+// this function is mostly to check the order of section codes
+function doesCourseMakeSense(course: Course): boolean {
+  if (course.meetings.length + course.exams.length === 0) {
+    return false;
+  }
+  // apparently neither sectionCode nor section ID are sorted, see PEDS 232, FA95 page 360
+  // for (let i = 0; i < course.meetings.length - 1; i++) {
+  //   const curr = course.meetings[i];
+  //   const next = course.meetings[i + 1];
+  //   if (curr.sectionCode > next.sectionCode) {
+  //     return false;
+  //   }
+  // }
+  if (course.resourcesSectionId === null) {
+    if (course.exams.length === 0) {
+      return false;
+    }
+  } else {
+    // summary of this check: the resources section ID corresponds to the
+    // meeting with the earliest section code. but the logic is complexed
+    // because the section codes themselves are not sorted
+    const firstNonExtra = course.meetings
+      .values()
+      .filter(
+        (meeting) =>
+          meeting.cancelled || meeting.enrollable !== null || !meeting.isExtra,
+      )
+      .reduce(
+        (cum, curr) =>
+          // section IDs are not necessarily sorted (FA95 page 360 PEDS 232), but
+          // it seems to correspond to the lowest section ID
+          cum.sectionCode > curr.sectionCode ? curr : cum,
+        // Note: there can be two enrollable sections with the same section code
+        // (SA09 page 3 BENG 199)
+      );
+    if (!firstNonExtra) {
+      return false;
+    }
+    if (firstNonExtra.enrollable) {
+      if (firstNonExtra.enrollable.sectionId !== course.resourcesSectionId) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 function processLine(
   state: State,
   line: string,
@@ -1469,7 +1516,7 @@ function processLine(
       const newCourse = addMeeting(state.course, state.prevMeeting);
       // could either be beginning of course or subject or department, which is
       // handled by this state i think
-      if (newCourse) {
+      if (newCourse && doesCourseMakeSense(newCourse)) {
         return {
           type:
             line === "<tr >"
@@ -1508,7 +1555,7 @@ function processLine(
     }
     if (line === "" && state.prevMeeting) {
       const newCourse = addMeeting(state.course, state.prevMeeting);
-      if (newCourse) {
+      if (newCourse && doesCourseMakeSense(newCourse)) {
         return {
           type: "done",
           commands: [...state.commands, newCourse],
