@@ -1,0 +1,100 @@
+
+html {
+	/* delete if doesn't help FF issue */
+	overflow: visible;
+}
+
+body {
+	
+    background-color: white;
+    color: #000000 !important;
+	font: 14px/1.2 "Helvetica Neue",Helvetica,Arial,sans-serif;
+	width: 100%;
+	
+}
+
+
+.ui-tabs-nav,
+.ui-jqgrid-resize-mark,
+#view-booklist,
+#wr-conflict-alert-box-id-div,
+#tdr_env,
+#tdr_banner,
+#tdr_crumbs,
+#tdr_nav,
+#tdr_search,
+#tdr_title,
+#tdr_login,
+#tdr_footer,
+#tdr_title_page_title,
+#mainpage-top-div, 
+#wr-finals-alert-box-id-div, 
+#wr-apptmsg-alert-box-id-div,
+#wr-action-line,
+.wr-spinner,
+#wr-floater-img1,
+#wr-floater-img2,
+#msg-global,
+#tabs ul,
+.ui-button,
+.wrbutton
+{
+	display: none !important;
+	padding: 0 !important;
+}
+
+.ui-widget-header, 
+.wr-grid-en, 
+.wr-grid-wt, 
+.wr-grid-pl, 
+.wr-grid-ev {
+	color: #000000 !important;
+	background-color: white;
+	font-weight: normal;
+	
+}
+
+
+a, a:hover, a:visited, a:link, a:focus {
+	color: #000000 !important;
+	text-decoration: none;
+	transition: none;
+	-moz-transition: none;
+	-webkit-transition: none;
+	-o-transition: none;
+	opacity: 100;
+	background-color: white;
+}
+
+.ui-widget-header {
+	border-color: #000000 !important;
+	border-width: 1px !important;
+}
+
+#calendar-id-tba, #finalcal-id {
+	page-break-after: always;
+}
+
+.print-conflicts {
+	display: block !important;
+	margin-top: 12px;
+}
+
+#print-title {
+	width: 100%;
+	display: block;
+	font-size: 12px;
+	padding: 0 !important;
+}
+
+.fc-event.wr-grid-pl {
+	border-color: black;
+}
+
+/* first is IE10 second is IE11
+@media all and (-ms-high-contrast:none)
+     {
+     .event-div-hidden { display: none; }
+     *::-ms-backdrop, .event-div-hidden { display: none }
+     }
+     */

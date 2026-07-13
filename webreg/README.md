@@ -7,3 +7,4 @@ Sources:
 - https://act.ucsd.edu/webreg2/js/webreg/webreg-main-min.js?v=19
 - https://act.ucsd.edu/webreg2/js/webreg/webreg-main.js
 - https://act.ucsd.edu/webreg2/js/webreg/webreg.css?v=19
+- https://act.ucsd.edu/webreg2/js/webreg/webreg-print.css?v=19
