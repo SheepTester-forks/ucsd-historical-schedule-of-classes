@@ -670,8 +670,6 @@ function addMeeting(
     | WeirdExam
     | ExtraMeetingRow,
 ): Course | null {
-  // TODO: may also want to assert based on section code format (e.g. A01 vs
-  // 001)
   if (meeting.isExam) {
     if (!meeting.cancelled && meeting.isWeird) {
       // weird exams are only allowed if resourcesSectionId is 0 (null)
@@ -761,31 +759,144 @@ function doesCourseMakeSense(course: Course): boolean {
     // summary of this check: the resources section ID corresponds to the
     // meeting with the earliest section code. but the logic is complexed
     // because the section codes themselves are not sorted
-    const firstNonExtra = course.meetings
-      .values()
-      .filter(
-        (meeting) =>
-          meeting.cancelled || meeting.enrollable !== null || !meeting.isExtra,
-      )
-      .reduce(
-        (cum, curr) =>
-          // section IDs are not necessarily sorted (FA95 page 360 PEDS 232), but
-          // it seems to correspond to the lowest section ID
-          cum.sectionCode > curr.sectionCode ? curr : cum,
-        // Note: there can be two enrollable sections with the same section code
-        // (SA09 page 3 BENG 199)
-      );
-    if (!firstNonExtra) {
+    const nonExtras = course.meetings.filter(
+      (meeting) =>
+        meeting.cancelled || meeting.enrollable !== null || !meeting.isExtra,
+    );
+    if (nonExtras.length === 0) {
       return false;
     }
+    const firstNonExtra = nonExtras.reduce(
+      (cum, curr) =>
+        // section IDs are not necessarily sorted (FA95 page 360 PEDS 232), but
+        // it seems to correspond to the lowest section ID
+        cum.sectionCode > curr.sectionCode ? curr : cum,
+      // Note: there can be two enrollable sections with the same section code
+      // (SA09 page 3 BENG 199)
+    );
     if (firstNonExtra.enrollable) {
       if (firstNonExtra.enrollable.sectionId !== course.resourcesSectionId) {
         return false;
       }
     }
   }
+  if (course.meetings.length > 0) {
+    const { numeric, letter } = Object.groupBy(course.meetings, (meeting) =>
+      /^[\d ]/.test(meeting.sectionCode) ? "numeric" : "letter",
+    );
+    if (!!numeric === !!letter) {
+      // can only be one or the other
+      return false;
+    }
+    if (numeric) {
+      // numeric courses can have extras: FA98 page 349, MCWP 40
+      // if (
+      //   course.meetings.some(
+      //     (meeting) =>
+      //       !meeting.cancelled &&
+      //       meeting.enrollable === null &&
+      //       meeting.isExtra,
+      //   )
+      // ) {
+      //   return false;
+      // }
+      // numeric courses can have exams and unenrollable sections: MUS 120B, WI95 page 431
+      // if (course.exams.length > 0) {
+      //   return false;
+      // }
+      // there may be a numeric course where it has no enrollable meetings (and
+      // thus there are courses with both numeric and letter sections): SP00
+      // page 421 PHYS 1A accidentally created an 001 then switched to A00
+      // if (course.meetings.every((meeting) => meeting.enrollable === null)) {
+      //   return false;
+      // }
+    }
+    if (letter) {
+      // my guess is that schedule of classes groups by letter in its DB query which is why this works
+      if (
+        course.meetings.some(
+          (meeting) =>
+            meeting.sectionCode[0] !== course.meetings[0].sectionCode[0],
+        )
+      ) {
+        return false;
+      }
+
+      // WI95 page 188 ECE 121B skips A50
+      // WI95 page 276 HUM 4 skips A06
+      /*
+      const numbers = new Set(
+        course.meetings
+          .values()
+          .map((meeting) => +meeting.sectionCode.slice(1)),
+      );
+      for (let i = 0; i < 50; i++) {
+        if (numbers.has(i)) {
+          numbers.delete(i);
+        } else {
+          break;
+        }
+      }
+      numbers.delete(50);
+      for (let i = 51; i < 100; i++) {
+        if (numbers.has(i)) {
+          numbers.delete(i);
+        } else {
+          break;
+        }
+      }
+      if (numbers.size > 0) {
+        return false;
+      }*/
+      // for (const meeting of course.meetings) {
+      //   if (meeting.sectionCode === "XXX") {
+      //     continue;
+      //   }
+      //   const number =
+      //     // AAA, AA0
+      //     meeting.sectionCode[1] === "A" || meeting.sectionCode === ":00"
+      //       ? 0
+      //       : +meeting.sectionCode.replaceAll("O", "0").slice(1);
+      //   if (number === 0) {
+      //     // WI95 page 41 BGGN 271 has lab a00
+      //     // if (!zero.includes(meeting.instructionType)) {
+      //     //   return false;
+      //     // }
+      //   } else if (number < 50) {
+      //     // WI95 page 1 AMES 5 has lab A01
+      //     // if (notunderFifty.includes(meeting.instructionType)) {
+      //     //   return false;
+      //     // }
+      //   } else {
+      //     if (!aboveFifty.includes(meeting.instructionType)) {
+      //       return false;
+      //     }
+      //   }
+      // }
+    }
+  }
   return true;
 }
+
+// const zero: (keyof typeof instructionTypes)[] = [
+//   "LE",
+//   "SE",
+//   "IN",
+//   "FW",
+//   "CL",
+//   "TU",
+// ];
+// const notunderFifty: (keyof typeof instructionTypes)[] = ["LA"];
+// SP95 page 447 PEDS 232 has A51 DI
+// WI10 page 529 TDPR 1 has A50 LE
+// const aboveFifty: (keyof typeof instructionTypes)[] = [
+//   "LA",
+//   "CL",
+//   "DI",
+//   "TU",
+//   "PR",
+//   "SE",
+// ];
 
 function processLine(
   state: State,
