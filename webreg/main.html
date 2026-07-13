@@ -1,0 +1,1045 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+
+
+<title>webregMain</title>
+<link rel="stylesheet" href="//www.ucsd.edu/common/cwp/active-cherry/base-min.css" />
+<style type="text/css">
+#tdr_banner {
+	background: transparent url(//students.ucsd.edu/_resources/current_students/css/images/triton-banner.png) center top no-repeat;
+	height: 52px;
+	margin: 0 auto;
+	max-width: 960px;
+	width: 98%;
+}
+
+body.fluid #tdr_banner {
+	max-width: none;
+}
+</style>
+<style type="text/css">
+#tdr_nav ul #current_students_nav a {
+	background: transparent url(//students.ucsd.edu/_resources/student_global/css/images/current_students_primary_nav.png) 2px 0 no-repeat;
+	background-color: #E3EDF8;
+    background-color: rgba(255, 255, 255, 0.4);
+    text-indent: -9999px;
+    width: 94px;
+}
+
+#tdr_nav ul #current_students_nav a:hover {
+	background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+@media only screen and (max-width: 768px) {
+	#tdr_nav ul #current_students_nav a {
+		width: auto;
+	}
+}
+</style>
+<script src="//www.ucsd.edu/common/cwp/active-cherry/base-min.js"></script>
+<script src="//www.ucsd.edu/common/_emergency-broadcast/message.js"></script>
+
+<meta charset="utf-8"/>
+
+
+
+<script type="text/javascript" src="/webreg2/js/webreg/webreg-main-min.js?v=19"></script>
+
+
+
+
+
+<link href='/webreg2/resources/css/jquery-ui-1.10.4.custom.css' rel='stylesheet' />
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<!--  NEEDED IN CASE GOOGLE ISN'T AVAILABLE -->
+<script>if (!window.jQuery || $.fn.jquery != '1.9.1') { document.write('<script src="/webreg2/js/jq/core/jquery-1.9.0.min.js"><\/script>'); }
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+<!--  NEEDED IN CASE GOOGLE ISN'T AVAILABLE -->
+<script>if (!window.jQuery.ui) { document.write('<script src="/webreg2/js/jq/ui/ui/minified/jquery-ui.min.js"><\/script>'); }
+</script>
+
+<script src='/webreg2/js/jq/core/json3.min.js'></script>
+<link href='/webreg2/js/jq/plugins/fullcal/fullcalendar/fullcalendar.css' rel='stylesheet' />
+<link href='/webreg2/js/jq/plugins/fullcal/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+<script src='/webreg2/js/jq/plugins/fullcal/fullcalendar/fullcalendar-wr.js'></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/webreg2/js/jq/plugins/jqGrid/css/ui.jqgrid.css" />
+<script src="/webreg2/js/jq/plugins/jqGrid/js/i18n/grid.locale-en.js" type="text/javascript"></script> 
+<script src="/webreg2/js/jq/plugins/jqGrid/js/jquery.jqGrid.src.js" type="text/javascript"></script> 
+<link rel="stylesheet" type="text/css" media="screen" href="/webreg2/js/jq/plugins/jPaginate/css/style.css" />
+<script src="/webreg2/js/jq/plugins/jPaginate/jquery.paginate.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/webreg2/js/jq/plugins/timepicker/jquery.timepicker.css" />
+<script type="text/javascript" src="/webreg2/js/jq/plugins/timepicker/jquery.timepicker.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/webreg2/js/jq/plugins/select2/select2.css" />
+<script type="text/javascript" src="/webreg2/js/jq/plugins/select2/select2.js"></script>
+<script type="text/javascript" src="/webreg2/js/jq/plugins/select2/select2c-wr.js"></script>
+
+<script type="text/javascript" src="/webreg2/js/jq/plugins/jquery.address.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="/webreg2/js/webreg/webreg.css?v=19" />
+<link rel="stylesheet" type="text/css" media="print" href="/webreg2/js/webreg/webreg-print.css?v=19" />
+
+
+</head>
+
+<body
+	
+	>
+
+	
+
+
+
+
+
+
+
+
+
+<!-- env -->
+
+<!-- emergency -->
+<div id="uc-emergency"></div>
+<!-- skip to content -->
+<a class="skip-link" href="#tdr_content">Skip to content</a>
+<!-- login -->
+
+<div id="tdr_login">
+	<div id="tdr_login_content">
+		Hello, <strong> Sean Yen</strong> | <a href="/security/student/logout?url=http://students.ucsd.edu">Log Out</a>
+	</div>
+</div>
+
+
+	<!-- title -->
+	<div id="tdr_title">
+		<div id="tdr_title_content">
+			<a id="tdr_title_ucsd_title" href="http://www.ucsd.edu">UC San Diego</a>
+			<div id="tdr_title_page_title">
+				<a href="/myTritonlink20">My TritonLink</a>
+			</div>
+			<a id="tdr_title_search_link" class="search-button" style="display: none">Search</a>
+            <a id="tdr_title_menu_link">Menu</a>
+		</div>
+	</div>
+<!-- $Id: academic-student-current.jsp 1219 2024-02-02 22:51:11Z devhar $ -->
+
+<div id="tdr_nav" style="display: ">
+    <div id="tdr_nav_content">
+        <ul id="tdr_nav_list">
+            <li id="current_students_nav"><a href="http://tritonlink.ucsd.edu">TritonLink</a></li>
+            <li class="dropdown"><a aria-expanded="false"
+			class="dropdown-toggle" data-close-others="true"
+			data-hover="dropdown" href="" >Advising &amp; Grades</a>
+                <ul>
+                    <li><a href="/studentAcademicHistory/academichistorystudentdisplay.htm">Academic History</a></li>
+                    <li><a href="https://myccr.ucsd.edu/home.htm">Co-Curricular Record</a></li>
+                    <li><a href="/studentDars/select">Degree Audit</a></li>
+                    <li><a href="https://degree-planner.ucsd.edu/">Degree Planner</a></li>
+                    <li><a href="http://ucsd.edu/catalog/">General Catalog</a></li>
+                    <li><a href="/studentGpa/gpa">GPA Calculator</a></li>
+                    <li><a href="/studentMajorMinorChange2/majorminorchange">Major &amp; Minor</a></li>
+                    <li><a href="http://real.ucsd.edu">REAL Portal</a></li>
+                    <li><a href="/studentETranscript/order.htm">Order Official Documents</a></li>
+                    <li><a href="http://vac.ucsd.edu">Virtual Advising Center</a></li>
+                </ul></li>
+            <li class="dropdown"><a aria-expanded="false"
+			class="dropdown-toggle" data-close-others="true"
+			data-hover="dropdown" href="" >Classes &amp; Enrollment</a>
+                <ul>
+                    <li><a href=" https://academicaffairs.ucsd.edu/Modules/Students/PreAuth">Enrollment Authorization System (EASy)</a></li>
+                    <li><a href="/studentHolds/holds">Holds</a></li>
+                    <li><a href="/scheduleOfClasses/scheduleOfClassesStudent.htm">Schedule of Classes</a></li>
+                    <li><a href="https://canvas.ucsd.edu">Canvas</a></li>
+                    <li><a href="/webreg2">WebReg</a></li>
+                </ul></li>
+            <li class="dropdown"><a aria-expanded="false"
+			class="dropdown-toggle" data-close-others="true"
+			data-hover="dropdown" href="" >Financial Tools</a>
+                <ul>
+                    <li><a href="https://itsweb.ucsd.edu/studentEBill2/StudentBilling">Billing and Payment</a></li>
+                    <li><a href="https://itsweb.ucsd.edu/studentDirectDeposit2/DirectDeposit">Students Direct Deposit</a></li>
+                    <li><a href="/studentFinancialAid/financialaiddisplay.htm">Financial Aid</a></li>
+                    <li><a href="/studentShsHealthWaiver/healthwaiverdisplay.htm">Health Fee Waiver/RAFT</a></li>                    
+            		<li><a href="https://ucsd-transportation.t2hosted.com/Account/Portal">Parking Permits</a></li>
+                    <li><a href="https://student-sis.ucsd.edu/studenttuitioninformation">Tuition Information</a></li>
+                </ul>
+            </li>
+            <li class="dropdown"><a aria-expanded="false"
+			class="dropdown-toggle" data-close-others="true"
+			data-hover="dropdown" href="" >Personal Tools</a>
+                <ul>
+                    <li><a href="/studentAddresses2/addresses">Addresses</a></li>
+                    <li><a href="/studentAddresses2/infoRestrictions">Public Information Restriction</a></li>
+                    <li><a href="/studentAddresses2/socialIdentities">Social Identities</a></li>
+                    <li><a href="https://ucsd.joinhandshake.com">Handshake</a></li>
+                </ul></li>
+            <li class="dropdown"><a aria-expanded="false"
+			class="dropdown-toggle" data-close-others="true"
+			data-hover="dropdown" href="" >Student Forms</a>
+                <ul>
+                    <li><a href="http://students.ucsd.edu/finances/financial-aid/forms/">Financial Aid Forms</a></li>
+                    <li><a href="http://students.ucsd.edu/my-tritonlink/forms/">All Forms</a></li>
+                </ul>
+            </li>
+            <li class="dropdown"><a aria-expanded="false"
+			class="dropdown-toggle" data-close-others="true"
+			data-hover="dropdown" href="" >Help</a>
+                <ul>
+                    <li><a href="http://www.ucsd.edu/current-students/my-tritonlink/tools/tool-help/index.html">MyTritonLink Tools Help</a></li>
+                    <li><a href="//act.ucsd.edu/cwp/feedback/help/tritonlink"
+                        onclick="window.open('//act.ucsd.edu/cwp/feedback/help/tritonlink', 'DYGWYW', 'menubar=0,resizable=1,scrollbars=1,width=450,height=650');" target="DYGWYW">Request Assistance</a>
+                    </li>
+                </ul>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+<div id="tdr_search" style="display: none">
+    <div id="tdr_search_content">
+        <form action="//act.ucsd.edu/cwp/tools/search-redir" method="get">
+            <label for="search-scope">Search</label> <select id="search-scope" name="search-scope">
+                <option selected="selected" value="tritonlink">This Site</option>
+                <option value="default_collection">All UCSD Sites</option>
+                <option value="faculty-staff">Faculty/Staff Directory</option>
+            </select> <label for="search-term" id="search-term-label">Search Term</label> <input type="search" id="search-term" name="search-term" size="20" /> <input type="submit" class="search-button" value="Search" />
+        </form>
+    </div>
+</div>
+<div id="tdr_banner"
+	style="display: block"></div>
+<div id="tdr_crumbs" style="display: none">
+	<div id="tdr_crumbs_content"></div>
+</div>
+<div id="tdr_content" class="tdr_fonts itag_webapp">
+	<div id="tdr_content_content">
+		
+	<div id="wr-main-content">
+		
+		<span id="print-title"></span>
+
+		<div id="dialog-confirm-drop" align="left">
+
+			<p class="dialog-tip-class-alert"></p>
+			<table class="diagxxx-class-table-class" id="diagdrop-class-table">
+				<col width="150">
+				<col width="300">
+				<col width="150">
+				<col width="100">
+				<col width="100">
+				<col width="100">
+				<col width="150">
+				<col width="150">
+				<tr>
+					<td align="center">Subject/Course </td>
+					<td align="center">Course Title </td>
+					<td align="center">Grading</td>
+					<td align="center">Units</td>
+					<td align="center">Section Code</td>
+					<td align="center">Meeting Type</td>
+					<td align="center">Days</td>
+					<td align="center">Time</td>
+				</tr>
+				<tr>
+					<td  id="diagdrop-class-table-subj" align="center"  ></td>
+					<td  id="diagdrop-class-table-title" align="center" ></td>
+					<td  id="diagdrop-class-table-grade-p" align="center" ></td>
+					<td  id="diagdrop-class-table-unit-p" align="center" ></td>
+					<td  id="diagdrop-class-table-code" align="center"></td>
+					<td  id="diagdrop-class-table-type" align="center" ></td>
+					<td  id="diagdrop-class-table-days" align="center" ></td>
+					<td  id="diagdrop-class-table-time" align="center" ></td>
+				</tr>
+				
+			</table>
+		</div>
+
+
+		<div id="dialog-confirm-plan-add" align="left">
+			<p class="dialog-tip-class"></p>
+		</div>
+		
+		
+
+		<div id="dialog-confirm-plan-remove" align="left">
+			<p class="dialog-tip-class"></p>
+
+			<table class="diagxxx-class-table-class" id="diagplanrm-class-table">
+				<col width="150">
+				<col width="300">
+				<col width="150">
+				<col width="100">
+				<col width="100">
+				<col width="100">
+				<col width="150">
+				<col width="150">
+				<tr>
+					<td align="center">Subject/Course </td>
+					<td align="center">Course Title </td>
+					<td align="center">Grading</td>
+					<td align="center">Units</td>
+					<td align="center">Section Code</td>
+					<td align="center">Meeting Type</td>
+					<td align="center">Days</td>
+					<td align="center">Time</td>
+				</tr>
+				<tr>
+					<td  id="diagplanrm-class-table-subj" align="center"  ></td>
+					<td  id="diagplanrm-class-table-title" align="center" ></td>
+					<td  id="diagplanrm-class-table-grade-p" align="center" ></td>
+					<td  id="diagplanrm-class-table-unit-p" align="center" ></td>
+					<td  id="diagplanrm-class-table-code" align="center"></td>
+					<td  id="diagplanrm-class-table-type" align="center" ></td>
+					<td  id="diagplanrm-class-table-days" align="center" ></td>
+					<td  id="diagplanrm-class-table-time" align="center" ></td>
+				</tr>
+			</table>
+		</div>
+
+		<div id="dialog-multi-level">
+			<span id="dialog-multi-level-tip" style="margin-right:20px;" > </span>
+			<span id="dialog-multi-level-div" > </span>
+		</div>
+
+		<div id="dialog-msg" >
+			<p class="dialog-tip-class"></p>
+		</div>
+
+		<div id="dialog-msg-small" >
+			<p class="dialog-tip-class"></p>
+		</div>
+		
+		<div id="dialog-msg-appttime" >
+			<div class="msg confirm">
+				<h4>Appointment time active!</h4>
+				<span>Your appointment time is active.  You may now enroll.</span>
+			</div>
+		</div>
+		
+		<!--  -->
+		<div id="dialog-session-timeout">
+			<div class="msg alert">
+				<h4>Session Timeout Warning!</h4>
+				<span>Warning, your session is about to expire. Do you want to remain on this page and keep your session active?</span>
+			</div>
+		</div>
+		
+		<div id="dialog-msg-small-redirect" >
+			<p class="dialog-tip-class"></p>
+		</div>
+
+		<div id="dialog-msg-appt" >
+			<p class="dialog-tip-class"></p>
+		</div>
+
+		<div id="dialog-after-action" >
+			<p class="dialog-tip-class"></p>
+		</div>
+		
+		<div id="dialog-restrictions">
+			<p class="dialog-tip-class"></p>
+		</div>
+		
+		<div id="dialog-prereqs">
+			<p class="dialog-tip-class"></p>
+		</div>
+
+		<div id="dialog-class" align="left">
+			<p class="dialog-tip-class"></p>
+			<table class="diagxxx-class-table-class" id="diagclass-class-table">
+				<col width="150">
+				<col width="300">
+				<col width="150">
+				<col width="100">
+				<col width="100">
+				<col width="100">
+				<col width="150">
+				<col width="150">
+				<tr>
+					<td align="center">Subject/Course </td>
+					<td align="center">Course Title </td>
+					<td align="center"><label for="diagclass-class-table-grade">Grading</label></td>
+					<td align="center">Units</td>
+					<td align="center">Section Code</td>
+					<td align="center">Meeting Type</td>
+					<td align="center">Days</td>
+					<td align="center">Time</td>
+				</tr>
+				<tr>
+					<td  id="diagclass-class-table-subj" align="center"  ></td>
+					<td  id="diagclass-class-table-title" align="center" ></td>
+					<td  id="diagclass-class-table-grade-p" align="center" ></td>
+					<td  id="diagclass-class-table-unit-p" align="center" ></td>
+					<td  id="diagclass-class-table-code" align="center"></td>
+					<td  id="diagclass-class-table-mt" align="center" ></td>
+					<td  id="diagclass-class-table-days" align="center" ></td>
+					<td  id="diagclass-class-table-time" align="center" ></td>
+				</tr>
+			</table>
+		</div>
+
+		<div id="dialog-enroll" align="left">
+			<p class="dialog-tip-class"></p>
+			<table class="diagxxx-class-table-class" id="diagenroll-class-table">
+				<col width="150">
+				<col width="300">
+				<col width="150">
+				<col width="100">
+				<col width="100">
+				<col width="100">
+				<col width="150">
+				<col width="150">
+				
+				<tr>
+					<td align="center">Subject/Course </td>
+					<td align="center">Course Title </td>
+					<td align="center"><label for="diagenroll-class-table-grade">Grading</label></td>
+					<td align="center">Units</td>
+					<td align="center">Section Code</td>
+					<td align="center">Meeting Type</td>
+					<td align="center">Days</td>
+					<td align="center">Time</td>
+				</tr>
+				<tr>
+					<td  id="diagenroll-class-table-subj" align="center"  ></td>
+					<td  id="diagenroll-class-table-title" align="center" ></td>
+					<td  id="diagenroll-class-table-grade-p" align="center" ></td>
+					<td  id="diagenroll-class-table-unit-p" align="center" ></td>
+					<td  id="diagenroll-class-table-code" align="center"></td>
+					<td  id="diagenroll-class-table-type" align="center" ></td>
+					<td  id="diagenroll-class-table-days" align="center" ></td>
+					<td  id="diagenroll-class-table-time" align="center" ></td>
+				</tr>
+			</table>
+		</div>
+
+		<div id="dialog-plan" align="left">
+			<p class="dialog-tip-class"></p>
+			<table class="diagxxx-class-table-class" id="diagplan-class-table">
+				
+				<col width="150">
+				<col width="300">
+				<col width="150">
+				<col width="100">
+				<col width="100">
+				<col width="100">
+				<col width="150">
+				<col width="150">
+				
+				<tr>
+					<td align="center">Subject/Course </td>
+					<td align="center">Course Title </td>
+					<td align="center"><label for="diagplan-class-table-grade">Grading</label></td>
+					<td align="center">Units</td>
+					<td align="center">Section Code</td>
+					<td align="center">Meeting Type</td>
+					<td align="center">Days</td>
+					<td align="center">Time</td>
+				</tr>
+				
+				<tr>
+					<td  id="diagplan-class-table-subj" align="center"  >Subj_val</td>
+					<td  id="diagplan-class-table-title" align="center" >Title_val</td>
+					<td  id="diagplan-class-table-grade-p" align="center" ></td>
+					<td  id="diagplan-class-table-unit-p" align="center" ></td>
+					<td  id="diagplan-class-table-code" align="center"></td>
+					<td  id="diagplan-class-table-type" align="center" ></td>
+					<td  id="diagplan-class-table-days" align="center" ></td>
+					<td  id="diagplan-class-table-time" align="center" ></td>
+				</tr>
+			</table>
+		</div>
+		
+		<div id="dialog-view" align="left">
+			<p class="dialog-tip-class"></p>
+			<table class="diagxxx-class-table-class" id="diagview-class-table">
+				<col width="150">
+				<col width="300">
+				<col width="150">
+				<col width="100">
+				<col width="100">
+				<col width="100">
+				<col width="150">
+				<col width="150">
+				<col width="100">
+				<col width="100">
+				
+				<tr>
+					<td align="center">Subject/Course </td>
+					<td align="center">Course Title </td>
+					<td align="center"><label for="diagview-class-table-grade">Grading</label></td>
+					<td align="center">Units</td>
+					
+					<td align="center">Section Code</td>
+					<td align="center">Meeting Type</td>
+					<td align="center">Days</td>
+					<td align="center">Time</td>
+					<td align="center">Available Seats</td>
+					<td align="center" id="diagview-wtcount-header">Waitlist Count</td>
+				</tr>
+				<tr>
+					<td  id="diagview-class-table-subj" align="center"  ></td>
+					<td  id="diagview-class-table-title" align="center" ></td>
+					<td  id="diagview-class-table-grade-p" align="center" ></td>
+					<td  id="diagview-class-table-unit-p" align="center" ></td>
+					<td  id="diagview-class-table-code" align="center"></td>
+					<td  id="diagview-class-table-type" align="center" ></td>
+					<td  id="diagview-class-table-days" align="center" ></td>
+					<td  id="diagview-class-table-time" align="center" ></td>
+					<td  id="diagview-class-table-seats" align="center" ></td>
+					<td  id="diagview-class-table-wtcount" align="center"></td>
+				</tr>
+			</table>
+		</div>
+		
+		<div id="dialog-choose" align="left">
+			<p class="dialog-tip-class"></p>
+			<table class="diagxxx-class-table-class" id="diagchoose-class-table">
+				<col width="150">
+				<col width="300">
+				<col width="150">
+				<col width="100">
+				<col width="100">
+				<col width="100">
+				<col width="150">
+				<col width="150">
+				<col width="100">
+				<col width="100">
+				
+				<tr>
+					<td align="center">Subject/Course </td>
+					<td align="center">Course Title </td>
+					<td align="center">Grading</td>
+					<td align="center">Units</td>
+					<td align="center">Section Code</td>
+					<td align="center">Meeting Type</td>
+					<td align="center">Days</td>
+					<td align="center">Time</td>
+					<td align="center">Available Seats</td>
+					<td align="center">Waitlist Count</td>
+					<td align="center">Action</td>
+				</tr>
+				<tr>
+					<td  id="diagchoose-class-table-subj" align="center"  ></td>
+					<td  id="diagchoose-class-table-title" align="center" ></td>
+					<td  id="diagchoose-class-table-grade-p" align="center" ></td>
+					<td  id="diagchoose-class-table-unit-p" align="center" ></td>
+					<td  id="diagchoose-class-table-code" align="center"></td>
+					<td  id="diagchoose-class-table-type" align="center" ></td>
+					<td  id="diagchoose-class-table-days" align="center" ></td>
+					<td  id="diagchoose-class-table-time" align="center" ></td>
+					<td  id="diagchoose-class-table-seats" align="center" ></td>
+					<td  id="diagchoose-class-table-wtcount" align="center" ></td>
+					<td id="diagchoose-class-table-action" align="center"></td>
+				</tr>
+			</table>
+		</div>
+
+		<div id="dialog-schedule-input" align="left">
+			<p class="dialog-tip-class"></p>
+			<span class="dialog-tip-class-2"></span>
+			<div id="dialog-schedule-input-div">
+				<table id="dialog-schedule-input-t1" >
+					<tr>
+						<td  class="wr-set-bold dialog-schedule-input-label-class" >
+							<label for="dialog-schedule-input-t1-i1">Name:</label>
+						</td>
+						<td>
+							<input id="dialog-schedule-input-t1-i1" type="text" value="" maxlength="40" >
+						</td>	
+					</tr>
+				</table>
+			</div>
+		</div>
+
+		<div id="dialog-schedule-confirm" align="left">
+			<p class="dialog-tip-class"></p>
+			<span class="dialog-tip-class-2"></span>
+		</div>
+
+
+		<!-- >>>event -->
+		<div id="dialog-event" align="left">
+			<p class="dialog-tip-class"></p>
+			<span class="dialog-tip-class-2"></span>
+			<div id="dialog-event-div">
+				<table id="dialog-event-t1" >
+					<tr>
+						<td  id="dialog-event-t1-label" class="wr-required-class wr-set-bold dialog-event-label-class" >
+							<label for="dialog-event-t1-i1">Event Name</label>
+						</td>
+						<td>
+							<input id="dialog-event-t1-i1" type="text" value="" maxlength="20" >
+						</td>	
+					</tr>
+				</table>
+				<table id="dialog-event-t4" >
+					<tr>
+						<td  id="dialog-event-t4-label" class="wr-set-bold dialog-event-label-class" >
+							<label for="dialog-event-t4-i1">Location</label>
+						</td>
+						<td>
+							<input id="dialog-event-t4-i1" type="text" value="" maxlength="20" placeholder="location is optional" >
+						</td>	
+					</tr>
+				</table>
+				<table id="dialog-event-t2" >
+					<tr>
+						<td ></td>
+						<td ></td>
+						<td ><label for="dialog-event-t2-c1" >Mon</label></td>
+						<td ><label for="dialog-event-t2-c2" >Tue</label></td>
+						<td ><label for="dialog-event-t2-c3" >Wed</label></td>
+						<td ><label for="dialog-event-t2-c4" >Thu</label></td>
+						<td ><label for="dialog-event-t2-c5" >Fri</label></td>
+						<td ><label for="dialog-event-t2-c6" >Sat</label></td>
+						<td ><label for="dialog-event-t2-c7" >Sun</label></td>
+					</tr>
+					<tr>
+						<td  id="dialog-event-t2-label" class="wr-required-class wr-set-bold dialog-event-label-class" >Event Days</td>
+						<td ></td>
+						<td ><input class="dialog-event-days-class" id="dialog-event-t2-c1" type="checkbox" /></td>
+						<td ><input class="dialog-event-days-class" id="dialog-event-t2-c2" type="checkbox" /></td>
+						<td ><input class="dialog-event-days-class" id="dialog-event-t2-c3" type="checkbox" /></td>
+						<td ><input class="dialog-event-days-class" id="dialog-event-t2-c4" type="checkbox" /></td>
+						<td ><input class="dialog-event-days-class" id="dialog-event-t2-c5" type="checkbox" /></td>
+						<td ><input class="dialog-event-days-class" id="dialog-event-t2-c6" type="checkbox" /></td>
+						<td ><input class="dialog-event-days-class" id="dialog-event-t2-c7" type="checkbox" /></td>
+					</tr>
+				</table>
+				<table id="dialog-event-t3">
+					<tr>
+						<td  id="dialog-event-t3-label-1" class="wr-required-class wr-set-bold dialog-event-label-class">
+							<label for="dialog-event-t3-i1">Starts</label>
+						</td>
+						<td > <input id="dialog-event-t3-i1" type='search'/> </td>
+						<td  id="dialog-event-t3-label-2" class="wr-required-class wr-set-bold dialog-event-label-class">
+							<label for="dialog-event-t3-i2">Ends</label>
+						</td>
+						<td > <input id="dialog-event-t3-i2" type='search'/> </td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+			<div id="cal-grant-status" style="width: 500px;">
+					<div class="msg info" style="width:500px;">
+					<h4>Important:</h4>
+					<span>Cal Grant funding is limited to 4 academic years. In order to graduate in 4 years, you must complete 15 units or more per quarter. 
+					You should create a plan with your academic college advisor to ensure you will graduate in four years.
+					</span>
+						
+					</div>
+					<input type="checkbox" id="checkBox" class="checked" style="float: left; margin-top: 2.5px;>"/>
+					
+					<button  type="submit" disabled="disabled" id="submit_button" >Save</button>
+					
+					<p style="margin-left: 25px;"> I Acknowledge </p>
+					
+				</div>
+
+		<div id="mainpage-div1">
+			<div id="mainpage-top-div" align="left">
+				<br>
+				<br>
+
+				<h4 >
+					<span id="mainpage-div1-span1" >Course Enrollment</span>
+					<span id="mainpage-div1-span2">
+
+						<a class="mainpage-div1-a-class" href="#none" id="msg-appt-link" ><span>Appointment time</span></a>
+							<span id="msg-appt-link-bar" > | </span>
+
+						<a class="mainpage-div1-a-class" target="_blank" href="#none" id="enrollment-info-link" ><span>Enrollment Information</span></a> 
+							<span id="enrollment-info-link-bar" > | </span>
+
+						<span align="right">
+							<select id="mainpage-select-term"></select>
+						</span>
+						<!-- <a class="mainpage-div1-a-class" href="/webreg2"><span>Webreg2 Home</span></a> -->
+					</span>
+				</h4>
+
+				<div id="msg-status"></div> 
+				
+				
+
+				<!-- >>>search start  -------------------------------------------------->
+
+				<div id="search-div-0">
+					<div id="search-div-box-0" >
+						<table id="search-div-t-t1">
+							<tr>
+								<td>
+									<div id="search-div-t-t1-label" class="wr-set-bold" ><label for="s2id_autogen1">Search for Classes:</label></div>
+									<div id="search-div-t-t1-link">
+										<a class="mainpage-div1-a-class" href="#none" id="advanced-search" ><span>Advanced Search</span></a> 
+									</div>
+								</td>
+
+								<td id="search-div-t-t1-i1-td" >
+									<input id="search-div-t-t1-i1" type="hidden"/>
+								</td>
+								<td>
+									<div  id="search-div-t-t1-button-div" >
+										<input id="search-div-t-b1" align="middle" type="button" value="Search" class="button secondary">
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+				<div id="search-div-1">
+
+					<div id="search-div-box-1">
+
+						<div class="field">
+							<div class="label">
+								<label class="search-div-label-class search-not-section" for="search-div-t-t2-i1">Subject:</label>
+							</div>
+
+							<div class="input">
+								<input class="search-div-binput search-div-binput-canoff" id="search-div-t-t2-i1" type="hidden" />
+							</div>
+						</div>
+
+						<div class="field">
+							<div class="label">
+								<label  class="search-div-label-class search-not-section" for="search-div-t-t2-i2">Course:</label>
+							</div>
+							<div class="input">
+								<input placeholder="Enter one or more" class="search-div-binput search-div-binput-canoff" id="search-div-t-t2-i2" type="text" />
+							</div>
+						</div>
+
+
+						<div class="field">
+							<div class="label">
+								<label  class="search-div-label-class search-not-section" for="search-div-t-t3-i1">Department:</label>
+							</div>
+							<div class="input">
+								<input class="search-div-binput search-div-binput-canoff" id="search-div-t-t3-i1" type="hidden" />
+							</div>
+						</div>
+
+						<div class="field">
+							<div class="label">
+								<label class="search-div-label-class search-not-section" for="search-div-t-t3-i2">Instructor:</label>
+							</div>
+							<div class="input">
+								<input placeholder="Last, First" class="search-div-binput search-div-binput-canoff" id="search-div-t-t3-i2" type='text'/>
+							</div>
+						</div>
+
+						<div class="field">
+							<div class="label">
+								<label  class="search-div-label-class search-not-section" for="search-div-t-t3-i3">Title:</label>
+							</div>
+							<div class="input">
+								<input class="search-div-binput search-div-binput-canoff" id="search-div-t-t3-i3" type='text'/>
+							</div>
+						</div>
+
+						<div class="field">
+							<div class="label">
+								<label  class="search-div-label-class" for="search-div-t-t3-i4">Section ID:</label>
+							</div>
+							<div class="input">
+								<input placeholder="Enter one or more" class="search-div-binput" id="search-div-t-t3-i4" type='text'/>
+							</div>
+						</div>
+						
+					</div>
+
+					<div id="search-div-box-2">
+
+						<div id="search-div-box-2-show-only">Show only</div>
+
+						<table id="search-div-t-t4" >
+							<tr>
+								<td class="wr-set-bold search-div-label-class search-not-section" >Lower:</td>
+								<td ><input class="search-div-bcheck" id="search-div-t-t4-c01" type="checkbox" /></td>
+								<td class="search-not-section"><label for="search-div-t-t4-c01" >1-99</label></td>
+								<td ><input class="search-div-bcheck" id="search-div-t-t4-c02" type="checkbox" /></td>
+								<td class="search-not-section"><label for="search-div-t-t4-c02"  >87,90</label></td>
+								<td ><input class="search-div-bcheck" id="search-div-t-t4-c03" type="checkbox" /></td>
+								<td class="search-not-section"><label for="search-div-t-t4-c03"  >99</label></td>
+
+							</tr>
+							<tr class="search-div-t-separator" />
+							<tr>
+								<td  class="wr-set-bold search-div-label-class search-not-section" >Upper:</td>
+								<td ><input class="search-div-bcheck" id="search-div-t-t4-c04" type="checkbox" /></td>
+								<td class="search-not-section"><label for="search-div-t-t4-c04"  >100-198</label></td>
+								<td ><input class="search-div-bcheck" id="search-div-t-t4-c05" type="checkbox" /></td>
+								<td class="search-not-section"><label for="search-div-t-t4-c05"  >195</label></td>
+								<td ><input class="search-div-bcheck" id="search-div-t-t4-c06" type="checkbox" /></td>
+								<td class="search-not-section"><label for="search-div-t-t4-c06"  >199</label></td>
+							</tr>
+							<tr class="search-div-t-separator" />
+							<tr>
+								<td  class="wr-set-bold search-div-label-class search-not-section">Graduate:</td>
+								<td ><input class="search-div-bcheck" id="search-div-t-t4-c07" type="checkbox" /></td>
+								<td class="search-not-section"><label for="search-div-t-t4-c07"  >200-297</label></td>
+								<td ><input class="search-div-bcheck" id="search-div-t-t4-c08" type="checkbox" /></td>
+								<td class="search-not-section"><label for="search-div-t-t4-c08"  >298</label></td>
+								<td ><input class="search-div-bcheck" id="search-div-t-t4-c09" type="checkbox" /></td>
+								<td class="search-not-section"><label for="search-div-t-t4-c09"  >299</label></td>
+							</tr>
+							<tr class="search-div-t-separator" />
+							<tr>
+								<td ></td>
+								<td ><input class="search-div-bcheck" id="search-div-t-t4-c10" type="checkbox" /></td>
+								<td class="search-not-section"><label for="search-div-t-t4-c10" >300+</label></td>
+								<td ><input class="search-div-bcheck" id="search-div-t-t4-c11" type="checkbox" /></td>
+								<td class="search-not-section"><label for="search-div-t-t4-c11" >400+</label></td>
+								<td ><input class="search-div-bcheck" id="search-div-t-t4-c12" type="checkbox" /></td>
+								<td class="search-not-section"><label for="search-div-t-t4-c12"  >500+</label></td>
+							</tr>
+
+						</table>
+
+						<table id="search-div-t-t4-1" >
+							<tr>
+								<td  class="wr-set-bold search-div-label-class search-not-section" >Days:</td>
+								<td ><input class="search-div-bcheck" id="search-div-t-t4-c13" type="checkbox" /></td>
+								<td class="search-not-section"><label for="search-div-t-t4-c13" >M</label></td>
+								<td ><input class="search-div-bcheck" id="search-div-t-t4-c14" type="checkbox" /></td>
+								<td class="search-not-section"><label for="search-div-t-t4-c14" >Tu</label></td>
+								<td ><input class="search-div-bcheck" id="search-div-t-t4-c15" type="checkbox" /></td>
+								<td class="search-not-section"><label for="search-div-t-t4-c15"  >W</label></td>
+								<td ><input class="search-div-bcheck" id="search-div-t-t4-c16" type="checkbox" /></td>
+								<td class="search-not-section"><label for="search-div-t-t4-c16"  >Th</label></td>
+								<td ><input class="search-div-bcheck" id="search-div-t-t4-c17" type="checkbox" /></td>
+								<td class="search-not-section"><label for="search-div-t-t4-c17" >F</label></td>
+								<td ><input class="search-div-bcheck" id="search-div-t-t4-c18" type="checkbox" /></td>
+								<td class="search-not-section"><label for="search-div-t-t4-c18" >Sa</label></td>
+								<td ><input class="search-div-bcheck" id="search-div-t-t4-c19" type="checkbox" /></td>
+								<td class="search-not-section"><label for="search-div-t-t4-c19" >Su</label></td>
+							</tr>
+						</table>
+						
+						<table id="search-div-t-t5">
+							<tr>
+								<td  class="wr-set-bold search-div-label-class search-not-section"><label for="search-div-t-t5-i1" >Start:</label></td>
+								<td><input id="search-div-t-t5-i1" type='search'/></td>
+								<td  class="wr-set-bold search-div-label-class search-not-section"><label for="search-div-t-t5-i2" >End:</label></td>
+								<td ><input id="search-div-t-t5-i2" type='search'/></td>
+							</tr>
+						</table>
+
+
+						<table id="search-div-t-t6" >
+							<tr>
+								<td class="wr-set-bold search-div-label-class search-not-section" >
+								<label for="search-div-t-t6-c01" >Only show sections with seats available:</label>
+								</td>
+								<td ><input class="search-div-bcheck" id="search-div-t-t6-c01" type="checkbox" /></td>
+							</tr>
+						</table>
+
+
+					</div>  <!-- box2 -->
+					
+					<div id="search-warning-msg">
+						<div class="msg alert">
+							<h4>Warning!</h4>
+							<span>This search may take a long time to complete.  To get faster results add a subject filter to your search.</span>
+						</div>
+					</div>
+					
+
+					<div id="search-div-box-3">
+						<table >
+							<tr>
+								<td id="search-div-t-t5-td2">
+									<input id="search-div-t-reset" align="middle" type="button" value="Reset" class="button secondary"> 
+								</td>
+								<td id="search-div-t-t5-td1">
+									<input id="search-div-t-b2" align="middle" type="button" value="Search" class="button secondary"> 
+								</td>
+								
+							</tr>
+						</table>
+					</div>
+					
+					
+
+				</div>
+
+
+				<div id="search-grid-toggle-div"> 
+					<a id="search-grid-toggle" href="#none">Hide search result</a>
+				</div>
+
+				<div id="search-grid-result">
+					<div id="search-div-b">
+						<div id="search-pager-dropdown-header"><b>Show</b></div>
+						<div id="search-pager-dropdown"> 
+							<select>
+								<option value="10" >10</option>
+								<option value="20" >20</option>
+								<option value="30" >30</option>
+								<option value="50" >50</option>
+								<option value="75" >75</option>
+								<option value="100" >100</option>
+							</select>
+						</div>
+						<div id="search-pager"></div>
+						<div id="wr-search-notice"> <span id="wr-search-notice-msg"></span> </div>
+						<div id="search-div-b-div" align="center" style="clear:both">
+							<table id="search-div-b-table"></table>
+						</div>
+					</div>
+					<br>
+				</div>
+
+				<!-- >>>search end  -------------------------------------------------->
+				<div id="msg-hold"></div> 
+				<div id="msg-preauth"></div>
+			</div>
+			<div id="bottom-jumper"></div>
+			<!-- 
+			<div id="wr-conflict-alert-box-id-div" align="left" class="msg error">
+				<h4 id="wr-schedule-conflict-header"></h4>
+				<div id="wr-schedule-conflict"></div>
+				<br />
+				<span id="wr-schedule-conflict-footer">You are responsible for resolving time conflicts, which may also include conflicts in the midterm or final exam schedules. Special accommodations are not guaranteed. Review your Calendar and Final Tab now.</span>
+			</div>
+ -->
+ 			<div id="wr-conflict-alert-box-id-div" align="left" class="msg error">
+				<h4 class="wr-schedule-conflict-header"></h4>
+				<div class="wr-schedule-conflict"></div>
+				<br />
+				<span class="wr-schedule-conflict-footer">You are responsible for resolving time conflicts, which may also include conflicts in the midterm or final exam schedules. Special accommodations are not guaranteed. Review your Calendar and Final Tab now.</span>
+			</div>
+			<div id="wr-finals-alert-box-id-div" align="left" class="msg alert">
+				<h4>Alert:</h4>
+				<div id="wr-final-conflict-sat-1"></div>
+				<div id="wr-final-conflict-sat-2"></div>
+			</div>
+			
+			<div id="wr-apptmsg-alert-box-id-div" align="left" class="msg alert">
+				<h4>Alert:</h4>
+				<div id="msg-appt-alert"></div>
+			</div>
+			
+			<table id="wr-action-line">
+				<tr>
+					<td></td>
+					<td>
+						<div align="right" id="schedule-addevent-div">
+							<label id="my-schedule-label" for="my-schedule-id"></label><label><b>:</b></label>
+							<select id="my-schedule-id">
+								<option id="my-schedule-opt-dummy" value="my-schedule-opt-dummy" selected >Create new, copy, rename ...</option>
+								<option class="my-schedule-action-class" id="my-schedule-opt-new" >New</option>
+								<option class="my-schedule-action-class" id="my-schedule-opt-copy" >Copy</option>
+								<option class="my-schedule-action-class" id="my-schedule-opt-rename">Rename</option>
+								<option class="my-schedule-action-class" id="my-schedule-opt-delete">Delete</option>
+								<option id="my-schedule-opt-empty2" disabled ></option>
+								<option id='schedid-0' class='sched-class-all' value='schedval-0'> My Schedule </option>
+							</select>
+							<input id="add-event-id" align="middle" type="button" value="Add Event" class="button secondary"> 
+
+						</div>
+					</td>
+				</tr>
+			</table>
+
+			<div id="tabs">
+				<ul>
+					<li><a href="#tabs-1">List</a></li>
+					<li><a href="#tabs-2">Calendar</a></li>
+					<li><a href="#tabs-3">Finals</a></li>
+					<div id='view-booklist' ></div>
+				</ul>
+
+				<div id="tabs-1">
+					<table id="list-id-table"></table>
+					<div id="list-id-event-div">
+						<table id="list-id-event"></table>
+					</div>
+				</div>
+
+				<div id="tabs-2">
+					<div id="calendar-id"></div>
+					<table id="calendar-id-tba"></table>
+					<div id="calendar-id-pb-div">
+						<table id="calendar-id-pb"></table>
+					</div>
+				</div>
+
+				<div id="tabs-3">
+					<div id="finalcal-id"></div>
+				</div>
+
+			</div>
+			
+			<div id="wr-conflict-alert-box-id-div-print" align="left" class="msg error">
+				<h4 class="wr-schedule-conflict-header"></h4>
+				<div class="wr-schedule-conflict"></div>
+				<br />
+				<span class="wr-schedule-conflict-footer">You are responsible for resolving time conflicts, which may also include conflicts in the midterm or final exam schedules. Special accommodations are not guaranteed. Review your Calendar and Final Tab now.</span>
+			</div>
+
+			<br></br>
+			<div id="msg-global" align="left"></div>
+		</div>
+
+		<br>
+		<br>
+		<br>
+		<br>
+		<img id="wr-floater-img1" title="Go to search" alt="Go to search" class="wr-floater-img-class" src='/webreg2/resources/images/navi-up.png'/> 
+		<img id="wr-floater-img2" title="View my schedule" alt="View my schedule" class="wr-floater-img-class" src='/webreg2/resources/images/navi-down.png'/> 
+
+	</div>
+	<div class="wr-spinner"></div>
+
+	</div>
+</div>
+<!-- footer -->
+<div id="tdr_footer">
+    <div id="tdr_footer_content">
+        <div>UC San Diego 9500 Gilman Dr. La Jolla, CA 92093 (858) 534-2230</div>
+        <div>
+            Copyright &copy;<span id="tdr_copyright_year">2015</span> Regents of the University of California. All rights reserved.
+        </div>
+        <ul id="tdr_footer_links">
+            <li><a href="http://www.ucsd.edu/_about/legal/index.html">Terms &amp; Conditions</a></li>
+            <li id="tdr_footer_feedback" class="last"><a href="//act.ucsd.edu/cwp/feedback/tool/apps"
+                onclick="window.open('//act.ucsd.edu/cwp/feedback/help/tritonlink', 'DYGWYW', 'menubar=0,resizable=1,scrollbars=1,width=450,height=650');" target="DYGWYW">Feedback</a></li>
+        </ul>
+    </div>
+</div>
+
+<!-- shib timeout -->
+<img src="https://a4.ucsd.edu/tritON/imagebug" alt=" " style="display: none;" />
+<!-- google analytic -->
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', "UA-24480055-22"]);
+  _gaq.push(['_setDomainName', "ucsd.edu"]);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</body>
+</html>
