@@ -15,11 +15,11 @@ type GlobalOptions = {
   departmentNames: Set<string>;
 };
 
-type Department = {
+export type Department = {
   kind: "department";
   name: string;
 };
-type Subject = {
+export type Subject = {
   kind: "subject";
   name: string;
   code: string;
@@ -33,12 +33,12 @@ type Subject = {
   };
 };
 type ExpectedCourseInfo = { number: string; title: string };
-type CourseComment = {
+export type CourseComment = {
   kind: "course-comment";
   number: string;
   comment: string;
 };
-type Course = {
+export type Course = {
   kind: "course";
   restrictions: (keyof typeof restrictionTypes)[];
   number: string;
@@ -78,14 +78,14 @@ type Course = {
   // resourcesSectionId is null
   exams: (Exam | CancelledExam | WeirdExam)[];
 };
-type EnrollmentInfo = {
+export type EnrollmentInfo = {
   sectionId: number;
   limit:
     | { type: "waitlist"; waitlist: number; limit: number }
     | { type: "unlimited" }
     | { type: "available"; available: number; limit: number };
 };
-type MeetingBase = {
+export type MeetingBase = {
   cancelled: false;
   isExam: false;
   instructionType: keyof typeof instructionTypes;
@@ -98,16 +98,16 @@ type MeetingBase = {
   instructors: { name: string; encryptedPid: Buffer }[];
   comment: string;
 };
-type EnrollableMeeting = MeetingBase & {
+export type EnrollableMeeting = MeetingBase & {
   enrollable: EnrollmentInfo;
 };
-type UnenrollableMeetingBase = MeetingBase & {
+export type UnenrollableMeetingBase = MeetingBase & {
   enrollable: null;
 };
-type UnenrollableMeeting = UnenrollableMeetingBase & {
+export type UnenrollableMeeting = UnenrollableMeetingBase & {
   isExtra: false;
 };
-type ExtraMeetingRow = UnenrollableMeetingBase & {
+export type ExtraMeetingRow = UnenrollableMeetingBase & {
   isExtra: true;
   // assume location of extra meeting will never be TBA
   // nvm they apparently can be, SA05 page 46, MGT 111. but the time should
@@ -118,21 +118,21 @@ type ExtraMeetingRow = UnenrollableMeetingBase & {
     location: { building: string; room: string } | null;
   };
 };
-type Meeting = EnrollableMeeting | UnenrollableMeeting;
-type CancelledMeetingBase = {
+export type Meeting = EnrollableMeeting | UnenrollableMeeting;
+export type CancelledMeetingBase = {
   cancelled: true;
   isExam: false;
   instructionType: keyof typeof instructionTypes;
   sectionCode: string;
   comment: string;
 };
-type CancelledEnrollableMeeting = CancelledMeetingBase & {
+export type CancelledEnrollableMeeting = CancelledMeetingBase & {
   enrollable: { sectionId: number };
 };
-type CancelledUnnrollableMeeting = CancelledMeetingBase & {
+export type CancelledUnnrollableMeeting = CancelledMeetingBase & {
   enrollable: null;
 };
-type ExamBase = {
+export type ExamBase = {
   cancelled: false;
   isExam: true;
   examType: keyof typeof examTypes;
@@ -151,15 +151,15 @@ type ExamBase = {
   location: { building: string; room: string } | null;
   comment: string;
 };
-type Exam = ExamBase & {
+export type Exam = ExamBase & {
   isWeird: false;
 };
 // a weird exam is an exam with instructors listed
-type WeirdExam = ExamBase & {
+export type WeirdExam = ExamBase & {
   isWeird: true;
   instructors: { name: string; encryptedPid: Buffer }[];
 };
-type CancelledExam = {
+export type CancelledExam = {
   cancelled: true;
   isExam: true;
   examType: keyof typeof examTypes;
@@ -650,8 +650,10 @@ type State = (
     }
   | { type: "done" }
 ) & {
-  commands: (Department | Subject | Course | CourseComment)[];
+  commands: Command[];
 };
+
+export type Command = Department | Subject | Course | CourseComment;
 
 const initState: State = {
   type: "before-heading",
@@ -2411,6 +2413,24 @@ async function printDebug(
   );
 }
 
+export function parseLines(
+  lines: Iterable<string>,
+  options: GlobalOptions,
+): Command[] {
+  let state: State = initState;
+  for (const line of lines) {
+    const next = processLine(state, line, options);
+    if (!next) {
+      throw new Error(`state error: ${state.type}`);
+    }
+    state = next;
+  }
+  if (state.type !== "done") {
+    throw new Error(`state error: ${state.type}`);
+  }
+  return state.commands;
+}
+
 async function main() {
   const allDeptNames = new Map<string, string>();
   const allSubjectNames = new Map<string, string>();
@@ -2607,5 +2627,5 @@ async function main() {
 }
 
 if (import.meta.main) {
-  await main()
+  await main();
 }
