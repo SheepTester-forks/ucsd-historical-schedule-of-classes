@@ -2413,8 +2413,9 @@ async function printDebug(
 
 const allDeptNames = new Map<string, string>();
 const allSubjectNames = new Map<string, string>();
-const allCourseNames = new Map<`${string} ${string}`, string>();
-const allInstructorNames = new Map<string, string>();
+const allCourseDepts = new Map<`${string} ${string}`, string>();
+// const allCourseNames = new Map<`${string} ${string}`, string>();
+// const allInstructorNames = new Map<string, string>();
 
 for (const {
   deptTerms,
@@ -2432,6 +2433,9 @@ for (const {
     ),
   );
   const departmentNames = new Set(departments.values());
+  const departmentsReverseMap = new Map(
+    departments.entries().map(([code, value]) => [value.trimEnd(), code]),
+  );
 
   for (const [code, value] of departments) {
     const existing = allDeptNames.get(code);
@@ -2508,8 +2512,15 @@ for (const {
 
     let issue = false;
     let subject = "";
+    let department = "";
     for (const command of state.commands) {
-      if (command.kind === "subject") {
+      if (command.kind === "department") {
+        department = departmentsReverseMap.get(command.name) ?? "";
+        if (!department) {
+          console.warn(`warn: department name '${command.name}' unknown`);
+          issue = true;
+        }
+      } else if (command.kind === "subject") {
         const existing = allSubjectNames.get(command.code);
         if (existing) {
           if (existing !== command.name) {
@@ -2523,43 +2534,67 @@ for (const {
         }
         subject = command.code;
       } else if (command.kind === "course") {
-        const existing = allCourseNames.get(`${subject} ${command.number}`);
-        if (existing) {
-          if (existing !== command.title) {
-            console.warn(
-              `warn: course ${subject} ${command.number} has new title '${command.title}', was '${existing}'`,
-            );
-            issue = true;
-          }
-        } else {
-          allCourseNames.set(`${subject} ${command.number}`, command.title);
-        }
-
-        const instructors = [];
-        for (const meeting of command.meetings) {
-          if (!meeting.cancelled) {
-            instructors.push(...meeting.instructors);
-          }
-        }
-        for (const meeting of command.exams) {
-          if (!meeting.cancelled && meeting.isWeird) {
-            instructors.push(...meeting.instructors);
-          }
-        }
-        for (const instructor of instructors) {
-          const hex = instructor.encryptedPid.toString("hex");
-          const existing = allInstructorNames.get(hex);
-          if (existing) {
-            if (existing !== instructor.name) {
-              console.warn(
-                `warn: instructor with PID ${hex} has new name '${instructor.name}', was '${existing}'`,
-              );
-              issue = true;
-            }
-          } else {
-            allInstructorNames.set(hex, instructor.name);
-          }
-        }
+        // course titles change quarter by quarter
+        // and instructor hashes are not stable it seems
+        // neither are departments for a course:
+        // warn: course BGGN 206 has new dept 'BIOL', was 'PHYS'
+        // debug: scheduleOfClassesStudentResult.htm?selectedTerm=WI00&page=38
+        // warn: course BGGN 206 has new dept 'BIOL', was 'PHYS'
+        // debug: scheduleOfClassesStudentResult.htm?selectedTerm=WI04&page=28
+        // warn: course CENG 1 has new dept 'CENG', was 'MAE '
+        // debug: scheduleOfClassesStudentResult.htm?selectedTerm=WI10&page=94
+        // warn: course SOMI 420U has new dept 'SOMI', was 'SOMC'
+        // debug: scheduleOfClassesStudentResult.htm?selectedTerm=WI10&page=508
+        // warn: course SOMI 420U has new dept 'SOMI', was 'SOMC'
+        // debug: scheduleOfClassesStudentResult.htm?selectedTerm=WI10&page=509
+        // warn: course CENG 101C has new dept 'CENG', was 'MAE '
+        // const existing = allCourseDepts.get(`${subject} ${command.number}`);
+        // if (existing) {
+        //   if (existing !== department) {
+        //     console.warn(
+        //       `warn: course ${subject} ${command.number} has new dept '${department}', was '${existing}'`,
+        //     );
+        //     issue = true;
+        //   }
+        // } else {
+        //   allCourseDepts.set(`${subject} ${command.number}`, department);
+        // }
+        // const existing = allCourseNames.get(`${subject} ${command.number}`);
+        // if (existing) {
+        //   if (existing !== command.title) {
+        //     console.warn(
+        //       `warn: course ${subject} ${command.number} has new title '${command.title}', was '${existing}'`,
+        //     );
+        //     issue = true;
+        //   }
+        // } else {
+        //   allCourseNames.set(`${subject} ${command.number}`, command.title);
+        // }
+        // const instructors = [];
+        // for (const meeting of command.meetings) {
+        //   if (!meeting.cancelled) {
+        //     instructors.push(...meeting.instructors);
+        //   }
+        // }
+        // for (const meeting of command.exams) {
+        //   if (!meeting.cancelled && meeting.isWeird) {
+        //     instructors.push(...meeting.instructors);
+        //   }
+        // }
+        // for (const instructor of instructors) {
+        //   const hex = instructor.encryptedPid.toString("hex");
+        //   const existing = allInstructorNames.get(hex);
+        //   if (existing) {
+        //     if (existing !== instructor.name) {
+        //       console.warn(
+        //         `warn: instructor with PID ${hex} has new name '${instructor.name}', was '${existing}'`,
+        //       );
+        //       issue = true;
+        //     }
+        //   } else {
+        //     allInstructorNames.set(hex, instructor.name);
+        //   }
+        // }
       }
     }
     if (issue) {
