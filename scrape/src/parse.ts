@@ -2411,195 +2411,201 @@ async function printDebug(
   );
 }
 
-const allDeptNames = new Map<string, string>();
-const allSubjectNames = new Map<string, string>();
-const allCourseDepts = new Map<`${string} ${string}`, string>();
-// const allCourseNames = new Map<`${string} ${string}`, string>();
-// const allInstructorNames = new Map<string, string>();
+async function main() {
+  const allDeptNames = new Map<string, string>();
+  const allSubjectNames = new Map<string, string>();
+  const allCourseDepts = new Map<`${string} ${string}`, string>();
+  // const allCourseNames = new Map<`${string} ${string}`, string>();
+  // const allInstructorNames = new Map<string, string>();
 
-for (const {
-  deptTerms,
-  paginateTerm: term,
-  year: termYear,
-  quarter,
-} of terms()) {
-  const departments = new Map(
-    await Promise.all(deptTerms.map((term) => getDepartments(term))).then(
-      (departments) =>
-        departments
-          .values()
-          .flatMap((departments) => departments)
-          .map(({ code, value }) => [code, value]),
-    ),
-  );
-  const departmentNames = new Set(departments.values());
-  const departmentsReverseMap = new Map(
-    departments.entries().map(([code, value]) => [value.trimEnd(), code]),
-  );
-
-  for (const [code, value] of departments) {
-    const existing = allDeptNames.get(code);
-    if (existing) {
-      if (existing !== value) {
-        console.warn(
-          `warn: department ${code} has new name '${value}', was '${existing}'`,
-        );
-      }
-    } else {
-      allDeptNames.set(code, value);
-    }
-  }
-
-  let totalPages = 1;
-  for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
-    const path = `.cache/${term}/_all/${pageNumber}.html`;
-    const allLines = (
-      await readFile(path, "utf-8").catch((error) =>
-        error instanceof Error && "code" in error && error.code === "ENOENT"
-          ? null
-          : Promise.reject(error),
-      )
-    )?.split(/\r?\n/);
-    if (!allLines) {
-      // some pages are missing and thats ok
-      continue;
-    }
-    const [firstLine, ...lines] = allLines;
-    const match = firstLine.match(
-      /^Page  \((\d+)&nbsp;of&nbsp;(\d+)\) &nbsp;$/,
+  for (const {
+    deptTerms,
+    paginateTerm: term,
+    year: termYear,
+    quarter,
+  } of terms()) {
+    const departments = new Map(
+      await Promise.all(deptTerms.map((term) => getDepartments(term))).then(
+        (departments) =>
+          departments
+            .values()
+            .flatMap((departments) => departments)
+            .map(({ code, value }) => [code, value]),
+      ),
     );
-    if (
-      !match ||
-      +match[1] !== pageNumber ||
-      (totalPages !== 1 && +match[2] !== totalPages)
-    ) {
-      console.error(`${path}:1: page mismatch`);
-      console.error(firstLine);
-      await printDebug(term, Array.from(departments.keys()), pageNumber);
-      process.exit(1);
-    }
-    totalPages = +match[2];
+    const departmentNames = new Set(departments.values());
+    const departmentsReverseMap = new Map(
+      departments.entries().map(([code, value]) => [value.trimEnd(), code]),
+    );
 
-    let state: State = initState;
-    for (const [i, line] of lines.entries()) {
-      const next = processLine(state, line, {
-        termYear,
-        quarter,
-        departmentNames,
-      });
-      if (!next) {
-        console.dir(state, { depth: null });
-        console.error(
-          `${path}:${i + 2}: unexpected line for state '\x1b[1;36m${state.type}\x1b[0m'`,
-        );
-        console.error(line);
+    for (const [code, value] of departments) {
+      const existing = allDeptNames.get(code);
+      if (existing) {
+        if (existing !== value) {
+          console.warn(
+            `warn: department ${code} has new name '${value}', was '${existing}'`,
+          );
+        }
+      } else {
+        allDeptNames.set(code, value);
+      }
+    }
+
+    let totalPages = 1;
+    for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
+      const path = `.cache/${term}/_all/${pageNumber}.html`;
+      const allLines = (
+        await readFile(path, "utf-8").catch((error) =>
+          error instanceof Error && "code" in error && error.code === "ENOENT"
+            ? null
+            : Promise.reject(error),
+        )
+      )?.split(/\r?\n/);
+      if (!allLines) {
+        // some pages are missing and thats ok
+        continue;
+      }
+      const [firstLine, ...lines] = allLines;
+      const match = firstLine.match(
+        /^Page  \((\d+)&nbsp;of&nbsp;(\d+)\) &nbsp;$/,
+      );
+      if (
+        !match ||
+        +match[1] !== pageNumber ||
+        (totalPages !== 1 && +match[2] !== totalPages)
+      ) {
+        console.error(`${path}:1: page mismatch`);
+        console.error(firstLine);
         await printDebug(term, Array.from(departments.keys()), pageNumber);
         process.exit(1);
       }
-      state = next;
-    }
-    if (state.type !== "done") {
-      console.dir(state, { depth: null });
-      console.error(
-        `${path}:${lines.length + 1}: state machine incomplete :( ended at '\x1b[1;36m${state.type}\x1b[0m'`,
-      );
-      await printDebug(term, Array.from(departments.keys()), pageNumber);
-      process.exit(1);
-    }
-    // console.dir(state, { depth: null });
-    // await printDebug(term, deptTerms, pageNumber);
-    // process.exit(0);
+      totalPages = +match[2];
 
-    let issue = false;
-    let subject = "";
-    let department = "";
-    for (const command of state.commands) {
-      if (command.kind === "department") {
-        department = departmentsReverseMap.get(command.name) ?? "";
-        if (!department) {
-          console.warn(`warn: department name '${command.name}' unknown`);
-          issue = true;
+      let state: State = initState;
+      for (const [i, line] of lines.entries()) {
+        const next = processLine(state, line, {
+          termYear,
+          quarter,
+          departmentNames,
+        });
+        if (!next) {
+          console.dir(state, { depth: null });
+          console.error(
+            `${path}:${i + 2}: unexpected line for state '\x1b[1;36m${state.type}\x1b[0m'`,
+          );
+          console.error(line);
+          await printDebug(term, Array.from(departments.keys()), pageNumber);
+          process.exit(1);
         }
-      } else if (command.kind === "subject") {
-        const existing = allSubjectNames.get(command.code);
-        if (existing) {
-          if (existing !== command.name) {
-            console.warn(
-              `warn: subject ${command.code} has new name '${command.name}', was '${existing}'`,
-            );
+        state = next;
+      }
+      if (state.type !== "done") {
+        console.dir(state, { depth: null });
+        console.error(
+          `${path}:${lines.length + 1}: state machine incomplete :( ended at '\x1b[1;36m${state.type}\x1b[0m'`,
+        );
+        await printDebug(term, Array.from(departments.keys()), pageNumber);
+        process.exit(1);
+      }
+      // console.dir(state, { depth: null });
+      // await printDebug(term, deptTerms, pageNumber);
+      // process.exit(0);
+
+      let issue = false;
+      let subject = "";
+      let department = "";
+      for (const command of state.commands) {
+        if (command.kind === "department") {
+          department = departmentsReverseMap.get(command.name) ?? "";
+          if (!department) {
+            console.warn(`warn: department name '${command.name}' unknown`);
             issue = true;
           }
-        } else {
-          allSubjectNames.set(command.code, command.name);
+        } else if (command.kind === "subject") {
+          const existing = allSubjectNames.get(command.code);
+          if (existing) {
+            if (existing !== command.name) {
+              console.warn(
+                `warn: subject ${command.code} has new name '${command.name}', was '${existing}'`,
+              );
+              issue = true;
+            }
+          } else {
+            allSubjectNames.set(command.code, command.name);
+          }
+          subject = command.code;
+        } else if (command.kind === "course") {
+          // course titles change quarter by quarter
+          // and instructor hashes are not stable it seems
+          // neither are departments for a course:
+          // warn: course BGGN 206 has new dept 'BIOL', was 'PHYS'
+          // debug: scheduleOfClassesStudentResult.htm?selectedTerm=WI00&page=38
+          // warn: course BGGN 206 has new dept 'BIOL', was 'PHYS'
+          // debug: scheduleOfClassesStudentResult.htm?selectedTerm=WI04&page=28
+          // warn: course CENG 1 has new dept 'CENG', was 'MAE '
+          // debug: scheduleOfClassesStudentResult.htm?selectedTerm=WI10&page=94
+          // warn: course SOMI 420U has new dept 'SOMI', was 'SOMC'
+          // debug: scheduleOfClassesStudentResult.htm?selectedTerm=WI10&page=508
+          // warn: course SOMI 420U has new dept 'SOMI', was 'SOMC'
+          // debug: scheduleOfClassesStudentResult.htm?selectedTerm=WI10&page=509
+          // warn: course CENG 101C has new dept 'CENG', was 'MAE '
+          // const existing = allCourseDepts.get(`${subject} ${command.number}`);
+          // if (existing) {
+          //   if (existing !== department) {
+          //     console.warn(
+          //       `warn: course ${subject} ${command.number} has new dept '${department}', was '${existing}'`,
+          //     );
+          //     issue = true;
+          //   }
+          // } else {
+          //   allCourseDepts.set(`${subject} ${command.number}`, department);
+          // }
+          // const existing = allCourseNames.get(`${subject} ${command.number}`);
+          // if (existing) {
+          //   if (existing !== command.title) {
+          //     console.warn(
+          //       `warn: course ${subject} ${command.number} has new title '${command.title}', was '${existing}'`,
+          //     );
+          //     issue = true;
+          //   }
+          // } else {
+          //   allCourseNames.set(`${subject} ${command.number}`, command.title);
+          // }
+          // const instructors = [];
+          // for (const meeting of command.meetings) {
+          //   if (!meeting.cancelled) {
+          //     instructors.push(...meeting.instructors);
+          //   }
+          // }
+          // for (const meeting of command.exams) {
+          //   if (!meeting.cancelled && meeting.isWeird) {
+          //     instructors.push(...meeting.instructors);
+          //   }
+          // }
+          // for (const instructor of instructors) {
+          //   const hex = instructor.encryptedPid.toString("hex");
+          //   const existing = allInstructorNames.get(hex);
+          //   if (existing) {
+          //     if (existing !== instructor.name) {
+          //       console.warn(
+          //         `warn: instructor with PID ${hex} has new name '${instructor.name}', was '${existing}'`,
+          //       );
+          //       issue = true;
+          //     }
+          //   } else {
+          //     allInstructorNames.set(hex, instructor.name);
+          //   }
+          // }
         }
-        subject = command.code;
-      } else if (command.kind === "course") {
-        // course titles change quarter by quarter
-        // and instructor hashes are not stable it seems
-        // neither are departments for a course:
-        // warn: course BGGN 206 has new dept 'BIOL', was 'PHYS'
-        // debug: scheduleOfClassesStudentResult.htm?selectedTerm=WI00&page=38
-        // warn: course BGGN 206 has new dept 'BIOL', was 'PHYS'
-        // debug: scheduleOfClassesStudentResult.htm?selectedTerm=WI04&page=28
-        // warn: course CENG 1 has new dept 'CENG', was 'MAE '
-        // debug: scheduleOfClassesStudentResult.htm?selectedTerm=WI10&page=94
-        // warn: course SOMI 420U has new dept 'SOMI', was 'SOMC'
-        // debug: scheduleOfClassesStudentResult.htm?selectedTerm=WI10&page=508
-        // warn: course SOMI 420U has new dept 'SOMI', was 'SOMC'
-        // debug: scheduleOfClassesStudentResult.htm?selectedTerm=WI10&page=509
-        // warn: course CENG 101C has new dept 'CENG', was 'MAE '
-        // const existing = allCourseDepts.get(`${subject} ${command.number}`);
-        // if (existing) {
-        //   if (existing !== department) {
-        //     console.warn(
-        //       `warn: course ${subject} ${command.number} has new dept '${department}', was '${existing}'`,
-        //     );
-        //     issue = true;
-        //   }
-        // } else {
-        //   allCourseDepts.set(`${subject} ${command.number}`, department);
-        // }
-        // const existing = allCourseNames.get(`${subject} ${command.number}`);
-        // if (existing) {
-        //   if (existing !== command.title) {
-        //     console.warn(
-        //       `warn: course ${subject} ${command.number} has new title '${command.title}', was '${existing}'`,
-        //     );
-        //     issue = true;
-        //   }
-        // } else {
-        //   allCourseNames.set(`${subject} ${command.number}`, command.title);
-        // }
-        // const instructors = [];
-        // for (const meeting of command.meetings) {
-        //   if (!meeting.cancelled) {
-        //     instructors.push(...meeting.instructors);
-        //   }
-        // }
-        // for (const meeting of command.exams) {
-        //   if (!meeting.cancelled && meeting.isWeird) {
-        //     instructors.push(...meeting.instructors);
-        //   }
-        // }
-        // for (const instructor of instructors) {
-        //   const hex = instructor.encryptedPid.toString("hex");
-        //   const existing = allInstructorNames.get(hex);
-        //   if (existing) {
-        //     if (existing !== instructor.name) {
-        //       console.warn(
-        //         `warn: instructor with PID ${hex} has new name '${instructor.name}', was '${existing}'`,
-        //       );
-        //       issue = true;
-        //     }
-        //   } else {
-        //     allInstructorNames.set(hex, instructor.name);
-        //   }
-        // }
+      }
+      if (issue) {
+        await printDebug(term, Array.from(departments.keys()), pageNumber);
       }
     }
-    if (issue) {
-      await printDebug(term, Array.from(departments.keys()), pageNumber);
-    }
   }
+  console.error("success!");
 }
-console.error("success!");
+
+if (import.meta.main) {
+  await main()
+}
