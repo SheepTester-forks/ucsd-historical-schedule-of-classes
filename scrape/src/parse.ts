@@ -1382,6 +1382,7 @@ function processLine(
       .match(
         // SA10 page 46 HIEU 106GS links to SP18.html and idk if that's intentional
         // idk why they only misspell "EXCLUDE" but SP19 page 500 RMAS 199 links to 'EXCULDE' and one before did 'EXLUDE'
+        // WI11 page 366 is the one with EXLUDE
         /^(?:<a href="javascript:openNewWindow\('http:\/\/(registrar\.ucsd\.edu\/studentlink\/cnd\.html|www\.ucsd\.edu\/catalog\/courses\/([A-Z]{2,5}|SP18|CSE-AESE|EXLUDE|EXCULDE|css|mae-aese)\.html#([a-z]{2,5}\d{1,3}[a-z]{0,2})|www\.ucsd\.edu\/catalog\/curric\/EAP\.html|pharmacy\.ucsd\.edu\/current)'\)">)?<span class="boldtxt">([A-Za-z&'/:,.\d()+";?!@#\\ -]{30})<\/span>(?: <\/a>)?$/,
       );
     if (match && line.startsWith("<a") === line.endsWith("a>")) {
@@ -2396,7 +2397,7 @@ function processLine(
   return null;
 }
 
-async function printDebug(
+export async function printDebug(
   paginateTerm: string,
   departments: string[],
   page: number,
