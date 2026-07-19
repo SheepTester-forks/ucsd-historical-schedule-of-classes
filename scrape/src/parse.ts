@@ -1811,11 +1811,11 @@ function processLine(
     const match = line.match(
       // (?:00|10|15|20|30|45|50)
       // (?:00|05|10|15|20|25|30|40|45|50|55|59)
-      /^<td class="brdr">((1?\d):([0-5]\d)([ap])-(1?\d):([0-5]\d)([ap]))<\/td>$/,
+      /^<td class="brdr">(1?\d):([0-5]\d)([ap])-(1?\d):([0-5]\d)([ap])<\/td>$/,
     );
     if (match) {
       const time = {
-        start: { hour: parseHour(match[1], match[2]), minute: +match[2] },
+        start: { hour: parseHour(match[1], match[3]), minute: +match[2] },
         end: { hour: parseHour(match[4], match[6]), minute: +match[5] },
       };
       if (state.sectionId === "extra") {
@@ -2289,7 +2289,7 @@ function processLine(
         exam: {
           ...state.exam,
           time: {
-            start: { hour: parseHour(match[1], match[2]), minute: +match[2] },
+            start: { hour: parseHour(match[1], match[3]), minute: +match[2] },
             end: { hour: parseHour(match[4], match[6]), minute: +match[5] },
           },
         },
@@ -2703,10 +2703,10 @@ async function main() {
               );
               if (
                 meeting.date.dayOfWeek !== null &&
-                date.getUTCDay() === meeting.date.dayOfWeek
+                date.getUTCDay() !== meeting.date.dayOfWeek
               ) {
                 wrongExamDay.push(
-                  `${display}: [${meeting.date.dayOfWeek}, ${date.getUTCDay()}]`,
+                  `${display}: [${meeting.date.dayOfWeek}, ${date.getUTCDay()}]\n`,
                 );
               }
             }
