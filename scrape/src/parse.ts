@@ -5,7 +5,7 @@
  * Assumes src/index.ts has already been run
  */
 
-import { readFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { terms, type Quarter } from "./lib.ts";
 import { getDepartments, getResultPath } from "./get.ts";
 
@@ -85,6 +85,10 @@ export type EnrollmentInfo = {
     | { type: "unlimited" }
     | { type: "available"; available: number; limit: number };
 };
+export type Time = { hour: number; minute: number };
+const parseHour = (hour: string, ap: string) =>
+  hour === "12" ? (ap === "a" ? 0 : 12) : +hour + (ap === "a" ? 0 : 12);
+export type TimeRange = { start: Time; end: Time };
 export type MeetingBase = {
   cancelled: false;
   isExam: false;
@@ -92,7 +96,7 @@ export type MeetingBase = {
   sectionCode: string;
   location: {
     days: string;
-    time: string;
+    time: TimeRange;
     location: { building: string; room: string } | null;
   } | null;
   instructors: { name: string; encryptedPid: Buffer }[];
@@ -114,7 +118,7 @@ export type ExtraMeetingRow = UnenrollableMeetingBase & {
   // always be determined, surely
   location: {
     days: string;
-    time: string;
+    time: TimeRange;
     location: { building: string; room: string } | null;
   };
 };
@@ -147,7 +151,7 @@ export type ExamBase = {
     // and omitted for cancelled exams
     dayOfWeek: number | null;
   };
-  time: string;
+  time: TimeRange;
   location: { building: string; room: string } | null;
   comment: string;
 };
@@ -163,7 +167,7 @@ export type CancelledExam = {
   cancelled: true;
   isExam: true;
   examType: keyof typeof examTypes;
-  date: { month: number; date: number };
+  date: { month: number; date: number; year: number };
   comment: string;
 };
 
@@ -509,7 +513,7 @@ type State = (
       sectionId: number | null;
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
       days: string;
-      time: string;
+      time: TimeRange;
     }
   | {
       type: "building-code-next" | "room-next";
@@ -517,7 +521,7 @@ type State = (
       sectionId: number | null | "extra";
       meeting: Pick<Meeting, "instructionType" | "sectionCode">;
       days: string;
-      time: string;
+      time: TimeRange;
       building: string;
     }
   | {
@@ -1807,22 +1811,26 @@ function processLine(
     const match = line.match(
       // (?:00|10|15|20|30|45|50)
       // (?:00|05|10|15|20|25|30|40|45|50|55|59)
-      /^<td class="brdr">(1?\d:[0-5]\d[ap]-1?\d:[0-5]\d[ap])<\/td>$/,
+      /^<td class="brdr">((1?\d):([0-5]\d)([ap])-(1?\d):([0-5]\d)([ap]))<\/td>$/,
     );
     if (match) {
+      const time = {
+        start: { hour: parseHour(match[1], match[2]), minute: +match[2] },
+        end: { hour: parseHour(match[4], match[6]), minute: +match[5] },
+      };
       if (state.sectionId === "extra") {
         return {
           ...state,
           type: "building-code-next",
           building: "unused",
-          time: match[1],
+          time,
         };
       } else {
         return {
           ...state,
           type: "building-start-next",
           sectionId: state.sectionId,
-          time: match[1],
+          time,
         };
       }
     }
@@ -2261,14 +2269,6 @@ function processLine(
       .match(/^<td class="brdr">([MTWRFSX] {6})<\/td>$/);
     if (match) {
       const day = "XMTWRFS".indexOf(match[1][0]);
-      // const date = new Date(
-      //   Date.UTC(
-      //     state.exam.date.year,
-      //     state.exam.date.month - 1,
-      //     state.exam.date.date,
-      //   ),
-      // );
-      // if (date.getUTCDay() === day) {
       return {
         ...state,
         type: "exam-time-next",
@@ -2280,13 +2280,19 @@ function processLine(
     const match = line.match(
       // (?:00|01|05|10|15|30|45|51)
       // (?:00|20|29|30|40|45|50|59)
-      /^<td class="brdr">(1?\d:[0-5]\d[ap]-1?\d:[0-5]\d[ap])<\/td>$/,
+      /^<td class="brdr">(1?\d):([0-5]\d)([ap])-(1?\d):([0-5]\d)([ap])<\/td>$/,
     );
     if (match) {
       return {
         ...state,
         type: "exam-building-next",
-        exam: { ...state.exam, time: match[1] },
+        exam: {
+          ...state.exam,
+          time: {
+            start: { hour: parseHour(match[1], match[2]), minute: +match[2] },
+            end: { hour: parseHour(match[4], match[6]), minute: +match[5] },
+          },
+        },
       };
     }
   }
@@ -2439,12 +2445,35 @@ async function main() {
   // const allCourseNames = new Map<`${string} ${string}`, string>();
   // const allInstructorNames = new Map<string, string>();
 
+  const wrongExamDay: string[] = [];
+  const wrongExamYear: string[] = [];
+  let maxSectionCodeLetter = { code: "A00", display: "idk" };
+  let maxSectionCodeNumber = { code: 1, display: "idk" };
+  let maxSectionId = { code: 0, display: "idk" };
+  let minSectionId = { code: 999_999, display: "idk" };
+  const seenSectionId = new Map<number, string>();
+  const duplicateSectionId: string[] = [];
+  const freqs: Record<
+    `${"meeting" | "exam"}_${"start" | "end"}_${"hour" | "minute"}`,
+    Record<number, string[]>
+  > = {
+    meeting_start_hour: {},
+    meeting_start_minute: {},
+    meeting_end_hour: {},
+    meeting_end_minute: {},
+    exam_start_hour: {},
+    exam_start_minute: {},
+    exam_end_hour: {},
+    exam_end_minute: {},
+  };
+
   for (const {
     deptTerms,
     paginateTerm: term,
     year: termYear,
     quarter,
   } of terms()) {
+    process.stderr.write(`\r${term}`);
     const departments = new Map(
       await Promise.all(deptTerms.map((term) => getDepartments(term))).then(
         (departments) =>
@@ -2459,18 +2488,18 @@ async function main() {
       departments.entries().map(([code, value]) => [value.trimEnd(), code]),
     );
 
-    for (const [code, value] of departments) {
-      const existing = allDeptNames.get(code);
-      if (existing) {
-        if (existing !== value) {
-          console.warn(
-            `warn: department ${code} has new name '${value}', was '${existing}'`,
-          );
-        }
-      } else {
-        allDeptNames.set(code, value);
-      }
-    }
+    // for (const [code, value] of departments) {
+    //   const existing = allDeptNames.get(code);
+    //   if (existing) {
+    //     if (existing !== value) {
+    //       console.warn(
+    //         `warn: department ${code} has new name '${value}', was '${existing}'`,
+    //       );
+    //     }
+    //   } else {
+    //     allDeptNames.set(code, value);
+    //   }
+    // }
 
     let totalPages = 1;
     for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
@@ -2543,19 +2572,20 @@ async function main() {
             issue = true;
           }
         } else if (command.kind === "subject") {
-          const existing = allSubjectNames.get(command.code);
-          if (existing) {
-            if (existing !== command.name) {
-              console.warn(
-                `warn: subject ${command.code} has new name '${command.name}', was '${existing}'`,
-              );
-              issue = true;
-            }
-          } else {
-            allSubjectNames.set(command.code, command.name);
-          }
+          // const existing = allSubjectNames.get(command.code);
+          // if (existing) {
+          //   if (existing !== command.name) {
+          //     console.warn(
+          //       `warn: subject ${command.code} has new name '${command.name}', was '${existing}'`,
+          //     );
+          //     issue = true;
+          //   }
+          // } else {
+          //   allSubjectNames.set(command.code, command.name);
+          // }
           subject = command.code;
         } else if (command.kind === "course") {
+          const display = `${term} page ${pageNumber} ${subject} ${command.number}`;
           // course titles change quarter by quarter
           // and instructor hashes are not stable it seems
           // neither are departments for a course:
@@ -2593,16 +2623,97 @@ async function main() {
           //   allCourseNames.set(`${subject} ${command.number}`, command.title);
           // }
           // const instructors = [];
-          // for (const meeting of command.meetings) {
-          //   if (!meeting.cancelled) {
-          //     instructors.push(...meeting.instructors);
-          //   }
-          // }
-          // for (const meeting of command.exams) {
-          //   if (!meeting.cancelled && meeting.isWeird) {
-          //     instructors.push(...meeting.instructors);
-          //   }
-          // }
+          for (const meeting of command.meetings) {
+            if (/^[A-Z]/.test(meeting.sectionCode)) {
+              if (meeting.sectionCode > maxSectionCodeLetter.code) {
+                maxSectionCodeLetter = { code: meeting.sectionCode, display };
+              }
+            } else {
+              if (+meeting.sectionCode > maxSectionCodeNumber.code) {
+                maxSectionCodeNumber = { code: +meeting.sectionCode, display };
+              }
+            }
+            if (!meeting.cancelled && meeting.location) {
+              // instructors.push(...meeting.instructors);
+              freqs.meeting_start_hour[meeting.location.time.start.hour] ??= [];
+              freqs.meeting_start_hour[meeting.location.time.start.hour].push(
+                display,
+              );
+              freqs.meeting_start_minute[meeting.location.time.start.minute] ??=
+                [];
+              freqs.meeting_start_minute[
+                meeting.location.time.start.minute
+              ].push(display);
+              freqs.meeting_end_hour[meeting.location.time.end.hour] ??= [];
+              freqs.meeting_end_hour[meeting.location.time.end.hour].push(
+                display,
+              );
+              freqs.meeting_end_minute[meeting.location.time.end.minute] ??= [];
+              freqs.meeting_end_minute[meeting.location.time.end.minute].push(
+                display,
+              );
+            }
+            if (meeting.enrollable) {
+              if (termYear < 2010) {
+                if (meeting.enrollable.sectionId < minSectionId.code) {
+                  minSectionId = {
+                    code: meeting.enrollable.sectionId,
+                    display,
+                  };
+                }
+              } else if (
+                termYear > 2024 &&
+                meeting.enrollable.sectionId < 500_000
+              ) {
+                if (meeting.enrollable.sectionId > maxSectionId.code) {
+                  maxSectionId = {
+                    code: meeting.enrollable.sectionId,
+                    display,
+                  };
+                }
+              }
+              const seen = seenSectionId.get(meeting.enrollable.sectionId);
+              if (seen) {
+                duplicateSectionId.push(
+                  `${display}: [${meeting.enrollable.sectionId}, ${seen}]\n`,
+                );
+              }
+              seenSectionId.set(meeting.enrollable.sectionId, display);
+            }
+          }
+          for (const meeting of command.exams) {
+            // if (!meeting.cancelled && meeting.isWeird) {
+            //   instructors.push(...meeting.instructors);
+            // }
+            if (!meeting.cancelled) {
+              freqs.exam_start_hour[meeting.time.start.hour] ??= [];
+              freqs.exam_start_hour[meeting.time.start.hour].push(display);
+              freqs.exam_start_minute[meeting.time.start.minute] ??= [];
+              freqs.exam_start_minute[meeting.time.start.minute].push(display);
+              freqs.exam_end_hour[meeting.time.end.hour] ??= [];
+              freqs.exam_end_hour[meeting.time.end.hour].push(display);
+              freqs.exam_end_minute[meeting.time.end.minute] ??= [];
+              freqs.exam_end_minute[meeting.time.end.minute].push(display);
+              const date = new Date(
+                Date.UTC(
+                  meeting.date.year,
+                  meeting.date.month - 1,
+                  meeting.date.date,
+                ),
+              );
+              if (
+                meeting.date.dayOfWeek !== null &&
+                date.getUTCDay() === meeting.date.dayOfWeek
+              ) {
+                wrongExamDay.push(
+                  `${display}: [${meeting.date.dayOfWeek}, ${date.getUTCDay()}]`,
+                );
+              }
+            }
+            if (meeting.date.year !== termYear) {
+              wrongExamYear.push(`${display}: ${meeting.date.year}\n`);
+            }
+          }
           // for (const instructor of instructors) {
           //   const hex = instructor.encryptedPid.toString("hex");
           //   const existing = allInstructorNames.get(hex);
@@ -2624,7 +2735,50 @@ async function main() {
       }
     }
   }
-  console.error("success!");
+  console.error("\rsuccess!");
+
+  await mkdir("parse-stats", { recursive: true });
+  await writeFile(
+    "parse-stats/wrongExamDay.yml",
+    "# [actual, expected]\n" + wrongExamDay.join(""),
+  );
+  await writeFile("parse-stats/wrongExamYear.yml", wrongExamYear.join(""));
+  await writeFile(
+    "parse-stats/duplicateSectionId.yml",
+    "# [section ID, previous claimant]\n" + duplicateSectionId.join(""),
+  );
+  await writeFile(
+    "parse-stats/README.md",
+    [
+      "Award | Value | Winner\n",
+      "--- | --- | ---\n",
+      `Max section code (letter) | ${maxSectionCodeLetter.code} | ${
+        maxSectionCodeLetter.display
+      }\n`,
+      `Max section code (number) | ${maxSectionCodeNumber.code
+        .toString()
+        .padStart(3, "0")} | ${maxSectionCodeNumber.display}\n`,
+      `Smallest section ID (pre-2010) | ${minSectionId.code} | ${
+        minSectionId.display
+      }\n`,
+      `Largest section ID (post-2024) | ${maxSectionId.code} | ${
+        maxSectionId.display
+      }\n`,
+    ].join(""),
+  );
+  for (const [key, freq] of Object.entries(freqs)) {
+    await writeFile(
+      `parse-stats/${key}.yml`,
+      Object.entries(freq)
+        .sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]))
+        .map(([value, displays]) => {
+          return `${value}: [${displays.slice(0, 2).join(", ")}${
+            displays.length > 2 ? `... total ${displays.length}` : ""
+          }]\n`;
+        })
+        .join(""),
+    );
+  }
 }
 
 if (import.meta.main) {
