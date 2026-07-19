@@ -2772,9 +2772,9 @@ async function main() {
       Object.entries(freq)
         .sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]))
         .map(([value, displays]) => {
-          return `${value}: [${displays.slice(0, 2).join(", ")}${
-            displays.length > 2 ? `... total ${displays.length}` : ""
-          }]\n`;
+          return `${value}: [${displays.length > 0 ? displays[0] : ""}${
+            displays.length > 1 ? `, ${displays.at(-1)}` : ""
+          }${displays.length > 2 ? `, ... total ${displays.length}` : ""}]\n`;
         })
         .join(""),
     );
