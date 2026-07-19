@@ -2466,6 +2466,7 @@ async function main() {
     exam_end_hour: {},
     exam_end_minute: {},
   };
+  const sectionCodeNumbers: Record<number, string> = {};
 
   for (const {
     deptTerms,
@@ -2629,9 +2630,15 @@ async function main() {
                 maxSectionCodeLetter = { code: meeting.sectionCode, display };
               }
             } else {
-              if (+meeting.sectionCode > maxSectionCodeNumber.code) {
+              // section code 999
+              // https://act.ucsd.edu/scheduleOfClasses/scheduleOfClassesStudentResult.htm?selectedTerm=FA11&tabNum=tabs-crs&courses=SIO%20228
+              if (
+                meeting.sectionCode !== "999" &&
+                +meeting.sectionCode > maxSectionCodeNumber.code
+              ) {
                 maxSectionCodeNumber = { code: +meeting.sectionCode, display };
               }
+              sectionCodeNumbers[+meeting.sectionCode] ??= display;
             }
             if (!meeting.cancelled && meeting.location) {
               // instructors.push(...meeting.instructors);
@@ -2746,6 +2753,12 @@ async function main() {
   await writeFile(
     "parse-stats/duplicateSectionId.yml",
     "# [section ID, previous claimant]\n" + duplicateSectionId.join(""),
+  );
+  await writeFile(
+    "parse-stats/sectionCodeNumbers.yml",
+    Object.entries(sectionCodeNumbers)
+      .map(([code, display]) => `${code.padStart(3, "0")}: ${display}\n`)
+      .join(""),
   );
   await writeFile(
     "parse-stats/README.md",
